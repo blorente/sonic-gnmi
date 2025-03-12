@@ -1,0 +1,267 @@
+{
+  "title": "Wildcard OnChange Subscription: /openconfig/system/alarm[id=*]/alarm/state/severity",
+  "includeDefs": ["../defs/sys_alarm.json"],
+  "globalDef": {
+    "validators": {
+      "severity.major": {
+        "type": "object",
+        "required": [
+          "openconfig-system:severity"
+        ],
+        "properties": {
+          "openconfig-system:severity": {
+            "type": "string",
+            "const": "openconfig-alarm-types:MAJOR"
+          }
+        }
+      },
+      "severity.critical": {
+        "type": "object",
+        "required": [
+          "openconfig-system:severity"
+        ],
+        "properties": {
+          "openconfig-system:severity": {
+            "type": "string",
+            "const": "openconfig-alarm-types:CRITICAL"
+          }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "Subscribes to /openconfig/system/alarms/alarm[id=*]/state/severity with ON_CHANGE",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'alarms'}elem:{name:'alarm'key:{key:'id'value:'*'}}elem:{name:'state'}elem:{name:'severity'}}mode:ON_CHANGE}mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/openconfig/system/alarms/alarm",
+            "schema": {
+              "type": "object",
+              "allowDuplicates": false,
+              "required": ["openconfig-system:alarm"],
+              "properties": {
+                "openconfig-system:alarm": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "minItems": 4,
+                  "maxItems": 4,
+                  "additionalItems": false,
+                  "allOf": [
+                    {
+                      "contains": {
+                        "type": "object",
+                        "required": [ "id", "state" ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "id": { "$ref": "#/globalDef/alarmDefs/a1_id" },
+                          "state": {
+                            "type": "object",
+                            "required": [ "severity" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "severity": { "$ref": "#/globalDef/alarmDefs/a1_sev" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "required": [ "id", "state" ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "id": { "$ref": "#/globalDef/alarmDefs/a2_id" },
+                          "state": {
+                            "type": "object",
+                            "required": [ "severity" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "severity": { "$ref": "#/globalDef/alarmDefs/a2_sev" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "required": [ "id", "state" ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "id": { "$ref": "#/globalDef/alarmDefs/a3_id" },
+                          "state": {
+                            "type": "object",
+                            "required": [ "severity" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "severity": { "$ref": "#/globalDef/alarmDefs/a3_sev" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "required": [ "id", "state" ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "id": { "$ref": "#/globalDef/alarmDefs/a4_id" },
+                          "state": {
+                            "type": "object",
+                            "required": [ "severity" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "severity": { "$ref": "#/globalDef/alarmDefs/a4_sev" }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes linkqual to active to remove linkqual alarm",
+          "db": "STATE_DB",
+          "value": {
+            "COMPONENT_STATE_TABLE|linkqual:linkqual": {
+              "state": "ACTIVE"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange delete update with linkqual",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/system/alarms/alarm[id=linkqual:linkqual_1611693908000099999]/state/severity"
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Restore linkqual to warning",
+          "db": "STATE_DB",
+          "value": {
+            "COMPONENT_STATE_TABLE|linkqual:linkqual": {
+              "state": "INACTIVE"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with linkqual warning",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/system/alarms/alarm[id=linkqual:linkqual_1611693908000099999]/state/severity",
+              "schema": {
+                "$ref": "#/globalDef/validators/severity.major"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes orchagent to inactive to trigger alarm",
+          "db": "STATE_DB",
+          "value": {
+            "COMPONENT_STATE_TABLE|swss:orchagent": {
+              "state": "INACTIVE"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with orchagent critical",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/system/alarms/alarm[id=swss:orchagent_1611693908000007777]/state/severity",
+              "schema": {
+                "$ref": "#/globalDef/validators/severity.critical"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Restore orchagent to active",
+          "db": "STATE_DB",
+          "value": {
+            "COMPONENT_STATE_TABLE|swss:orchagent": {
+              "state": "ACTIVE"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange delete update with orchagent",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/system/alarms/alarm[id=swss:orchagent_1611693908000007777]/state/severity"
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Create new alarmtest01234 alarm",
+          "db": "STATE_DB",
+          "value": {
+            "COMPONENT_STATE_TABLE|alarmtest01234": {
+              "state": "INACTIVE",
+              "timestamp-seconds": "1611693908",
+              "timestamp-nanoseconds": "11111"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with alarmtest01234 warning",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/system/alarms/alarm[id=alarmtest01234_1611693908000011111]/state/severity",
+              "schema": {
+                "$ref": "#/globalDef/validators/severity.major"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Deletes alarmtest01234",
+          "db": "STATE_DB",
+          "value": {
+            "COMPONENT_STATE_TABLE|alarmtest01234": []
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates delete update for alarmtest01234",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/system/alarms/alarm[id=alarmtest01234_1611693908000011111]/state/severity"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

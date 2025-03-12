@@ -1,0 +1,128 @@
+{
+    "title": "Subscribe ONCE /openconfig/system/processes/process[pid=31212]/state/memory-limit",
+    "operations": [
+        {
+            "operation": "subscribe",
+            "returnCode": 0,
+            "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'processes'}elem:{name:'process'key:{key:'pid'value:'31212'}}} }mode:ONCE}",
+            "subOpers": [
+                {
+                    "oper": "validate",
+                    "title": "Validates initial updates",
+                    "timeout": 5000,
+                    "finalValidator": {
+                        "xpath": "/openconfig/system/processes/process[pid=31212]",
+                        "syncResponse": true,
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "openconfig-system:process"
+                            ],
+                            "properties": {
+                                "openconfig-system:process": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "required": [
+                                            "state"
+                                        ],
+                                        "properties": {
+                                            "state": {
+                                                "type": "object",
+                                                "required": [
+                                                    "openconfig-procmon-ext:memory-limit"
+                                                ],
+                                                "properties": {
+                                                    "openconfig-procmon-ext:memory-limit": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "2147483648"
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "operation": "subscribe",
+            "returnCode": 0,
+            "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'processes'}elem:{name:'process'key:{key:'pid'value:'31212'}}elem:{name:'state'}} }mode:ONCE}",
+            "subOpers": [
+                {
+                    "oper": "validate",
+                    "title": "Validates initial updates",
+                    "timeout": 5000,
+                    "finalValidator": {
+                        "xpath": "/openconfig/system/processes/process[pid=31212]/state",
+                        "syncResponse": true,
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "openconfig-system:state"
+                            ],
+                            "properties": {
+                                "openconfig-system:state": {
+                                    "type": "object",
+                                    "required": [
+                                        "openconfig-procmon-ext:memory-limit"
+                                    ],
+                                    "properties": {
+                                        "openconfig-procmon-ext:memory-limit": {
+                                            "type": "string",
+                                            "enum": [
+                                                "2147483648"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "operation": "subscribe",
+            "returnCode": 0,
+            "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'processes'}elem:{name:'process'key:{key:'pid'value:'31212'}}elem:{name:'state'}elem:{name:'memory-limit'}} }mode:ONCE}",
+            "subOpers": [
+                {
+                    "oper": "validate",
+                    "title": "Validates initial updates",
+                    "timeout": 5000,
+                    "finalValidator": {
+                        "xpath": "/openconfig/system/processes/process[pid=31212]/state/memory-limit",
+                        "syncResponse": true,
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "openconfig-procmon-ext:memory-limit"
+                            ],
+                            "properties": {
+                                "openconfig-procmon-ext:memory-limit": {
+                                    "type": "string",
+                                    "enum": [
+                                        "2147483648"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "operation": "subscribe",
+            "returnCode": 5,
+            "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'processes'}elem:{name:'process'key:{key:'pid'value:'43210'}}elem:{name:'state'}elem:{name:'memory-limit'}} }mode:ONCE}",
+            "subOpers": []
+        }
+    ]
+}

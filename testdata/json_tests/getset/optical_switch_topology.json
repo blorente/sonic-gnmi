@@ -1,0 +1,232 @@
+{
+  "title": "Optical Switch Topology Path Tests",
+  "globalDef" : {
+    "validators": {
+      "topology.state": {
+        "type": "object",
+        "required": [
+            "port-connectivity",
+            "total-port-count",
+            "total-optical-module-count",
+            "ingress-port-count",
+            "egress-port-count",
+            "ingress-start-index",
+            "egress-start-index",
+            "inter-module-connection-support"
+        ],
+        "properties": {
+          "port-connectivity": {
+            "type": "string",
+            "enum": ["INGRESS_EGRESS"]
+          },
+          "total-port-count": {
+            "type": "integer",
+            "enum": [100]
+          },
+          "total-optical-module-count": {
+            "type": "integer",
+            "enum": [1]
+          },
+          "ingress-port-count": {
+            "type": "integer",
+            "enum": [100]
+          },
+          "egress-port-count": {
+            "type": "integer",
+            "enum": [100]
+          },
+          "ingress-start-index": {
+            "type": "integer",
+            "enum": [1]
+          },
+          "egress-start-index": {
+            "type": "integer",
+            "enum": [10000]
+          },
+          "inter-module-connection-support": {
+            "type": "boolean",
+            "enum": [true]
+          }
+        }
+      }
+    }
+  },
+  "operations": [
+    {
+      "title": "Root-Level Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/optical-switch-topology",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:optical-switch-topology"
+      ],
+      "properties": {
+        "openconfig-optical-switch:optical-switch-topology": {
+          "type": "object",
+          "required": [
+            "state"
+          ],
+          "properties" : {
+            "state": {
+              "$ref": "#/globalDef/validators/topology.state"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "State-Level Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/optical-switch-topology/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:state"
+      ],
+      "properties": {
+        "openconfig-optical-switch:state": {
+          "$ref": "#/globalDef/validators/topology.state"
+        }
+      }
+    },
+    {
+      "title": "port-connectivity Leaf Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/optical-switch-topology/state/port-connectivity",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:port-connectivity"
+      ],
+      "properties": {
+        "openconfig-optical-switch:port-connectivity": {
+          "type": "string",
+          "enum": ["INGRESS_EGRESS"]
+        }
+      }
+    },
+    {
+      "title": "total-port-count Leaf Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/optical-switch-topology/state/total-port-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:total-port-count"
+      ],
+      "properties": {
+        "openconfig-optical-switch:total-port-count": {
+          "type": "integer",
+          "enum": [100]
+        }
+      }
+    },
+    {
+      "title": "total-optical-module-count Leaf Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/optical-switch-topology/state/total-optical-module-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:total-optical-module-count"
+      ],
+      "properties": {
+        "openconfig-optical-switch:total-optical-module-count": {
+          "type": "integer",
+          "enum": [1]
+        }
+      }
+    },
+    {
+      "title": "ingress-port-count Leaf Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/optical-switch-topology/state/ingress-port-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:ingress-port-count"
+      ],
+      "properties": {
+        "openconfig-optical-switch:ingress-port-count": {
+          "type": "integer",
+          "enum": [100]
+        }
+      }
+    },
+    {
+      "title": "egress-port-count Leaf Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/optical-switch-topology/state/egress-port-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:egress-port-count"
+      ],
+      "properties": {
+        "openconfig-optical-switch:egress-port-count": {
+          "type": "integer",
+          "enum": [100]
+        }
+      }
+    },
+    {
+      "title": "ingress-start-index Leaf Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/optical-switch-topology/state/ingress-start-index",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:ingress-start-index"
+      ],
+      "properties": {
+        "openconfig-optical-switch:ingress-start-index": {
+          "type": "integer",
+          "enum": [1]
+        }
+      }
+    },
+    {
+      "title": "egress-start-index Leaf Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/optical-switch-topology/state/egress-start-index",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:egress-start-index"
+      ],
+      "properties": {
+        "openconfig-optical-switch:egress-start-index": {
+          "type": "integer",
+          "enum": [10000]
+        }
+      }
+    },
+    {
+      "title": "inter-module-connection-support Leaf Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/optical-switch-topology/state/inter-module-connection-support",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:inter-module-connection-support"
+      ],
+      "properties": {
+        "openconfig-optical-switch:inter-module-connection-support": {
+          "type": "boolean",
+          "enum": [true]
+        }
+      }
+    }
+  ]
+}

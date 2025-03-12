@@ -1,0 +1,310 @@
+
+{
+    "title": "Gnpsi Tests",
+    "operations":[
+        {
+            "title": "Set GNPSI config",
+            "operation": "replace",
+            "returnCode": 0,
+            "xpath": "openconfig-system:system/grpc-servers/grpc-server[name=gnpsi]",
+            "target": "OC_YANG",
+            "attributeData": "{\"grpc-server\":[{\"name\":\"gnpsi\",\"config\":{\"name\":\"gnpsi\",\"enable\":true, \"port\":4730}}]}",
+            "subOpers": [
+                {
+                    "oper": "dbHSet",
+                    "db": "APPL_STATE_DB",
+                    "value": {
+                        "GNPSI:global" : {
+                            "admin_state": "ENABLE",
+                            "port": "4730"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "title": "Get GNPSI from grpc-server",
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig-system:system/grpc-servers/grpc-server[name=gnpsi]",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "openconfig-system-grpc:grpc-server"
+            ],
+            "properties": {
+                "openconfig-system-grpc:grpc-server": {
+                    "type": "array",
+                    "items": [
+                        {
+                            "type": "object",
+                            "required": [
+                                "config",
+                                "connections",
+                                "name",
+                                "state"
+                            ],
+                            "properties": {
+                                "config": {
+                                    "type": "object",
+                                    "required": [
+                                        "enable",
+                                        "port"
+                                    ],
+                                    "properties": {
+                                        "enable": {
+                                            "type": "boolean",
+                                            "enum": [
+                                                true
+                                            ]
+                                        },
+                                        "port": {
+                                            "type": "integer",
+                                            "enum": [
+                                                4730
+                                            ]
+                                        }
+                                    }
+                                },
+                                "connections": {
+                                    "type": "object",
+                                    "required": [
+                                        "connection"
+                                    ],
+                                    "properties": {
+                                        "connection": {
+                                            "type": "array",
+                                            "items": [
+                                                {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "port",
+                                                        "state",
+                                                        "address"
+                                                    ],
+                                                    "properties": {
+                                                        "port": {
+                                                            "type": "integer",
+                                                            "enum": [
+                                                                4343
+                                                            ]
+                                                        },
+                                                        "state": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "port",
+                                                                "address",
+                                                                "counters"
+                                                            ],
+                                                            "properties": {
+                                                                "port": {
+                                                                    "type": "integer",
+                                                                    "enum": [
+                                                                        4343
+                                                                    ]
+                                                                },
+                                                                "address": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "127.0.0.1"
+                                                                    ]
+                                                                },
+                                                                "counters": {
+                                                                    "type": "object",
+                                                                    "required": [
+                                                                        "bytes-sent",
+                                                                        "data-send-error",
+                                                                        "packets-sent"
+                                                                    ],
+                                                                    "properties": {
+                                                                        "bytes-sent": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "6512"
+                                                                            ]
+                                                                        },
+                                                                        "data-send-error": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "300"
+                                                                            ]
+                                                                        },
+                                                                        "packets-sent": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "20"
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "address": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "127.0.0.1"
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "port",
+                                                        "state",
+                                                        "address"
+                                                    ],
+                                                    "properties": {
+                                                        "port": {
+                                                            "type": "integer",
+                                                            "enum": [
+                                                                4343
+                                                            ]
+                                                        },
+                                                        "state": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "counters",
+                                                                "port",
+                                                                "address"
+                                                            ],
+                                                            "properties": {
+                                                                "counters": {
+                                                                    "type": "object",
+                                                                    "required": [
+                                                                        "packets-sent",
+                                                                        "bytes-sent",
+                                                                        "data-send-error"
+                                                                    ],
+                                                                    "properties": {
+                                                                        "packets-sent": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "142"
+                                                                            ]
+                                                                        },
+                                                                        "bytes-sent": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "8989"
+                                                                            ]
+                                                                        },
+                                                                        "data-send-error": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "10"
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "port": {
+                                                                    "type": "integer",
+                                                                    "enum": [
+                                                                        4343
+                                                                    ]
+                                                                },
+                                                                "address": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "2001:0db8:0000:ff00:0042:7879::1"
+                                                                    ]
+                                                                }
+                                                            }
+                                                        },
+                                                        "address": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "2001:0db8:0000:ff00:0042:7879::1"
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "enum": [
+                                        "gnpsi"
+                                    ]
+                                },
+                                "state": {
+                                    "type": "object",
+                                    "required": [
+                                        "enable",
+                                        "name",
+                                        "port"
+                                    ],
+                                    "properties": {
+                                        "enable": {
+                                            "type": "boolean",
+                                            "enum": [
+                                                true
+                                            ]
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "enum": [
+                                                "gnpsi"
+                                            ]
+                                        },
+                                        "port": {
+                                            "type": "integer",
+                                            "enum": [
+                                                4730
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "title": "Get data-send-error leaf of a GNPSI connection",
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig-system:system/grpc-servers/grpc-server[name=gnpsi]/connections/connection[address=2001:0db8:0000:ff00:0042:7879::1][port=4343]/state/counters/data-send-error",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "openconfig-system-grpc:data-send-error"
+            ],
+            "properties": {
+                "openconfig-system-grpc:data-send-error": {
+                    "type": "string",
+                    "enum": [
+                        "10"
+                    ]
+                }
+            }
+        },
+        {
+            "title": "Get a non-existing GNPSI connection, expect NotFound",
+            "operation": "get",
+            "returnCode": 5,
+            "xpath": "openconfig-system:system/grpc-servers/grpc-server[name=gnpsi]/connections/connection[address=2001:0db8:0000:ff00:0042:7879::1][port=4340]",
+            "target": "OC_YANG",
+            "type": "object"
+        },
+        {
+            "title": "Delete GNPSI",
+            "operation": "delete",
+            "returnCode": 0,
+            "xpath": "openconfig-system:system/grpc-servers/grpc-server[name=gnpsi]",
+            "target": "OC_YANG",
+            "subOpers": [
+                {
+                    "oper": "dbHDel",
+                    "db": "APPL_STATE_DB",
+                    "value": {
+                        "GNPSI:global" : []
+                    }
+                }
+            ]
+        }
+    ]
+}

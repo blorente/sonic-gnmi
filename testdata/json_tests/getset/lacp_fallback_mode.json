@@ -1,0 +1,223 @@
+{
+  "title": "Lacp_fallback_mode",
+  "operations":[
+    {
+      "title": "Return bool default value when fallback is not in database. Cover config leaf path case",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/config/fallback",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-lacp:fallback"
+      ],
+      "properties": {
+        "openconfig-lacp:fallback": {
+          "type": "boolean",
+          "enum": [
+            false
+          ]
+        }
+      }
+    },
+    {
+      "title": "Return bool default value when fallback is not in database. Cover state leaf path case",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/state/fallback",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-lacp:fallback"
+      ],
+      "properties": {
+        "openconfig-lacp:fallback": {
+          "type": "boolean",
+          "enum": [
+            false
+          ]
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/config/fallback",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-lacp:fallback\":true}",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "STATE_DB",
+          "value": {
+            "LAG_TABLE|PortChannel1" : {
+              "runner.fallback": "true"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-lacp:interface"
+      ],
+      "properties": {
+        "openconfig-lacp:interface": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "required": [
+                "config",
+                "state"
+              ],
+              "properties": {
+                "config": {
+                  "type": "object",
+                  "required": [
+                    "fallback"
+                  ],
+                  "properties": {
+                    "fallback": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    }
+                  }
+                },
+                "state": {
+                  "type": "object",
+                  "required": [
+                    "fallback"
+                  ],
+                  "properties": {
+                    "fallback": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/config/fallback",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-lacp:fallback"
+      ],
+      "properties": {
+        "openconfig-lacp:fallback": {
+          "type": "boolean",
+          "enum": [
+            true
+          ]
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\":{\"openconfig-lacp:fallback\":false}}",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "STATE_DB",
+          "value": {
+            "LAG_TABLE|PortChannel1" : {
+              "runner.fallback": "false"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-lacp:interface"
+      ],
+      "properties": {
+        "openconfig-lacp:interface": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "required": [
+                "config",
+                "state"
+              ],
+              "properties": {
+                "config": {
+                  "type": "object",
+                  "required": [
+                    "fallback"
+                  ],
+                  "properties": {
+                    "fallback": {
+                      "type": "boolean",
+                      "enum": [
+                        false
+                      ]
+                    }
+                  }
+                },
+                "state": {
+                  "type": "object",
+                  "required": [
+                    "fallback"
+                  ],
+                  "properties": {
+                    "fallback": {
+                      "type": "boolean",
+                      "enum": [
+                        false
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/state/fallback",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-lacp:fallback"
+      ],
+      "properties": {
+        "openconfig-lacp:fallback": {
+          "type": "boolean",
+          "enum": [
+            false
+          ]
+        }
+      }
+    }
+  ]
+}

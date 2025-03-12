@@ -1,0 +1,73 @@
+{
+  "title": "Optical Switch Port Connection Recovery Subscribe Once",
+  "operations": [
+    {
+      "title": "subscribe to /port-connection-recovery ONCE",
+      "operation": "subscribe",
+      "operProto": "subscribe: { prefix: { origin:'openconfig' target:'OC_YANG' }encoding:PROTO subscription: { path: { elem: { name:'optical-switch'} elem: { name:'port-connection-recovery' } } } mode:ONCE }",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/optical-switch/port-connection-recovery",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "openconfig-optical-switch:port-connection-recovery"
+              ],
+              "properties": {
+                "openconfig-optical-switch:port-connection-recovery": {
+                  "type": "object",
+                  "required": [
+                    "state",
+                    "config"
+                  ],
+                  "properties": {
+                    "state": {
+                      "type": "object",
+                      "required": [
+                        "port-connection-recovery-behavior",
+                        "port-connection-recovery-capability"
+                      ],
+                      "properties": {
+                        "port-connection-recovery-capability": {
+                          "type": "string",
+                          "enum": [
+                            "CONNECTIONS_PERSIST_REBOOT_RECOVERABLE_BY_NVM"
+                          ]
+                        },
+                        "port-connection-recovery-behavior": {
+                          "type": "string",
+                          "enum": [
+                            "RECOVER_PORT_CONNECTIONS_FROM_MEMORY"
+                          ]
+                        }
+                      }
+                    },
+                    "config": {
+                      "type": "object",
+                      "required": [
+                        "port-connection-recovery-behavior"
+                      ],
+                      "properties": {
+                        "port-connection-recovery-behavior": {
+                          "type": "string",
+                          "enum": [
+                            "RECOVER_PORT_CONNECTIONS_FROM_MEMORY"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

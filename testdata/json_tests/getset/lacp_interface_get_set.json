@@ -1,0 +1,376 @@
+{
+  "title": "Set lacp config",
+  "operations":[
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"openconfig-lacp:interval\" : \"lacp-period-type:SLOW\", \"google-pins-lacp:lacp-key\" : 1234, \"openconfig-lacp:lacp-mode\" : \"lacp-activity-type:PASSIVE\", \"openconfig-lacp:system-id-mac\" : \"fc:bd:67:2c:08:dd\", \"openconfig-lacp:system-priority\" : 128}}"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-lacp:interface"
+      ],
+      "properties": {
+        "openconfig-lacp:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "fallback",
+                  "interval",
+                  "google-pins-lacp:lacp-key",
+                  "lacp-mode",
+                  "system-id-mac",
+                  "system-priority"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": ["PortChannel1"]
+                  },
+                  "fallback": {
+                    "type": "boolean",
+                    "const": false
+                  },
+                  "interval": {
+                    "type": "string",
+                    "enum": ["SLOW"]
+                  },
+                  "openconfig-pins-lacp:lacp-key": {
+                    "type": "integer",
+                    "enum": [1234]
+                  },
+                  "lacp-mode": {
+                    "type": "string",
+                    "enum": ["PASSIVE"]
+                  },
+                  "system-id-mac": {
+                    "type": "string",
+                    "enum": ["fc:bd:67:2c:08:dd"]
+                  },
+                  "system-priority": {
+                    "type": "integer",
+                    "enum": [128]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"openconfig-lacp:interval\" : \"lacp-period-type:FAST\", \"google-pins-lacp:lacp-key\" : 1, \"openconfig-lacp:lacp-mode\" : \"lacp-activity-type:ACTIVE\", \"openconfig-lacp:system-id-mac\" : \"fc:bd:67:2c:08:f4\", \"openconfig-lacp:system-priority\" : 256}}"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-lacp:interface"
+      ],
+      "properties": {
+        "openconfig-lacp:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "fallback",
+                  "interval",
+                  "google-pins-lacp:lacp-key",
+                  "lacp-mode",
+                  "system-id-mac",
+                  "system-priority"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": ["PortChannel1"]
+                  },
+                  "fallback": {
+                    "type": "boolean",
+                    "const": false
+                  },
+                  "interval": {
+                    "type": "string",
+                    "enum": ["FAST"]
+                  },
+                  "openconfig-pins-lacp:lacp-key": {
+                    "type": "integer",
+                    "enum": [1]
+                  },
+                  "lacp-mode": {
+                    "type": "string",
+                    "enum": ["ACTIVE"]
+                  },
+                  "system-id-mac": {
+                    "type": "string",
+                    "enum": ["fc:bd:67:2c:08:f4"]
+                  },
+                  "system-priority": {
+                    "type": "integer",
+                    "enum": [256]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"config\": {\"google-pins-interfaces:ecmp-hash-algorithm\" : \"RANDOM\", \"google-pins-interfaces:ecmp-hash-offset\" : \"9\", \"description\" : \"myswitch.grumble.com:eth-1/7/3 [(a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"myswitch.grumble.com:eth-1/7/3\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9104, \"name\": \"Ethernet1/7/3\", \"openconfig-p4rt:id\" : 1, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/7/3\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_100GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}, {\"name\": \"PortChannel1\",\"config\": {\"name\": \"PortChannel1\", \"mtu\": 9126}}, {\"config\": {\"description\" : \"myswitch.grumble.com:eth-1/7/4 [(a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"myswitch.grumble.com:eth-1/7/4\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9104, \"name\": \"Ethernet1/7/4\", \"openconfig-p4rt:id\" : 513, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/7/4\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_100GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}]},\"openconfig-lacp:lacp\": {\"interfaces\":  {\"interface\": [{\"name\": \"PortChannel1\", \"config\": {\"openconfig-lacp:interval\" : \"lacp-period-type:FAST\", \"google-pins-lacp:lacp-key\" : 1, \"openconfig-lacp:lacp-mode\" : \"lacp-activity-type:ACTIVE\", \"openconfig-lacp:system-id-mac\" : \"fc:bd:67:2c:08:f4\", \"openconfig-lacp:system-priority\" : 256}}]}}}"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/7/3]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "description", "enabled", "google-pins-interfaces:fully-qualified-interface-name", "loopback-mode", "mtu", "name", "openconfig-p4rt:id", "type", "google-pins-interfaces:ecmp-hash-algorithm", "google-pins-interfaces:ecmp-hash-offset"
+                ],
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "enum": ["myswitch.grumble.com:eth-1/7/3 [(a trunk member)]"]
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "enum": [true]
+                  },
+                  "google-pins-interfaces:fully-qualified-interface-name": {
+                    "type": "string",
+                    "enum": ["myswitch.grumble.com:eth-1/7/3"]
+                  },
+                  "loopback-mode": {
+                    "type": "string",
+                    "enum": ["NONE"]
+                  },
+                  "mtu": {
+                    "type": "integer",
+                    "enum": [9104]
+                  },
+                  "name": {
+                    "type": "string",
+                    "enum": ["Ethernet1/7/3"]
+                  },
+                  "openconfig-p4rt:id": {
+                    "type": "integer",
+                    "enum": [1]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["iana-if-type:ethernetCsmacd"]
+                  },
+                  "google-pins-interfaces:ecmp-hash-algorithm": {
+                    "type": "string",
+                    "enum": ["RANDOM"]
+                  },
+                  "google-pins-interfaces:ecmp-hash-offset": {
+                    "type": "string",
+                    "enum": ["9"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORTCHANNEL|PortChannel1" : {
+              "mtu" : "9104"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-lacp:interface"
+      ],
+      "properties": {
+        "openconfig-lacp:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "fallback",
+                  "interval",
+                  "google-pins-lacp:lacp-key",
+                  "lacp-mode",
+                  "system-id-mac",
+                  "system-priority"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": ["PortChannel1"]
+                  },
+                  "fallback": {
+                    "type": "boolean",
+                    "const": false
+                  },
+                  "interval": {
+                    "type": "string",
+                    "enum": ["FAST"]
+                  },
+                  "openconfig-pins-lacp:lacp-key": {
+                    "type": "integer",
+                    "enum": [1]
+                  },
+                  "lacp-mode": {
+                    "type": "string",
+                    "enum": ["ACTIVE"]
+                  },
+                  "system-id-mac": {
+                    "type": "string",
+                    "enum": ["fc:bd:67:2c:08:f4"]
+                  },
+                  "system-priority": {
+                    "type": "integer",
+                    "enum": [256]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/config",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-lacp:config"
+      ],
+      "properties": {
+        "openconfig-lacp:config": {
+          "type": "object",
+          "properties": {
+            "config": {
+              "type": "object",
+              "required": [
+                "name",
+                "fallback",
+                "interval",
+                "google-pins-lacp:lacp-key",
+                "lacp-mode",
+                "system-id-mac",
+                "system-priority"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "enum": ["PortChannel1"]
+                },
+                "fallback": {
+                  "type": "boolean",
+                  "const": false
+                },
+                "interval": {
+                  "type": "string",
+                  "enum": ["FAST"]
+                },
+                "openconfig-pins-lacp:lacp-key": {
+                  "type": "integer",
+                  "enum": [1]
+                },
+                "lacp-mode": {
+                  "type": "string",
+                  "enum": ["ACTIVE"]
+                },
+                "system-id-mac": {
+                  "type": "string",
+                  "enum": ["fc:bd:67:2c:08:f4"]
+                },
+                "system-priority": {
+                  "type": "integer",
+                  "enum": [256]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/config/system-priority",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:system-priority"],
+      "properties": {
+        "openconfig-lacp:system-priority": {
+          "type": "integer",
+          "enum": [256]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+    "title": "Get interface hardware vendor port id",
+    "operations":[
+      {
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:interface"
+        ],
+        "properties": {
+          "openconfig-interfaces:interface": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "state"
+              ],
+              "properties": {
+                "state": {
+                  "type": "object",
+                  "required": [
+                    "google-pins-interfaces:vendor-id"
+                  ],
+                  "properties": {
+                    "google-pins-interfaces:vendor-id": {
+                      "type": "integer",
+                      "enum": [1]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/7/4]/state",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:state"
+        ],
+        "properties": {
+          "openconfig-interfaces:state": {
+            "type": "object",
+            "required": [
+              "google-pins-interfaces:vendor-id"
+            ],
+            "properties": {
+              "google-pins-interfaces:vendor-id": {
+                "type": "integer",
+                "enum": [7]
+              }
+            }
+          }
+        }
+      },
+      {
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/3/1]/state/vendor-id",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "google-pins-interfaces:vendor-id"
+        ],
+        "properties": {
+          "google-pins-interfaces:vendor-id": {
+            "type": "integer",
+            "enum": [3]
+          }
+        }
+      },
+      {
+        "operation": "get",
+        "returnCode": 5,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/11/5]/state/vendor-id",
+        "target": "OC_YANG",
+        "type": "object"
+      }
+    ]
+  }

@@ -1,0 +1,105 @@
+{
+  "title": "Subscribe with TARGET_DEFINED Ethernet Counters in-octets",
+  "globalDef" : {
+    "validators": {
+      "state.counters.in-octets.170": {
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:in-octets"
+        ],
+        "properties": {
+          "openconfig-interfaces:in-octets": {
+            "type": "string",
+            "const": "170"
+          }
+        }
+      },
+      "state.counters.in-octets.200": {
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:in-octets"
+        ],
+        "properties": {
+          "openconfig-interfaces:in-octets": {
+            "type": "string",
+            "const": "200"
+          }
+        }
+      },
+      "state.counters.in-octets.300": {
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:in-octets"
+        ],
+        "properties": {
+          "openconfig-interfaces:in-octets": {
+            "type": "string",
+            "const": "300"
+          }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "subscribe to /interfaces/interface[name=Ethernet1/1/1]/state/counters/in-octets",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'Ethernet1/1/1'}}elem:{name:'state'}elem:{name:'counters'}elem:{name:'in-octets'}}mode:TARGET_DEFINED sample_interval:1000000000 suppress_redundant: true} mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/interfaces/interface[name=Ethernet1/1/1]/state/counters/in-octets",
+            "schema": {
+              "$ref": "#/globalDef/validators/state.counters.in-octets.170"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "db": "COUNTERS_DB",
+          "value": {
+            "COUNTERS:oid:0x1000000000012" : {
+              "SAI_PORT_STAT_IF_IN_OCTETS": 200
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/1/1]/state/counters/in-octets",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.counters.in-octets.200"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "db": "COUNTERS_DB",
+          "value": {
+            "COUNTERS:oid:0x1000000000012" : {
+              "SAI_PORT_STAT_IF_IN_OCTETS": 300
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/1/1]/state/counters/in-octets",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.counters.in-octets.300"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

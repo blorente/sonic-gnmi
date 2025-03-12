@@ -1,0 +1,105 @@
+{
+  "title": "Subscribe with TARGET_DEFINED CPU counters in-unicast-pkts",
+  "globalDef" : {
+    "validators": {
+      "state.counters.in-unicast-pkts.3200": {
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:in-unicast-pkts"
+        ],
+        "properties": {
+          "openconfig-interfaces:in-unicast-pkts": {
+            "type": "string",
+            "const": "3200"
+          }
+        }
+      },
+      "state.counters.in-unicast-pkts.200": {
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:in-unicast-pkts"
+        ],
+        "properties": {
+          "openconfig-interfaces:in-unicast-pkts": {
+            "type": "string",
+            "const": "200"
+          }
+        }
+      },
+      "state.counters.in-unicast-pkts.300": {
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:in-unicast-pkts"
+        ],
+        "properties": {
+          "openconfig-interfaces:in-unicast-pkts": {
+            "type": "string",
+            "const": "300"
+          }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "subscribe to /interfaces/interface[name=CPU]/state/counters/in-unicast-pkts",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'CPU'}}elem:{name:'state'}elem:{name:'counters'}elem:{name:'in-unicast-pkts'}}mode:TARGET_DEFINED sample_interval:1000000000 suppress_redundant: false} mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/interfaces/interface[name=CPU]/state/counters/in-unicast-pkts",
+            "schema": {
+              "$ref": "#/globalDef/validators/state.counters.in-unicast-pkts.3200"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "db": "COUNTERS_DB",
+          "value": {
+            "COUNTERS:oid:0x1000000000001" : {
+              "SAI_PORT_STAT_IF_IN_UCAST_PKTS": 200
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=CPU]/state/counters/in-unicast-pkts",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.counters.in-unicast-pkts.200"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "db": "COUNTERS_DB",
+          "value": {
+            "COUNTERS:oid:0x1000000000001" : {
+              "SAI_PORT_STAT_IF_IN_UCAST_PKTS": 300
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=CPU]/state/counters/in-unicast-pkts",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.counters.in-unicast-pkts.300"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

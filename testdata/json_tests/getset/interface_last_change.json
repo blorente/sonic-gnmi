@@ -1,0 +1,80 @@
+{
+  "title": "Get interface last-change",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "last-change"
+                ],
+                "properties": {
+                  "last-change": {
+                    "type": "string",
+                    "enum": [
+                      "1612516544000848847"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "last-change"
+                ],
+                "properties": {
+                  "last-change": {
+                    "type": "string",
+                    "enum": [
+                      "1612516511000848811"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+

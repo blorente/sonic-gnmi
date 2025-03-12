@@ -1,0 +1,331 @@
+{
+  "title": "Wildcard OnChange Subscription: /openconfig/interfaces/interface[name=*]/ethernet/state/port-speed",
+  "globalDef" : {
+    "enums" : {
+      "port-speed": {
+        "type": "string",
+        "enum": [
+          "openconfig-if-ethernet:SPEED_10MB",
+          "openconfig-if-ethernet:SPEED_100MB",
+          "openconfig-if-ethernet:SPEED_1GB",
+          "openconfig-if-ethernet:SPEED_5GB",
+          "openconfig-if-ethernet:SPEED_2500MB",
+          "openconfig-if-ethernet:SPEED_10GB",
+          "openconfig-if-ethernet:SPEED_25GB",
+          "openconfig-if-ethernet:SPEED_40GB",
+          "openconfig-if-ethernet:SPEED_50GB",
+          "openconfig-if-ethernet:SPEED_100GB",
+          "openconfig-if-ethernet:SPEED_200GB",
+          "openconfig-if-ethernet:SPEED_400GB",
+          "openconfig-if-ethernet:SPEED_600GB",
+          "openconfig-if-ethernet:SPEED_800GB"
+        ]
+      }
+    },
+    "validators": {
+      "state.pspeed.100G": {
+        "type": "object",
+        "required": [
+          "openconfig-if-ethernet:port-speed"
+        ],
+        "properties": {
+          "openconfig-if-ethernet:port-speed": {
+            "type": "string",
+            "const": "openconfig-if-ethernet:SPEED_100GB"
+          }
+        }
+      },
+      "state.pspeed.200G": {
+        "type": "object",
+        "required": [
+          "openconfig-if-ethernet:port-speed"
+        ],
+        "properties": {
+          "openconfig-if-ethernet:port-speed": {
+            "type": "string",
+            "const": "openconfig-if-ethernet:SPEED_200GB"
+          }
+        }
+      },
+      "state.pspeed.400G": {
+        "type": "object",
+        "required": [
+          "openconfig-if-ethernet:port-speed"
+        ],
+        "properties": {
+          "openconfig-if-ethernet:port-speed": {
+            "type": "string",
+            "const": "openconfig-if-ethernet:SPEED_400GB"
+          }
+        }
+      },
+      "state.pspeed.unknown": {
+        "type": "object",
+        "required": [
+          "openconfig-if-ethernet:port-speed"
+        ],
+        "properties": {
+          "openconfig-if-ethernet:port-speed": {
+            "type": "string",
+            "const": "openconfig-if-ethernet:SPEED_UNKNOWN"
+          }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "Subscribes to /openconfig/interfaces/interface[name=*]/ethernet/state/port-speed",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'*'}}elem:{name:'ethernet'}elem:{name:'state'}elem:{name:'port-speed'}}mode:ON_CHANGE}mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/interfaces/interface",
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-interfaces:interface"],
+              "properties": {
+                "openconfig-interfaces:interface" : {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "required": ["name", "openconfig-if-ethernet:ethernet"],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "enum": [
+                          "Ethernet1/1/1", "Ethernet1/1/5", "Ethernet1/2/1", "Ethernet1/2/5", "Ethernet1/3/1", "Ethernet1/4/1", "Ethernet1/4/5", "Ethernet1/5/1", "Ethernet1/5/5", "Ethernet1/6/1", "Ethernet1/7/3", "Ethernet1/7/4", "Ethernet1/8/1", "Ethernet1/8/5", "Ethernet1/9/1", "Ethernet1/9/5", "Ethernet1/11/1", "Ethernet1/11/5"
+                        ]
+                      },
+                      "openconfig-if-ethernet:ethernet": {
+                        "type": "object",
+                        "properties": {
+                          "state": {
+                            "type": "object",
+                            "properties" : {
+                              "port-speed": {
+                                "$ref": "#/globalDef/enums/port-speed"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "minItems" : 18,
+                  "maxItems" : 18,
+                  "additionalItems": false,
+                  "allOf": [
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name" : { "type": "string", "const": "Ethernet1/1/1"},
+                          "state" : {
+                            "type": "object",
+                            "required": [ "openconfig-if-ethernet:ethernet" ],
+                            "properties": {
+                              "openconfig-if-ethernet:ethernet":{
+                                "type": "object",
+                                "properties": {
+                                  "port-speed": {
+                                    "type": "string",
+                                    "const": "openconfig-if-ethernet:SPEED_100GB"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name" : { "type": "string", "const": "Ethernet1/2/1"},
+                          "state" : {
+                            "type": "object",
+                            "required": [ "openconfig-if-ethernet:ethernet" ],
+                            "properties": {
+                              "openconfig-if-ethernet:ethernet":{
+                                "type": "object",
+                                "properties": {
+                                  "port-speed": {
+                                    "type": "string",
+                                    "const": "openconfig-if-ethernet:SPEED_400GB"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes Ethernet1/1/1.port_speed to 200G",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/1/1" : {
+              "speed": "200000"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates update with Ethernet1/1/1.port_speed 200G",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/port-speed",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.pspeed.200G"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes Ethernet1/2/1.port_speed to 200G",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/2/1" : {
+              "speed": "200000"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates update with Ethernet1/2/1.port_speed 200G",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/2/1]/ethernet/state/port-speed",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.pspeed.200G"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes Ethernet1/1/1.port_speed back to 100G",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/1/1" : {
+              "speed": "100000"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates update with Ethernet1/1/1.port_speed 100G",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/port-speed",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.pspeed.100G"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes Ethernet1/2/1.port_speed back to 400G",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/2/1" : {
+              "speed": "400000"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates update with Ethernet1/2/1.port_speed 400G",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/2/1]/ethernet/state/port-speed",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.pspeed.400G"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Creates new interface Ethernet1/01234/1",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/01234/1" : {
+              "admin-status": "up"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes Ethernet1/01234/1.port_speed to 400G",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/01234/1" : {
+              "speed": "400000"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates update with Ethernet1/01234/1.port_speed 400G",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/01234/1]/ethernet/state/port-speed",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.pspeed.400G"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Deletes Ethernet1/01234/1 state",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/01234/1" : [  ]
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates delete update for Ethernet1/01234/1.port_speed",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/01234/1]/ethernet/state/port-speed"
+            }
+          ]
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Deletes interface Ethernet1/01234/1",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/01234/1" : []
+          }
+        }
+      ]
+    }
+  ]
+}

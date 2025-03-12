@@ -1,0 +1,85 @@
+// LDS represents a list of APIs that are used for interacting with Link Diagnostic System on OCS.
+
+syntax = "proto3";
+
+package gpins.gnoi;
+option go_package = "proto/gnoi/ocs";
+
+import "proto/gnoi/ocs/ocs_error.proto";
+
+
+message LdsCommandRequest {
+  enum MeasureOperation {
+    UNSPECIFIED = 0;
+    // Turn laser on at specified power level and measure return loss.
+    MEASURE_RETURN_LOSS = 1;
+    // Laser remains off. Measure RX power in dbm.
+    MEASURE_RX_POWER = 2;
+    // Turn laser on at specified power level.
+    POWER_ON_TX = 3;
+    // Turn laser off.
+    POWER_OFF_TX = 4;
+    // Check if LDS ports, eg. lasers, FPD, and RPDs are functional.
+    SELF_CHECK_STATUS = 5;
+  }
+  message MeasurementCommand {
+    optional MeasureOperation operation = 1;
+
+    reserved 2; // Google specific.
+    // tx_power in dbm.
+    optional double tx_power = 3;
+    // Force self_check before returning the status. All LDS internal ports are
+    // expected to be in unused state.
+    optional bool force_self_check = 4;
+
+    reserved 5; // Google specific.
+    // Force disconnecting existing connections on the LDS and front panel
+    // ports before the operation.
+    optional bool force_disconnect = 6;
+    optional int32 port_number = 7;
+    // This allows user to select the LDS port for the operation, instead of
+    // being chosen by the stack. It's the user's responsibility to ensure the
+    // LDS port is functional.
+    optional int32 lds_port_number = 8;
+  }
+  // Only one measurement is processed at a time.
+  optional MeasurementCommand command = 1;
+}
+
+
+message LdsCommandResponse {
+  message LdsCommandResult {
+    optional bool success = 1;
+    // rx_power and return loss in dbm.
+    optional double rx_power = 2;
+    // measured/readback tx_power in dbm.
+    optional double tx_power = 3;
+    optional double return_loss = 4;
+    // Insertion loss in dBm for the connection used.
+    // Available only with RL, Rx and Tx Power commands initially.
+    optional double insertion_loss = 5;
+    optional OcsErrorDetail error_detail = 6;
+    // The port pair for this measurement.
+    message LdsPortPair {
+      reserved 1; // Google specific.
+      reserved 2; // Google specific.
+      optional int32 port_number = 3;
+      optional int32 lds_port_number = 4;
+    }
+    optional LdsPortPair lds_port_pair = 7;
+  }
+  message MeasurementResult {
+    optional LdsCommandResult command_result = 1;
+    reserved 2;
+  }
+  // Results for link measurement requests.
+  optional MeasurementResult result = 1;
+}
+
+service Lds {
+  // TunnelCommand executes a command on the device.
+  // Commands should only be executed one at a time. And it is recommented to
+  // have rate limiting of this RPC service. Implementation should also perform
+  // command validation to prevent pipe and redirect if needed.
+  rpc LdsCommand(LdsCommandRequest) returns (LdsCommandResponse) {}
+}

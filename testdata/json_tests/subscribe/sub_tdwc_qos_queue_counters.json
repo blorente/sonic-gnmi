@@ -1,0 +1,859 @@
+{
+    "title": "TARGET_DEFINED_Subscribe_with_wildcard_for_queue_stats",
+    "globalDef" : {
+      "validators": {
+        "queue.state.transmit-pkts.100": {
+          "type": "object",
+          "required": [
+            "openconfig-qos:state"
+          ],
+          "properties": {
+            "openconfig-qos:state": {
+              "type": "object",
+              "required":["transmit-pkts", "transmit-octets", "dropped-pkts"],
+              "properties" : {
+                "transmit-pkts": {
+                  "type": "string",
+                  "enum": ["100"]
+                },
+                "transmit-octets": {
+                  "type": "string",
+                  "enum": ["10000"]
+                },
+                "dropped-pkts": {
+                  "type": "string",
+                  "enum": ["50"]
+                }
+              }
+            }
+          }
+        },
+        "queue.state.transmit-pkts.200": {
+          "type": "object",
+          "required": [
+            "openconfig-qos:state"
+          ],
+          "properties": {
+            "openconfig-qos:state": {
+              "type": "object",
+              "required":["transmit-pkts", "transmit-octets", "dropped-pkts"],
+              "properties" : {
+                "transmit-pkts": {
+                  "type": "string",
+                  "enum": ["200"]
+                },
+                "transmit-octets": {
+                  "type": "string",
+                  "enum": ["20000"]
+                },
+                "dropped-pkts": {
+                  "type": "string",
+                  "enum": ["100"]
+                }
+              }
+            }
+          }
+        },
+        "queue.state.transmit-pkts.300": {
+          "type": "object",
+          "required": [
+            "openconfig-qos:state"
+          ],
+          "properties": {
+            "openconfig-qos:state": {
+              "type": "object",
+              "required":["transmit-pkts", "transmit-octets", "dropped-pkts"],
+              "properties" : {
+                "transmit-pkts": {
+                  "type": "string",
+                  "enum": ["300"]
+                },
+                "transmit-octets": {
+                  "type": "string",
+                  "enum": ["30000"]
+                },
+                "dropped-pkts": {
+                  "type": "string",
+                  "enum": ["150"]
+                }
+              }
+            }
+          }
+        },
+        "queue.state.transmit-pkts.40001": {
+          "type": "object",
+          "required": [
+            "openconfig-qos:state"
+          ],
+          "properties": {
+            "openconfig-qos:state": {
+              "type": "object",
+              "required":["transmit-pkts", "transmit-octets", "dropped-pkts"],
+              "properties" : {
+                "transmit-pkts": {
+                  "type": "string",
+                  "enum": ["303"]
+                },
+                "transmit-octets": {
+                  "type": "string",
+                  "enum": ["30003"]
+                },
+                "dropped-pkts": {
+                  "type": "string",
+                  "enum": ["153"]
+                }
+              }
+            }
+          }
+        },
+        "queue.state.transmit-pkts.40002": {
+          "type": "object",
+          "required": [
+            "openconfig-qos:state"
+          ],
+          "properties": {
+            "openconfig-qos:state": {
+              "type": "object",
+              "required":["transmit-pkts", "transmit-octets", "dropped-pkts"],
+              "properties" : {
+                "transmit-pkts": {
+                  "type": "string",
+                  "enum": ["203"]
+                },
+                "transmit-octets": {
+                  "type": "string",
+                  "enum": ["20003"]
+                },
+                "dropped-pkts": {
+                  "type": "string",
+                  "enum": ["103"]
+                }
+              }
+            }
+          }
+        },
+        "queue.state.transmit-pkts.1001": {
+          "type": "object",
+          "required": [
+            "openconfig-qos:state"
+          ],
+          "properties": {
+            "openconfig-qos:state": {
+              "type": "object",
+              "required":["transmit-pkts", "transmit-octets", "dropped-pkts"],
+              "properties" : {
+                "transmit-pkts": {
+                  "type": "string",
+                  "enum": ["303"]
+                },
+                "transmit-octets": {
+                  "type": "string",
+                  "enum": ["30003"]
+                },
+                "dropped-pkts": {
+                  "type": "string",
+                  "enum": ["153"]
+                }
+              }
+            }
+          }
+        },
+        "queue.state.transmit-pkts.2001": {
+          "type": "object",
+          "required": [
+            "openconfig-qos:state"
+          ],
+          "properties": {
+            "openconfig-qos:state": {
+              "type": "object",
+              "required":["transmit-pkts", "transmit-octets", "dropped-pkts"],
+              "properties" : {
+                "transmit-pkts": {
+                  "type": "string",
+                  "enum": ["203"]
+                },
+                "transmit-octets": {
+                  "type": "string",
+                  "enum": ["20003"]
+                },
+                "dropped-pkts": {
+                  "type": "string",
+                  "enum": ["103"]
+                }
+              }
+            }
+          }
+        },
+        "state.transmit-pkts.100": {
+          "type": "object",
+          "required":["openconfig-qos:transmit-pkts"],
+          "properties" : {
+            "openconfig-qos:transmit-pkts": {
+              "type": "string",
+              "enum": ["100"]
+            }
+          }
+        },
+        "state.transmit-pkts.300": {
+          "type": "object",
+          "required":["openconfig-qos:transmit-pkts"],
+          "properties" : {
+            "openconfig-qos:transmit-pkts": {
+              "type": "string",
+              "enum": ["300"]
+            }
+          }
+        }
+      }
+    },
+    "operations":[
+      {
+        "title": "Get a QoS path to kick off the pre-transformer and populate internal data structures",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/qos/queues/queue[name=BE1]/config/name",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-qos:name"
+        ],
+        "properties": {
+          "openconfig-qos:name": {
+            "type": "string",
+            "enum": ["BE1"]
+          }
+        }
+      },
+      {
+        "title": "subscribe to /qos/interfaces/interface[interface-id=*]/output/queues/queue[name=LLQ1]/state",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'qos'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'interface-id'value:'*'}}elem:{name:'output'}elem:{name:'queues'}elem:{name:'queue'key:{key:'name'value:'LLQ1'}}}mode:TARGET_DEFINED sample_interval:1000000000 suppress_redundant: true} mode:STREAM}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 3000,
+            "pathValidators": [
+              {
+                "xpath": "/qos/interfaces/interface[interface-id=Ethernet1/2/1]/output/queues/queue[name=LLQ1]/state/transmit-pkts",
+                "timestamp": "1628778558222222000",
+                "schema": {
+                  "$ref": "#/globalDef/validators/state.transmit-pkts.100"
+                }
+              }
+            ],
+            "finalValidator": {
+              "xpath": "/qos/interfaces/interface",
+              "schema": {
+                "type": "object",
+                "required": [ "openconfig-qos:interface" ],
+                "properties": {
+                  "openconfig-qos:interface": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "object",
+                      "required": [ "interface-id", "output" ],
+                      "properties": {
+                        "interface-id": {
+                          "type": "string",
+                          "enum": [ "Ethernet1/2/1", "Ethernet1/7/3", "Ethernet1/7/4", "PortChannel1" ]
+                        },
+                        "output": {
+                          "type": "object",
+                          "required": [ "queues" ],
+                          "properties": {
+                            "queues": {
+                              "type": "object",
+                              "required": [ "queue" ],
+                              "properties": {
+                                "queue": {
+                                  "type": "array",
+                                  "uniqueItems": true,
+                                  "items": {
+                                    "type": "object",
+                                    "required": [ "name" ],
+                                    "properties": {
+                                      "name": {
+                                        "type": "string",
+                                        "enum": [ "LLQ1" ]
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "additionalItems": false,
+                    "contains": {
+                      "type": "object",
+                      "required": [ "interface-id", "output" ],
+                      "properties": {
+                        "interface-id": {
+                          "type": "string",
+                          "const": "Ethernet1/2/1"
+                        },
+                        "output": {
+                          "type": "object",
+                          "required": [ "queues" ],
+                          "properties": {
+                            "queues": {
+                              "type": "object",
+                              "required": [ "queue" ],
+                              "properties": {
+                                "queue": {
+                                  "type": "array",
+                                  "uniqueItems": true,
+                                  "items": {
+                                    "type": "object",
+                                    "required": [ "name", "state" ],
+                                    "properties" : {
+                                      "name": {
+                                        "type": "string",
+                                        "const": "LLQ1"
+                                      },
+                                      "state": {
+                                        "type": "object",
+                                        "required":["transmit-pkts",
+                                                    "transmit-octets",
+                                                    "dropped-pkts"],
+                                        "properties": {
+                                          "transmit-pkts": {
+                                            "type": "string",
+                                            "enum": ["100"]
+                                          },
+                                          "transmit-octets": {
+                                            "type": "string",
+                                            "enum": ["10000"]
+                                          },
+                                          "dropped-pkts": {
+                                            "type": "string",
+                                            "enum": ["50"]
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "db": "COUNTERS_DB",
+            "value": {
+              "COUNTERS:oid:0x1500000000011c" : {
+                "SAI_QUEUE_STAT_PACKETS": 200,
+                "SAI_QUEUE_STAT_BYTES": 20000,
+                "SAI_QUEUE_STAT_DROPPED_PACKETS": 100
+              }
+            }
+          },
+          {
+            "oper": "validate",
+            "timeout": 3000,
+            "finalValidator": {
+              "xpath": "/qos/interfaces/interface[interface-id=Ethernet1/2/1]/output/queues/queue[name=LLQ1]/state",
+              "schema": {
+                "$ref": "#/globalDef/validators/queue.state.transmit-pkts.200"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "db": "COUNTERS_DB",
+            "value": {
+              "COUNTERS:oid:0x1500000000011c" : {
+                "SAI_QUEUE_STAT_PACKETS": 300,
+                "SAI_QUEUE_STAT_BYTES": 30000,
+                "SAI_QUEUE_STAT_DROPPED_PACKETS": 150
+              }
+            }
+          },
+          {
+            "oper": "validate",
+            "timeout": 3000,
+            "finalValidator": {
+              "xpath": "/qos/interfaces/interface[interface-id=Ethernet1/2/1]/output/queues/queue[name=LLQ1]/state",
+              "schema": {
+                "$ref": "#/globalDef/validators/queue.state.transmit-pkts.300"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "subscribe to /qos/interfaces/interface[interface-id=Ethernet1/2/1]/output/queues/queue[name=*]/state",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'qos'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'interface-id'value:'Ethernet1/2/1'}}elem:{name:'output'}elem:{name:'queues'}elem:{name:'queue'key:{key:'name'value:'*'}}}mode:TARGET_DEFINED sample_interval:1000000000 suppress_redundant: true} mode:STREAM}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 3000,
+            "finalValidator": {
+              "xpath": "/qos/interfaces/interface",
+              "schema": {
+                "type": "object",
+                "required": [ "openconfig-qos:interface" ],
+                "properties": {
+                  "openconfig-qos:interface": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "object",
+                      "required": [ "interface-id", "output" ],
+                      "properties": {
+                        "interface-id": {
+                          "type": "string",
+                          "const": "Ethernet1/2/1"
+                        },
+                        "output": {
+                          "type": "object",
+                          "required": [ "queues" ],
+                          "properties": {
+                            "queues": {
+                              "type": "object",
+                              "required": [ "queue" ],
+                              "properties": {
+                                "queue": {
+                                  "type": "array",
+                                  "uniqueItems": true,
+                                  "items": {
+                                    "type": "object",
+                                    "required": [ "name" ],
+                                    "properties": {
+                                      "name": {
+                                        "type": "string",
+                                        "enum": [ "LLQ1", "AF1", "Ethernet1/2/1:8", "Ethernet1/2/1:9" ]
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "additionalItems": false,
+                    "contains": {
+                      "type": "object",
+                      "required": [ "interface-id", "output" ],
+                      "properties": {
+                        "interface-id": {
+                          "type": "string",
+                          "const": "Ethernet1/2/1"
+                        },
+                        "output": {
+                          "type": "object",
+                          "required": [ "queues" ],
+                          "properties": {
+                            "queues": {
+                              "type": "object",
+                              "required": [ "queue" ],
+                              "properties": {
+                                "queue": {
+                                  "type": "array",
+                                  "uniqueItems": true,
+                                  "items": {
+                                    "type": "object",
+                                    "required": [ "name", "state" ],
+                                    "properties" : {
+                                      "name": {
+                                        "type": "string",
+                                        "enum": [ "LLQ1", "AF1", "Ethernet1/2/1:8", "Ethernet1/2/1:9"]
+                                      },
+                                      "state": {
+                                        "type": "object",
+                                        "required":["transmit-pkts",
+                                                    "transmit-octets",
+                                                    "dropped-pkts"],
+                                        "properties": {
+                                          "transmit-pkts": {
+                                            "type": "string",
+                                            "enum": ["300", "100", "0"]
+                                          },
+                                          "transmit-octets": {
+                                            "type": "string",
+                                            "enum": ["30000", "10000", "0"]
+                                          },
+                                          "dropped-pkts": {
+                                            "type": "string",
+                                            "enum": ["150", "50", "40", "30", "0"]
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "db": "COUNTERS_DB",
+            "value": {
+              "COUNTERS:oid:0x1500000000011c" : {
+                "SAI_QUEUE_STAT_PACKETS": 200,
+                "SAI_QUEUE_STAT_BYTES": 20000,
+                "SAI_QUEUE_STAT_DROPPED_PACKETS": 100
+              }
+            }
+          },
+          {
+            "oper": "validate",
+            "timeout": 3000,
+            "finalValidator": {
+              "xpath": "/qos/interfaces/interface[interface-id=Ethernet1/2/1]/output/queues/queue[name=LLQ1]/state",
+              "schema": {
+                "$ref": "#/globalDef/validators/queue.state.transmit-pkts.200"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "db": "COUNTERS_DB",
+            "value": {
+              "COUNTERS:oid:0x1500000000011c" : {
+                "SAI_QUEUE_STAT_PACKETS": 300,
+                "SAI_QUEUE_STAT_BYTES": 30000,
+                "SAI_QUEUE_STAT_DROPPED_PACKETS": 150
+              }
+            }
+          },
+          {
+            "oper": "validate",
+            "timeout": 3000,
+            "finalValidator": {
+              "xpath": "/qos/interfaces/interface[interface-id=Ethernet1/2/1]/output/queues/queue[name=LLQ1]/state",
+              "schema": {
+                "$ref": "#/globalDef/validators/queue.state.transmit-pkts.300"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "subscribe to /qos/interfaces/interface[interface-id=*]/output/queues/queue[name=*]/state",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'qos'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'interface-id'value:'*'}}elem:{name:'output'}elem:{name:'queues'}elem:{name:'queue'key:{key:'name'value:'*'}}}mode:TARGET_DEFINED sample_interval:1000000000 suppress_redundant: true} mode:STREAM}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 3000,
+            "finalValidator": {
+              "xpath": "/qos/interfaces/interface",
+              "schema": {
+                "type": "object",
+                "required": [ "openconfig-qos:interface" ],
+                "properties": {
+                  "openconfig-qos:interface": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "object",
+                      "required": [ "interface-id" ],
+                      "properties": {
+                        "interface-id": {
+                          "type": "string",
+                          "enum": [ "Ethernet1/2/1", "Ethernet1/2/5", "Ethernet1/3/5", "Ethernet1/7/3", "Ethernet1/7/4", "CPU", "PortChannel1", "PortChannel2" ]
+                        }
+                      }
+                    },
+                    "minItems": 8,
+                    "maxItems": 8,
+                    "additionalItems": false,
+                    "contains": {
+                      "type": "object",
+                      "required": [ "interface-id", "output" ],
+                      "properties": {
+                        "interface-id": {
+                          "type": "string",
+                          "const": "PortChannel1"
+                        },
+                        "output": {
+                          "type": "object",
+                          "required": [ "queues" ],
+                          "properties": {
+                            "queues": {
+                              "type": "object",
+                              "required": [ "queue" ],
+                              "properties": {
+                                "queue": {
+                                  "type": "array",
+                                  "uniqueItems": true,
+                                  "items": {
+                                    "type": "object",
+                                    "required": [ "name", "state" ],
+                                    "properties" : {
+                                      "name": {
+                                        "type": "string",
+                                        "enum": [ "LLQ1"]
+                                      },
+                                      "state": {
+                                        "type": "object",
+                                        "required":["transmit-pkts",
+                                                    "transmit-octets",
+                                                    "dropped-pkts"],
+                                        "properties": {
+                                          "transmit-pkts": {
+                                            "type": "string",
+                                            "enum": ["203"]
+                                          },
+                                          "transmit-octets": {
+                                            "type": "string",
+                                            "enum": ["20003"]
+                                          },
+                                          "dropped-pkts": {
+                                            "type": "string",
+                                            "enum": ["103"]
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "db": "COUNTERS_DB",
+            "value": {
+              "COUNTERS:oid:0x1500000000011f" : {
+                "SAI_QUEUE_STAT_PACKETS": 201,
+                "SAI_QUEUE_STAT_BYTES": 20001,
+                "SAI_QUEUE_STAT_DROPPED_PACKETS": 101
+              }
+            }
+          },
+          {
+            "oper": "validate",
+            "timeout": 3000,
+            "finalValidator": {
+              "xpath": "/qos/interfaces/interface[interface-id=PortChannel1]/output/queues/queue[name=LLQ1]/state",
+              "schema": {
+                "$ref": "#/globalDef/validators/queue.state.transmit-pkts.40001"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "db": "COUNTERS_DB",
+            "value": {
+              "COUNTERS:oid:0x1500000000011f" : {
+                "SAI_QUEUE_STAT_PACKETS": 101,
+                "SAI_QUEUE_STAT_BYTES": 10001,
+                "SAI_QUEUE_STAT_DROPPED_PACKETS": 51
+              }
+            }
+          },
+          {
+            "oper": "validate",
+            "timeout": 3000,
+            "finalValidator": {
+              "xpath": "/qos/interfaces/interface[interface-id=PortChannel1]/output/queues/queue[name=LLQ1]/state",
+              "schema": {
+                "$ref": "#/globalDef/validators/queue.state.transmit-pkts.40002"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "subscribe to /qos/interfaces/interface[interface-id=PortChannel1]/output/queues/queue[name=*]/state",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'qos'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'interface-id'value:'PortChannel1'}}elem:{name:'output'}elem:{name:'queues'}elem:{name:'queue'key:{key:'name'value:'*'}}}mode:TARGET_DEFINED sample_interval:1000000000 suppress_redundant: true} mode:STREAM}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 3000,
+            "finalValidator": {
+              "xpath": "/qos/interfaces/interface",
+              "schema": {
+                "type": "object",
+                "required": [ "openconfig-qos:interface" ],
+                "properties": {
+                  "openconfig-qos:interface": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "object",
+                      "required": [ "interface-id", "output" ],
+                      "properties": {
+                        "interface-id": {
+                          "type": "string",
+                          "enum": [ "PortChannel1" ]
+                        },
+                        "output": {
+                          "type": "object",
+                          "required": [ "queues" ],
+                          "properties": {
+                            "queues": {
+                              "type": "object",
+                              "required": [ "queue" ],
+                              "properties": {
+                                "queue": {
+                                  "type": "array",
+                                  "uniqueItems": true,
+                                  "items": {
+                                    "type": "object",
+                                    "required": [ "name" ],
+                                    "properties": {
+                                      "name": {
+                                        "type": "string",
+                                        "enum": [ "AF1", "LLQ1" ]
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "additionalItems": false,
+                    "contains": {
+                      "type": "object",
+                      "required": [ "interface-id", "output" ],
+                      "properties": {
+                        "interface-id": {
+                          "type": "string",
+                          "const": "PortChannel1"
+                        },
+                        "output": {
+                          "type": "object",
+                          "required": [ "queues" ],
+                          "properties": {
+                            "queues": {
+                              "type": "object",
+                              "required": [ "queue" ],
+                              "properties": {
+                                "queue": {
+                                  "type": "array",
+                                  "uniqueItems": true,
+                                  "items": {
+                                    "type": "object",
+                                    "required": [ "name", "state" ],
+                                    "properties" : {
+                                      "name": {
+                                        "type": "string",
+                                        "enum": [ "LLQ1"]
+                                      },
+                                      "state": {
+                                        "type": "object",
+                                        "required":["transmit-pkts",
+                                                    "transmit-octets",
+                                                    "dropped-pkts"],
+                                        "properties": {
+                                          "transmit-pkts": {
+                                            "type": "string",
+                                            "enum": ["203"]
+                                          },
+                                          "transmit-octets": {
+                                            "type": "string",
+                                            "enum": ["20003"]
+                                          },
+                                          "dropped-pkts": {
+                                            "type": "string",
+                                            "enum": ["103"]
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "db": "COUNTERS_DB",
+            "value": {
+              "COUNTERS:oid:0x1500000000011f" : {
+                "SAI_QUEUE_STAT_PACKETS": 201,
+                "SAI_QUEUE_STAT_BYTES": 20001,
+                "SAI_QUEUE_STAT_DROPPED_PACKETS": 101
+              }
+            }
+          },
+          {
+            "oper": "validate",
+            "timeout": 3000,
+            "finalValidator": {
+              "xpath": "/qos/interfaces/interface[interface-id=PortChannel1]/output/queues/queue[name=LLQ1]/state",
+              "schema": {
+                "$ref": "#/globalDef/validators/queue.state.transmit-pkts.1001"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "db": "COUNTERS_DB",
+            "value": {
+              "COUNTERS:oid:0x1500000000011f" : {
+                "SAI_QUEUE_STAT_PACKETS": 101,
+                "SAI_QUEUE_STAT_BYTES": 10001,
+                "SAI_QUEUE_STAT_DROPPED_PACKETS": 51
+              }
+            }
+          },
+          {
+            "oper": "validate",
+            "timeout": 3000,
+            "finalValidator": {
+              "xpath": "/qos/interfaces/interface[interface-id=PortChannel1]/output/queues/queue[name=LLQ1]/state",
+              "schema": {
+                "$ref": "#/globalDef/validators/queue.state.transmit-pkts.2001"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }

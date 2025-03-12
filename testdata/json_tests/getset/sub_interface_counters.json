@@ -1,0 +1,197 @@
+{
+  "title": "Get Sub-Interface counters",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/subinterfaces/subinterface[index=0]/ipv6/state/counters/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-if-ip:counters"
+      ],
+      "properties": {
+        "openconfig-if-ip:counters": {
+          "type": "object",
+          "required": ["in-pkts", "out-pkts", "in-discarded-pkts", "out-discarded-pkts", "in-multicast-pkts", "out-multicast-pkts"],
+          "properties": {
+            "in-pkts": {
+              "type": "string",
+              "enum": ["190"]
+            },
+            "out-pkts": {
+              "type": "string",
+              "enum": ["200"]
+            },
+            "in-discarded-pkts": {
+              "type": "string",
+              "enum": ["134"]
+            },
+            "out-discarded-pkts": {
+              "type": "string",
+              "enum": ["201"]
+            },
+            "in-multicast-pkts": {
+              "type": "string",
+              "enum": ["777"]
+            },
+            "out-multicast-pkts": {
+              "type": "string",
+              "enum": ["888"]
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/subinterfaces/subinterface[index=0]/ipv4/state/counters/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-if-ip:counters"
+      ],
+      "properties": {
+        "openconfig-if-ip:counters": {
+          "type": "object",
+          "required": ["in-pkts", "out-pkts", "in-multicast-pkts", "out-multicast-pkts"],
+          "properties": {
+            "in-pkts": {
+              "type": "string",
+              "enum": ["176"]
+            },
+            "out-pkts": {
+              "type": "string",
+              "enum": ["200"]
+            },
+            "in-multicast-pkts": {
+              "type": "string",
+              "enum": ["555"]
+            },
+            "out-multicast-pkts": {
+              "type": "string",
+              "enum": ["100"]
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORTCHANNEL|PortChannel1" : {
+              "admin_status": "up",
+              "id": "2049",
+              "alias": "PortChannel1Alias",
+              "type": "iana-if-type:ieee8023adLag",
+              "description": "some description string.",
+              "mtu": "9104",
+              "lag_type": "LACP",
+              "members@": "Ethernet1/7/3,Ethernet1/7/4",
+              "min_links": "1",
+              "fast_rate": "true",
+              "active": "true",
+              "system_id": "fc:bd:67:2c:08:f4",
+              "lacp_key": "1",
+              "system_priority": "256"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]/subinterfaces/subinterface[index=0]/ipv6/state/counters/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-if-ip:counters"
+      ],
+      "properties": {
+        "openconfig-if-ip:counters": {
+          "type": "object",
+          "required": ["in-pkts", "out-pkts", "in-discarded-pkts", "out-discarded-pkts"],
+          "properties": {
+            "in-pkts": {
+              "type": "string",
+              "enum": ["380"]
+            },
+            "out-pkts": {
+              "type": "string",
+              "enum": ["400"]
+            },
+            "in-discarded-pkts": {
+              "type": "string",
+              "enum": ["268"]
+            },
+            "out-discarded-pkts": {
+              "type": "string",
+              "enum": ["402"]
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]/subinterfaces/subinterface[index=0]/ipv4/state/counters/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-if-ip:counters"
+      ],
+      "properties": {
+        "openconfig-if-ip:counters": {
+          "type": "object",
+          "required": ["in-pkts", "out-pkts"],
+          "properties": {
+            "in-pkts": {
+              "type": "string",
+              "enum": ["352"]
+            },
+            "out-pkts": {
+              "type": "string",
+              "enum": ["400"]
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/subinterfaces/subinterface[index=0]/ipv6/state/counters/in-discarded-pkts",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-if-ip:in-discarded-pkts"
+      ],
+      "properties": {
+        "openconfig-if-ip:in-discarded-pkts": {
+          "type": "string",
+          "enum": ["134"]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/subinterfaces/subinterface[index=0]/ipv6/state/counters/out-discarded-pkts",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-if-ip:out-discarded-pkts"
+      ],
+      "properties": {
+        "openconfig-if-ip:out-discarded-pkts": {
+          "type": "string",
+          "enum": ["201"]
+        }
+      }
+    }
+  ]
+}

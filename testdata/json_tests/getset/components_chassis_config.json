@@ -1,0 +1,102 @@
+{
+  "title": "Set Chassis Component Name",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=chassis]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "name", "openconfig-pins-platform:fully-qualified-name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "examples": [
+                      "chassis"
+                    ],
+                    "pattern": "^(.*)$"
+                  },
+                  "openconfig-pins-platform:fully-qualified-name": {
+                    "type": "string",
+                    "enum": [
+                      "chassisXYZ"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-platform:components\": {\"component\": [{\"name\": \"chassis\",\"config\": {\"name\": \"chassis\", \"fully-qualified-name\" : \"chassis123\"}}]}}"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=chassis]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "name", "openconfig-pins-platform:fully-qualified-name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "examples": [
+                      "chassis"
+                    ],
+                    "pattern": "^(.*)$"
+                  },
+                  "openconfig-pins-platform:fully-qualified-name": {
+                    "type": "string",
+                    "enum": [
+                      "chassis123"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

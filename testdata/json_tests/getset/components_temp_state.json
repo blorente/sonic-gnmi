@@ -1,0 +1,616 @@
+{
+  "title": "Get Temperature Sensor Component State paths",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=exhaust_sensor_1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state", "google-pins-platform:sensor"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "parent", "temperature", "type", "location"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "exhaust_sensor_1"
+                    ]
+                  },
+                  "parent": {
+                    "type": "string",
+                    "enum": [
+                      "chassis"
+                    ]
+                  },
+                  "temperature": {
+                    "type": "object",
+                    "required": [
+                      "instant"
+                    ],
+                    "properties": {
+                      "instant": {
+                        "type": "string",
+                        "enum": [
+                          "36"
+                        ]
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-platform-types:SENSOR"
+                    ]
+                  },
+                  "location": {
+                    "type": "string",
+                    "enum": [
+                      "exhaust_sensor_1"
+                    ]
+                  }
+                }
+              },
+              "google-pins-platform:sensor": {
+                "type": "object",
+                "required": [
+                  "state"
+                ],
+                "properties": {
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "sensor-type"
+                    ],
+                    "properties": {
+                      "sensor-type": {
+                        "type": "string",
+                        "enum": [
+                          "google-pins-platform:EXHAUST_TEMPERATURE_SENSOR"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=inlet_sensor]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state", "google-pins-platform:sensor"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "parent", "temperature", "type", "location"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "inlet_sensor"
+                    ]
+                  },
+                  "parent": {
+                    "type": "string",
+                    "enum": [
+                      "chassis"
+                    ]
+                  },
+                  "temperature": {
+                    "type": "object",
+                    "required": [
+                      "instant"
+                    ],
+                    "properties": {
+                      "instant": {
+                        "type": "string",
+                        "enum": [
+                          "37.2"
+                        ]
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-platform-types:SENSOR"
+                    ]
+                  },
+                  "location": {
+                    "type": "string",
+                    "enum": [
+                      "inlet_sensor"
+                    ]
+                  }
+                }
+              },
+              "google-pins-platform:sensor": {
+                "type": "object",
+                "required": [
+                  "state"
+                ],
+                "properties": {
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "sensor-type"
+                    ],
+                    "properties": {
+                      "sensor-type": {
+                        "type": "string",
+                        "enum": [
+                          "google-pins-platform:INLET_TEMPERATURE_SENSOR"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=heatsink_sensor_1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state", "google-pins-platform:sensor"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "parent", "temperature", "type", "location"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "heatsink_sensor_1"
+                    ]
+                  },
+                  "parent": {
+                    "type": "string",
+                    "enum": [
+                      "chassis"
+                    ]
+                  },
+                  "temperature": {
+                    "type": "object",
+                    "required": [
+                      "instant"
+                    ],
+                    "properties": {
+                      "instant": {
+                        "type": "string",
+                        "enum": [
+                          "38.1"
+                        ]
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-platform-types:SENSOR"
+                    ]
+                  },
+                  "location": {
+                    "type": "string",
+                    "enum": [
+                      "heatsink_sensor_1"
+                    ]
+                  }
+                }
+              },
+              "google-pins-platform:sensor": {
+                "type": "object",
+                "required": [
+                  "state"
+                ],
+                "properties": {
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "sensor-type"
+                    ],
+                    "properties": {
+                      "sensor-type": {
+                        "type": "string",
+                        "enum": [
+                          "google-pins-platform:HEAT_SINK_TEMPERATURE_SENSOR"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=heatsink_sensor_15]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state", "google-pins-platform:sensor"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "parent", "temperature", "type", "location"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "heatsink_sensor_15"
+                    ]
+                  },
+                  "parent": {
+                    "type": "string",
+                    "enum": [
+                      "chassis"
+                    ]
+                  },
+                  "temperature": {
+                    "type": "object",
+                    "required": [
+                      "instant"
+                    ],
+                    "properties": {
+                      "instant": {
+                        "type": "string",
+                        "enum": [
+                          "39.4"
+                        ]
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-platform-types:SENSOR"
+                    ]
+                  },
+                  "location": {
+                    "type": "string",
+                    "enum": [
+                      "heatsink_sensor_15"
+                    ]
+                  }
+                }
+              },
+              "google-pins-platform:sensor": {
+                "type": "object",
+                "required": [
+                  "state"
+                ],
+                "properties": {
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "sensor-type"
+                    ],
+                    "properties": {
+                      "sensor-type": {
+                        "type": "string",
+                        "enum": [
+                          "google-pins-platform:HEAT_SINK_TEMPERATURE_SENSOR"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=cpu_sensor_1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "parent", "temperature", "type", "location"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "cpu_sensor_1"
+                    ]
+                  },
+                  "parent": {
+                    "type": "string",
+                    "enum": [
+                      "chassis"
+                    ]
+                  },
+                  "temperature": {
+                    "type": "object",
+                    "required": [
+                      "instant"
+                    ],
+                    "properties": {
+                      "instant": {
+                        "type": "string",
+                        "enum": [
+                          "36.5"
+                        ]
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-platform-types:CPU"
+                    ]
+                  },
+                  "location": {
+                    "type": "string",
+                    "enum": [
+                      "cpu_sensor_1"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=cpu_sensor_2]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "parent", "temperature", "type", "location"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "cpu_sensor_2"
+                    ]
+                  },
+                  "parent": {
+                    "type": "string",
+                    "enum": [
+                      "chassis"
+                    ]
+                  },
+                  "temperature": {
+                    "type": "object",
+                    "required": [
+                      "instant"
+                    ],
+                    "properties": {
+                      "instant": {
+                        "type": "string",
+                        "enum": [
+                          "37.4"
+                        ]
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-platform-types:CPU"
+                    ]
+                  },
+                  "location": {
+                    "type": "string",
+                    "enum": [
+                      "cpu_sensor_2"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=dimm_sensor_1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state", "google-pins-platform:sensor"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "parent", "temperature", "type", "location"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "dimm_sensor_1"
+                    ]
+                  },
+                  "parent": {
+                    "type": "string",
+                    "enum": [
+                      "chassis"
+                    ]
+                  },
+                  "temperature": {
+                    "type": "object",
+                    "required": [
+                      "instant"
+                    ],
+                    "properties": {
+                      "instant": {
+                        "type": "string",
+                        "enum": [
+                          "35.4"
+                        ]
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-platform-types:SENSOR"
+                    ]
+                  },
+                  "location": {
+                    "type": "string",
+                    "enum": [
+                      "dimm_sensor_1"
+                    ]
+                  }
+                }
+              },
+              "google-pins-platform:sensor": {
+                "type": "object",
+                "required": [
+                  "state"
+                ],
+                "properties": {
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "sensor-type"
+                    ],
+                    "properties": {
+                      "sensor-type": {
+                        "type": "string",
+                        "enum": [
+                          "google-pins-platform:DIMM_TEMPERATURE_SENSOR"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=inlet_sensor]/sensor/state/sensor-type",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-platform:sensor-type"
+      ],
+      "properties": {
+        "google-pins-platform:sensor-type": {
+          "type": "string",
+          "enum": [
+            "google-pins-platform:INLET_TEMPERATURE_SENSOR"
+          ]
+        }
+      }
+    }
+  ]
+}

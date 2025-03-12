@@ -1,0 +1,86 @@
+{
+    "title": "Get openconfig/system/processes/process[pid=31212]/state/memory-limit",
+    "operations": [
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/system/processes/process[pid=31212]",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "openconfig-system:process"
+            ],
+            "properties": {
+                "openconfig-system:process": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "required": [
+                            "state"
+                        ],
+                        "properties": {
+                            "state": {
+                                "type": "object",
+                                "required": [
+                                    "openconfig-procmon-ext:memory-limit"
+                                ],
+                                "properties": {
+                                    "openconfig-procmon-ext:memory-limit": {
+                                        "type": "string",
+                                        "enum": [
+                                            "2147483648"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/system/processes/process[pid=31212]/state",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "openconfig-system:state"
+            ],
+            "properties": {
+                "openconfig-system:state": {
+                    "type": "object",
+                    "required": [
+                        "openconfig-procmon-ext:memory-limit"
+                    ],
+                    "properties": {
+                        "openconfig-procmon-ext:memory-limit": {
+                            "type": "string",
+                            "enum": [
+                                "2147483648"
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/system/processes/process[pid=31212]/state/memory-limit",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "openconfig-procmon-ext:memory-limit"
+            ],
+            "properties": {
+                "openconfig-procmon-ext:memory-limit": {
+                    "type": "string",
+                    "enum": [
+                        "2147483648"
+                    ]
+                }
+            }
+        }
+    ]
+}

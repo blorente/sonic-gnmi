@@ -1,0 +1,174 @@
+{
+    "title": "Subscribe_ONCE_loopback_interfaces",
+    "operations": [
+        {
+            "title": "Subscribe ONCE /openconfig/interfaces/interface[name=Loopback4]",
+            "operation": "subscribe",
+            "returnCode": 0,
+            "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'Loopback4'}}} }mode:ONCE}",
+            "subOpers": [
+                {
+                    "oper": "validate",
+                    "title": "Validates initial updates",
+                    "timeout": 5000,
+                    "finalValidator": {
+                        "xpath": "/openconfig/interfaces/interface[name=Loopback4]",
+                        "syncResponse": true,
+                        "allowDuplicates": false,
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "openconfig-interfaces:interface"
+                            ],
+                            "properties": {
+                                "openconfig-interfaces:interface": {
+                                    "type": "array",
+                                    "items": [
+                                        {
+                                            "type": "object",
+                                            "required": [
+                                                "name", "config", "state"
+                                            ],
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "const": "Loopback4"
+                                                },
+                                                "config": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "type", "name"
+                                                    ],
+                                                    "properties": {
+                                                        "type": {
+                                                            "type": "string",
+                                                            "const": "iana-if-type:softwareLoopback"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "const": "Loopback4"
+                                                        }
+                                                    }
+                                                },
+                                                "state": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "oper-status", "type", "name"
+                                                    ],
+                                                    "properties": {
+                                                        "oper-status": {
+                                                            "type": "string",
+                                                            "const": "UP"
+                                                        },
+                                                        "type": {
+                                                            "type": "string",
+                                                            "const": "iana-if-type:softwareLoopback"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "const": "Loopback4"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "title": "Subscribe ONCE /openconfig/interfaces/interface[name=Loopback4]/state/type",
+            "operation": "subscribe",
+            "returnCode": 0,
+            "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'Loopback4'}}elem:{name:'state'}elem:{name:'type'}} }mode:ONCE}",
+            "subOpers": [
+                {
+                    "oper": "validate",
+                    "title": "Validates initial updates",
+                    "timeout": 5000,
+                    "finalValidator": {
+                        "xpath": "/openconfig/interfaces/interface[name=Loopback4]/state/type",
+                        "syncResponse": true,
+                        "allowDuplicates": false,
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "openconfig-interfaces:type"
+                            ],
+                            "properties": {
+                                "openconfig-interfaces:type": {
+                                    "type": "string",
+                                    "const": "iana-if-type:softwareLoopback"
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "title": "Subscribe ONCE /openconfig/interfaces/interface[name=Loopback4]/state/oper-status",
+            "operation": "subscribe",
+            "returnCode": 0,
+            "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'Loopback4'}}elem:{name:'state'}elem:{name:'oper-status'}} }mode:ONCE}",
+            "subOpers": [
+                {
+                    "oper": "validate",
+                    "title": "Validates initial updates",
+                    "timeout": 5000,
+                    "finalValidator": {
+                        "xpath": "/openconfig/interfaces/interface[name=Loopback4]/state/oper-status",
+                        "syncResponse": true,
+                        "allowDuplicates": false,
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "openconfig-interfaces:oper-status"
+                            ],
+                            "properties": {
+                                "openconfig-interfaces:oper-status": {
+                                    "type": "string",
+                                    "const": "UP"
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "title": "Subscribe ONCE /openconfig/interfaces/interface[name=Loopback4]/state/name",
+            "operation": "subscribe",
+            "returnCode": 0,
+            "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'Loopback4'}}elem:{name:'state'}elem:{name:'name'}} }mode:ONCE}",
+            "subOpers": [
+                {
+                    "oper": "validate",
+                    "title": "Validates initial updates",
+                    "timeout": 5000,
+                    "finalValidator": {
+                        "xpath": "/openconfig/interfaces/interface[name=Loopback4]/state/name",
+                        "syncResponse": true,
+                        "allowDuplicates": false,
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "openconfig-interfaces:name"
+                            ],
+                            "properties": {
+                                "openconfig-interfaces:name": {
+                                    "type": "string",
+                                    "const": "Loopback4"
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

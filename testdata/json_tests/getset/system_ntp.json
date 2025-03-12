@@ -1,0 +1,104 @@
+{
+  "title": "Set and Get System ntp",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/ntp",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:ntp"
+      ],
+      "properties": {
+        "openconfig-system:ntp": {
+          "type": "object",
+          "required": [
+            "servers"
+          ],
+          "properties": {
+            "servers": {
+              "type": "object",
+              "required": [
+                "server"
+              ],
+              "properties": {
+                "server": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "address", "state"
+                    ],
+                    "properties": {
+                      "address": {
+                        "type": "string",
+                        "enum": [
+                          "1.1.1.1"
+                        ]
+                      },
+                      "state": {
+                        "type": "object",
+                        "required": [
+                          "address", "offset", "google-pins-system:reach", "google-pins-system:refid", "poll-interval", "root-delay", "root-dispersion", "stratum"
+                        ],
+                        "properties": {
+                          "address": {
+                            "type": "string",
+                            "enum": [
+                              "1.1.1.1"
+                            ]
+                          },
+                          "offset": {
+                            "type": "string",
+                            "enum": [
+                              "0"
+                            ]
+                          },
+                          "google-pins-system:reach": {
+                            "type": "string",
+                            "enum": [
+                              "0"
+                            ]
+                          },
+                          "google-pins-system:refid": {
+                            "type": "string",
+                            "enum": [
+                              ".INIT."
+                            ]
+                          },
+                          "poll-interval": {
+                            "type": "integer",
+                            "minimum": 1
+                          },
+                          "root-delay": {
+                            "type": "string",
+                            "enum": [
+                              "0"
+                            ]
+                          },
+                          "root-dispersion": {
+                            "type": "string",
+                            "enum": [
+                              "0"
+                            ]
+                          },
+                          "stratum": {
+                            "type": "integer",
+                            "enum": [
+                              16
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

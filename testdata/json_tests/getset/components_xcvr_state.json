@@ -1,0 +1,1186 @@
+{
+  "title": "Get_Transceiver_Component_State_paths",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=Ethernet4]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "openconfig-platform-transceiver:transceiver", "state"
+            ],
+            "properties": {
+              "openconfig-platform-transceiver:transceiver": {
+                "type": "object",
+                "required": [
+                  "physical-channels", "state"
+                ],
+                "properties": {
+                  "physical-channels": {
+                    "type": "object",
+                    "required": [
+                      "channel"
+                    ],
+                    "properties": {
+                      "channel": {
+                        "type": "array",
+                        "items": [
+                          {
+                            "title": "0",
+                            "type": "object",
+                            "required": [
+                              "config", "state"
+                            ],
+                            "properties": {
+                              "config": {
+                                "type": "object",
+                                "required": [
+                                  "index"
+                                ],
+                                "properties": {
+                                  "index": {
+                                    "type": "integer",
+                                    "enum": [
+                                      0
+                                    ]
+                                  }
+                                }
+                              },
+                              "state": {
+                                "type": "object",
+                                "required": [
+                                  "index", "input-power", "laser-bias-current", "output-power", "google-pins-transceivers:associated-interface"
+                                ],
+                                "properties": {
+                                  "index": {
+                                    "type": "integer",
+                                    "enum": [
+                                      0
+                                    ]
+                                  },
+                                  "input-power": {
+                                    "type": "object",
+                                    "required": [
+                                      "instant"
+                                    ],
+                                    "properties": {
+                                      "instant": {
+                                        "type": "string",
+                                        "enum": [
+                                          "12"
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  "laser-bias-current": {
+                                    "type": "object",
+                                    "required": [
+                                      "instant"
+                                    ],
+                                    "properties": {
+                                      "instant": {
+                                        "type": "string",
+                                        "enum": [
+                                          "20"
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  "output-power": {
+                                    "type": "object",
+                                    "required": [
+                                      "instant"
+                                    ],
+                                    "properties": {
+                                      "instant": {
+                                        "type": "string",
+                                        "enum": [
+                                          "16"
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  "google-pins-transceivers:associated-interface": {
+                                    "type": "string",
+                                    "enum": ["Ethernet1/4/1"]
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "title": "1",
+                            "type": "object",
+                            "required": [
+                              "config", "state"
+                            ],
+                            "properties": {
+                              "config": {
+                                "type": "object",
+                                "required": [
+                                  "index"
+                                ],
+                                "properties": {
+                                  "index": {
+                                    "type": "integer",
+                                    "enum": [
+                                      1
+                                    ]
+                                  }
+                                }
+                              },
+                              "state": {
+                                "type": "object",
+                                "required": [
+                                  "index", "input-power", "output-power", "google-pins-transceivers:associated-interface"
+                                ],
+                                "properties": {
+                                  "index": {
+                                    "type": "integer",
+                                    "enum": [
+                                      1
+                                    ]
+                                  },
+                                  "input-power": {
+                                    "type": "object",
+                                    "required": [
+                                      "instant"
+                                    ],
+                                    "properties": {
+                                      "instant": {
+                                        "type": "string",
+                                        "enum": [
+                                          "13"
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  "output-power": {
+                                    "type": "object",
+                                    "required": [
+                                      "instant"
+                                    ],
+                                    "properties": {
+                                      "instant": {
+                                        "type": "string",
+                                        "enum": [
+                                          "17"
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  "google-pins-transceivers:associated-interface": {
+                                    "type": "string",
+                                    "enum": ["Ethernet1/4/1"]
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "title": "2",
+                            "type": "object",
+                            "required": [
+                              "config", "state"
+                            ],
+                            "properties": {
+                              "config": {
+                                "type": "object",
+                                "required": [
+                                  "index"
+                                ],
+                                "properties": {
+                                  "index": {
+                                    "type": "integer",
+                                    "enum": [
+                                      2
+                                    ]
+                                  }
+                                }
+                              },
+                              "state": {
+                                "type": "object",
+                                "required": [
+                                  "index", "google-pins-transceivers:associated-interface"
+                                ],
+                                "properties": {
+                                  "index": {
+                                    "type": "integer",
+                                    "enum": [
+                                      2
+                                    ]
+                                  },
+                                  "google-pins-transceivers:associated-interface": {
+                                    "type": "string",
+                                    "enum": ["Ethernet1/4/1"]
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "title": "3",
+                            "type": "object",
+                            "required": [
+                              "config", "state"
+                            ],
+                            "properties": {
+                              "config": {
+                                "type": "object",
+                                "required": [
+                                  "index"
+                                ],
+                                "properties": {
+                                  "index": {
+                                    "type": "integer",
+                                    "enum": [
+                                      3
+                                    ]
+                                  }
+                                }
+                              },
+                              "state": {
+                                "type": "object",
+                                "required": [
+                                  "index", "google-pins-transceivers:associated-interface"
+                                ],
+                                "properties": {
+                                  "index": {
+                                    "type": "integer",
+                                    "enum": [
+                                      3
+                                    ]
+                                  },
+                                  "google-pins-transceivers:associated-interface": {
+                                    "type": "string",
+                                    "enum": ["Ethernet1/4/1"]
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "title": "4",
+                            "type": "object",
+                            "required": [
+                              "config", "state"
+                            ],
+                            "properties": {
+                              "config": {
+                                "type": "object",
+                                "required": [
+                                  "index"
+                                ],
+                                "properties": {
+                                  "index": {
+                                    "type": "integer",
+                                    "enum": [
+                                      4
+                                    ]
+                                  }
+                                }
+                              },
+                              "state": {
+                                "type": "object",
+                                "required": [
+                                  "index", "google-pins-transceivers:associated-interface"
+                                ],
+                                "properties": {
+                                  "index": {
+                                    "type": "integer",
+                                    "enum": [
+                                      4
+                                    ]
+                                  },
+                                  "google-pins-transceivers:associated-interface": {
+                                    "type": "string",
+                                    "enum": ["Ethernet1/4/5"]
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "title": "5",
+                            "type": "object",
+                            "required": [
+                              "config", "state"
+                            ],
+                            "properties": {
+                              "config": {
+                                "type": "object",
+                                "required": [
+                                  "index"
+                                ],
+                                "properties": {
+                                  "index": {
+                                    "type": "integer",
+                                    "enum": [
+                                      5
+                                    ]
+                                  }
+                                }
+                              },
+                              "state": {
+                                "type": "object",
+                                "required": [
+                                  "index", "google-pins-transceivers:associated-interface"
+                                ],
+                                "properties": {
+                                  "index": {
+                                    "type": "integer",
+                                    "enum": [
+                                      5
+                                    ]
+                                  },
+                                  "google-pins-transceivers:associated-interface": {
+                                    "type": "string",
+                                    "enum": ["Ethernet1/4/5"]
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "title": "6",
+                            "type": "object",
+                            "required": [
+                              "config", "state"
+                            ],
+                            "properties": {
+                              "config": {
+                                "type": "object",
+                                "required": [
+                                  "index"
+                                ],
+                                "properties": {
+                                  "index": {
+                                    "type": "integer",
+                                    "enum": [
+                                      6
+                                    ]
+                                  }
+                                }
+                              },
+                              "state": {
+                                "type": "object",
+                                "required": [
+                                  "index", "google-pins-transceivers:associated-interface"
+                                ],
+                                "properties": {
+                                  "index": {
+                                    "type": "integer",
+                                    "enum": [
+                                      6
+                                    ]
+                                  },
+                                  "google-pins-transceivers:associated-interface": {
+                                    "type": "string",
+                                    "enum": ["Ethernet1/4/5"]
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "title": "7",
+                            "type": "object",
+                            "required": [
+                              "config", "state"
+                            ],
+                            "properties": {
+                              "config": {
+                                "type": "object",
+                                "required": [
+                                  "index"
+                                ],
+                                "properties": {
+                                  "index": {
+                                    "type": "integer",
+                                    "enum": [
+                                      7
+                                    ]
+                                  }
+                                }
+                              },
+                              "state": {
+                                "type": "object",
+                                "required": [
+                                  "index", "google-pins-transceivers:associated-interface"
+                                ],
+                                "properties": {
+                                  "index": {
+                                    "type": "integer",
+                                    "enum": [
+                                      7
+                                    ]
+                                  },
+                                  "google-pins-transceivers:associated-interface": {
+                                    "type": "string",
+                                    "enum": ["Ethernet1/4/5"]
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "ethernet-pmd", "form-factor", "google-pins-platform:latest-available-firmware-version"
+                    ],
+                    "properties": {
+                      "ethernet-pmd": {
+                        "type": "string",
+                        "enum": [
+                          "openconfig-transport-types:ETH_100GBASE_CLR4"
+                        ]
+                      },
+                      "form-factor": {
+                        "type": "string",
+                        "enum": [
+                          "openconfig-transport-types:OSFP"
+                        ]
+                      },
+                      "google-pins-platform:latest-available-firmware-version": {
+                        "type": "string",
+                        "enum": [
+                          "1002"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "hardware-version", "firmware-version", "mfg-date", "mfg-name", "part-no", "serial-no", "empty", "parent", "type", "temperature"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "Ethernet4"
+                    ]
+                  },
+                  "hardware-version": {
+                    "type": "string",
+                    "enum": [
+                      "1001"
+                    ]
+                  },
+                  "firmware-version": {
+                    "type": "string",
+                    "enum": [
+                      "1001"
+                    ]
+                  },
+                  "mfg-date": {
+                    "type": "string",
+                    "enum": [
+                      "2021-01-01"
+                    ]
+                  },
+                  "mfg-name": {
+                    "type": "string",
+                    "enum": [
+                      "ABC123"
+                    ]
+                  },
+                  "part-no": {
+                    "type": "string",
+                    "enum": [
+                      "1234"
+                    ]
+                  },
+                  "serial-no": {
+                    "type": "string",
+                    "enum": [
+                      "TX123"
+                    ]
+                  },
+                  "empty": {
+                    "type": "boolean",
+                    "enum": [
+                      false
+                    ]
+                  },
+                  "parent": {
+                    "type": "string",
+                    "enum": [
+                      "1/4"
+                    ]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-platform-types:TRANSCEIVER"
+                    ]
+                  },
+                  "temperature": {
+                    "type": "object",
+                    "required": [
+                      "instant"
+                    ],
+                    "properties": {
+                      "instant": {
+                        "type": "string",
+                        "enum": [
+                          "30"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=Ethernet4]/transceiver/physical-channels/channel[index=1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform-transceiver:channel"
+      ],
+      "properties": {
+        "openconfig-platform-transceiver:channel": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config", "index", "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "index"
+                ],
+                "properties": {
+                  "index": {
+                    "type": "integer",
+                    "enum": [
+                      1
+                    ]
+                  }
+                }
+              },
+              "index": {
+                "type": "integer",
+                "enum": [
+                  1
+                ]
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "index", "input-power", "output-power", "google-pins-transceivers:associated-interface"
+                ],
+                "properties": {
+                  "index": {
+                    "type": "integer",
+                    "enum": [
+                      1
+                    ]
+                  },
+                  "input-power": {
+                    "type": "object",
+                    "required": [
+                      "instant"
+                    ],
+                    "properties": {
+                      "instant": {
+                        "type": "string",
+                        "enum": [
+                          "13"
+                        ]
+                      }
+                    }
+                  },
+                  "output-power": {
+                    "type": "object",
+                    "required": [
+                      "instant"
+                    ],
+                    "properties": {
+                      "instant": {
+                        "type": "string",
+                        "enum": [
+                          "17"
+                        ]
+                      }
+                    }
+                  },
+                  "google-pins-transceivers:associated-interface": {
+                    "type": "string",
+                    "enum": ["Ethernet1/4/1"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=Ethernet5]/state/empty",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:empty"
+      ],
+      "properties": {
+        "openconfig-platform:empty": {
+          "type": "boolean",
+          "enum": [
+            true
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=Ethernet6]/transceiver/state/form-factor",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform-transceiver:form-factor"
+      ],
+      "properties": {
+        "openconfig-platform-transceiver:form-factor": {
+          "type": "string",
+          "enum": [
+            "openconfig-transport-types:OSFP"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=Ethernet6]/transceiver/state/ethernet-pmd",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform-transceiver:ethernet-pmd"
+      ],
+      "properties": {
+        "openconfig-platform-transceiver:ethernet-pmd": {
+          "type": "string",
+          "enum": [
+            "openconfig-transport-types:ETH_400GBASE_DR4"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=Ethernet6]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "openconfig-platform-transceiver:transceiver"
+            ],
+            "properties": {
+              "openconfig-platform-transceiver:transceiver": {
+                "type": "object",
+                "required": [
+                  "state"
+                ],
+                "properties": {
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "ethernet-pmd", "form-factor"
+                    ],
+                    "properties": {
+                      "ethernet-pmd": {
+                        "type": "string",
+                        "enum": [
+                          "openconfig-transport-types:ETH_400GBASE_DR4"
+                        ]
+                      },
+                      "form-factor": {
+                        "type": "string",
+                        "enum": [
+                          "openconfig-transport-types:OSFP"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/33" : {
+              "index": "33",
+              "lanes" : "258"
+            },
+            "PORT_TABLE:Ethernet1/34" : {
+              "index": "34",
+              "lanes" : "257"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "db": "STATE_DB",
+          "value": {
+            "TRANSCEIVER_STATUS|Ethernet33" : {
+              "status": "1"
+            },
+            "TRANSCEIVER_DOM_SENSOR|Ethernet33" : {
+              "rx1power": "10",
+              "tx1disable": "False",
+              "module_state": "ModuleReady"
+            },
+            "TRANSCEIVER_STATUS|Ethernet34" : {
+              "status": "1"
+            },
+            "TRANSCEIVER_DOM_SENSOR|Ethernet34" : {
+              "rx1power": "11",
+              "tx1disable": "True"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=Ethernet33]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "openconfig-platform-transceiver:transceiver"
+            ],
+            "properties": {
+              "openconfig-platform-transceiver:transceiver": {
+                "type": "object",
+                "required": [
+                  "physical-channels", "state"
+                ],
+                "properties": {
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "google-pins-transceivers:module-status"
+                    ],
+                    "properties": {
+                      "google-pins-transceivers:module-status": {
+                        "type": "string",
+                        "enum": ["MODULE_STATUS_READY"]
+                      }
+                    }
+                  },
+                  "physical-channels": {
+                    "type": "object",
+                    "required": [
+                      "channel"
+                    ],
+                    "properties": {
+                      "channel": {
+                        "type": "array",
+                        "items": [
+                          {
+                            "title": "0",
+                            "type": "object",
+                            "required": [
+                              "config", "state"
+                            ],
+                            "properties": {
+                              "config": {
+                                "type": "object",
+                                "required": [
+                                  "index"
+                                ],
+                                "properties": {
+                                  "index": {
+                                    "type": "integer",
+                                    "enum": [
+                                      0
+                                    ]
+                                  }
+                                }
+                              },
+                              "state": {
+                                "type": "object",
+                                "required": [
+                                  "index", "google-pins-transceivers:associated-interface", "tx-laser"
+                                ],
+                                "properties": {
+                                  "index": {
+                                    "type": "integer",
+                                    "enum": [
+                                      0
+                                    ]
+                                  },
+                                  "google-pins-transceivers:associated-interface": {
+                                    "type": "string",
+                                    "enum": ["Ethernet1/33"]
+                                  },
+                                  "tx-laser": {
+                                    "type": "boolean",
+                                    "enum": [ true ]
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=Ethernet34]/transceiver/physical-channels/channel[index=0]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform-transceiver:channel"
+      ],
+      "properties": {
+        "openconfig-platform-transceiver:channel": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config", "index", "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "index"
+                ],
+                "properties": {
+                  "index": {
+                    "type": "integer",
+                    "enum": [
+                      0
+                    ]
+                  }
+                }
+              },
+              "index": {
+                "type": "integer",
+                "enum": [
+                  0
+                ]
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "index", "google-pins-transceivers:associated-interface", "tx-laser"
+                ],
+                "properties": {
+                  "index": {
+                    "type": "integer",
+                    "enum": [
+                      0
+                    ]
+                  },
+                  "google-pins-transceivers:associated-interface": {
+                    "type": "string",
+                    "enum": ["Ethernet1/34"]
+                  },
+                  "tx-laser": {
+                    "type": "boolean",
+                    "enum": [ false ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHDel",
+          "title": "Delete Ethernet1/33 and Ethernet1/34 from APPL_STATE_DB",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/33": [],
+            "PORT_TABLE:Ethernet1/34": []
+          }
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Delete Ethernet33/Ethernet34 from STATE_DB",
+          "db": "STATE_DB",
+          "value": {
+            "TRANSCEIVER_STATUS|Ethernet33": [],
+            "TRANSCEIVER_DOM_SENSOR|Ethernet33": [],
+            "TRANSCEIVER_STATUS|Ethernet34": [],
+            "TRANSCEIVER_DOM_SENSOR|Ethernet34": []
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=Ethernet1]/transceiver/state/ethernet-pmd",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform-transceiver:ethernet-pmd"
+      ],
+      "properties": {
+        "openconfig-platform-transceiver:ethernet-pmd": {
+          "type": "string",
+          "enum": [
+            "openconfig-transport-types:ETH_UNDEFINED"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=Ethernet7]/transceiver/state/ethernet-pmd",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform-transceiver:ethernet-pmd"
+      ],
+      "properties": {
+        "openconfig-platform-transceiver:ethernet-pmd": {
+          "type": "string",
+          "enum": [
+            "openconfig-transport-types:ETH_400GMSA_PSM4"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=Ethernet8]/transceiver/state/ethernet-pmd",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform-transceiver:ethernet-pmd"
+      ],
+      "properties": {
+        "openconfig-platform-transceiver:ethernet-pmd": {
+          "type": "string",
+          "enum": [
+            "google-pins-transceivers:ETH_400G_AOC"
+          ]
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "title": "Re-Set Ethernet7 in STATE_DB",
+          "db": "STATE_DB",
+          "value": {
+            "TRANSCEIVER_INFO|Ethernet7": {
+              "ethernet-pmd": "200G_BSM8"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Re-Set Ethernet8 in STATE_DB",
+          "db": "STATE_DB",
+          "value": {
+            "TRANSCEIVER_INFO|Ethernet8": {
+              "ethernet-pmd": "2X400G_FR4"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=Ethernet7]/transceiver/state/ethernet-pmd",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform-transceiver:ethernet-pmd"
+      ],
+      "properties": {
+        "openconfig-platform-transceiver:ethernet-pmd": {
+          "type": "string",
+          "enum": [
+            "google-pins-transceivers:ETH_200GBASE_BSM8"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=Ethernet8]/transceiver/state/ethernet-pmd",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform-transceiver:ethernet-pmd"
+      ],
+      "properties": {
+        "openconfig-platform-transceiver:ethernet-pmd": {
+          "type": "string",
+          "enum": [
+            "google-pins-transceivers:ETH_2X400GBASE_FR4"
+          ]
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "title": "Re-set value of Ethernet7 back in STATE_DB",
+          "db": "STATE_DB",
+          "value": {
+            "TRANSCEIVER_INFO|Ethernet7": {
+              "ethernet-pmd": "2X200G_BGR4"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=Ethernet7]/transceiver/state/ethernet-pmd",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform-transceiver:ethernet-pmd"
+      ],
+      "properties": {
+        "openconfig-platform-transceiver:ethernet-pmd": {
+          "type": "string",
+          "enum": [
+            "google-pins-transceivers:ETH_2X200GBASE_BGR4"
+          ]
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "title": "Set new value for Ethernet7 in STATE_DB",
+          "db": "STATE_DB",
+          "value": {
+            "TRANSCEIVER_INFO|Ethernet7": {
+              "ethernet-pmd": "2X400G_ENHANCED_CDGR4+"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=Ethernet7]/transceiver/state/ethernet-pmd",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform-transceiver:ethernet-pmd"
+      ],
+      "properties": {
+        "openconfig-platform-transceiver:ethernet-pmd": {
+          "type": "string",
+          "enum": [
+            "google-pins-transceivers:ETH_2X400GBASE_ENHANCED_CDGR4_PLUS"
+          ]
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "title": "Set original value of Ethernet7 back in STATE_DB",
+          "db": "STATE_DB",
+          "value": {
+            "TRANSCEIVER_INFO|Ethernet7": {
+              "ethernet-pmd": "400G_PSM4"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Set original value of Ethernet8 back in STATE_DB",
+          "db": "STATE_DB",
+          "value": {
+            "TRANSCEIVER_INFO|Ethernet8": {
+              "ethernet-pmd": "400G_AOC"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=Ethernet4]/transceiver/state/latest-available-firmware-version",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-platform:latest-available-firmware-version"
+      ],
+      "properties": {
+        "google-pins-platform:latest-available-firmware-version": {
+          "type": "string",
+          "enum": [
+            "1002"
+          ]
+        }
+      }
+    }
+  ]
+}

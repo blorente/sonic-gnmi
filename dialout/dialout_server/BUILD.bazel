@@ -1,0 +1,24 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "dialout_server",
+    srcs = ["dialout_server.go"],
+    importpath = "github.com/sonic-net/sonic-gnmi/dialout/dialout_server",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//proto/gnmi_sonic",
+        "@com_github_golang_glog//:glog",
+        "@com_github_google_gnxi//utils",
+        "@com_github_openconfig_gnmi//proto/gnmi",
+        "@org_golang_google_grpc//:grpc",
+        "@org_golang_google_grpc//codes",
+        "@org_golang_google_grpc//peer",
+        "@org_golang_google_grpc//reflection",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":dialout_server",
+    visibility = ["//visibility:public"],
+)

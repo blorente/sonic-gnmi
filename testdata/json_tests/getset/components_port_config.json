@@ -1,0 +1,219 @@
+{
+  "title": "Set Port Component Paths",
+  "operations":[
+    {
+    "title": "No change in breakout for port 1/1: 2x400G -> 2x400G",
+    "operation": "replace",
+    "returnCode": 0,
+    "xpath": "openconfig-platform:components/",
+    "target": "OC_YANG",
+    "attributeData": "{\"openconfig-platform:components\": {\"component\": [{\"name\": \"1/1\",\"config\": {\"name\": \"1/1\"}, \"port\" : {\"config\": {\"port-id\": 456}, \"breakout-mode\": {\"groups\": { \"group\" : [{ \"index\": 0, \"config\": { \"index\": 0, \"num-breakouts\": 2, \"num-physical-channels\" : 4, \"breakout-speed\": \"SPEED_400GB\" }}]}}}, \"subcomponents\": {\"subcomponent\": [{\"name\": \"Ethernet1/1/1\",\"config\": {\"name\": \"Ethernet1/1/1\"}}]}}]}}"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config", "port", "subcomponents"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "1/1"
+                    ]
+                  }
+                }
+              },
+              "port": {
+                "type": "object",
+                "required": [
+                  "config", "openconfig-platform-port:breakout-mode"
+                ],
+                "properties": {
+                  "config": {
+                    "type": "object",
+                    "required": [
+                      "openconfig-pins-platform-port:port-id"
+                    ],
+                    "properties": {
+                      "openconfig-pins-platform-port:port-id": {
+                        "type": "integer",
+                        "enum": [
+                          456
+                        ]
+                      }
+                    }
+                  },
+                  "openconfig-platform-port:breakout-mode": {
+                    "type": "object",
+                    "required": [
+                      "groups"
+                    ],
+                    "properties": {
+                      "groups": {
+                        "type": "object",
+                          "required": [
+                            "group"
+                          ],
+                          "properties": {
+                            "group": {
+                              "type": "array",
+                                "items": [
+                                  {
+                                    "title": "0",
+                                    "type": "object",
+                                    "required": [
+                                      "index", "config", "state"
+                                    ],
+                                    "properties": {
+                                      "index": {
+                                        "type": "integer",
+                                        "enum": [
+                                          0
+                                        ]
+                                      },
+                                      "config": {
+                                        "type": "object",
+                                        "required": [
+                                          "index", "num-breakouts", "breakout-speed", "num-physical-channels"
+                                        ],
+                                        "properties": {
+                                          "index": {
+                                            "type": "integer",
+                                            "enum": [
+                                              0
+                                            ]
+                                          },
+                                          "num-breakouts": {
+                                            "type": "integer",
+                                            "enum": [
+                                              2
+                                            ]
+                                          },
+                                          "breakout-speed": {
+                                            "type": "string",
+                                            "enum": [
+                                              "openconfig-if-ethernet:SPEED_400GB"
+                                            ]
+                                          },
+                                          "num-physical-channels": {
+                                            "type": "integer",
+                                            "enum": [
+                                              4
+                                            ]
+                                          }
+                                        }
+                                      },
+                                      "state": {
+                                        "type": "object",
+                                        "required": [
+                                          "index", "num-breakouts", "breakout-speed", "num-physical-channels"
+                                        ],
+                                        "properties": {
+                                          "index": {
+                                            "type": "integer",
+                                            "enum": [
+                                              0
+                                            ]
+                                          },
+                                          "num-breakouts": {
+                                            "type": "integer",
+                                            "enum": [
+                                              2
+                                            ]
+                                          },
+                                          "breakout-speed": {
+                                            "type": "string",
+                                            "enum": [
+                                              "openconfig-if-ethernet:SPEED_400GB"
+                                            ]
+                                          },
+                                          "num-physical-channels": {
+                                            "type": "integer",
+                                            "enum": [
+                                              4
+                                            ]
+                                         }
+                                      }
+                                   }
+                                 }
+                               }
+                             ]
+                           }
+                         }
+                       }
+                    }
+                  }
+                }
+              },
+              "subcomponents": {
+                "type": "object",
+                "required": [
+                  "subcomponent"
+                ],
+                "properties": {
+                  "subcomponent": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "config", "state"
+                      ],
+                      "properties": {
+                        "config" : {
+                          "type": "object",
+                          "required": [
+                            "name"
+                          ],
+                          "properties": {
+                            "name" : {
+                              "type": "string",
+                              "enum": [
+                                "Ethernet1/1/1"
+                              ]
+                            }
+                          }
+                        },
+                        "state" : {
+                          "type": "object",
+                          "required": [
+                            "name"
+                          ],
+                          "properties": {
+                            "name" : {
+                              "type": "string",
+                              "enum": [
+                                "Ethernet1/1/1"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

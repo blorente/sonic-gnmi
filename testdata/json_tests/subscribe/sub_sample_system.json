@@ -1,0 +1,137 @@
+{
+  "title": "Subscribe_to_system_subtree_sample",
+    "globalDef" : {
+      "validators": {
+        "full.system.sample": {
+          "type": "object",
+          "required": [ "openconfig-system:system" ],
+          "additionalProperties": false,
+          "properties": {
+            "openconfig-system:system": {
+              "type": "object",
+              "required": ["aaa", "alarms", "config", "cpus", "gnsi-credentialz:console", "gnsi-pathz:gnmi-pathz-policies", "google-pins-diag:diag", "logging", "memory", "mount-points", "ntp", "openconfig-system-grpc:grpc-servers", "processes", "ssh-server", "state"],
+              "additionalProperties": false,
+              "properties": {
+                "aaa":{
+                  "type": "object",
+                  "required": ["authorization", "authentication"]
+                },
+                "alarms":{ "type": "object" },
+                "config": {
+                  "type": "object",
+                  "required": [ "google-pins-system:config-meta-data", "hostname" ]
+                },
+                "cpus":{ "type": "object" },
+                "gnsi-credentialz:console":{ "type": "object" },
+                "gnsi-pathz:gnmi-pathz-policies":{ "type": "object" },
+                "google-pins-diag:diag":{ "type": "object" },
+                "logging":{ "type": "object" },
+                "memory":{ "type": "object" },
+                "mount-points":{ "type": "object" },
+                "ntp":{
+                  "type": "object",
+                  "required": ["servers"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "servers":{
+                      "type": "object",
+                      "required": ["server"],
+                      "additionalProperties": false,
+                      "properties": {
+                        "server": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": ["address", "state"],
+                            "properties": {
+                              "address": {
+                                "type": "string",
+                                "const": "1.1.1.1"
+                              },
+                              "state": {
+                                "type": "object",
+                                "required": [
+                                  "address", "offset"
+                                ],
+                                "properties": {
+                                  "address": {
+                                    "type": "string",
+                                    "const": "1.1.1.1"
+                                  },
+                                  "offset" : {
+                                    "type": "string",
+                                    "const": "0"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "openconfig-system-grpc:grpc-servers":{ "type": "object" },
+                "processes":{ "type": "object" },
+                "ssh-server":{ "type": "object" },
+                "state": {
+                  "type": "object",
+                  "required": [
+                    "boot-time", "google-pins-system:config-meta-data", "hostname", "last-configuration-timestamp", "up-time", "google-pins-system:verification-status", "google-pins-system:boot-type", "google-pins-system:warmboot-count", "google-pins-system:last-coldboot-timestamp", "google-pins-system:last-coldboot-version"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "operations":[
+    {
+      "title": "subscribe to /system",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}}mode:SAMPLE sample_interval:5000000000}mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+      {
+        "oper": "validate",
+        "timeout": 5000,
+        "allowDuplicateUpdates": true,
+        "finalValidator": {
+          "xpath": "/system",
+          "syncResponse": true,
+          "schema": {
+            "$ref": "#/globalDef/validators/full.system.sample"
+          }
+        }
+      },
+      {
+        "oper": "validate",
+        "title": "Validates subsequent updates",
+        "timeout": 10000,
+        "allowDuplicateUpdates": true,
+        "finalValidator": {
+          "xpath": "/system",
+          "syncResponse": false,
+          "schema": {
+            "$ref": "#/globalDef/validators/full.system.sample"
+          }
+        }
+      },
+      {
+        "oper": "validate",
+        "title": "Validates subsequent updates last time",
+        "timeout": 10000,
+        "allowDuplicateUpdates": true,
+        "finalValidator": {
+          "xpath": "/system",
+          "syncResponse": false,
+          "schema": {
+            "$ref": "#/globalDef/validators/full.system.sample"
+          }
+        }
+      }
+      ]
+    }
+  ]
+}

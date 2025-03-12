@@ -1,0 +1,90 @@
+{
+  "title": "Set Interface description",
+  "operations":[
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=bond0]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"description\":\"Management interface\"}}"
+
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=bond0]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "description"
+                ],
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "examples": [
+                      "Management interface"
+                    ],
+                    "pattern": "^(.*)$"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=bond0]/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:state"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "description"
+                ],
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "examples": [
+                      "Management interface"
+                    ],
+                    "pattern": "^(.*)$"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

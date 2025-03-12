@@ -1,0 +1,154 @@
+// NSFDebugData collects debugging and performance information for NSF warmboots.
+
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package gpins.gnoi;
+option go_package = "github.com/sonic-net/sonic-gnmi/proto/gnoi/debug";
+
+// NSFDebugData
+message NSFDebugData {
+  message WarmbootRegistrationInfo {
+    // Docker name.
+    string docker = 1;
+    // Application name.
+    string application = 2;
+    // Indicates if application supports stop_on_freeze.
+    bool stop_on_freeze = 3;
+    // Indicates if application supports freeze stage.
+    bool freeze = 4;
+    // Indicates if application supports checkpoint stage.
+    bool checkpoint = 5;
+    // Indicates if application supports reconciliation stage.
+    bool reconciliation = 6;
+    // Timestamp when application was registered.
+    google.protobuf.Timestamp timestamp = 7;
+  }
+
+  message WarmbootStateInfo {
+    // Application name.
+    string application = 1;
+    // Restore count.
+    uint64 restore_count = 2;
+    // Current state of the application.
+    string state = 3;
+    // Timestamp when the state was last updated.
+    google.protobuf.Timestamp timestamp = 4;
+  }
+
+  message StatusTimestamp {
+    // Status can be either "in-progress/success/failure/frozen/quiescent"
+    string status = 1;
+    // Timestamp when the NSF stage was started.
+    google.protobuf.Timestamp start_timestamp = 2;
+    // Timestamp when the NSF stage was stopped.
+    google.protobuf.Timestamp stop_timestamp = 3;
+  }
+  message WarmbootPerformanceOverall {
+    // Key indicates if it is either system or particular NSF stage.
+    string key = 1;
+    // Message for status and timestamp.
+    StatusTimestamp status_timestamp = 2;
+  }
+
+  message WarmbootPerformancePerApplication {
+    // Warmboot stage.
+    string warmboot_stage = 1;
+    // Application name.
+    string application = 2;
+    // Timestamp when status was last updated.
+    StatusTimestamp status_timestamp = 3;
+  }
+
+  message WarmbootPerformanceInfo {
+    // Performance info at the system level.
+    WarmbootPerformanceOverall system_performance = 1;
+    // Performance info at the system level for each NSF stage.
+    repeated WarmbootPerformanceOverall per_stage_performance = 2;
+    // Performance info at the application level for each NSF stage.
+    repeated WarmbootPerformancePerApplication per_app_performance = 3;
+  }
+
+  message WarmbootHistoricalInfoPerBoot {
+    // Indicates boot count in the historical order.
+    int32 boot_count = 1;
+    // Image release verion.
+    string firmware_version = 2;
+    // Timestamp when the stack was started.
+    google.protobuf.Timestamp stack_start_timestamp = 3;
+    // Timestamp when the stack was stopped.
+    google.protobuf.Timestamp stack_stop_timestamp = 4;
+    // Time in seconds since the stack started.
+    uint64 stack_uptime_seconds = 5;
+    // Time in seconds since the kernel started.
+    uint64 kernel_uptime_seconds = 6;
+    // Current SSD region.
+    string ssd_region = 7;
+    // Current reset count.
+    uint32 reset_count = 8;
+    // This repeated field captures detailed performance info for each of the
+    // earlier warmboots.
+    WarmbootPerformanceInfo warmboot_performance_info = 9;
+  }
+
+  message SyncdObjectOperation {
+    // Type of object.
+    string object_type = 1;
+    // Type of ASIC operation.
+    string asic_operation_type = 2;
+    // Number of ASIC operations.
+    uint64 number_of_asic_operations = 3;
+  }
+
+  message SyncdRandomMatchInfo {
+    message SyncdRandomMatchObjectInfo {
+      // Type of object.
+      string object_type = 1;
+      // Object identifier.
+      repeated string oid = 2;
+    }
+
+    // Total random match selections.
+    uint64 random_matches = 1;
+    // Information about individual objects that matched randomly.
+    repeated SyncdRandomMatchObjectInfo random_match_objects = 2;
+  }
+
+  message SyncdWarmbootStatistics {
+    // Total ASIC operations.
+    uint64 asic_operations = 1;
+    // This repeated field captures detailed info per ASIC operation type.
+    repeated SyncdObjectOperation syncd_object_operation = 2;
+    // Information about the objects that were randomly matched.
+    SyncdRandomMatchInfo random_match_info = 3;
+  }
+
+  message P4RTAclRecarvingTelemetry {
+    // Name of added table.
+    repeated string added_tables = 1;
+    // Name of removed table.
+    repeated string removed_tables = 2;
+    // Name of modified essential table.
+    repeated string modified_essential_tables = 3;
+    // Name of modified non-essential table.
+    repeated string modified_non_essential_tables = 4;
+    // Timestamp when data was fetched.
+    google.protobuf.Timestamp timestamp = 5;
+  }
+
+  //  Current NSF status.
+  string nsf_status = 1;
+  // Registration info for each application.
+  repeated WarmbootRegistrationInfo warmboot_registration_info = 2;
+  // Latest state info for each application.
+  repeated WarmbootStateInfo warmboot_state_info = 3;
+  // NSF performance info for the last warm reboot.
+  WarmbootPerformanceInfo last_warmboot_performance_info = 4;
+  // NSF historical information of earlier warm reboots.
+  repeated WarmbootHistoricalInfoPerBoot warmboot_historical_info_per_boot = 5;
+  // NSF-related counters populated by Syncd application.
+  SyncdWarmbootStatistics syncd_warmboot_stats = 6;
+  // ACL Recarving information in P4RT table
+  P4RTAclRecarvingTelemetry p4rt_acl_recarving_telemetry = 7;
+}

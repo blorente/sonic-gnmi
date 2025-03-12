@@ -1,0 +1,221 @@
+{
+  "title": "Set Interface auto-negotiate",
+  "operations":[
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"auto-negotiate\":false}}",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/1/1" : {
+              "autoneg": "off"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "openconfig-if-ethernet:ethernet"
+            ],
+            "properties": {
+              "openconfig-if-ethernet:ethernet": {
+                "type": "object",
+                "required": [
+                  "config"
+                ],
+                "properties": {
+                  "config": {
+                    "type": "object",
+                    "required": [
+                      "auto-negotiate"
+                    ],
+                    "properties": {
+                      "auto-negotiate": {
+                        "type": "boolean",
+                        "enum": [
+                          false
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "openconfig-if-ethernet:ethernet"
+            ],
+            "properties": {
+              "openconfig-if-ethernet:ethernet": {
+                "type": "object",
+                "required": [
+                  "state"
+                ],
+                "properties": {
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "auto-negotiate"
+                    ],
+                    "properties": {
+                      "auto-negotiate": {
+                        "type": "boolean",
+                        "enum": [
+                          false
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"auto-negotiate\":true}}",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/1/1" : {
+              "autoneg": "on"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "openconfig-if-ethernet:ethernet"
+            ],
+            "properties": {
+              "openconfig-if-ethernet:ethernet": {
+                "type": "object",
+                "required": [
+                  "config"
+                ],
+                "properties": {
+                  "config": {
+                    "type": "object",
+                    "required": [
+                      "auto-negotiate"
+                    ],
+                    "properties": {
+                      "auto-negotiate": {
+                        "type": "boolean",
+                        "enum": [
+                          true
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "openconfig-if-ethernet:ethernet"
+            ],
+            "properties": {
+              "openconfig-if-ethernet:ethernet": {
+                "type": "object",
+                "required": [
+                  "state"
+                ],
+                "properties": {
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "auto-negotiate"
+                    ],
+                    "properties": {
+                      "auto-negotiate": {
+                        "type": "boolean",
+                        "enum": [
+                          true
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

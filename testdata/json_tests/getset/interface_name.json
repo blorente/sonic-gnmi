@@ -1,0 +1,318 @@
+{
+  "title": "Set Interface Name",
+  "operations":[
+    {
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"name\": \"Ethernet1/3/1\",\"config\": {\"name\": \"Ethernet1/3/1\"}}]}}"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/3/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "examples": [
+                      "Ethernet1/3/1"
+                    ],
+                    "pattern": "^(.*)$"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/3/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "examples": [
+                      "Ethernet1/3/1"
+                    ],
+                    "pattern": "^(.*)$"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"name\": \"bond1\",\"config\": {\"name\": \"bond1\"}}]}}"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=bond1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "examples": [
+                      "bond1"
+                    ],
+                    "pattern": "^(.*)$"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }   
+    },  
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=bond1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "examples": [
+                      "bond1"
+                    ],
+                    "pattern": "^(.*)$"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }   
+    },
+    {
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"name\": \"Loopback4\",\"config\": {\"name\": \"Loopback4\"}}]}}"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Loopback4]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "examples": [
+                      "Loopback4"
+                    ],
+                    "pattern": "^(.*)$"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"name\": \"PortChannel1\",\"config\": {\"name\": \"PortChannel1\"}}]}}"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config",
+              "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "examples": [
+                      "PortChannel1"
+                    ],
+                    "pattern": "^(.*)$"
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "examples": [
+                      "PortChannel1"
+                    ],
+                    "pattern": "^(.*)$"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Loopback4]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "examples": [
+                      "Loopback4"
+                    ],
+                    "pattern": "^(.*)$"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }   
+    }
+  ]
+}

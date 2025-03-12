@@ -1,0 +1,382 @@
+{
+  "title": "Get FPGA Component State paths",
+  "operations": [
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=fpga_0]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state",
+              "google-pins-platform:fpga"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "description",
+                  "mfg-name",
+                  "firmware-version"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "fpga_0"
+                    ]
+                  },
+                  "description": {
+                    "type": "string",
+                    "enum": [
+                      "fpga_0 description"
+                    ]
+                  },
+                  "mfg-name": {
+                    "type": "string",
+                    "enum": [
+                      "GOOGLE"
+                    ]
+                  },
+                  "firmware-version": {
+                    "type": "string",
+                    "enum": [
+                      "1.0"
+                    ]
+                  }
+                }
+              },
+              "google-pins-platform:fpga": {
+                "type": "object",
+                "required": [
+                  "state",
+                  "reset-causes"
+                ],
+                "properties": {
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "reset-count"
+                    ],
+                    "properties": {
+                      "reset-count": {
+                        "type": "integer",
+                        "enum": [3]
+                      }
+                    }
+                  },
+                  "reset-causes": {
+                    "type": "object",
+                    "required": [
+                      "reset-cause"
+                    ],
+                    "properties": {
+                      "reset-cause": {
+                        "type": "array",
+                        "minItems": 8,
+                        "maxItems": 8,
+                        "uniqueItems": true,
+                        "contains": {
+                          "type": "object",
+                          "required": [
+                            "index",
+                            "state"
+                          ],
+                          "properties": {
+                            "index": {
+                              "type": "integer",
+                              "enum": [
+                                3
+                              ]
+                            },
+                            "state": {
+                              "type": "object",
+                              "required": [
+                                "index",
+                                "cause"
+                              ],
+                              "properties": {
+                                "index": {
+                                  "type": "integer",
+                                  "enum": [
+                                    3
+                                  ]
+                                },
+                                "cause": {
+                                  "type": "string",
+                                  "enum": [
+                                    "SOFTWARE"
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=fpga_0]/google-pins-platform:fpga/reset-causes/reset-cause[index=1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-platform:reset-cause"
+      ],
+      "properties": {
+        "google-pins-platform:reset-cause": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state",
+              "index"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "index",
+                  "cause"
+                ],
+                "properties": {
+                  "index": {
+                    "type": "integer",
+                    "enum": [
+                      1
+                    ]
+                  },
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "index",
+                      "cause"
+                    ],
+                    "properties": {
+                      "index": {
+                        "type": "integer",
+                        "enum": [
+                          1
+                        ]
+                      },
+                      "cause": {
+                        "type": "string",
+                        "enum": [
+                          "SWITCH"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=fpga_0]/google-pins-platform:fpga/reset-causes/reset-cause[index=1]/state/index",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-platform:index"
+      ],
+      "properties": {
+        "google-pins-platform:index": {
+          "type": "integer",
+          "enum": [
+            1
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=fpga_0]/google-pins-platform:fpga/reset-causes/reset-cause[index=1]/state/cause",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-platform:cause"
+      ],
+      "properties": {
+        "google-pins-platform:cause": {
+          "type": "string",
+          "enum": [
+            "SWITCH"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=fpga_0]/fpga/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-platform:fpga"
+      ],
+      "properties": {
+        "google-pins-platform:fpga": {
+          "type": "object",
+          "required": [
+            "reset-causes"
+          ],
+          "properties": {
+            "reset-causes": {
+              "type": "object",
+              "required": [
+                "reset-cause"
+              ],
+              "properties": {
+                "reset-cause": {
+                  "type": "array",
+                  "minItems": 8,
+                  "maxItems": 8,
+                  "uniqueItems": true,
+                  "contains": {
+                    "type": "object",
+                    "required": [
+                      "index",
+                      "state"
+                    ],
+                    "properties": {
+                      "index": {
+                        "type": "integer",
+                        "enum": [
+                          4
+                        ]
+                      },
+                      "state": {
+                        "type": "object",
+                        "required": [
+                          "index",
+                          "cause"
+                        ],
+                        "properties": {
+                          "index": {
+                            "type": "integer",
+                            "enum": [
+                              4
+                            ]
+                          },
+                          "cause": {
+                            "type": "string",
+                            "enum": [
+                              "EMULATOR"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=fpga_0]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "contains": {
+            "type": "object",
+            "required": [
+              "google-pins-platform:fpga"
+            ],
+            "properties": {
+              "google-pins-platform:fpga": {
+                "type": "object",
+                "required": [
+                  "reset-causes"
+                ],
+                "properties": {
+                  "reset-causes": {
+                    "type": "object",
+                    "required": [
+                      "reset-cause"
+                    ],
+                    "properties": {
+                      "reset-cause": {
+                        "type": "array",
+                        "minItems": 8,
+                        "maxItems": 8,
+                        "uniqueItems": true,
+                        "contains": {
+                          "type": "object",
+                          "required": [
+                            "index",
+                            "state"
+                          ],
+                          "properties": {
+                            "index": {
+                              "type": "integer",
+                              "enum": [
+                                4
+                              ]
+                            },
+                            "state": {
+                              "type": "object",
+                              "required": [
+                                "index",
+                                "cause"
+                              ],
+                              "properties": {
+                                "index": {
+                                  "type": "integer",
+                                  "enum": [
+                                    4
+                                  ]
+                                },
+                                "cause": {
+                                  "type": "string",
+                                  "enum": [
+                                    "EMULATOR"
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

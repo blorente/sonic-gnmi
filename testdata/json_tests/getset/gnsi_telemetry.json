@@ -1,0 +1,212 @@
+{
+  "title": "Get_gNSI_paths",
+  "operations": [
+    {
+      "title": "subscribe to system",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 5000,
+          "finalValidator": {
+            "xpath": "/openconfig/system",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-system:system"],
+              "properties": {
+                "openconfig-system:system": {
+                  "type": "object",
+                  "required": ["openconfig-system-grpc:grpc-servers"],
+                  "properties": {
+                    "openconfig-system-grpc:grpc-servers": {
+                      "type": "object",
+                      "required": ["grpc-server"],
+                      "properties": {
+                        "grpc-server": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "required": ["name", "state"],
+                              "properties": {
+                                "name": {
+                                  "type": "string",
+                                  "enum": ["gnxi"]
+                                },
+                                "state": {
+                                  "type": "object",
+                                  "required": [
+                                    "gnsi-certz:ca-trust-bundle-created-on",
+                                    "gnsi-certz:ca-trust-bundle-version",
+                                    "gnsi-certz:certificate-created-on",
+                                    "gnsi-certz:certificate-revocation-list-bundle-created-on",
+                                    "gnsi-certz:certificate-revocation-list-bundle-version",
+                                    "gnsi-certz:certificate-version",
+                                    "gnsi-certz:authentication-policy-created-on",
+                                    "gnsi-certz:authentication-policy-version"
+                                  ],
+                                  "properties": {
+                                    "gnsi-certz:ca-trust-bundle-created-on": {
+                                      "type": "string",
+                                      "pattern": "^[0-9]+$"
+                                    },
+                                    "gnsi-certz:ca-trust-bundle-version": {
+                                      "type": "string",
+                                      "pattern": "^[A-Za-z0-9]+$"
+                                    },
+                                    "gnsi-certz:certificate-created-on": {
+                                      "type": "string",
+                                      "pattern": "^[0-9]+$"
+                                    },
+                                    "gnsi-certz:certificate-revocation-list-bundle-created-on": {
+                                      "type": "string",
+                                      "pattern": "^[0-9]+$"
+                                    },
+                                    "gnsi-certz:certificate-revocation-list-bundle-version": {
+                                      "type": "string",
+                                      "pattern": "^[A-Za-z0-9]+$"
+                                    },
+                                    "gnsi-certz:certificate-version": {
+                                      "type": "string",
+                                      "pattern": "^[A-Za-z0-9]+$"
+                                    },
+                                    "gnsi-certz:authentication-policy-created-on": {
+                                      "type": "string",
+                                      "pattern": "^[0-9]+$"
+                                    },
+                                    "gnsi-certz:authentication-policy-version": {
+                                      "type": "string",
+                                      "pattern": "^[A-Za-z0-9]+$"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "type": "object",
+                              "required": ["name", "state"],
+                              "properties": {
+                                "name": {
+                                  "type": "string",
+                                  "enum": ["p4rt"]
+                                },
+                                "state": {
+                                  "type": "object",
+                                  "required": [
+                                    "gnsi-certz:ca-trust-bundle-created-on",
+                                    "gnsi-certz:ca-trust-bundle-version",
+                                    "gnsi-certz:certificate-created-on",
+                                    "gnsi-certz:certificate-revocation-list-bundle-created-on",
+                                    "gnsi-certz:certificate-revocation-list-bundle-version",
+                                    "gnsi-certz:certificate-version",
+                                    "gnsi-certz:authentication-policy-created-on",
+                                    "gnsi-certz:authentication-policy-version"
+                                  ],
+                                  "properties": {
+                                    "gnsi-certz:ca-trust-bundle-created-on": {
+                                      "type": "string",
+                                      "pattern": "^[0-9]+$"
+                                    },
+                                    "gnsi-certz:ca-trust-bundle-version": {
+                                      "type": "string"
+                                    },
+                                    "gnsi-certz:certificate-created-on": {
+                                      "type": "string",
+                                      "pattern": "^[0-9]+$"
+                                    },
+                                    "gnsi-certz:certificate-revocation-list-bundle-created-on": {
+                                      "type": "string",
+                                      "pattern": "^[0-9]+$"
+                                    },
+                                    "gnsi-certz:certificate-revocation-list-bundle-version": {
+                                      "type": "string"
+                                    },
+                                    "gnsi-certz:certificate-version": {
+                                      "type": "string"
+                                    },
+                                    "gnsi-certz:authentication-policy-created-on": {
+                                      "type": "string",
+                                      "pattern": "^[0-9]+$"
+                                    },
+                                    "gnsi-certz:authentication-policy-version": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "Get gNSI grpc-server State",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/grpc-servers/grpc-server[name=gnxi]/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-system-grpc:state"],
+      "properties": {
+        "openconfig-system-grpc:state": {
+          "type": "object",
+          "required": [
+            "gnsi-certz:ca-trust-bundle-created-on",
+            "gnsi-certz:ca-trust-bundle-version",
+            "gnsi-certz:certificate-created-on",
+            "gnsi-certz:certificate-version",
+            "gnsi-certz:certificate-revocation-list-bundle-created-on",
+            "gnsi-certz:certificate-revocation-list-bundle-version",
+            "gnsi-certz:authentication-policy-created-on",
+            "gnsi-certz:authentication-policy-version"
+          ],
+          "properties": {
+            "gnsi-certz:ca-trust-bundle-version": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9]+$"
+            },
+            "gnsi-certz:ca-trust-bundle-created-on": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "gnsi-certz:certificate-version": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9]+$"
+            },
+            "gnsi-certz:certificate-created-on": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "gnsi-certz:certificate-revocation-list-bundle-created-on": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "gnsi-certz:certificate-revocation-list-bundle-version": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9]+$"
+            },
+            "gnsi-certz:authentication-policy-created-on": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "gnsi-certz:authentication-policy-version": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9]+$"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "title": "ONCE Subscribe with qos whole state with wildcard",
+  "operations":[
+    {
+      "title": "subscribe (ONCE) to /qos/interfaces/interface[interface-id=*]/output/queues/queue[name=*]/state",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}subscription:{path:{elem:{name:'qos'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'interface-id'value:'*'}}elem:{name:'output'}elem:{name:'queues'}elem:{name:'queue'key:{key:'name'value:'*'}}elem:{name:'state'}}}encoding:PROTO mode:ONCE}",
+      "returnCode": 0,
+
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 9000
+        }
+      ]
+    }
+  ]
+}

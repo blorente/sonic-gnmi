@@ -1,0 +1,184 @@
+{
+  "title": "Set Interface mtu",
+  "operations":[
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"mtu\":9003}}"
+
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "mtu"
+                ],
+                "properties": {
+                  "mtu": {
+                    "type": "integer",
+                    "enum": [
+                      9003
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"mtu\":9100}}"
+
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:state"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "mtu"
+                ],
+                "properties": {
+                  "mtu": {
+                    "type": "integer",
+                    "enum": [
+                      9100
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=CPU]/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:state"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "mtu"
+                ],
+                "properties": {
+                  "mtu": {
+                    "type": "integer",
+                    "enum": [
+                      1500
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config",
+              "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "mtu"
+                ],
+                "properties": {
+                  "mtu": {
+                    "type": "integer",
+                    "enum": [
+                      9126
+                    ]
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "mtu"
+                ],
+                "properties": {
+                  "mtu": {
+                    "type": "integer",
+                    "enum": [
+                      9126
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

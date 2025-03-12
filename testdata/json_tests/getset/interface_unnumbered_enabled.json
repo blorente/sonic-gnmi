@@ -1,0 +1,136 @@
+{
+  "title": "Set Get Interface Unnumbered enabled",
+  "operations":[
+    {
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/subinterfaces/subinterface[index=0]",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:subinterface\":[{\"index\":0,\"config\":{\"index\":0},\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}",
+      "title": "Set Interface ipv6 unnumbered enabled"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/subinterfaces/subinterface[index=0]/ipv6/unnumbered/config/enabled",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-if-ip:enabled"],
+      "properties": {
+        "counters": {
+          "type": "boolean",
+          "enum": [true]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/subinterfaces/subinterface[index=0]/ipv6/unnumbered/state/enabled",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-if-ip:enabled"],
+      "properties": {
+        "counters": {
+          "type": "boolean",
+          "enum": [true]
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "title": "Create PORTCHANNEL|PortChannel4 in CONFIG_DB",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORTCHANNEL|PortChannel4": {
+              "NULL": "NULL"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel4]/subinterfaces/subinterface[index=0]",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:subinterface\":[{\"index\":0,\"config\":{\"index\":0},\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}",
+      "title": "Set PortChannel Interface ipv6 unnumbered enabled",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "title": "Create INTF_TABLE:PortChannel4 in APPL_STATE_DB",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "INTF_TABLE:PortChannel4": {
+              "unnumbered_enabled": "true"
+            }
+          }
+        },
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORTCHANNEL_INTERFACE|PortChannel4" : {
+              "unnumbered_enabled" : "true"
+            }
+          }
+        }
+      ]
+    },
+    {
+     "operation": "get",
+     "returnCode": 0,
+     "xpath": "openconfig/interfaces/interface[name=PortChannel4]/subinterfaces/subinterface[index=0]/ipv6/unnumbered/config/enabled",
+     "target": "OC_YANG",
+     "type": "object",
+     "required": ["openconfig-if-ip:enabled"],
+     "properties": {
+        "counters": {
+          "type": "boolean",
+          "enum": [true]
+        }
+      }
+    },
+    {
+     "operation": "get",
+     "returnCode": 0,
+     "xpath": "openconfig/interfaces/interface[name=PortChannel4]/subinterfaces/subinterface[index=0]/ipv6/unnumbered/state/enabled",
+     "target": "OC_YANG",
+     "type": "object",
+     "required": ["openconfig-if-ip:enabled"],
+     "properties": {
+        "counters": {
+          "type": "boolean",
+          "enum": [true]
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHDel",
+          "title": "Delete PORTCHANNEL|PortChannel4 from CONFIG_DB",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORTCHANNEL|PortChannel4": []
+          }
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Delete PORTCHANNEL_INTERFACE|PortChannel4 from CONFIG_DB",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORTCHANNEL_INTERFACE|PortChannel4": []
+          }
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Delete INTF_TABLE:PortChannel4 from APPL_STATE_DB",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "INTF_TABLE:PortChannel4": []
+          }
+        }
+      ]
+    }
+  ]
+}

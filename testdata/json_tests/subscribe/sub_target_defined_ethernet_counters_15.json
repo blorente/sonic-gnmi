@@ -1,0 +1,105 @@
+{
+  "title": "Subscribe with TARGET_DEFINED Ethernet counters in-fcs-errors",
+  "globalDef" : {
+    "validators": {
+      "state.counters.in-fcs-errors.123": {
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:in-fcs-errors"
+        ],
+        "properties": {
+          "openconfig-interfaces:in-fcs-errors": {
+            "type": "string",
+            "const": "123"
+          }
+        }
+      },
+      "state.counters.in-fcs-errors.200": {
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:in-fcs-errors"
+        ],
+        "properties": {
+          "openconfig-interfaces:in-fcs-errors": {
+            "type": "string",
+            "const": "200"
+          }
+        }
+      },
+      "state.counters.in-fcs-errors.300": {
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:in-fcs-errors"
+        ],
+        "properties": {
+          "openconfig-interfaces:in-fcs-errors": {
+            "type": "string",
+            "const": "300"
+          }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "subscribe to /interfaces/interface[name=Ethernet1/1/1]/state/counters/in-fcs-errors",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'Ethernet1/1/1'}}elem:{name:'state'}elem:{name:'counters'}elem:{name:'in-fcs-errors'}}mode:TARGET_DEFINED sample_interval:1000000000 suppress_redundant: true} mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/interfaces/interface[name=Ethernet1/1/1]/state/counters/in-fcs-errors",
+            "schema": {
+              "$ref": "#/globalDef/validators/state.counters.in-fcs-errors.123"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "db": "COUNTERS_DB",
+          "value": {
+            "COUNTERS:oid:0x1000000000012" : {
+              "SAI_PORT_STAT_ETHER_STATS_CRC_ALIGN_ERRORS": 200
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/1/1]/state/counters/in-fcs-errors",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.counters.in-fcs-errors.200"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "db": "COUNTERS_DB",
+          "value": {
+            "COUNTERS:oid:0x1000000000012" : {
+              "SAI_PORT_STAT_ETHER_STATS_CRC_ALIGN_ERRORS": 300
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/1/1]/state/counters/in-fcs-errors",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.counters.in-fcs-errors.300"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

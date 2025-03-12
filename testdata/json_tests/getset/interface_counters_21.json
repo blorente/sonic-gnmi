@@ -1,0 +1,77 @@
+{
+  "title": "Get Interface counters",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["state"],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": ["counters"],
+                "properties": {
+                  "counters": {
+                    "type": "object",
+                    "required": [
+                      "google-pins-interfaces:in-buffer-discards",
+                      "google-pins-interfaces:out-ecn-marked-pkts"
+                    ],
+                    "properties": {
+                      "google-pins-interfaces:in-buffer-discards": {
+                        "type": "string",
+                        "enum": ["160"]
+                      },
+                      "google-pins-interfaces:out-ecn-marked-pkts": {
+                        "type": "string",
+                        "enum": ["200"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=CPU]/state/counters/out-ecn-marked-pkts",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-interfaces:out-ecn-marked-pkts"],
+      "properties": {
+        "google-pins-interfaces:out-ecn-marked-pkts": {
+          "type": "string",
+          "enum": ["99"]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/state/counters/out-ecn-marked-pkts",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-interfaces:out-ecn-marked-pkts"],
+      "properties": {
+        "google-pins-interfaces:out-ecn-marked-pkts": {
+          "type": "string",
+          "enum": ["200"]
+        }
+      }
+    }
+  ]
+}

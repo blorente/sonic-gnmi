@@ -1,0 +1,274 @@
+{
+  "title": "Get System Process State",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/processes",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:processes"
+      ],
+      "properties": {
+        "openconfig-system:processes": {
+          "type": "object",
+          "required": [
+            "process"
+          ],
+          "properties": {
+            "process": {
+              "type": "array",
+              "items": [
+                {
+                  "title": "31212",
+                  "type": "object",
+                  "required": [
+                    "state"
+                  ],
+                  "properties": {
+                    "state": {
+                      "type": "object",
+                      "required": [
+                        "pid", "name", "memory-usage", "cpu-utilization", "cpu-usage-user", "cpu-usage-system", "start-time"
+                      ],
+                      "properties": {
+                        "pid": {
+                          "type": "string",
+                          "enum": [
+                            "31212"
+                          ]
+                        },
+                        "name": {
+                          "type": "string",
+                          "enum": [
+                            "/bin/bash grep"
+                          ]
+                        },
+                        "memory-usage": {
+                          "type": "string",
+                          "enum": [
+                            "821940"
+                          ]
+                        },
+                        "cpu-utilization": {
+                          "type": "integer",
+                          "enum": [
+                            1
+                          ]
+                        },
+                        "cpu-usage-user": {
+                          "type": "string",
+                          "enum": [
+                            "452000000000"
+                          ]
+                        },
+                        "cpu-usage-system": {
+                          "type": "string",
+                          "enum": [
+                            "679000000000"
+                          ]
+                        },
+                        "start-time": {
+                          "type": "string",
+                          "enum": [
+                            "1639044029000000000"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "title": "43210",
+                  "type": "object",
+                  "required": [
+                    "state"
+                  ],
+                  "properties": {
+                    "state": {
+                      "type": "object",
+                      "required": [
+                        "pid", "name", "memory-usage", "cpu-utilization", "cpu-usage-user", "cpu-usage-system", "start-time"
+                      ],
+                      "properties": {
+                        "pid": {
+                          "type": "string",
+                          "enum": [
+                            "43210"
+                          ]
+                        },
+                        "name": {
+                          "type": "string",
+                          "enum": [
+                            "telemetry"
+                          ]
+                        },
+                        "memory-usage": {
+                          "type": "string",
+                          "enum": [
+                            "295898"
+                          ]
+                        },
+                        "cpu-utilization": {
+                          "type": "integer",
+                          "enum": [
+                            46
+                          ]
+                        },
+                        "cpu-usage-user": {
+                          "type": "string",
+                          "enum": [
+                            "1268020000000"
+                          ]
+                        },
+                        "cpu-usage-system": {
+                          "type": "string",
+                          "enum": [
+                            "117380000000"
+                          ]
+                        },
+                        "start-time": {
+                          "type": "string",
+                          "enum": [
+                            "1639044029000000000"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/processes/process[pid=31212]/state/pid",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:pid"
+      ],
+      "properties": {
+        "openconfig-system:pid": {
+          "type": "string",
+          "enum": [
+            "31212"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/processes/process[pid=31212]/state/name",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:name"
+      ],
+      "properties": {
+        "openconfig-system:name": {
+          "type": "string",
+          "enum": [
+            "/bin/bash grep"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/processes/process[pid=31212]/state/memory-usage",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:memory-usage"
+      ],
+      "properties": {
+        "openconfig-system:memory-usage": {
+          "type": "string",
+          "enum": [
+            "821940"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/processes/process[pid=31212]/state/cpu-utilization",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:cpu-utilization"
+      ],
+      "properties": {
+        "openconfig-system:cpu-utilization": {
+          "type": "integer",
+          "enum": [
+            1
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/processes/process[pid=31212]/state/cpu-usage-user",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:cpu-usage-user"
+      ],
+      "properties": {
+        "openconfig-system:cpu-usage-user": {
+          "type": "string",
+          "enum": [
+            "452000000000"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/processes/process[pid=31212]/state/cpu-usage-system",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:cpu-usage-system"
+      ],
+      "properties": {
+        "openconfig-system:cpu-usage-system": {
+          "type": "string",
+          "enum": [
+            "679000000000"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/processes/process[pid=31212]/state/start-time",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:start-time"
+      ],
+      "properties": {
+        "openconfig-system:start-time": {
+          "type": "string",
+          "enum": [
+            "1639044029000000000"
+          ]
+        }
+      }
+    }
+  ]
+}

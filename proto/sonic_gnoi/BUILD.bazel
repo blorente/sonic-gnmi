@@ -1,0 +1,24 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+#gazelle:ignore
+
+go_library(
+    name = "sonic_gnoi",
+    srcs = [
+        "sonic_debug.pb.go",
+        "sonic_gnoi.pb.go",
+    ],
+    importpath = "github.com/sonic-net/sonic-gnmi/proto/sonic_gnoi",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_gogo_protobuf//gogoproto",
+        "@com_github_golang_protobuf//proto",
+        "@org_golang_google_grpc//:grpc",
+        "@org_golang_google_grpc//codes",
+        "@org_golang_google_grpc//status",
+        "@org_golang_x_net//context",
+        "@org_golang_google_protobuf//reflect/protoreflect",
+        "@org_golang_google_protobuf//runtime/protoimpl",
+        "@com_github_openconfig_gnmi//proto/gnmi",
+    ],
+)

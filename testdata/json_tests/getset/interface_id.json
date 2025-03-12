@@ -1,0 +1,246 @@
+{
+  "title": "Set Interface id",
+  "operations":[
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"openconfig-p4rt:id\":123}}"
+
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "openconfig-p4rt:id"
+                ],
+                "properties": {
+                  "openconfig-p4rt:id": {
+                    "type": "integer",
+                    "enum": [123]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"openconfig-p4rt:id\":10}}"
+
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/state/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:state"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "openconfig-p4rt:id"
+                ],
+                "properties": {
+                  "openconfig-p4rt:id": {
+                    "type": "integer",
+                    "enum": [10]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"openconfig-p4rt:id\":1234}}"
+
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "openconfig-p4rt:id"
+                ],
+                "properties": {
+                  "openconfig-p4rt:id": {
+                    "type": "integer",
+                    "enum": [1234]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"openconfig-p4rt:id\":2049}}"
+
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config",
+              "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "openconfig-p4rt:id"
+                ],
+                "properties": {
+                  "openconfig-p4rt:id": {
+                    "type": "integer",
+                    "enum": [2049]
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "openconfig-p4rt:id"
+                ],
+                "properties": {
+                  "openconfig-p4rt:id": {
+                    "type": "integer",
+                    "enum": [2049]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=CPU]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"openconfig-p4rt:id\":456}}"
+
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=CPU]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config",
+              "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "openconfig-p4rt:id"
+                ],
+                "properties": {
+                  "openconfig-p4rt:id": {
+                    "type": "integer",
+                    "enum": [456]
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "openconfig-p4rt:id"
+                ],
+                "properties": {
+                  "openconfig-p4rt:id": {
+                    "type": "integer",
+                    "enum": [456]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

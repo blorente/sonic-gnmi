@@ -1,0 +1,54 @@
+{
+  "title": "Set interface min-links",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-if-aggregation:aggregation": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config",
+              "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "min-links"
+                ],
+                "properties": {
+                  "min-links": {
+                    "type": "integer",
+                    "enum": [1]
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "min-links"
+                ],
+                "properties": {
+                  "min-links": {
+                    "type": "integer",
+                    "enum": [1]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+

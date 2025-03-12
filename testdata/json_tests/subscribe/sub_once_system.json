@@ -1,0 +1,892 @@
+{
+    "title": "Subscribe_to_system_subtree",
+    "includeDefs": ["../defs/sys_alarm.json"],
+    "operations":[
+      {
+        "title": "subscribe to /system",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}}}mode:ONCE}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 5000,
+            "allowDuplicateUpdates": false,
+            "finalValidator": {
+              "xpath": "/system",
+              "syncResponse": true,
+              "schema": {
+                "type": "object",
+                "required": [ "openconfig-system:system" ],
+                "additionalProperties": false,
+                "properties": {
+                  "openconfig-system:system": {
+                    "type": "object",
+                    "required": ["aaa", "alarms", "config", "cpus", "gnsi-credentialz:console", "gnsi-pathz:gnmi-pathz-policies", "google-pins-diag:diag", "logging", "memory", "mount-points", "ntp", "openconfig-system-grpc:grpc-servers", "processes", "ssh-server", "state"],
+                    "additionalProperties": false,
+                    "properties": {
+                      "aaa":{ "type": "object" },
+                      "alarms":{ "type": "object" },
+                      "config": {
+                        "type": "object",
+                        "required": [ "google-pins-system:config-meta-data", "hostname" ]
+                      },
+                      "cpus":{ "type": "object" },
+                      "gnsi-credentialz:console":{ "type": "object" },
+                      "gnsi-pathz:gnmi-pathz-policies":{ "type": "object" },
+                      "google-pins-diag:diag":{ "type": "object" },
+                      "logging":{ "type": "object" },
+                      "memory":{ "type": "object" },
+                      "mount-points":{ "type": "object" },
+                      "ntp":{
+                        "type": "object",
+                        "required": ["servers"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "servers":{
+                            "type": "object",
+                            "required": ["server"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "server": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "required": ["address", "state"],
+                                  "properties": {
+                                    "address": {
+                                      "type": "string",
+                                      "const": "1.1.1.1"
+                                    },
+                                    "state": {
+                                      "type": "object",
+                                      "required": [
+                                        "address", "offset"
+                                      ],
+                                      "properties": {
+                                        "address": {
+                                          "type": "string",
+                                          "const": "1.1.1.1"
+                                        },
+                                        "offset" : {
+                                          "type": "string",
+                                          "const": "0"
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "openconfig-system-grpc:grpc-servers":{ "type": "object" },
+                      "processes":{ "type": "object" },
+                      "ssh-server":{ "type": "object" },
+                      "state": {
+                        "type": "object",
+                        "required": [
+                          "boot-time", "google-pins-system:config-meta-data", "hostname", "last-configuration-timestamp", "up-time", "google-pins-system:verification-status", "google-pins-system:boot-type", "google-pins-system:warmboot-count", "google-pins-system:last-coldboot-timestamp", "google-pins-system:last-coldboot-version"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "subscribe to /system/state/boot-time",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'state'}elem:{name:'boot-time'}}}mode:ONCE}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 5000,
+            "finalValidator": {
+              "xpath": "/system/state/boot-time",
+              "syncResponse": true,
+              "schema": {
+                "type": "object",
+                "required": [
+                  "openconfig-system:boot-time"
+                ],
+                "properties": {
+                  "openconfig-system:boot-time": {
+                    "type": "string",
+                    "default": "",
+                    "examples": [
+                        "1615263741"
+                    ],
+                    "pattern": "^[1-9][0-9]*$"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "subscribe to /system/state/up-time",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'state'}elem:{name:'up-time'}}}mode:ONCE}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 5000,
+            "finalValidator": {
+              "xpath": "/system/state/up-time",
+              "syncResponse": true,
+              "schema": {
+                "type": "object",
+                "required": [
+                  "openconfig-system:up-time"
+                ],
+                "properties": {
+                  "openconfig-system:up-time": {
+                    "type": "string",
+                    "default": "",
+                    "examples": [
+                        "1615263741"
+                    ],
+                    "pattern": "^[1-9][0-9]*$"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "db": "STATE_DB",
+            "value": {
+              "VERIFY_STATE_RESP_TABLE|all": {
+                "timestamp": "2021-01-26 08:45:08",
+                "status": "pass",
+                "err_str": ""
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "subscribe to /system/state/verification-status",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'state'}elem:{name:'verification-status'}}}mode:ONCE}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 5000,
+            "finalValidator": {
+              "xpath": "/system/state/verification-state",
+              "syncResponse": true,
+              "schema": {
+                "type": "object",
+                "required": [
+                  "google-pins-system:verification-status"
+                ],
+                "properties": {
+                  "google-pins-system:verification-status": {
+                    "type": "string",
+                    "enum": [
+                        "OK"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "subscribe to /system/state/boot-type",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'state'}elem:{name:'boot-type'}}}mode:ONCE}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 5000,
+            "finalValidator": {
+              "xpath": "/system/state/boot-type",
+              "syncResponse": true,
+              "schema": {
+                "type": "object",
+                "required": [
+                  "google-pins-system:boot-type"
+                ],
+                "properties": {
+                  "google-pins-system:boot-type": {
+                    "type": "string",
+                    "enum": [
+                        "WARMBOOT"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "subscribe to /system/state/warmboot-count",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'state'}elem:{name:'warmboot-count'}}}mode:ONCE}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 5000,
+            "finalValidator": {
+              "xpath": "/system/state/warmboot-count",
+              "syncResponse": true,
+              "schema": {
+                "type": "object",
+                "required": [
+                  "google-pins-system:warmboot-count"
+                ],
+                "properties": {
+                  "google-pins-system:warmboot-count": {
+                    "type": "integer",
+                    "enum": [
+                        3
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "subscribe to /system/state/last-coldboot-timestamp",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'state'}elem:{name:'last-coldboot-timestamp'}}}mode:ONCE}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 5000,
+            "finalValidator": {
+              "xpath": "/system/state/last-coldboot-timestamp",
+              "syncResponse": true,
+              "schema": {
+                "type": "object",
+                "required": [
+                  "google-pins-system:last-coldboot-timestamp"
+                ],
+                "properties": {
+                  "google-pins-system:last-coldboot-timestamp": {
+                    "type": "string",
+                    "enum": [
+                        "1707707898000000000"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "subscribe to /system/state/last-coldboot-version",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'state'}elem:{name:'last-coldboot-version'}}}mode:ONCE}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 5000,
+            "finalValidator": {
+              "xpath": "/system/state/last-coldboot-version",
+              "syncResponse": true,
+              "schema": {
+                "type": "object",
+                "required": [
+                  "google-pins-system:last-coldboot-version"
+                ],
+                "properties": {
+                  "google-pins-system:last-coldboot-version": {
+                    "type": "string",
+                    "enum": [
+                        "gpins_release_20240202_17_prod_RC00"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "subscribe to /system/memory",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'memory'}}}mode:ONCE}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 5000,
+            "allowDuplicateUpdates": false,
+            "finalValidator": {
+              "xpath": "/system",
+              "syncResponse": true,
+              "schema": {
+                "type": "object",
+                "required": [ "openconfig-system:system" ],
+                "additionalProperties": false,
+                "properties": {
+                  "openconfig-system:system": {
+                    "type": "object",
+                    "required": ["memory"],
+                    "additionalProperties": false,
+                    "properties": {
+                      "memory": {
+                        "type": "object",
+                        "required": [ "state" ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "state": {
+                            "type": "object",
+                            "required": [ "counters", "free", "physical", "reserved", "used" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "counters":{
+                                "type": "object",
+                                "required": ["correctable-ecc-errors", "total-ecc-errors", "uncorrectable-ecc-errors"],
+                                "additionalProperties": false,
+                                "properties": {
+                                  "correctable-ecc-errors":{
+                                    "type": "string",
+                                    "pattern": "^[0-9]+$"
+                                  },
+                                  "total-ecc-errors":{
+                                    "type": "string",
+                                    "pattern": "^[0-9]+$"
+                                  },
+                                  "uncorrectable-ecc-errors":{
+                                    "type": "string",
+                                    "pattern": "^[0-9]+$"
+                                  }
+                                }
+                              },
+                              "free":{
+                                "type": "string",
+                                "pattern": "^[0-9]+$"
+                              },
+                              "physical":{
+                                "type": "string",
+                                "pattern": "^[0-9]+$"
+                              },
+                              "reserved":{
+                                "type": "string",
+                                "pattern": "^[0-9]+$"
+                              },
+                              "used":{
+                                "type": "string",
+                                "pattern": "^[0-9]+$"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "subscribe to /system/cpus",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'cpus'}}}mode:ONCE}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 5000,
+            "allowDuplicateUpdates": false,
+            "finalValidator": {
+              "xpath": "/system",
+              "syncResponse": true,
+              "schema": {
+                "type": "object",
+                "required": [ "openconfig-system:system" ],
+                "additionalProperties": false,
+                "properties": {
+                  "openconfig-system:system": {
+                    "type": "object",
+                    "required": [ "cpus" ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "cpus": {
+                        "type": "object",
+                        "required": [ "cpu" ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "cpu": {
+                            "type": "array",
+                            "minItems": 3,
+                            "maxItems": 3,
+                            "additionalItems": false,
+                            "items": {
+                              "$ref": "#/$defs/cpu"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "$defs": {
+                  "cpu": {
+                    "type": "object",
+                    "required": ["index", "state"],
+                    "additionalProperties": false,
+                    "properties": {
+                      "index": {
+                        "type": "integer"
+                      },
+                      "state": {
+                        "type": "object",
+                        "required": ["idle", "kernel", "user", "total"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "idle": {
+                            "type": "object",
+                            "required": ["instant"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "instant": {
+                                "type": "integer",
+                                "constant": 0
+                              }
+                            }
+                          },
+                          "kernel": {
+                            "type": "object",
+                            "required": ["instant"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "instant": {
+                                "type": "integer",
+                                "constant": 0
+                              }
+                            }
+                          },
+                          "user": {
+                            "type": "object",
+                            "required": ["instant"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "instant": {
+                                "type": "integer",
+                                "constant": 0
+                              }
+                            }
+                          },
+                          "total": {
+                            "type": "object",
+                            "required": ["avg", "interval"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "avg": {
+                                "enum": [50, 60, 80]
+                              },
+                              "interval": {
+                                "type": "string",
+                                "pattern":"^[123456789]"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "subscribe to /system/processes",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'processes'}}}mode:ONCE}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 5000,
+            "allowDuplicateUpdates": false,
+            "finalValidator": {
+              "xpath": "/system",
+              "syncResponse": true,
+              "schema": {
+                "type": "object",
+                "required": [ "openconfig-system:system" ],
+                "additionalProperties": false,
+                "properties": {
+                  "openconfig-system:system": {
+                    "type": "object",
+                    "required": [ "processes" ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "processes": {
+                        "type": "object",
+                        "required": [ "process" ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "process": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "additionalItems": false,
+                            "items": {
+                              "$ref": "#/$defs/process"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "$defs": {
+                  "process": {
+                    "type": "object",
+                    "required": ["pid", "state"],
+                    "additionalProperties": false,
+                    "properties": {
+                      "pid": {
+                        "type": "string"
+                      },
+                      "state": {
+                        "type": "object",
+                        "required": ["cpu-usage-system", "cpu-usage-user", "cpu-utilization", "memory-usage", "memory-utilization", "name", "pid", "start-time"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "cpu-usage-system": {
+                            "type": "string"
+                          },
+                          "cpu-usage-user": {
+                            "type": "string"
+                          },
+                          "cpu-utilization": {
+                            "type": "integer"
+                          },
+                          "memory-usage": {
+                            "type": "string"
+                          },
+                          "memory-utilization": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "openconfig-procmon-ext:memory-limit": {
+                            "type": "string"
+                          },
+                          "pid": {
+                            "type": "string"
+                          },
+                          "start-time": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "subscribe to /system/logging/remote-servers",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'logging'}elem:{name:'remote-servers'}}}mode:ONCE}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 5000,
+            "allowDuplicateUpdates": false,
+            "finalValidator": {
+              "xpath": "/system",
+              "syncResponse": true,
+              "schema": {
+                "type": "object",
+                "required": [ "openconfig-system:system" ],
+                "additionalProperties": false,
+                "properties": {
+                  "openconfig-system:system": {
+                    "type": "object",
+                    "required": [ "logging" ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "logging": {
+                        "type": "object",
+                        "required": [ "remote-servers" ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "remote-servers": {
+                            "type": "object",
+                            "required": [ "remote-server" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "remote-server": {
+                                "type": "array",
+                                "minItems": 2,
+                                "maxItems": 2,
+                                "additionalItems": false,
+                                "items": {
+                                  "$ref": "#/$defs/remote-server"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "$defs": {
+                  "remote-server": {
+                    "type": "object",
+                    "required": ["config", "host", "state"],
+                    "additionalProperties": false,
+                    "properties": {
+                      "config": {
+                        "type": "object",
+                        "required": ["host"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "host": {
+                            "type": "string",
+                            "pattern": "127.0.0.[12]"
+                          }
+                        }
+                      },
+                      "host": {
+                        "type": "string",
+                        "pattern": "127.0.0.[12]"
+                      },
+                      "state": {
+                        "type": "object",
+                        "required": ["host"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "host": {
+                            "type": "string",
+                            "pattern": "127.0.0.[12]"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "subscribe to /system/mount-points",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'mount-points'}}}mode:ONCE}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 5000,
+            "allowDuplicateUpdates": false,
+            "finalValidator": {
+              "xpath": "/system",
+              "syncResponse": true,
+              "schema": {
+                "type": "object",
+                "required": [ "openconfig-system:system" ],
+                "additionalProperties": false,
+                "properties": {
+                  "openconfig-system:system": {
+                    "type": "object",
+                    "required": [ "mount-points" ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "mount-points": {
+                        "type": "object",
+                        "required": [ "mount-point" ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "mount-point": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "additionalItems": false,
+                            "items": {
+                              "$ref": "#/$defs/mount-point"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "$defs": {
+                  "mount-point": {
+                    "type": "object",
+                    "required": ["name", "state"],
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "state": {
+                        "type": "object",
+                        "required": ["available", "google-pins-system:type", "name", "size", "utilized"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "available": {
+                            "type": "string",
+                            "pattern": "^[0-9]+$"
+                          },
+                          "google-pins-system:type": {
+                            "enum": ["google-pins-system:RAMFS_FS", "google-pins-system:EXT4_FS"]
+                          },
+                          "name": {
+                            "enum": ["/var/log/tmp", "udev"]
+                          },
+                          "size": {
+                            "type": "string",
+                            "pattern": "^[0-9]+$"
+                          },
+                          "utilized": {
+                            "type": "string",
+                            "pattern": "^[0-9]+$"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "subscribe to /system/grpc-servers/grpc-server[name=gnpsi]/state/enable",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'grpc-servers'}elem:{name:'grpc-server'key:{key:'name'value:'gnpsi'}}elem:{name:'state'}elem:{name:'enable'}}}mode:ONCE}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 5000,
+            "allowDuplicateUpdates": false,
+            "finalValidator": {
+              "xpath": "/system/grpc-servers/grpc-server[name=gnpsi]/state/enable",
+              "syncResponse": true,
+              "schema": {
+                "type": "object",
+                "required": [ "openconfig-system-grpc:enable" ],
+                "additionalProperties": false,
+                "properties": {
+                  "openconfig-system-grpc:enable": {
+                    "type": "boolean",
+                    "const": true
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "subscribe-once to /system/alarms",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'alarms'}}}mode:ONCE}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 3000,
+            "allowDuplicateUpdates": false,
+            "finalValidator": {
+              "xpath": "/system/alarms",
+              "syncResponse": true,
+              "allowDuplicates": false,
+              "schema": {
+                "type": "object",
+                "required": [ "openconfig-system:alarms" ],
+                "additionalProperties": false,
+                "properties": {
+                  "openconfig-system:alarms": { "$ref": "#/globalDef/alarmDefs/all_alarms" }
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "subscribe-once to /system/alarms/alarm",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'alarms'}elem:{name:'alarm'}}}mode:ONCE}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 3000,
+            "allowDuplicateUpdates": false,
+            "finalValidator": {
+              "xpath": "/system/alarms",
+              "syncResponse": true,
+              "allowDuplicates": false,
+              "schema": {
+                "type": "object",
+                "required": [ "openconfig-system:alarms" ],
+                "additionalProperties": false,
+                "properties": {
+                  "openconfig-system:alarms": { "$ref": "#/globalDef/alarmDefs/all_alarms" }
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "subscribe-once to /system/alarms/alarm[id=*]",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'alarms'}elem:{name:'alarm' key:{key:'id'value:'*'}}}}mode:ONCE}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 3000,
+            "allowDuplicateUpdates": false,
+            "finalValidator": {
+              "xpath": "/system/alarms",
+              "syncResponse": true,
+              "allowDuplicates": false,
+              "schema": {
+                "type": "object",
+                "required": [ "openconfig-system:alarms" ],
+                "additionalProperties": false,
+                "properties": {
+                  "openconfig-system:alarms": { "$ref": "#/globalDef/alarmDefs/all_alarms" }
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }

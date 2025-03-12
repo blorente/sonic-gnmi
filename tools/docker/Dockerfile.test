@@ -1,0 +1,51 @@
+ARG DEBIAN_VERSION=bullseye
+FROM debian:${DEBIAN_VERSION}
+
+RUN apt-get update
+RUN apt-get upgrade -y
+RUN apt-get install -y python3
+RUN apt-get install -y pip
+RUN apt-get install -y iproute2
+RUN apt-get install -y redis-server
+RUN apt-get install -y wget
+RUN apt-get install -y sudo
+RUN apt-get install -y systemctl
+
+# A few packages needed for sonic-swss-common (sonic data client).
+RUN apt-get install -y libboost-dev libboost-all-dev
+RUN apt-get install -y libnl-nf-3-dev libnl-genl-3-dev libhiredis-dev libzmq3-dev
+
+RUN wget http://http.us.debian.org/debian/pool/main/n/ntp/ntp_4.2.8p12+dfsg-4_amd64.deb
+## # Newer version of ntp. Makes the NTP test pass too but differs from the one
+## # that is used in production image.
+## # RUN wget http://http.us.debian.org/debian/pool/main/n/ntpsec/ntpsec_1.1.3+dfsg1-2+deb10u1_amd64.deb
+RUN apt install -y ./*.deb && rm -f ./*.deb
+
+## RUN wget http://security.debian.org/debian-security/pool/updates/main/r/rsyslog/rsyslog_8.1901.0-1+deb10u2_amd64.deb \
+##     && apt install -y --allow-downgrades ./rsyslog_8.1901.0-1+deb10u2_amd64.deb \
+##     && rm -f ./rsyslog_8.1901.0-1+deb10u2_amd64.deb
+RUN apt-get install -y rsyslog
+RUN sed -i '/imklog/s/^/#/' /etc/rsyslog.conf
+
+ENV DB_DIR=/var/run/redis/sonic-db/
+RUN mkdir -p /var/run/redis/sonic-db/
+
+RUN mkdir -p /etc/sonic/
+RUN touch /etc/sonic/sonic_version.yml
+
+# Location for platform.json
+ENV PLATFORM_DIR=/usr/share/sonic/hwsku/
+RUN mkdir -p /usr/share/sonic/hwsku/
+
+RUN sed -ri 's/^# unixsocket/unixsocket/' /etc/redis/redis.conf \
+  && sed -ri 's/^unixsocketperm .../unixsocketperm 777/' /etc/redis/redis.conf \
+  && sed -ri 's/redis-server.sock/redis.sock/' /etc/redis/redis.conf \
+  && sed -ri 's/^databases [0-9]+/databases 64/g' /etc/redis/redis.conf \
+  && sed -ri 's/notify-keyspace-events ""/notify-keyspace-events AKE/' /etc/redis/redis.conf \
+  && echo "bind 0.0.0.0" >> /etc/redis/redis.conf
+
+RUN pip install redis
+RUN pip install pytest==7.4.4
+
+RUN mkdir /workspace
+WORKDIR /workspace

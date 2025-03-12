@@ -1,0 +1,141 @@
+{
+  "title": "Subscribe with Sample",
+  "globalDef" : {
+    "validators": {
+      "Ethernet0.st.admin-status.up": {
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:interface"
+        ],
+        "properties": {
+          "openconfig-interfaces:interface": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "state", "config", "subinterfaces"
+              ],
+              "properties": {
+                "state": {
+                  "type": "object",
+                  "required": [
+                    "type", "oper-status", "name", "mtu", "loopback-mode",
+                    "enabled", "description", "counters", "admin-status"
+                  ],
+                  "properties": {
+                    "admin-status": {
+                      "type": "string",
+                      "const": "UP"
+                    }
+                  }
+                },
+                "config": {
+                  "type": "object",
+                  "required": [
+                    "type", "name", "mtu", "enabled", "description"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "Ethernet0.st.admin-status.down": {
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:interface"
+        ],
+        "properties": {
+          "openconfig-interfaces:interface": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "state", "config", "subinterfaces"
+              ],
+              "properties": {
+                "state": {
+                  "type": "object",
+                  "required": [
+                    "type", "oper-status", "name", "mtu", "loopback-mode",
+                    "enabled", "description", "counters", "admin-status"
+                  ],
+                  "properties": {
+                    "admin-status": {
+                      "type": "string",
+                      "const": "DOWN"
+                    }
+                  }
+                },
+                "config": {
+                  "type": "object",
+                  "required": [
+                    "type", "name", "mtu", "enabled", "description"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "subscribe to /interfaces/interface[name=Ethernet1/1/1]",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'Ethernet1/1/1'}}}mode:SAMPLE sample_interval:2000000000}mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 4000,
+          "finalValidator": {
+            "xpath": "/interfaces/interface[name=Ethernet1/1/1]",
+            "schema": {
+              "$ref": "#/globalDef/validators/Ethernet0.st.admin-status.up"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/1/1" : {
+              "admin_status": "down"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "timeout": 4000,
+          "finalValidator": {
+            "xpath": "/interfaces/interface[name=Ethernet1/1/1]",
+            "schema": {
+              "$ref": "#/globalDef/validators/Ethernet0.st.admin-status.down"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/1/1" : {
+              "admin_status": "up"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "timeout": 4000,
+          "finalValidator": {
+            "xpath": "/interfaces/interface[name=Ethernet1/1/1]",
+            "schema": {
+              "$ref": "#/globalDef/validators/Ethernet0.st.admin-status.up"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

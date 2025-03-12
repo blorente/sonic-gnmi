@@ -1,0 +1,218 @@
+{
+    "title": "Subscribe with TARGET_DEFINED queue stats",
+    "globalDef" : {
+      "validators": {
+        "queue.state.transmit-pkts.100": {
+          "type": "object",
+          "required": [
+            "openconfig-qos:state"
+          ],
+          "properties": {
+            "openconfig-qos:state": {
+                "type": "object",
+                "required":["transmit-pkts", "transmit-octets", "dropped-pkts"],
+                "properties" : {
+                    "transmit-pkts": {
+                        "type": "string",
+                        "enum": ["100"]
+                    },
+                    "transmit-octets": {
+                      "type": "string",
+                      "enum": ["10000"]
+                  },
+                  "dropped-pkts": {
+                    "type": "string",
+                    "enum": ["50"]
+                  }
+                }
+            }
+          }
+        },
+        "queue.state.transmit-pkts.200": {
+            "type": "object",
+            "required": [
+              "openconfig-qos:state"
+            ],
+            "properties": {
+              "openconfig-qos:state": {
+                  "type": "object",
+                  "required":["transmit-pkts", "transmit-octets", "dropped-pkts"],
+                  "properties" : {
+                      "transmit-pkts": {
+                          "type": "string",
+                          "enum": ["200"]
+                      },
+                      "transmit-octets": {
+                        "type": "string",
+                        "enum": ["20000"]
+                    },
+                    "dropped-pkts": {
+                      "type": "string",
+                      "enum": ["100"]
+                    }
+                  }
+              }
+            }
+        },
+        "queue.state.transmit-pkts.300": {
+            "type": "object",
+            "required": [
+              "openconfig-qos:state"
+            ],
+            "properties": {
+              "openconfig-qos:state": {
+                  "type": "object",
+                  "required":["transmit-pkts", "transmit-octets", "dropped-pkts"],
+                  "properties" : {
+                      "transmit-pkts": {
+                          "type": "string",
+                          "enum": ["300"]
+                      },
+                      "transmit-octets": {
+                        "type": "string",
+                        "enum": ["30000"]
+                    },
+                    "dropped-pkts": {
+                      "type": "string",
+                      "enum": ["150"]
+                    }
+                  }
+              }
+            }
+        },
+        "state.transmit-pkts.100": {
+          "type": "object",
+          "required":["openconfig-qos:transmit-pkts"],
+          "properties" : {
+            "openconfig-qos:transmit-pkts": {
+              "type": "string",
+              "enum": ["100"]
+            }
+          }
+        },
+        "state.transmit-pkts.200": {
+          "type": "object",
+          "required":["openconfig-qos:transmit-pkts"],
+          "properties" : {
+            "openconfig-qos:transmit-pkts": {
+              "type": "string",
+              "enum": ["200"]
+            }
+          }
+        }
+      }
+    },
+    "operations":[
+      {
+        "title": "subscribe to /qos/interfaces/interface[interface-id=Ethernet1/2/1]/output/queues/queue[name=LLQ1]/state",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'qos'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'interface-id'value:'Ethernet1/2/1'}}elem:{name:'output'}elem:{name:'queues'}elem:{name:'queue'key:{key:'name'value:'LLQ1'}}}mode:TARGET_DEFINED sample_interval:1000000000 suppress_redundant: true} mode:STREAM}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 3000,
+            "pathValidators": [
+              {
+                "xpath": "/qos/interfaces/interface[interface-id=Ethernet1/2/1]/output/queues/queue[name=LLQ1]/state/transmit-pkts",
+                "timestamp": "1628778558222222000",
+                "schema": {
+                  "$ref": "#/globalDef/validators/state.transmit-pkts.100"
+                }
+              }
+            ],
+            "finalValidator": {
+              "xpath": "/qos/interfaces/interface[interface-id=Ethernet1/2/1]/output/queues/queue[name=LLQ1]/state",
+              "schema": {
+                "$ref": "#/globalDef/validators/queue.state.transmit-pkts.100"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "db": "COUNTERS_DB",
+            "value": {
+              "COUNTERS:oid:0x1500000000011c" : {
+                "SAI_QUEUE_STAT_PACKETS": 200,
+                "SAI_QUEUE_STAT_BYTES": 20000,
+                "SAI_QUEUE_STAT_DROPPED_PACKETS": 100,
+                "QUEUE_STAT_TIME_STAMP_USEC": "123456789012345"
+              }
+            }
+          },
+          {
+            "oper": "validate",
+            "timeout": 3000,
+            "pathValidators": [
+              {
+                "xpath": "/qos/interfaces/interface[interface-id=Ethernet1/2/1]/output/queues/queue[name=LLQ1]/state/transmit-pkts",
+                "timestamp": "123456789012345000",
+                "schema": {
+                  "$ref": "#/globalDef/validators/state.transmit-pkts.200"
+                }
+              }
+            ],
+            "finalValidator": {
+              "xpath": "/qos/interfaces/interface[interface-id=Ethernet1/2/1]/output/queues/queue[name=LLQ1]/state",
+              "schema": {
+                "$ref": "#/globalDef/validators/queue.state.transmit-pkts.200"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "db": "COUNTERS_DB",
+            "value": {
+              "COUNTERS:oid:0x1500000000011c" : {
+                "SAI_QUEUE_STAT_PACKETS": 300,
+                "SAI_QUEUE_STAT_BYTES": 30000,
+                "SAI_QUEUE_STAT_DROPPED_PACKETS": 150
+              }
+            }
+          },
+          {
+            "oper": "validate",
+            "timeout": 3000,
+            "finalValidator": {
+              "xpath": "/qos/interfaces/interface[interface-id=Ethernet1/2/1]/output/queues/queue[name=LLQ1]/state",
+              "schema": {
+                "$ref": "#/globalDef/validators/queue.state.transmit-pkts.300"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "db": "COUNTERS_DB",
+            "value": {
+              "COUNTERS:oid:0x1500000000011c" : {
+                "SAI_QUEUE_STAT_PACKETS": 100,
+                "SAI_QUEUE_STAT_BYTES": 10000,
+                "SAI_QUEUE_STAT_DROPPED_PACKETS": 50,
+                "QUEUE_STAT_TIME_STAMP_USEC": "1628778558222222"
+              }
+            }
+          },
+          {
+            "oper": "validate",
+            "timeout": 3000,
+            "title": "Revert back the counters for LLQ1",
+            "pathValidators": [
+              {
+                "xpath": "/qos/interfaces/interface[interface-id=Ethernet1/2/1]/output/queues/queue[name=LLQ1]/state/transmit-pkts",
+                "timestamp": "1628778558222222000",
+                "schema": {
+                  "$ref": "#/globalDef/validators/state.transmit-pkts.100"
+                }
+              }
+            ],
+            "finalValidator": {
+              "xpath": "/qos/interfaces/interface[interface-id=Ethernet1/2/1]/output/queues/queue[name=LLQ1]/state",
+              "schema": {
+                "$ref": "#/globalDef/validators/queue.state.transmit-pkts.100"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }

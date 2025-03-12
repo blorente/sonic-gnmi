@@ -1,0 +1,15 @@
+name: "sonic-gnmi"
+description:
+    "SONiC gNMI Server"
+
+third_party {
+homepage: "https://github.com/sonic-net/"
+  identifier {
+    type: Git
+    value: "https://github.com/sonic-net/sonic-gnmi"
+    primary_source: true
+  }
+  version: "752f1fceffa2d8fa7138638dd49c2d0aec96bc7b"
+  last_upgrade_date { year: 2024 month: 1 day: 4 }
+  license_type: NOTICE
+}

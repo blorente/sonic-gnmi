@@ -1,0 +1,190 @@
+{
+  "title": "Set and Get System feature labels",
+  "operations":[
+    {
+      "title": "Inital set of feature labels",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "/openconfig/system",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-system:system\": {\"feature-labels\": {\"feature-label\": [{\"label\": 5, \"config\": {\"label\": 5}},{\"label\": 34, \"config\": {\"label\": 34}}]}}}"
+    },
+    {
+      "title": "Verify that the feature labels were set",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:system"
+      ],
+      "properties": {
+        "openconfig-system:system": {
+          "type": "object",
+          "required": [
+            "google-pins-system:feature-labels"
+          ],
+          "properties": {
+            "google-pins-system:feature-labels": {
+              "type": "object",
+              "required": [
+                "feature-label"
+              ],
+              "properties": {
+                "feature-label": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "config", "label", "state"
+                      ],
+                      "properties": {
+                        "config": {
+                          "type": "object",
+                          "required": [
+                            "label"
+                          ],
+                          "properties": {
+                            "label": {
+                              "type": "integer",
+                              "enum": [5]
+                            }
+                          }
+                        },
+                        "label": {
+                          "type": "integer",
+                          "enum": [5]
+                        },
+                        "state": {
+                          "type": "object",
+                          "required": [
+                            "label"
+                          ],
+                          "properties": {
+                            "label": {
+                              "type": "integer",
+                              "enum": [5]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "config", "label", "state"
+                      ],
+                      "properties": {
+                        "config": {
+                          "type": "object",
+                          "required": [
+                            "label"
+                          ],
+                          "properties": {
+                            "label": {
+                              "type": "integer",
+                              "enum": [34]
+                            }
+                          }
+                        },
+                        "label": {
+                          "type": "integer",
+                          "enum": [34]
+                        },
+                        "state": {
+                          "type": "object",
+                          "required": [
+                            "label"
+                          ],
+                          "properties": {
+                            "label": {
+                              "type": "integer",
+                              "enum": [34]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Test set replace of feature labels",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "/openconfig/system",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-system:system\": {\"feature-labels\": {\"feature-label\": [{\"label\": 5, \"config\": {\"label\": 5}}]}}}"
+    },
+    {
+      "title": "Verify that the label in the config was not deleted",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/feature-labels/feature-label[label=5]",
+      "target": "OC_YANG",
+      "type": "object"
+    },
+    {
+      "title": "Verify that the label not in the config was deleted",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig/system/feature-labels/feature-label[label=34]",
+      "target": "OC_YANG",
+      "type": "object"
+    },
+    {
+      "title": "Set feature label at a lower level subtree",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/feature-labels/feature-label[label=6]",
+      "target": "OC_YANG",
+      "attributeData": "{\"google-pins-system:feature-label\": [{\"label\": 6, \"config\": {\"label\": 6}}]}"
+    },
+    {
+      "title": "Verify that the new label was written to the ConfigDB",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/feature-labels/feature-label[label=6]",
+      "target": "OC_YANG",
+      "type": "object"
+    },
+    {
+      "title": "Verify that the existing label was not deleted from the ConfigDB",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/feature-labels/feature-label[label=5]",
+      "target": "OC_YANG",
+      "type": "object"
+    },
+    {
+      "title": "Delete feature label",
+      "operation": "delete",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/feature-labels/feature-label[label=6]",
+      "target": "OC_YANG"
+    },
+    {
+      "title": "Verify that the deleted label was removed from the ConfigDB",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig/system/feature-labels/feature-label[label=6]",
+      "target": "OC_YANG",
+      "type": "object"
+    },
+    {
+      "title": "Verify that the existing label was not deleted from the ConfigDB",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/feature-labels/feature-label[label=5]",
+      "target": "OC_YANG",
+      "type": "object"
+    }
+  ]
+}

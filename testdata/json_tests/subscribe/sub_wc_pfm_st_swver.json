@@ -1,0 +1,220 @@
+{
+  "title": "Wildcard OnChange Subscription: /openconfig/components/component[name=*]/state/software-version",
+  "globalDef": {
+    "validators": {
+      "swver.v2021": {
+        "type": "object",
+        "required": [
+          "openconfig-platform:software-version"
+        ],
+        "properties": {
+          "openconfig-platform:software-version": {
+            "type": "string",
+            "const": "v2021"
+          }
+        }
+      },
+      "swver.v2020": {
+        "type": "object",
+        "required": [
+          "openconfig-platform:software-version"
+        ],
+        "properties": {
+          "openconfig-platform:software-version": {
+            "type": "string",
+            "const": "v2020"
+          }
+        }
+      },
+      "swver.os-v3": {
+        "type": "object",
+        "required": [
+          "openconfig-platform:software-version"
+        ],
+        "properties": {
+          "openconfig-platform:software-version": {
+            "type": "string",
+            "const": "os-v3"
+          }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "Subscribes to /openconfig/components/component[name=*]/state/software-version with ON_CHANGE",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'*'}}elem:{name:'state'}elem:{name:'software-version'}}mode:ON_CHANGE}mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:component"],
+              "properties": {
+                "openconfig-platform:component": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "required": ["name", "state"],
+                    "properties": {
+                      "state": {
+                        "type": "object",
+                        "properties": {
+                          "software-version": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "minItems": 5,
+                  "maxItems": 5,
+                  "additionalItems": false,
+                  "allOf": [
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "network_stack0"},
+                          "state": {
+                            "type": "object",
+                            "required": [
+                              "software-version"
+                            ],
+                            "properties": {
+                              "software-version": {
+                                "type": "string",
+                                "const": "v2021"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "os1"},
+                          "state": {
+                            "type": "object",
+                            "required": [
+                              "software-version"
+                            ],
+                            "properties": {
+                              "software-version": {
+                                "type": "string",
+                                "const": "os-v3"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes network_stack0 to v2020",
+          "db": "STATE_DB",
+          "value": {
+            "SW_COMP_INFO|network_stack0": {
+              "software-version": "v2020"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with network_stack0 v2020",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/components/component[name=network_stack0]/state/software-version",
+              "schema": {
+                "$ref": "#/globalDef/validators/swver.v2020"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Restore network_stack0 to v2021",
+          "db": "STATE_DB",
+          "value": {
+            "SW_COMP_INFO|network_stack0": {
+              "software-version": "v2021"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with network_stack0 v2021",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/components/component[name=network_stack0]/state/software-version",
+              "schema": {
+                "$ref": "#/globalDef/validators/swver.v2021"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Deletes component os1",
+          "db": "STATE_DB",
+          "value": {
+            "SW_COMP_INFO|os1": []
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates delete update for os1",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/components/component[name=os1]/state/software-version"
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Restore os1",
+          "db": "STATE_DB",
+          "value": {
+            "SW_COMP_INFO|os1": {
+              "software-version": "os-v3",
+              "oper-status": "inactive",
+              "storage-side": "b"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with os1 os-v3",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/components/component[name=os1]/state/software-version",
+              "schema": {
+                "$ref": "#/globalDef/validators/swver.os-v3"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

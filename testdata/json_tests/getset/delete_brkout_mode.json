@@ -1,0 +1,112 @@
+{
+    "title": "Delete_Breakout_Mode",
+    "operations": [
+      {
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:interface"
+        ],
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORT|Ethernet1/12/1": {
+                "admin_status": "up",
+                "adv_extended_fec_modes": "rs544-interleaved",
+                "adv_speeds": "400000",
+                "alias": "NoAliasEth12/1",
+                "description": "(not a trunk member)",
+                "ecmp_hash_algorithm": "crc",
+                "ecmp_hash_offset": "0",
+                "egress_timestamp_enable": "false",
+                "fec": "rs544-interleaved",
+switch:Ethernet1/12/1",
+                "health_indicator": "good",
+                "hold_time_down": "0",
+                "hold_time_up": "8000",
+                "id": "12",
+                "index": "12",
+                "ingress_timestamp_enable": "false",
+                "lanes": "81,82,83,84,85,86,87,88",
+                "link_event_damping_algorithm": "disabled",
+                "loopback-mode": "none",
+                "mtu": "9194",
+                "port_direction": "host_facing",
+                "speed": "400000"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_STATE:Ethernet1/12/1": {
+                "phase": "pending_delete"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "db": "STATE_DB",
+            "value": {
+              "PORT_BREAKOUT|Ethernet1/12/1": {
+                "name": "1/12",
+                "parent": "integrated_circuit0",
+                "port-id": "12"
+              }
+            }
+          },
+          {
+            "oper": "dbHGetValidate",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORT|Ethernet1/12/5": {}
+            }
+          }
+        ]
+      },
+      {
+        "title": "Delete 1/12 DPB mode",
+        "operation": "delete",
+        "returnCode": 0,
+        "xpath": "openconfig/components/component[name=1/12]/port/openconfig-platform-port:breakout-mode",
+        "target": "OC_YANG",
+        "subOpers": [
+          {
+            "oper": "dbHGetValidate",
+            "db": "CONFIG_DB",
+            "value": {
+              "BREAKOUT_CFG|Ethernet1/12/1" : {
+                "lanes": "81,82,83,84,85,86,87,88"
+              },
+              "PORT|Ethernet1/12/1": {
+                "index": "12",
+                "alias": "Eth12/1",
+                "lanes": "81,82,83,84",
+                "speed": "400000"
+              },
+              "PORT|Ethernet1/12/5": {
+                "index": "12",
+                "alias": "Eth12/5",
+                "lanes": "85,86,87,88",
+                "speed": "400000"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "Expect Abort from unsupported breakout mode (1X200G)",
+        "operation": "replace",
+        "returnCode": 10,
+        "xpath": "openconfig/",
+        "target": "OC_YANG",
+switch:eth-1/12/1\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/12/1\",\"openconfig-p4rt:id\":1,\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/4/1\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"port-speed\":\"openconfig-if-ethernet:SPEED_200GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"port-id\":4},\"breakout-mode\":{\"groups\":{\"group\":[{\"index\":0,\"config\":{\"index\":0,\"num-breakouts\":1,\"breakout-speed\":\"SPEED_200GB\",\"num-physical-channels\":8}}]}}}}]}}"
+      }
+    ]
+  }

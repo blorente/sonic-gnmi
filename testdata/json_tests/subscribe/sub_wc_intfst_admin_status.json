@@ -1,0 +1,258 @@
+{
+  "title": "Wildcard OnChange Subscription: /openconfig/interfaces/interface[name=*]/state/admin_status",
+  "globalDef" : {
+    "enums" : {
+      "admin-status": {
+        "type": "string",
+        "enum": [ "DOWN", "UP", "TESTING" ]
+      }
+    },
+    "validators": {
+      "state.admin.up": {
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:admin-status"
+        ],
+        "properties": {
+          "openconfig-interfaces:admin-status": {
+            "type": "string",
+            "const": "UP"
+          }
+        }
+      },
+      "state.admin.down": {
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:admin-status"
+        ],
+        "properties": {
+          "openconfig-interfaces:admin-status": {
+            "type": "string",
+            "const": "DOWN"
+          }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "Subscribes to /openconfig/interfaces/interface[name=*]/state/admin-status with ON_CHANGE",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'*'}}elem:{name:'state'}elem:{name:'admin-status'}}mode:ON_CHANGE}mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/interfaces/interface",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-interfaces:interface"],
+              "properties": {
+                "openconfig-interfaces:interface" : {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "required": ["name", "state"],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "enum": [
+                          "Ethernet1/1/1", "Ethernet1/1/5", "Ethernet1/2/1", "Ethernet1/2/5", "Ethernet1/3/1", "Ethernet1/4/1", "Ethernet1/4/5", "Ethernet1/5/1", "Ethernet1/5/5", "Ethernet1/6/1", "Ethernet1/7/3", "Ethernet1/7/4", "Ethernet1/8/1", "Ethernet1/8/5", "Ethernet1/9/1", "Ethernet1/9/5", "Ethernet1/9/7", "Ethernet1/11/1", "Ethernet1/11/5", "PortChannel1", "PortChannel2"
+                        ]
+                      },
+                      "state": {
+                        "type": "object",
+                        "properties": {
+                          "admin-status": {
+                            "$ref": "#/globalDef/enums/admin-status"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "minItems" : 20,
+                  "maxItems" : 20,
+                  "additionalItems": false,
+                  "contains": {
+                    "type": "object",
+                    "properties": {
+                      "name" : { "type": "string", "const": "Ethernet1/1/1"},
+                      "state" : {
+                        "type": "object",
+                        "required": [ "admin-status" ],
+                        "properties": {
+                          "admin-status": {
+                            "type": "string", "const": "UP"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Triggers Ethernet1/1/1.admin-status DOWN",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/1/1" : {
+              "admin_status": "down",
+              "admin_status_state": "down"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with Ethernet1/1/1.admin-status DOWN",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/1/1]/state/admin-status",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.admin.down"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Triggers Ethernet1/1/1.admin-status UP",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/1/1" : {
+              "admin_status": "up",
+              "admin_status_state": "up"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with Ethernet1/1/1.admin-status UP",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/1/1]/state/admin-status",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.admin.up"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Creates new interface Ethernet1/01234/1",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/01234/1" : {
+              "admin_status": "up"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Triggers Ethernet1/01234/1.admin-status UP",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/01234/1" : {
+              "admin_status": "up",
+              "admin_status_state": "up"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with Ethernet1/01234/1.admin-status UP",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/01234/1]/state/admin-status",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.admin.up"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Deletes Ethernet1/01234/1 state",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/01234/1" : [  ]
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates delete update for Ethernet1/01234/1.admin-status",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/01234/1]/state/admin-status"
+            }
+          ]
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Deletes interface Ethernet1/01234/1",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/01234/1" : []
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Triggers PortChannel1.admin-status DOWN",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "LAG_TABLE:PortChannel1" : {
+              "admin_status": "down"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with PortChannel1.admin-status DOWN",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=PortChannel1]/state/admin-status",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.admin.down"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Triggers PortChannel1.admin-status UP",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "LAG_TABLE:PortChannel1" : {
+              "admin_status": "up"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with PortChannel1.admin-status UP",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=PortChannel1]/state/admin-status",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.admin.up"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

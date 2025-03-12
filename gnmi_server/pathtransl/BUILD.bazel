@@ -1,0 +1,35 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "pathtransl",
+    srcs = [
+        "openconfigTransl.go",
+        "pathTranslator.go",
+    ],
+    importpath = "github.com/sonic-net/sonic-gnmi/gnmi_server/pathtransl",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//gnmi_server/log",
+        "@com_github_golang_glog//:glog",
+        "@com_github_golang_protobuf//proto",
+        "@com_github_openconfig_gnmi//proto/gnmi",
+        "@sonic-mgmt-common//translib/transformer",
+    ],
+)
+
+go_test(
+    name = "pathtransl_test",
+    srcs = ["openconfigTransl_test.go"],
+    embed = [":pathtransl"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_golang_protobuf//proto",
+        "@com_github_openconfig_gnmi//proto/gnmi",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":pathtransl",
+    visibility = ["//visibility:public"],
+)

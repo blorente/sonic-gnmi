@@ -1,0 +1,217 @@
+{
+  "title": "Get tests for openconfig-platforms integrated-circuit",
+  "includeDefs": ["../defs/pfm_ic.json"],
+  "operations":[
+    {
+      "title": "Get /openconfig/components/component[name=integrated_circuit0]",
+      "operation": "get",
+      "operProto": "prefix:{origin:'openconfig' target:'SomeTarget'} type:ALL encoding:JSON_IETF path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}}",
+      "returnCode": 0,
+      "type": "object",
+      "required": ["openconfig-platform:component"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:component" : {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "$ref": "#/globalDef/pfm_ic/IC0"
+          }
+        }
+      }
+    },
+    {
+      "title": "Get /openconfig/components/component[name=integrated_circuit0]/config",
+      "operation": "get",
+      "operProto": "prefix:{origin:'openconfig' target:'SomeTarget'} type:ALL encoding:JSON_IETF path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'config'}}",
+      "returnCode": 0,
+      "type": "object",
+      "required": ["openconfig-platform:config"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:config" : { "$ref": "#/globalDef/pfm_ic/IC0_cfg" }
+      }
+    },
+    {
+      "title": "Get /openconfig/components/component[name=integrated_circuit0]/config/name",
+      "operation": "get",
+      "operProto": "prefix:{origin:'openconfig' target:'SomeTarget'} type:ALL encoding:JSON_IETF path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'config'}elem:{name:'name'}}",
+      "returnCode": 0,
+      "type": "object",
+      "required": ["openconfig-platform:name"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:name" : { "$ref": "#/globalDef/pfm_ic/IC0_name" }
+      }
+    },
+    {
+      "title": "Get /openconfig/components/component[name=integrated_circuit0]/config/fully-qualified-name",
+      "operation": "get",
+      "operProto": "prefix:{origin:'openconfig' target:'SomeTarget'} type:ALL encoding:JSON_IETF path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'config'}elem:{name:'fully-qualified-name'}}",
+      "returnCode": 0,
+      "type": "object",
+      "required": ["openconfig-pins-platform:fully-qualified-name"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-pins-platform:fully-qualified-name" : { "$ref": "#/globalDef/pfm_ic/IC0_fq_name" }
+      }
+    },
+    {
+      "title": "Get /openconfig/components/component[name=integrated_circuit0]/state",
+      "operation": "get",
+      "operProto": "prefix:{origin:'openconfig' target:'SomeTarget'} type:ALL encoding:JSON_IETF path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'state'}}",
+      "returnCode": 0,
+      "type": "object",
+      "required": ["openconfig-platform:state"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:state" : { "$ref": "#/globalDef/pfm_ic/IC0_st" }
+      }
+    },
+    {
+      "title": "Get /openconfig/components/component[name=integrated_circuit0]/state/name",
+      "operation": "get",
+      "operProto": "prefix:{origin:'openconfig' target:'SomeTarget'} type:ALL encoding:JSON_IETF path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'state'}elem:{name:'name'}}",
+      "returnCode": 0,
+      "type": "object",
+      "required": ["openconfig-platform:name"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:name" : { "$ref": "#/globalDef/pfm_ic/IC0_name" }
+      }
+    },
+    {
+      "title": "Get /openconfig/components/component[name=integrated_circuit0]/state/fully-qualified-name",
+      "operation": "get",
+      "operProto": "prefix:{origin:'openconfig' target:'SomeTarget'} type:ALL encoding:JSON_IETF path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'state'}elem:{name:'fully-qualified-name'}}",
+      "returnCode": 0,
+      "type": "object",
+      "required": ["openconfig-pins-platform:fully-qualified-name"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-pins-platform:fully-qualified-name" : { "$ref": "#/globalDef/pfm_ic/IC0_fq_name" }
+      }
+    },
+    {
+      "title": "Get /openconfig/components/component[name=integrated_circuit0]/state/parent",
+      "operation": "get",
+      "operProto": "prefix:{origin:'openconfig' target:'SomeTarget'} type:ALL encoding:JSON_IETF path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'state'}elem:{name:'parent'}}",
+      "returnCode": 0,
+      "type": "object",
+      "required": ["openconfig-platform:parent"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:parent" : { "$ref": "#/globalDef/pfm_ic/IC0_parent" }
+      }
+    },
+    {
+      "title": "Get /openconfig/components/component[name=integrated_circuit0]/state/type",
+      "operation": "get",
+      "operProto": "prefix:{origin:'openconfig' target:'SomeTarget'} type:ALL encoding:JSON_IETF path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'state'}elem:{name:'type'}}",
+      "returnCode": 0,
+      "type": "object",
+      "required": ["openconfig-platform:type"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:type" : { "$ref": "#/globalDef/pfm_ic/IC0_type" }
+      }
+    },
+    {
+      "title": "Get /openconfig/components/component[name=integrated_circuit0]/integrated-circuit",
+      "operation": "get",
+      "operProto": "prefix:{origin:'openconfig' target:'SomeTarget'} type:ALL encoding:JSON_IETF path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'integrated-circuit'}}",
+      "returnCode": 0,
+      "type": "object",
+      "required": ["openconfig-platform:integrated-circuit"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:integrated-circuit" : { "$ref": "#/globalDef/pfm_ic/IC0_ic" }
+      }
+    },
+    {
+      "title": "Get /openconfig/components/component[name=fan1]/integrated-circuit",
+      "operation": "get",
+      "operProto": "prefix:{origin:'openconfig' target:'SomeTarget'} type:ALL encoding:JSON_IETF path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'fan1'}}elem:{name:'integrated-circuit'}}",
+      "returnCode": 0,
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+      }
+    },
+    {
+      "title": "Get /openconfig/components/component[name=integrated_circuit0]/integrated-circuit/config",
+      "operation": "get",
+      "operProto": "prefix:{origin:'openconfig' target:'SomeTarget'} type:ALL encoding:JSON_IETF path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'integrated-circuit'}elem:{name:'config'}}",
+      "returnCode": 0,
+      "type": "object",
+      "required": ["openconfig-platform:config"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:config" : { "$ref": "#/globalDef/pfm_ic/IC0_ic_cfg" }
+      }
+    },
+    {
+      "title": "Get /openconfig/components/component[name=integrated_circuit0]/integrated-circuit/state",
+      "operation": "get",
+      "operProto": "prefix:{origin:'openconfig' target:'SomeTarget'} type:ALL encoding:JSON_IETF path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'integrated-circuit'}elem:{name:'state'}}",
+      "returnCode": 0,
+      "type": "object",
+      "required": ["openconfig-platform:state"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:state" : { "$ref": "#/globalDef/pfm_ic/IC0_ic_st" }
+      }
+    },
+    {
+      "title": "Get /openconfig/components/component[name=integrated_circuit0]/integrated-circuit/state/blackhole",
+      "operation": "get",
+      "operProto": "prefix:{origin:'openconfig' target:'SomeTarget'} type:ALL encoding:JSON_IETF path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'integrated-circuit'}elem:{name:'state'}elem:{name:'blackhole'}}",
+      "returnCode": 0,
+      "type": "object",
+      "required": ["google-pins-platform:blackhole"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:blackhole" : { "$ref": "#/globalDef/pfm_ic/IC0_ic_st_bh" }
+      }
+    },
+    {
+      "title": "Get /openconfig/components/component[name=integrated_circuit0]/integrated-circuit/state/congestion",
+      "operation": "get",
+      "operProto": "prefix:{origin:'openconfig' target:'SomeTarget'} type:ALL encoding:JSON_IETF path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'integrated-circuit'}elem:{name:'state'}elem:{name:'congestion'}}",
+      "returnCode": 0,
+      "type": "object",
+      "required": ["google-pins-platform:congestion"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:congestion": { "$ref": "#/globalDef/pfm_ic/IC0_ic_st_cg" }
+      }
+    },
+    {
+      "title": "Get /openconfig/components/component[name=integrated_circuit0]/integrated-circuit/pipeline-counters",
+      "operation": "get",
+      "operProto": "prefix:{origin:'openconfig' target:'SomeTarget'} type:ALL encoding:JSON_IETF path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'integrated-circuit'}elem:{name:'pipeline-counters'}}",
+      "returnCode": 0,
+      "type": "object",
+      "required": ["openconfig-platform-pipeline-counters:pipeline-counters"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform-pipeline-counters:pipeline-counters" : { "$ref": "#/globalDef/pfm_ic/IC0_ic_plc" }
+      }
+    },
+    {
+      "title": "Get /openconfig/components/component[name=integrated_circuit0]/integrated-circuit/memory",
+      "operation": "get",
+      "operProto": "prefix:{origin:'openconfig' target:'SomeTarget'} type:ALL encoding:JSON_IETF path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'integrated-circuit'}elem:{name:'memory'}}",
+      "returnCode": 0,
+      "type": "object",
+      "required": ["openconfig-platform-integrated-circuit:memory"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform-integrated-circuit:memory" : { "$ref": "#/globalDef/pfm_ic/IC0_ic_mem" }
+      }
+    }
+  ]
+}
+

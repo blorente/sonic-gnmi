@@ -1,0 +1,137 @@
+{
+  "title": "openconfig-platforms transceiver subscription wildcard",
+  "operations":[
+    {
+      "title": "Wildcard Transceiver",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'*'}}elem:{name:'transceiver'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:component"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:component": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "minItems": 5,
+                  "maxItems": 5,
+                  "additionalItems": false,
+                  "items": [
+                    {
+                      "type": "object",
+                      "required": ["name", "openconfig-platform-transceiver:transceiver"],
+                      "additionalProperties": false,
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "enum": ["Ethernet1"]
+                        },
+                        "openconfig-platform-transceiver:transceiver": {
+                          "type": "object",
+                          "required": ["physical-channels", "state"],
+                          "additionalProperties": false,
+                          "properties": {
+                            "physical-channels": { "type": "object" },
+                            "state": { "type": "object" }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "required": ["name", "openconfig-platform-transceiver:transceiver"],
+                      "additionalProperties": false,
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "enum": ["Ethernet4"]
+                        },
+                        "openconfig-platform-transceiver:transceiver": {
+                          "type": "object",
+                          "required": ["physical-channels", "state"],
+                          "additionalProperties": false,
+                          "properties": {
+                            "physical-channels": { "type": "object" },
+                            "state": { "type": "object" }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "required": ["name", "openconfig-platform-transceiver:transceiver"],
+                      "additionalProperties": false,
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "enum": ["Ethernet6"]
+                        },
+                        "openconfig-platform-transceiver:transceiver": {
+                          "type": "object",
+                          "required": ["physical-channels", "state"],
+                          "additionalProperties": false,
+                          "properties": {
+                            "physical-channels": { "type": "object" },
+                            "state": { "type": "object" }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "required": ["name", "openconfig-platform-transceiver:transceiver"],
+                      "additionalProperties": false,
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "enum": ["Ethernet7"]
+                        },
+                        "openconfig-platform-transceiver:transceiver": {
+                          "type": "object",
+                          "required": ["state"],
+                          "additionalProperties": false,
+                          "properties": {
+                            "state": { "type": "object" }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "required": ["name", "openconfig-platform-transceiver:transceiver"],
+                      "additionalProperties": false,
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "enum": ["Ethernet8"]
+                        },
+                        "openconfig-platform-transceiver:transceiver": {
+                          "type": "object",
+                          "required": ["state"],
+                          "additionalProperties": false,
+                          "properties": {
+                            "state": { "type": "object" }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+

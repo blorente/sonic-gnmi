@@ -1,0 +1,222 @@
+{
+  "title": "Wildcard OnChange Subscription: /openconfig/interfaces/interface[name=*]/ethernet/state/mac-address",
+  "globalDef" : {
+    "debugLevel": 10,
+    "enums" : {
+      "mac-address": {
+        "type": "string"
+      }
+    },
+    "validators": {
+      "state.mac.1": {
+        "type": "object",
+        "required": [
+          "openconfig-if-ethernet:mac-address"
+        ],
+        "properties": {
+          "openconfig-if-ethernet:mac-address": {
+            "type": "string",
+            "const": "01:02:03:04:05:06"
+          }
+        }
+      },
+      "state.mac.2": {
+        "type": "object",
+        "required": [
+          "openconfig-if-ethernet:mac-address"
+        ],
+        "properties": {
+          "openconfig-if-ethernet:mac-address": {
+            "type": "string",
+            "const": "02:02:03:04:05:06"
+          }
+        }
+      },
+      "state.mac.3": {
+        "type": "object",
+        "required": [
+          "openconfig-if-ethernet:mac-address"
+        ],
+        "properties": {
+          "openconfig-if-ethernet:mac-address": {
+            "type": "string",
+            "const": "03:02:03:04:05:06"
+          }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "Subscribes to /openconfig/interfaces/interface[name=*]/ethernet/state/mac-address",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'*'}}elem:{name:'ethernet'}elem:{name:'state'}elem:{name:'mac-address'}}mode:ON_CHANGE}mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/interfaces/interface",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-interfaces:interface"],
+              "properties": {
+                "openconfig-interfaces:interface" : {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "required": ["name", "openconfig-if-ethernet:ethernet"],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "enum": [ "Ethernet1/1/1", "bond0", "CPU", "Ethernet1/1/5", "Ethernet1/2/1", "Ethernet1/2/5", "Ethernet1/3/1", "Ethernet1/4/1", "Ethernet1/4/5", "Ethernet1/5/1", "Ethernet1/5/5", "Ethernet1/6/1", "Ethernet1/7/3", "Ethernet1/7/4", "Ethernet1/8/1", "Ethernet1/8/5", "Ethernet1/9/1", "Ethernet1/9/5", "Ethernet1/9/7", "Ethernet1/11/1", "Ethernet1/11/5", "PortChannel1", "PortChannel2" ]
+                      },
+                      "openconfig-if-ethernet:ethernet": {
+                        "type": "object",
+                        "properties": {
+                          "state": {
+                            "type": "object",
+                            "properties" : {
+                              "mac-address": {
+                                "$ref": "#/globalDef/enums/mac-address"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "minItems" : 22,
+                  "maxItems" : 22,
+                  "additionalItems": false,
+                  "allOf": [
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name" : { "type": "string", "const": "Ethernet1/1/1"},
+                          "state" : {
+                            "$ref": "#/globalDef/validators/state.mac.1"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes Ethernet1/1/1.mac-address to 02:02:03:04:05:06",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/1/1" : {
+              "mac-address": "02:02:03:04:05:06"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates update with Ethernet1/1/1.mac-address 02:02:03:04:05:06",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/mac-address",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.mac.2"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes Ethernet1/1/1.mac-address back to 01:02:03:04:05:06",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/1/1" : {
+              "mac-address": "01:02:03:04:05:06"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates update with Ethernet1/1/1.mac-address 01:02:03:04:05:06",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/mac-address",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.mac.1"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Creates new interface Ethernet1/01234/1",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/01234/1" : {
+              "admin-status": "up"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes Ethernet1/01234/1.mac-address to 03:02:03:04:05:06",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/01234/1" : {
+              "mac-address": "03:02:03:04:05:06"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates update with Ethernet1/01234/1.mac-address 03:02:03:04:05:06",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/01234/1]/ethernet/state/mac-address",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.mac.3"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Deletes Ethernet1/01234/1 state",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/01234/1" : [  ]
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates delete update for Ethernet1/01234/1.mac-address",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/01234/1]/ethernet/state/mac-address"
+            }
+          ]
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Deletes interface Ethernet1/01234/1",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/01234/1" : []
+          }
+        }
+      ]
+    }
+  ]
+}

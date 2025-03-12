@@ -1,0 +1,29 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "sonic_service_client",
+    srcs = ["dbus_client.go"],
+    importpath = "github.com/sonic-net/sonic-gnmi/sonic_service_client",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//common_utils",
+        "@com_github_godbus_dbus_v5//:dbus",
+        "@com_github_golang_glog//:glog",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":sonic_service_client",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "sonic_service_client_test",
+    srcs = ["dbus_client_test.go"],
+    embed = [":sonic_service_client"],
+    deps = [
+        "@com_github_agiledragon_gomonkey_v2//:gomonkey",
+        "@com_github_godbus_dbus_v5//:dbus",
+    ],
+)

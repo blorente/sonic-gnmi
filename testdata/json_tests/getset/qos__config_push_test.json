@@ -1,0 +1,534 @@
+{
+  "title": "Set Qos Full Config",
+  "operations":[
+    {
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/qos/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-qos:qos\" : {\"buffer-allocation-profiles\" : {\"buffer-allocation-profile\" : [{  \"config\" : {  \"name\" : \"staggered_8queue\"  },  \"name\" : \"staggered_8queue\",  \"queues\" : {  \"queue\" : [ { \"config\" : {\"dedicated-buffer\" : \"0\",\"dynamic-limit-scaling-factor\" : 1,\"name\" : \"AF1\",\"shared-buffer-limit-type\" : \"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\" : true }, \"name\" : \"AF1\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"dynamic-limit-scaling-factor\" : 3,\"name\" : \"AF2\",\"shared-buffer-limit-type\" : \"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\" : true }, \"name\" : \"AF2\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"dynamic-limit-scaling-factor\" : 3,\"name\" : \"AF3\",\"shared-buffer-limit-type\" : \"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\" : true }, \"name\" : \"AF3\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"dynamic-limit-scaling-factor\" : 3,\"name\" : \"AF4\",\"shared-buffer-limit-type\" : \"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\" : true }, \"name\" : \"AF4\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"dynamic-limit-scaling-factor\" : -1,\"name\" : \"BE1\",\"shared-buffer-limit-type\" : \"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\" : true }, \"name\" : \"BE1\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"dynamic-limit-scaling-factor\" : -3,\"name\" : \"LLQ1\",\"shared-buffer-limit-type\" : \"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\" : true }, \"name\" : \"LLQ1\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"dynamic-limit-scaling-factor\" : -3,\"name\" : \"LLQ2\",\"shared-buffer-limit-type\" : \"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\" : true }, \"name\" : \"LLQ2\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"dynamic-limit-scaling-factor\" : 3,\"name\" : \"NC1\",\"shared-buffer-limit-type\" : \"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\" : true }, \"name\" : \"NC1\" }  ]  }},{  \"config\" : {  \"name\" : \"cpu_buffer_profile\"  },  \"name\" : \"cpu_buffer_profile\",  \"queues\" : {  \"queue\" : [ { \"config\" : {\"dedicated-buffer\" : \"0\",\"name\" : \"NC1\",\"shared-buffer-limit-type\" : \"openconfig-qos:STATIC\",\"static-shared-buffer-limit\" : 3200,\"use-shared-buffer\" : true }, \"name\" : \"NC1\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"name\" : \"AF4\",\"shared-buffer-limit-type\" : \"openconfig-qos:STATIC\",\"static-shared-buffer-limit\" : 3200,\"use-shared-buffer\" : true }, \"name\" : \"AF4\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"name\" : \"AF3\",\"shared-buffer-limit-type\" : \"openconfig-qos:STATIC\",\"static-shared-buffer-limit\" : 3200,\"use-shared-buffer\" : true }, \"name\" : \"AF3\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"name\" : \"AF2\",\"shared-buffer-limit-type\" : \"openconfig-qos:STATIC\",\"static-shared-buffer-limit\" : 3200,\"use-shared-buffer\" : true }, \"name\" : \"AF2\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"name\" : \"AF1\",\"shared-buffer-limit-type\" : \"openconfig-qos:STATIC\",\"static-shared-buffer-limit\" : 3200,\"use-shared-buffer\" : true }, \"name\" : \"AF1\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"name\" : \"BE1\",\"shared-buffer-limit-type\" : \"openconfig-qos:STATIC\",\"static-shared-buffer-limit\" : 3200,\"use-shared-buffer\" : true }, \"name\" : \"BE1\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"name\" : \"LLQ2\",\"shared-buffer-limit-type\" : \"openconfig-qos:STATIC\",\"static-shared-buffer-limit\" : 3200,\"use-shared-buffer\" : true }, \"name\" : \"LLQ2\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"name\" : \"LLQ1\",\"shared-buffer-limit-type\" : \"openconfig-qos:STATIC\",\"static-shared-buffer-limit\" : 3200,\"use-shared-buffer\" : true }, \"name\" : \"LLQ1\" }  ]  }}]},\"forwarding-groups\" : {\"forwarding-group\" : [{  \"config\" : {  \"fabric-priority\" : 7,  \"name\" : \"target-group-NC1\",  \"output-queue\" : \"NC1\"  },  \"name\" : \"target-group-NC1\"},{  \"config\" : {  \"fabric-priority\" : 4,  \"name\" : \"target-group-AF4\",  \"output-queue\" : \"AF4\"  },  \"name\" : \"target-group-AF4\"},{  \"config\" : {  \"fabric-priority\" : 3,  \"name\" : \"target-group-AF3\",  \"output-queue\" : \"AF3\"  },  \"name\" : \"target-group-AF3\"},{  \"config\" : {  \"fabric-priority\" : 2,  \"name\" : \"target-group-AF2\",  \"output-queue\" : \"AF2\"  },  \"name\" : \"target-group-AF2\"},{  \"config\" : {  \"fabric-priority\" : 1,  \"name\" : \"target-group-AF1\",  \"output-queue\" : \"AF1\"  },  \"name\" : \"target-group-AF1\"},{  \"config\" : {  \"fabric-priority\" : 0,  \"name\" : \"target-group-BE1\",  \"output-queue\" : \"BE1\"  },  \"name\" : \"target-group-BE1\"},{  \"config\" : {  \"fabric-priority\" : 5,  \"name\" : \"target-group-BE0\",  \"output-queue\" : \"BE0\"  },  \"name\" : \"target-group-BE0\"},{  \"config\" : {  \"fabric-priority\" : 6,  \"name\" : \"target-group-UNUSED\",  \"output-queue\" : \"UNUSED\"  },  \"name\" : \"target-group-UNUSED\"}]},\"interfaces\" : {\"interface\" : [{  \"config\" : {  \"interface-id\" : \"Ethernet1/2/1\"  },  \"interface-id\" : \"Ethernet1/2/1\",  \"output\" : {  \"config\" : { \"buffer-allocation-profile\" : \"staggered_8queue\"  },  \"queues\" : { \"queue\" : [ {\"config\" : {\"name\" : \"NC1\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"NC1\" }, {\"config\" : {\"name\" : \"AF4\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"AF4\" }, {\"config\" : {\"name\" : \"AF3\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"AF3\" }, {\"config\" : {\"name\" : \"AF2\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"AF2\" }, {\"config\" : {\"name\" : \"AF1\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"AF1\" }, {\"config\" : {\"name\" : \"BE1\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"BE1\" }, {\"config\" : {\"name\" : \"BE0\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"BE0\" }, {\"config\" : {\"name\" : \"UNUSED\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"UNUSED\" } ]  },  \"scheduler-policy\" : { \"config\" : { \"name\" : \"scheduler_400gb\" }  }  }},{  \"config\" : {  \"interface-id\" : \"Ethernet1/2/5\"  },  \"interface-id\" : \"Ethernet1/2/5\",  \"output\" : {  \"config\" : { \"buffer-allocation-profile\" : \"staggered_8queue\"  },  \"queues\" : { \"queue\" : [ {\"config\" : {\"name\" : \"NC1\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"NC1\" }, {\"config\" : {\"name\" : \"AF4\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"AF4\" }, {\"config\" : {\"name\" : \"AF3\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"AF3\" }, {\"config\" : {\"name\" : \"AF2\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"AF2\" }, {\"config\" : {\"name\" : \"AF1\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"AF1\" }, {\"config\" : {\"name\" : \"BE1\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"BE1\" }, {\"config\" : {\"name\" : \"BE0\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"BE0\" }, {\"config\" : {\"name\" : \"UNUSED\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"UNUSED\" } ]  },  \"scheduler-policy\" : { \"config\" : { \"name\" : \"scheduler_100gb\" }  }  }},{ \"config\" : { \"interface-id\" : \"CPU\" }, \"interface-id\" : \"CPU\", \"output\" : { \"config\" : {\"buffer-allocation-profile\" : \"cpu_buffer_profile\" }, \"queues\" : {\"queue\" : [{\"config\" : {  \"name\" : \"NC1\"},\"name\" : \"NC1\"},{\"config\" : {  \"name\" : \"AF4\"},\"name\" : \"AF4\"},{\"config\" : {  \"name\" : \"AF3\"},\"name\" : \"AF3\"},{\"config\" : {  \"name\" : \"AF2\"},\"name\" : \"AF2\"},{\"config\" : {  \"name\" : \"AF1\"},\"name\" : \"AF1\"},{\"config\" : {  \"name\" : \"BE1\"},\"name\" : \"BE1\"},{\"config\" : {  \"name\" : \"LLQ2\"},\"name\" : \"LLQ2\"},{\"config\" : {  \"name\" : \"LLQ1\"},\"name\" : \"LLQ1\"}] }, \"scheduler-policy\" : {\"config\" : {\"name\" : \"cpu_scheduler\"} } }  }]},\"queue-management-profiles\" : { \"queue-management-profile\" : [{\"config\" : {\"name\" : \"staggered_8queue\"},\"name\" : \"staggered_8queue\",\"wred\" : {\"uniform\" : {  \"config\" : {  \"drop\" : false,  \"enable-ecn\" : true,  \"max-drop-probability-percent\" : 1,  \"max-threshold\" : \"80000\",  \"min-threshold\" : \"80000\"  }}}} ] }, \"scheduler-policies\" : { \"scheduler-policy\" : [ {  \"config\" : { \"name\" : \"scheduler_100gb\"  },  \"name\" : \"scheduler_100gb\",  \"schedulers\" : { \"scheduler\" : [ {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 0,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"NC1\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"NC1\"  },  \"id\" : \"NC1\"}]},\"sequence\" : 0,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"1000000000\",\"pir\" : \"2000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 1,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"AF4\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"AF4\"  },  \"id\" : \"AF4\"}]},\"sequence\" : 1,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"100000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 2,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"AF3\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"AF3\"  },  \"id\" : \"AF3\"}]},\"sequence\" : 2,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"100000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 3,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"AF2\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"AF2\"  },  \"id\" : \"AF2\"}]},\"sequence\" : 3,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"100000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 4,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"AF1\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"AF1\"  },  \"id\" : \"AF1\"}]},\"sequence\" : 4,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"100000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 5,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"BE1\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"BE1\"  },  \"id\" : \"BE1\"}]},\"sequence\" : 5,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"100000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 6,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"BE0\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"BE0\"  },  \"id\" : \"BE0\"}]},\"sequence\" : 6,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"100000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 7,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"UNUSED\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"UNUSED\"  },  \"id\" : \"UNUSED\"}]},\"sequence\" : 7,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"100000000000\"}} } ]  }  },  {  \"config\" : { \"name\" : \"scheduler_400gb\"  },  \"name\" : \"scheduler_400gb\",  \"schedulers\" : { \"scheduler\" : [ {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 0,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"NC1\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"NC1\"  },  \"id\" : \"NC1\"}]},\"sequence\" : 0,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"4000000000\",\"pir\" : \"8000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 1,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"AF4\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"AF4\"  },  \"id\" : \"AF4\"}]},\"sequence\" : 1,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"400000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 2,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"AF3\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"AF3\"  },  \"id\" : \"AF3\"}]},\"sequence\" : 2,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"400000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 3,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"AF2\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"AF2\"  },  \"id\" : \"AF2\"}]},\"sequence\" : 3,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"400000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 4,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"AF1\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"AF1\"  },  \"id\" : \"AF1\"}]},\"sequence\" : 4,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"400000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 5,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"BE1\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"BE1\"  },  \"id\" : \"BE1\"}]},\"sequence\" : 5,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"400000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 6,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"BE0\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"BE0\"  },  \"id\" : \"BE0\"}]},\"sequence\" : 6,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"400000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 7,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"UNUSED\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"UNUSED\"  },  \"id\" : \"UNUSED\"}]},\"sequence\" : 7,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"400000000000\"}} } ]  }  },  {  \"config\" : { \"name\" : \"cpu_scheduler\"  },  \"name\" : \"cpu_scheduler\",  \"schedulers\" : { \"scheduler\" : [ {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 0,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"NC1\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"NC1\"  },  \"id\" : \"NC1\"}]},\"sequence\" : 0,\"two-rate-three-color\" : {\"config\" : {\"google-pins-qos:bc-pkts\" : 0,\"google-pins-qos:be-pkts\" : 256,\"google-pins-qos:cir-pkts\" : \"0\",\"google-pins-qos:pir-pkts\" : \"16000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 1,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"AF4\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"AF4\"  },  \"id\" : \"AF4\"}]},\"sequence\" : 1,\"two-rate-three-color\" : {\"config\" : {\"google-pins-qos:bc-pkts\" : 0,\"google-pins-qos:be-pkts\" : 4,\"google-pins-qos:cir-pkts\" : \"0\",\"google-pins-qos:pir-pkts\" : \"4000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 2,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"AF3\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"AF3\"  },  \"id\" : \"AF3\"}]},\"sequence\" : 2,\"two-rate-three-color\" : {\"config\" : {\"google-pins-qos:bc-pkts\" : 0,\"google-pins-qos:be-pkts\" : 4,\"google-pins-qos:cir-pkts\" : \"0\",\"google-pins-qos:pir-pkts\" : \"120\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 3,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"AF2\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"AF2\"  },  \"id\" : \"AF2\"}]},\"sequence\" : 3,\"two-rate-three-color\" : {\"config\" : {\"google-pins-qos:bc-pkts\" : 0,\"google-pins-qos:be-pkts\" : 4,\"google-pins-qos:cir-pkts\" : \"0\",\"google-pins-qos:pir-pkts\" : \"800\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 4,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"AF1\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"AF1\"  },  \"id\" : \"AF1\"}]},\"sequence\" : 4,\"two-rate-three-color\" : {\"config\" : {\"google-pins-qos:bc-pkts\" : 0,\"google-pins-qos:be-pkts\" : 4,\"google-pins-qos:cir-pkts\" : \"0\",\"google-pins-qos:pir-pkts\" : \"120\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 5,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"BE1\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"BE1\"  },  \"id\" : \"BE1\"}]},\"sequence\" : 5,\"two-rate-three-color\" : {\"config\" : {\"google-pins-qos:bc-pkts\" : 0,\"google-pins-qos:be-pkts\" : 4,\"google-pins-qos:cir-pkts\" : \"0\",\"google-pins-qos:pir-pkts\" : \"120\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 6,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"LLQ2\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"LLQ2\"  },  \"id\" : \"LLQ2\"}]},\"sequence\" : 6,\"two-rate-three-color\" : {\"config\" : {\"google-pins-qos:bc-pkts\" : 0,\"google-pins-qos:be-pkts\" : 4,\"google-pins-qos:cir-pkts\" : \"0\",\"google-pins-qos:pir-pkts\" : \"800\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 7,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"LLQ1\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"LLQ1\"  },  \"id\" : \"LLQ1\"}]},\"sequence\" : 7,\"two-rate-three-color\" : {\"config\" : {\"google-pins-qos:bc-pkts\" : 0,\"google-pins-qos:be-pkts\" : 4,\"google-pins-qos:cir-pkts\" : \"0\",\"google-pins-qos:pir-pkts\" : \"120\"}} } ]  }  }]}}}"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/qos/scheduler-policies/scheduler-policy[name=scheduler_400gb]/schedulers/scheduler[sequence=6]/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-qos:scheduler"
+      ],
+      "properties": {
+        "openconfig-qos:scheduler": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [ "inputs"],
+            "properties": {
+              "inputs": {
+                "type": "object",
+                "required": [ "input" ],
+                "properties": {
+                  "input": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "type": "object",
+                        "required": [ "config", "id", "state" ],
+                        "properties": {
+                          "config": {
+                            "type": "object",
+                            "required": [ "id", "input-type", "queue" ],
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "enum": ["BE0"]
+                              },
+                              "input-type": {
+                                "type": "string",
+                                "enum": ["QUEUE"]
+                              },
+                              "queue": {
+                                "type": "string",
+                                "enum": ["BE0"]
+                              }
+                            }
+                          },
+                          "id": {
+                            "type": "string",
+                            "enum": ["BE0"]
+                          },
+                          "state": {
+                            "type": "object",
+                            "required": [ "id", "input-type", "queue" ],
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "enum": ["BE0"]
+                              },
+                              "input-type": {
+                                "type": "string",
+                                "enum": ["QUEUE"]
+                              },
+                              "queue": {
+                                "type": "string",
+                                "enum": ["BE0"]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/qos/scheduler-policies/scheduler-policy[name=cpu_scheduler]/schedulers/scheduler[sequence=6]/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-qos:scheduler"
+      ],
+      "properties": {
+        "openconfig-qos:scheduler": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [ "inputs"],
+            "properties": {
+              "inputs": {
+                "type": "object",
+                "required": [ "input" ],
+                "properties": {
+                  "input": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "type": "object",
+                        "required": [ "config", "id", "state" ],
+                        "properties": {
+                          "config": {
+                            "type": "object",
+                            "required": [ "id", "input-type", "queue" ],
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "enum": ["LLQ2"]
+                              },
+                              "input-type": {
+                                "type": "string",
+                                "enum": ["QUEUE"]
+                              },
+                              "queue": {
+                                "type": "string",
+                                "enum": ["LLQ2"]
+                              }
+                            }
+                          },
+                          "id": {
+                            "type": "string",
+                            "enum": ["LLQ2"]
+                          },
+                          "state": {
+                            "type": "object",
+                            "required": [ "id", "input-type", "queue" ],
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "enum": ["LLQ2"]
+                              },
+                              "input-type": {
+                                "type": "string",
+                                "enum": ["QUEUE"]
+                              },
+                              "queue": {
+                                "type": "string",
+                                "enum": ["LLQ2"]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "title": "Insert 'orphaned' BUFFER_QUEUE that requires clean up",
+          "oper": "dbHSet",
+          "db": "CONFIG_DB",
+          "value": {
+            "BUFFER_QUEUE|CPU|47" : {
+              "profile": "cpu_buffer_profile.egress_shared_pool.0.s3200"
+            }
+          }
+        }
+      ]
+    },
+    {
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/qos/",
+        "target": "OC_YANG",
+        "attributeData": "{\"openconfig-qos:qos\" : {\"queues\" : {\"queue\" : [{\"config\" : { \"name\" : \"NC1\", \"queue-id\" : 7},\"name\" : \"NC1\"},{\"config\" : {  \"name\" : \"AF4\", \"queue-id\" : 6},\"name\" : \"AF4\"},{\"config\" : {  \"name\" : \"AF3\", \"queue-id\" : 5},\"name\" : \"AF3\"},{\"config\" : {  \"name\" : \"AF2\", \"queue-id\" : 4},\"name\" : \"AF2\"},{\"config\" : {  \"name\" : \"AF1\", \"queue-id\" : 3},\"name\" : \"AF1\"},{\"config\" : {  \"name\" : \"BE1\", \"queue-id\" : 2},\"name\" : \"BE1\"},{\"config\" : {  \"name\" : \"LLQ2\", \"queue-id\" : 1},\"name\" : \"LLQ2\"},{\"config\" : {  \"name\" : \"LLQ1\", \"queue-id\" : 0},\"name\" : \"LLQ1\"}, {\"config\" : { \"name\" : \"INBAND_PRIORITY_6\", \"queue-id\" : 6},\"name\" : \"INBAND_PRIORITY_6\"},{\"config\" : {  \"name\" : \"INBAND_PRIORITY_5\", \"queue-id\" : 5},\"name\" : \"INBAND_PRIORITY_5\"},{\"config\" : {  \"name\" : \"INBAND_PRIORITY_4\", \"queue-id\" : 4},\"name\" : \"INBAND_PRIORITY_4\"},{\"config\" : {  \"name\" : \"INBAND_PRIORITY_3\", \"queue-id\" : 3},\"name\" : \"INBAND_PRIORITY_3\"},{\"config\" : {  \"name\" : \"INBAND_PRIORITY_2\", \"queue-id\" : 2},\"name\" : \"INBAND_PRIORITY_2\"},{\"config\" : {  \"name\" : \"INBAND_PRIORITY_1\", \"queue-id\" : 1},\"name\" : \"INBAND_PRIORITY_1\"},{\"config\" : {  \"name\" : \"INBAND_PRIORITY_0\", \"queue-id\" : 0},\"name\" : \"INBAND_PRIORITY_0\"},{\"config\" : {  \"name\" : \"DEDICATED-CPU-QUEUE-FOR-INGRESS-PORT-Ethernet1/3/3\", \"queue-id\" : 7},\"name\" : \"DEDICATED-CPU-QUEUE-FOR-INGRESS-PORT-Ethernet1/3/3\"}] }, \"google-pins-qos:shared-buffer-pools\" : {\"shared-buffer-pool\" : [{\"config\" : { \"size\" : \"113620296\"},\"name\" : \"egress_shared_pool\"}]}, \"buffer-allocation-profiles\" : {\"buffer-allocation-profile\" : [{  \"config\" : {  \"name\" : \"staggered_8queue\"  },  \"name\" : \"staggered_8queue\",  \"queues\" : {  \"queue\" : [ { \"config\" : {\"dedicated-buffer\" : \"0\",\"dynamic-limit-scaling-factor\" : 1,\"name\" : \"AF1\",\"shared-buffer-limit-type\" : \"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\" : true, \"buffer-pool-name\" : \"egress_shared_pool\" }, \"name\" : \"AF1\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"dynamic-limit-scaling-factor\" : 3,\"name\" : \"AF2\",\"shared-buffer-limit-type\" : \"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\" : true, \"buffer-pool-name\" : \"egress_shared_pool\" }, \"name\" : \"AF2\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"dynamic-limit-scaling-factor\" : 3,\"name\" : \"AF3\",\"shared-buffer-limit-type\" : \"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\" : true, \"buffer-pool-name\" : \"egress_shared_pool\" }, \"name\" : \"AF3\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"dynamic-limit-scaling-factor\" : 3,\"name\" : \"AF4\",\"shared-buffer-limit-type\" : \"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\" : true, \"buffer-pool-name\" : \"egress_shared_pool\" }, \"name\" : \"AF4\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"dynamic-limit-scaling-factor\" : -1,\"name\" : \"BE1\",\"shared-buffer-limit-type\" : \"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\" : true, \"buffer-pool-name\" : \"egress_shared_pool\" }, \"name\" : \"BE1\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"dynamic-limit-scaling-factor\" : -3,\"name\" : \"LLQ1\",\"shared-buffer-limit-type\" : \"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\" : true, \"buffer-pool-name\" : \"egress_shared_pool\" }, \"name\" : \"LLQ1\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"dynamic-limit-scaling-factor\" : -3,\"name\" : \"LLQ2\",\"shared-buffer-limit-type\" : \"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\" : true, \"buffer-pool-name\" : \"egress_shared_pool\" }, \"name\" : \"LLQ2\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"dynamic-limit-scaling-factor\" : 3,\"name\" : \"NC1\",\"shared-buffer-limit-type\" : \"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\" : true, \"buffer-pool-name\" : \"egress_shared_pool\" }, \"name\" : \"NC1\" }  ]  }}, {  \"config\" : {  \"name\" : \"cpu_buffer_profile\"  },  \"name\" : \"cpu_buffer_profile\",  \"queues\" : {  \"queue\" : [ { \"config\" : {\"dedicated-buffer\" : \"0\",\"name\" : \"INBAND_PRIORITY_6\",\"shared-buffer-limit-type\" : \"openconfig-qos:STATIC\",\"static-shared-buffer-limit\" : 3200,\"use-shared-buffer\" : true, \"buffer-pool-name\" : \"egress_shared_pool\" }, \"name\" : \"INBAND_PRIORITY_6\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"name\" : \"INBAND_PRIORITY_5\",\"shared-buffer-limit-type\" : \"openconfig-qos:STATIC\",\"static-shared-buffer-limit\" : 3200,\"use-shared-buffer\" : true, \"buffer-pool-name\" : \"egress_shared_pool\" }, \"name\" : \"INBAND_PRIORITY_5\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"name\" : \"INBAND_PRIORITY_4\",\"shared-buffer-limit-type\" : \"openconfig-qos:STATIC\",\"static-shared-buffer-limit\" : 3200,\"use-shared-buffer\" : true, \"buffer-pool-name\" : \"egress_shared_pool\" }, \"name\" : \"INBAND_PRIORITY_4\" },  { \"config\" : {\"dedicated-buffer\" : \"0\",\"name\" : \"INBAND_PRIORITY_3\",\"shared-buffer-limit-type\" : \"openconfig-qos:STATIC\",\"static-shared-buffer-limit\" : 3200,\"use-shared-buffer\" : true, \"buffer-pool-name\" : \"egress_shared_pool\" }, \"name\" : \"INBAND_PRIORITY_3\" },   { \"config\" : {\"dedicated-buffer\" : \"0\",\"name\" : \"INBAND_PRIORITY_2\",\"shared-buffer-limit-type\" : \"openconfig-qos:STATIC\",\"static-shared-buffer-limit\" : 3200,\"use-shared-buffer\" : true, \"buffer-pool-name\" : \"egress_shared_pool\" }, \"name\" : \"INBAND_PRIORITY_2\" },   { \"config\" : {\"dedicated-buffer\" : \"0\",\"name\" : \"INBAND_PRIORITY_1\",\"shared-buffer-limit-type\" : \"openconfig-qos:STATIC\",\"static-shared-buffer-limit\" : 3200,\"use-shared-buffer\" : true, \"buffer-pool-name\" : \"egress_shared_pool\" }, \"name\" : \"INBAND_PRIORITY_1\" },  { \"config\" : {\"dedicated-buffer\" : \"0\",\"name\" : \"INBAND_PRIORITY_0\",\"shared-buffer-limit-type\" : \"openconfig-qos:STATIC\",\"static-shared-buffer-limit\" : 3200,\"use-shared-buffer\" : true, \"buffer-pool-name\" : \"egress_shared_pool\" }, \"name\" : \"INBAND_PRIORITY_0\" }, { \"config\" : {\"dedicated-buffer\" : \"0\",\"name\" : \"DEDICATED-CPU-QUEUE-FOR-INGRESS-PORT-Ethernet1/3/3\",\"shared-buffer-limit-type\" : \"openconfig-qos:STATIC\",\"static-shared-buffer-limit\" : 3200,\"use-shared-buffer\" : true, \"buffer-pool-name\" : \"egress_shared_pool\" }, \"name\" : \"DEDICATED-CPU-QUEUE-FOR-INGRESS-PORT-Ethernet1/3/3\" }]  }}]},\"forwarding-groups\" : {\"forwarding-group\" : [{  \"config\" : {  \"fabric-priority\" : 7,  \"name\" : \"target-group-NC1\",  \"unicast-output-queue\" : \"NC1\", \"multicast-output-queue\" : \"NC1\"  },  \"name\" : \"target-group-NC1\"},{  \"config\" : {  \"fabric-priority\" : 4,  \"name\" : \"target-group-AF4\",  \"unicast-output-queue\" : \"AF4\", \"multicast-output-queue\" : \"AF4\"  },  \"name\" : \"target-group-AF4\"},{  \"config\" : {  \"fabric-priority\" : 3,  \"name\" : \"target-group-AF3\",  \"unicast-output-queue\" : \"AF3\", \"multicast-output-queue\" : \"AF3\"  },  \"name\" : \"target-group-AF3\"},{  \"config\" : {  \"fabric-priority\" : 2,  \"name\" : \"target-group-AF2\",  \"unicast-output-queue\" : \"AF2\", \"multicast-output-queue\" : \"AF2\"  },  \"name\" : \"target-group-AF2\"},{  \"config\" : {  \"fabric-priority\" : 1,  \"name\" : \"target-group-AF1\",  \"unicast-output-queue\" : \"AF1\", \"multicast-output-queue\" : \"AF1\"  },  \"name\" : \"target-group-AF1\"},{  \"config\" : {  \"fabric-priority\" : 0,  \"name\" : \"target-group-BE1\",  \"unicast-output-queue\" : \"BE1\", \"multicast-output-queue\" : \"BE1\"  },  \"name\" : \"target-group-BE1\"},{  \"config\" : {  \"fabric-priority\" : 6,  \"name\" : \"target-group-LLQ2\",  \"unicast-output-queue\" : \"LLQ2\", \"multicast-output-queue\" : \"LLQ2\"  },  \"name\" : \"target-group-LLQ2\"},{  \"config\" : {  \"fabric-priority\" : 5,  \"name\" : \"target-group-LLQ1\",  \"unicast-output-queue\" : \"LLQ1\", \"multicast-output-queue\" : \"LLQ1\"  },  \"name\" : \"target-group-LLQ1\"}]},\"interfaces\" : {\"interface\" : [{  \"config\" : {  \"interface-id\" : \"Ethernet1/2/1\"  },  \"interface-id\" : \"Ethernet1/2/1\",  \"output\" : {  \"config\" : { \"buffer-allocation-profile\" : \"staggered_8queue\"  },  \"queues\" : { \"queue\" : [ {\"config\" : {\"name\" : \"NC1\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"NC1\" }, {\"config\" : {\"name\" : \"AF4\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"AF4\" }, {\"config\" : {\"name\" : \"AF3\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"AF3\" }, {\"config\" : {\"name\" : \"AF2\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"AF2\" }, {\"config\" : {\"name\" : \"AF1\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"AF1\" }, {\"config\" : {\"name\" : \"BE1\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"BE1\" }, {\"config\" : {\"name\" : \"LLQ2\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"LLQ2\" }, {\"config\" : {\"name\" : \"LLQ1\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"LLQ1\" } ]  },  \"scheduler-policy\" : { \"config\" : { \"name\" : \"scheduler_400gb\" }  }  }},{  \"config\" : {  \"interface-id\" : \"Ethernet1/2/5\"  },  \"interface-id\" : \"Ethernet1/2/5\",  \"output\" : {  \"config\" : { \"buffer-allocation-profile\" : \"staggered_8queue\"  },  \"queues\" : { \"queue\" : [ {\"config\" : {\"name\" : \"NC1\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"NC1\" }, {\"config\" : {\"name\" : \"AF4\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"AF4\" }, {\"config\" : {\"name\" : \"AF3\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"AF3\" }, {\"config\" : {\"name\" : \"AF2\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"AF2\" }, {\"config\" : {\"name\" : \"AF1\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"AF1\" }, {\"config\" : {\"name\" : \"BE1\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"BE1\" }, {\"config\" : {\"name\" : \"LLQ2\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"LLQ2\" }, {\"config\" : {\"name\" : \"LLQ1\",\"queue-management-profile\" : \"staggered_8queue\"},\"name\" : \"LLQ1\" } ]  },  \"scheduler-policy\" : { \"config\" : { \"name\" : \"scheduler_100gb\" }  }  }},{ \"config\" : { \"interface-id\" : \"CPU\" }, \"interface-id\" : \"CPU\", \"output\" : { \"config\" : {\"buffer-allocation-profile\" : \"cpu_buffer_profile\" }, \"queues\" : {\"queue\" : [{\"config\" : {  \"name\" : \"INBAND_PRIORITY_6\"},\"name\" : \"INBAND_PRIORITY_6\"},{\"config\" : {  \"name\" : \"INBAND_PRIORITY_5\"},\"name\" : \"INBAND_PRIORITY_5\"},{\"config\" : {  \"name\" : \"INBAND_PRIORITY_4\"},\"name\" : \"INBAND_PRIORITY_4\"},{\"config\" : {  \"name\" : \"INBAND_PRIORITY_3\"},\"name\" : \"INBAND_PRIORITY_3\"},{\"config\" : {  \"name\" : \"INBAND_PRIORITY_2\"},\"name\" : \"INBAND_PRIORITY_2\"},{\"config\" : {  \"name\" : \"INBAND_PRIORITY_1\"},\"name\" : \"INBAND_PRIORITY_1\"},{\"config\" : {  \"name\" : \"INBAND_PRIORITY_0\"},\"name\" : \"INBAND_PRIORITY_0\"},{\"config\" : {  \"name\" : \"DEDICATED-CPU-QUEUE-FOR-INGRESS-PORT-Ethernet1/3/3\"},\"name\" : \"DEDICATED-CPU-QUEUE-FOR-INGRESS-PORT-Ethernet1/3/3\"}] }, \"scheduler-policy\" : {\"config\" : {\"name\" : \"cpu_scheduler\"} } }  }]},\"queue-management-profiles\" : { \"queue-management-profile\" : [{\"config\" : {\"name\" : \"staggered_8queue\"},\"name\" : \"staggered_8queue\",\"wred\" : {\"uniform\" : {  \"config\" : {  \"drop\" : false,  \"enable-ecn\" : true,  \"max-drop-probability-percent\" : 1,  \"max-threshold\" : \"80000\",  \"min-threshold\" : \"80000\"  }}}} ] }, \"scheduler-policies\" : { \"scheduler-policy\" : [ {  \"config\" : { \"name\" : \"scheduler_100gb\"  },  \"name\" : \"scheduler_100gb\",  \"schedulers\" : { \"scheduler\" : [ {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 0,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"NC1\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"NC1\"  },  \"id\" : \"NC1\"}]},\"sequence\" : 0,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"1000000000\",\"pir\" : \"2000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 1,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"AF4\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"AF4\"  },  \"id\" : \"AF4\"}]},\"sequence\" : 1,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"100000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 2,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"AF3\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"AF3\"  },  \"id\" : \"AF3\"}]},\"sequence\" : 2,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"100000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 3,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"AF2\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"AF2\"  },  \"id\" : \"AF2\"}]},\"sequence\" : 3,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"100000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 4,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"AF1\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"AF1\"  },  \"id\" : \"AF1\"}]},\"sequence\" : 4,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"100000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 5,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"BE1\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"BE1\"  },  \"id\" : \"BE1\"}]},\"sequence\" : 5,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"100000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 6,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"LLQ2\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"LLQ2\"  },  \"id\" : \"LLQ2\"}]},\"sequence\" : 6,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"100000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 7,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"LLQ1\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"LLQ1\"  },  \"id\" : \"LLQ1\"}]},\"sequence\" : 7,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"100000000000\"}} } ]  }  },  {  \"config\" : { \"name\" : \"scheduler_400gb\"  },  \"name\" : \"scheduler_400gb\",  \"schedulers\" : { \"scheduler\" : [ {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 0,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"NC1\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"NC1\"  },  \"id\" : \"NC1\"}]},\"sequence\" : 0,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"4000000000\",\"pir\" : \"8000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 1,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"AF4\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"AF4\"  },  \"id\" : \"AF4\"}]},\"sequence\" : 1,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"400000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 2,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"AF3\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"AF3\"  },  \"id\" : \"AF3\"}]},\"sequence\" : 2,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"400000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 3,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"AF2\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"AF2\"  },  \"id\" : \"AF2\"}]},\"sequence\" : 3,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"400000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 4,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"AF1\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"AF1\"  },  \"id\" : \"AF1\"}]},\"sequence\" : 4,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"400000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 5,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"BE1\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"BE1\"  },  \"id\" : \"BE1\"}]},\"sequence\" : 5,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"400000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 6,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"LLQ2\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"LLQ2\"  },  \"id\" : \"LLQ2\"}]},\"sequence\" : 6,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"400000000000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 7,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"LLQ1\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"LLQ1\"  },  \"id\" : \"LLQ1\"}]},\"sequence\" : 7,\"two-rate-three-color\" : {\"config\" : {\"cir\" : \"0\",\"pir\" : \"400000000000\"}} } ]  }  },  {  \"config\" : { \"name\" : \"cpu_scheduler\"  },  \"name\" : \"cpu_scheduler\",  \"schedulers\" : { \"scheduler\" : [ {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 1,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"INBAND_PRIORITY_6\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"INBAND_PRIORITY_6\"  },  \"id\" : \"INBAND_PRIORITY_6\"}]},\"sequence\" : 1,\"two-rate-three-color\" : {\"config\" : {\"google-pins-qos:bc-pkts\" : 0,\"google-pins-qos:be-pkts\" : 256,\"google-pins-qos:cir-pkts\" : \"0\",\"google-pins-qos:pir-pkts\" : \"16000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 2,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"INBAND_PRIORITY_5\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"INBAND_PRIORITY_5\"  },  \"id\" : \"INBAND_PRIORITY_5\"}]},\"sequence\" : 2,\"two-rate-three-color\" : {\"config\" : {\"google-pins-qos:bc-pkts\" : 0,\"google-pins-qos:be-pkts\" : 4,\"google-pins-qos:cir-pkts\" : \"0\",\"google-pins-qos:pir-pkts\" : \"4000\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 3,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"INBAND_PRIORITY_4\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"INBAND_PRIORITY_4\"  },  \"id\" : \"INBAND_PRIORITY_4\"}]},\"sequence\" : 3,\"two-rate-three-color\" : {\"config\" : {\"google-pins-qos:bc-pkts\" : 0,\"google-pins-qos:be-pkts\" : 4,\"google-pins-qos:cir-pkts\" : \"0\",\"google-pins-qos:pir-pkts\" : \"120\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 4,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"INBAND_PRIORITY_3\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"INBAND_PRIORITY_3\"  },  \"id\" : \"INBAND_PRIORITY_3\"}]},\"sequence\" : 4,\"two-rate-three-color\" : {\"config\" : {\"google-pins-qos:bc-pkts\" : 0,\"google-pins-qos:be-pkts\" : 4,\"google-pins-qos:cir-pkts\" : \"0\",\"google-pins-qos:pir-pkts\" : \"800\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 5,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"INBAND_PRIORITY_2\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"INBAND_PRIORITY_2\"  },  \"id\" : \"INBAND_PRIORITY_2\"}]},\"sequence\" : 5,\"two-rate-three-color\" : {\"config\" : {\"google-pins-qos:bc-pkts\" : 0,\"google-pins-qos:be-pkts\" : 4,\"google-pins-qos:cir-pkts\" : \"0\",\"google-pins-qos:pir-pkts\" : \"120\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 6,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"INBAND_PRIORITY_1\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"INBAND_PRIORITY_1\"  },  \"id\" : \"INBAND_PRIORITY_1\"}]},\"sequence\" : 6,\"two-rate-three-color\" : {\"config\" : {\"google-pins-qos:bc-pkts\" : 0,\"google-pins-qos:be-pkts\" : 4,\"google-pins-qos:cir-pkts\" : \"0\",\"google-pins-qos:pir-pkts\" : \"120\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 7,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"INBAND_PRIORITY_0\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"INBAND_PRIORITY_0\"  },  \"id\" : \"INBAND_PRIORITY_0\"}]},\"sequence\" : 7,\"two-rate-three-color\" : {\"config\" : {\"google-pins-qos:bc-pkts\" : 0,\"google-pins-qos:be-pkts\" : 4,\"google-pins-qos:cir-pkts\" : \"0\",\"google-pins-qos:pir-pkts\" : \"800\"}} }, {\"config\" : {\"priority\" : \"STRICT\",\"sequence\" : 0,\"type\" : \"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\" : {\"input\" : [{  \"config\" : {  \"id\" : \"DEDICATED-CPU-QUEUE-FOR-INGRESS-PORT-Ethernet1/3/3\",  \"input-type\" : \"QUEUE\",  \"queue\" : \"DEDICATED-CPU-QUEUE-FOR-INGRESS-PORT-Ethernet1/3/3\"  },  \"id\" : \"DEDICATED-CPU-QUEUE-FOR-INGRESS-PORT-Ethernet1/3/3\"}]},\"sequence\" : 0,\"two-rate-three-color\" : {\"config\" : {\"google-pins-qos:bc-pkts\" : 0,\"google-pins-qos:be-pkts\" : 4,\"google-pins-qos:cir-pkts\" : \"0\",\"google-pins-qos:pir-pkts\" : \"800\"}} } ]  }  }]}}}",
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "BUFFER_POOL_TABLE:egress_shared_pool" : {
+                "mode": "dynamic",
+                "size": "113620296",
+                "type": "egress"
+              }
+            }
+          }
+        ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/qos/scheduler-policies/scheduler-policy[name=scheduler_400gb]/schedulers/scheduler[sequence=7]/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-qos:scheduler"
+      ],
+      "properties": {
+        "openconfig-qos:scheduler": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [ "inputs"],
+            "properties": {
+              "inputs": {
+                "type": "object",
+                "required": [ "input" ],
+                "properties": {
+                  "input": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "type": "object",
+                        "required": [ "config", "id", "state" ],
+                        "properties": {
+                          "config": {
+                            "type": "object",
+                            "required": [ "id", "input-type", "queue" ],
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "enum": ["LLQ1"]
+                              },
+                              "input-type": {
+                                "type": "string",
+                                "enum": ["QUEUE"]
+                              },
+                              "queue": {
+                                "type": "string",
+                                "enum": ["LLQ1"]
+                              }
+                            }
+                          },
+                          "id": {
+                            "type": "string",
+                            "enum": ["LLQ1"]
+                          },
+                          "state": {
+                            "type": "object",
+                            "required": [ "id", "input-type", "queue" ],
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "enum": ["LLQ1"]
+                              },
+                              "input-type": {
+                                "type": "string",
+                                "enum": ["QUEUE"]
+                              },
+                              "queue": {
+                                "type": "string",
+                                "enum": ["LLQ1"]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/qos/scheduler-policies/scheduler-policy[name=cpu_scheduler]/schedulers/scheduler[sequence=7]/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-qos:scheduler"
+      ],
+      "properties": {
+        "openconfig-qos:scheduler": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [ "inputs"],
+            "properties": {
+              "inputs": {
+                "type": "object",
+                "required": [ "input" ],
+                "properties": {
+                  "input": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "type": "object",
+                        "required": [ "config", "id", "state" ],
+                        "properties": {
+                          "config": {
+                            "type": "object",
+                            "required": [ "id", "input-type", "queue" ],
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "enum": ["INBAND_PRIORITY_0"]
+                              },
+                              "input-type": {
+                                "type": "string",
+                                "enum": ["QUEUE"]
+                              },
+                              "queue": {
+                                "type": "string",
+                                "enum": ["INBAND_PRIORITY_0"]
+                              }
+                            }
+                          },
+                          "id": {
+                            "type": "string",
+                            "enum": ["INBAND_PRIORITY_0"]
+                          },
+                          "state": {
+                            "type": "object",
+                            "required": [ "id", "input-type", "queue" ],
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "enum": ["INBAND_PRIORITY_0"]
+                              },
+                              "input-type": {
+                                "type": "string",
+                                "enum": ["QUEUE"]
+                              },
+                              "queue": {
+                                "type": "string",
+                                "enum": ["INBAND_PRIORITY_0"]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/qos/queues/queue[name=BE1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-qos:queue"
+      ],
+      "properties": {
+        "openconfig-qos:queue": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [ "config", "state" ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [ "name", "queue-id" ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": ["BE1"]
+                  },
+                  "queue-id": {
+                    "type": "integer",
+                    "enum": [2]
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [ "name", "queue-id" ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": ["BE1"]
+                  },
+                  "queue-id": {
+                    "type": "integer",
+                    "enum": [2]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/qos/forwarding-groups/forwarding-group[name=target-group-NC1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-qos:forwarding-group"
+      ],
+      "properties": {
+        "openconfig-qos:forwarding-group": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [ "config", "state" ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [ "name", "unicast-output-queue", "multicast-output-queue" ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": ["target-group-NC1"]
+                  },
+                  "unicast-output-queue": {
+                    "type": "string",
+                    "enum": ["NC1"]
+                  },
+                  "multicast-output-grouqueuep": {
+                    "type": "string",
+                    "enum": ["NC1"]
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [ "name", "unicast-output-queue", "multicast-output-queue" ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": ["target-group-NC1"]
+                  },
+                  "unicast-output-queue": {
+                    "type": "string",
+                    "enum": ["NC1"]
+                  },
+                  "multicast-output-queue": {
+                    "type": "string",
+                    "enum": ["NC1"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT_QOS_MAP|Ethernet1/2/1" : {
+              "tc_to_uc_mc_queue_map" : "global_tc_to_uc_mc_queue_map"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/qos/queues",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-qos:queues"
+      ],
+      "properties": {
+        "openconfig-qos:queues": {
+          "type": "object",
+          "required": [ "queue" ],
+          "properties": {
+            "queue": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [ "name" ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": ["INBAND_PRIORITY_6", "INBAND_PRIORITY_5", "INBAND_PRIORITY_4", "INBAND_PRIORITY_3", "INBAND_PRIORITY_2", "INBAND_PRIORITY_1", "INBAND_PRIORITY_0", "DEDICATED-CPU-QUEUE-FOR-INGRESS-PORT-Ethernet1/3/3", "AF1", "AF2", "AF3", "AF4", "BE1", "NC1", "LLQ1", "LLQ2"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "subscribe (ONCE) to /openconfig/qos/queues/queue[name=*]",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'qos'}elem:{name:'queues'}elem:{name:'queue'key:{key:'name'value:'*'}}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/openconfig/qos/queues/queue",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-qos:queue"],
+              "properties": {
+                "openconfig-qos:queue" : {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "minItems" : 16,
+                  "maxItems" : 16,
+                  "additionalItems": true
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

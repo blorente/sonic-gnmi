@@ -1,0 +1,245 @@
+{
+    "title": "Set_Interface_link_damping_config",
+    "operations":[
+      {
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces",
+        "target": "OC_YANG",
+        "attributeData": "{  \"interfaces\" : {     \"interface\" : [        {          \"config\": {            \"enabled\": true,            \"google-pins-interfaces:fully-qualified-interface-name\": \"\",            \"loopback-mode\": \"NONE\",            \"mtu\": 9216,            \"name\": \"Ethernet1/1/1\",            \"openconfig-pins-interfaces:health-indicator\": \"GOOD\",            \"type\": \"iana-if-type:ethernetCsmacd\"          },          \"name\": \"Ethernet1/1/1\",          \"penalty-based-aied\": {            \"config\": {              \"max-suppress-time\": 15000,              \"decay-half-life\": 3000,              \"suppress-threshold\": 10000,              \"reuse-threshold\": 8500,              \"flap-penalty\": 2000            }          }        },        {          \"config\": {            \"enabled\": true,            \"google-pins-interfaces:fully-qualified-interface-name\": \"\",            \"loopback-mode\": \"NONE\",            \"mtu\": 9216,            \"name\": \"Ethernet1/1/5\",            \"openconfig-pins-interfaces:health-indicator\": \"GOOD\",            \"type\": \"iana-if-type:ethernetCsmacd\"          },          \"hold-time\": {            \"config\": {              \"down\": 0,              \"up\": 8000            }          },          \"name\": \"Ethernet1/1/5\"        }     ]  }}",
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_TABLE:Ethernet1/1/1" : {
+                "max_suppress_time": "15000",
+                "decay_half_life": "3000",
+                "suppress_threshold": "10000",
+                "reuse_threshold": "8500",
+                "flap_penalty": "2000",
+                "link_event_damping_algorithm": "aied"
+              }
+            }
+          },
+          {
+            "oper": "dbHGetValidate",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORT|Ethernet1/1/1" : {
+                "learn_mode": "disable"
+              },
+              "PORT|Ethernet1/1/5" : {
+                "learn_mode": "disable"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/penalty-based-aied",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:penalty-based-aied"
+        ],
+        "properties": {
+          "openconfig-interfaces:penalty-based-aied": {
+            "type": "object",
+            "required": [
+                "config", "state"
+            ],
+            "properties": {
+                "config": {
+                    "type": "object",
+                    "required": [
+                        "max-suppress-time", "decay-half-life", "suppress-threshold", "reuse-threshold", "flap-penalty"
+                    ],
+                    "properties": {
+                        "max-suppress-time": {
+                            "type": "integer",
+                            "enum": [
+                                15000
+                            ]
+                        },
+                        "decay-half-life": {
+                            "type": "integer",
+                            "enum": [
+                                3000
+                            ]
+                        },
+                        "suppress-threshold": {
+                            "type": "integer",
+                            "enum": [
+                                10000
+                            ]
+                        },
+                        "reuse-threshold": {
+                            "type": "integer",
+                            "enum": [
+                                8500
+                            ]
+                        },
+                        "flap-penalty": {
+                            "type": "integer",
+                            "enum": [
+                                2000
+                            ]
+                        }
+                    }
+                },
+                "state": {
+                    "type": "object",
+                    "required": [
+                        "max-suppress-time", "decay-half-life", "suppress-threshold", "reuse-threshold", "flap-penalty"
+                    ],
+                    "properties": {
+                        "max-suppress-time": {
+                            "type": "integer",
+                            "enum": [
+                                15000
+                            ]
+                        },
+                        "decay-half-life": {
+                            "type": "integer",
+                            "enum": [
+                                3000
+                            ]
+                        },
+                        "suppress-threshold": {
+                            "type": "integer",
+                            "enum": [
+                                10000
+                            ]
+                        },
+                        "reuse-threshold": {
+                            "type": "integer",
+                            "enum": [
+                                8500
+                            ]
+                        },
+                        "flap-penalty": {
+                            "type": "integer",
+                            "enum": [
+                                2000
+                            ]
+                        }
+                    }
+                }
+            }
+          }
+        }
+      },
+      {
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/penalty-based-aied",
+        "target": "OC_YANG",
+        "type": "object",
+        "subOpers": [
+            {
+              "oper": "dbHGetValidate",
+              "db": "CONFIG_DB",
+              "value": {
+                "PORT|Ethernet1/1/5" : {
+                  "link_event_damping_algorithm" : "disabled"
+                }
+              }
+            }
+        ]
+      },
+      {
+        "title": "Set penalty-based-aied config again",
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces",
+        "target": "OC_YANG",
+        "attributeData": "{  \"interfaces\" : {     \"interface\" : [        {          \"config\": {            \"enabled\": true,            \"google-pins-interfaces:fully-qualified-interface-name\": \"\",            \"loopback-mode\": \"NONE\",            \"mtu\": 9216,            \"name\": \"Ethernet1/1/1\",            \"openconfig-pins-interfaces:health-indicator\": \"GOOD\",            \"type\": \"iana-if-type:ethernetCsmacd\"          },          \"name\": \"Ethernet1/1/1\",          \"penalty-based-aied\": {            \"config\": {              \"max-suppress-time\": 15000,              \"decay-half-life\": 3000,              \"suppress-threshold\": 10000,              \"reuse-threshold\": 8500,              \"flap-penalty\": 2000            }          }        },        {          \"config\": {            \"enabled\": true,            \"google-pins-interfaces:fully-qualified-interface-name\": \"\",            \"loopback-mode\": \"NONE\",            \"mtu\": 9216,            \"name\": \"Ethernet1/1/5\",            \"openconfig-pins-interfaces:health-indicator\": \"GOOD\",            \"type\": \"iana-if-type:ethernetCsmacd\"          },          \"hold-time\": {            \"config\": {              \"down\": 0,              \"up\": 8000            }          },          \"name\": \"Ethernet1/1/5\"        }     ]  }}"
+      },
+      {
+        "title": "Delete penalty-based-aied config",
+        "operation": "delete",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/penalty-based-aied",
+        "target": "OC_YANG"
+      },
+      {
+        "title": "Verify that penalty-based-aied config was deleted",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/penalty-based-aied/config",
+        "target": "OC_YANG",
+        "type": "object",
+        "additionalProperties": false,
+        "subOpers": [
+            {
+              "oper": "dbHGetValidate",
+              "db": "CONFIG_DB",
+              "value": {
+                "PORT|Ethernet1/1/1" : {
+                  "link_event_damping_algorithm" : "disabled"
+                }
+              }
+            }
+        ]
+      },
+      {
+        "title": "Restore changed config",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces",
+        "target": "OC_YANG",
+        "type": "object",
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORTCHANNEL|PortChannel1": {
+                "admin_status": "up",
+                "id": "2049",
+                "alias": "PortChannel1Alias",
+                "type": "iana-if-type:ieee8023adLag",
+                "description": "some description string.",
+                "mtu": "9104",
+                "lag_type": "LACP",
+                "members@": "Ethernet1/7/3,Ethernet1/7/4",
+                "min_links": "1",
+                "fast_rate": "true",
+                "active": "true",
+                "system_id": "fc:bd:67:2c:08:f4",
+                "lacp_key": "1",
+                "system_priority": "256"
+              },
+              "PORTCHANNEL_MEMBER|PortChannel1|Ethernet1/7/3": {
+                "NULL": "NULL"
+              },
+              "PORTCHANNEL_MEMBER|PortChannel1|Ethernet1/7/4": {
+                  "NULL": "NULL"
+              },
+              "PORTCHANNEL|PortChannel2": {
+                  "admin_status": "up",
+                  "id": "2049",
+                  "alias": "PortChannel2Alias",
+                  "type": "iana-if-type:ieee8023adLag",
+                  "description": "some description string.",
+                  "mtu": "9104",
+                  "lag_type": "LACP",
+                  "members@": "Ethernet1/3/5",
+                  "min_links": "1",
+                  "fast_rate": "true",
+                  "active": "true",
+                  "system_id": "AA:BB:CC:DD:EE:FF",
+                  "lacp_key": "2"
+              },
+              "PORTCHANNEL_MEMBER|PortChannel2|Ethernet1/3/5": {
+                "NULL": "NULL"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }

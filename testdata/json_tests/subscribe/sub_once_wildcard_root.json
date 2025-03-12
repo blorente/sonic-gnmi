@@ -1,0 +1,141 @@
+{
+  "title": "ONCE Subscribe with root with wildcard",
+  "operations":[
+    {
+      "title": "subscribe (ONCE) to /",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO mode:ONCE}",
+      "returnCode": 0,
+
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 20000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-interfaces:interfaces", "openconfig-lacp:lacp", "openconfig-platform:components", "openconfig-optical-switch:optical-switch", "openconfig-qos:qos", "openconfig-sampling:sampling", "openconfig-system:system"],
+              "properties": {
+                "openconfig-interfaces:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems" : 25,
+                      "maxItems" : 25,
+                      "additionalItems": false
+                    }
+                  }
+                },
+                "openconfig-lacp:lacp": {
+                  "type": "object",
+                  "required": ["config", "interfaces", "state"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "config": {
+                      "type": "object",
+                      "required": ["google-pins-lacp:enable-host-signaling"],
+                      "additionalProperties": false,
+                      "properties": {
+                        "google-pins-lacp:enable-host-signaling": { "type": "boolean", "const": false }
+                      }
+                    },
+                    "interfaces": {
+                      "type": "object",
+                      "required": ["interface"],
+                      "additionalProperties": false,
+                      "properties": {
+                        "interface": {
+                          "type": "array",
+                          "uniqueItems": true,
+                          "minItems" : 2,
+                          "maxItems" : 2,
+                          "additionalItems": false
+                        }
+                      }
+                    },
+                    "state": {
+                      "type": "object",
+                      "required": ["google-pins-lacp:enable-host-signaling"],
+                      "additionalProperties": false,
+                      "properties": {
+                        "google-pins-lacp:enable-host-signaling": { "type": "boolean", "const": false }
+                      }
+                    }
+                  }
+                },
+                "openconfig-platform:components": {
+                  "type": "object",
+                  "required": ["component"],
+                  "properties": {
+                    "component": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems" : 75,
+                      "maxItems" : 75,
+                      "additionalItems": false
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "openconfig-optical-switch:optical-switch": {
+                  "type": "object",
+                  "required": [
+                    "google-optical-switch:telemetry",
+                    "optical-switch-topology",
+                    "port-connection-recovery",
+                    "port-connections",
+                    "port-statuses"
+                  ]
+                },
+                "openconfig-qos:qos": {
+                  "type": "object",
+                  "required": [
+                    "buffer-allocation-profiles",
+                    "classifiers",
+                    "forwarding-groups",
+                    "google-pins-qos:shared-buffer-pools",
+                    "interfaces",
+                    "queue-management-profiles",
+                    "queues",
+                    "scheduler-policies"
+                  ]
+                },
+                "openconfig-sampling:sampling": {
+                  "type": "object",
+                  "required": [
+                    "openconfig-sampling-sflow:sflow"
+                  ]
+                },
+                "openconfig-system:system": {
+                  "type": "object",
+                  "required": [
+                    "aaa",
+                    "alarms",
+                    "config",
+                    "cpus",
+                    "gnsi-credentialz:console",
+                    "gnsi-pathz:gnmi-pathz-policies",
+                    "logging",
+                    "memory",
+                    "mount-points",
+                    "processes",
+                    "ssh-server",
+                    "state"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

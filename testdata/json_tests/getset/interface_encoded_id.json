@@ -1,0 +1,128 @@
+{
+  "title": "Set Interface encoded id",
+  "operations":[
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"openconfig-interfaces:encoded-id\":6756}}",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/1/1" : {
+              "encoded_id": "6756"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "required": [
+                "config",
+                "state"
+              ],
+              "properties": {
+                "config": {
+                  "type": "object",
+                  "required": [
+                    "google-pins-interfaces:encoded-id"
+                  ],
+                  "properties": {
+                    "google-pins-interfaces:encoded-id": {
+                      "type": "integer",
+                      "enum": [
+                        6756
+                      ]
+                    }
+                  }
+                },
+                "state": {
+                  "type": "object",
+                  "required": [
+                    "google-pins-interfaces:encoded-id"
+                  ],
+                  "properties": {
+                    "google-pins-interfaces:encoded-id": {
+                      "type": "integer",
+                      "enum": [
+                        6756
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "title": "Test non-existing config path, expect NotFound",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/2/1]/config/encoded-id",
+      "target": "OC_YANG",
+      "type": "object"
+    },
+    {
+      "title": "Test non-existing state path, expect NotFound",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/2/1]/state/encoded-id",
+      "target": "OC_YANG",
+      "type": "object"
+    },
+    {
+      "title": "Test non-singleton interfaces, expect Unknown",
+      "operation": "update",
+      "returnCode": 10,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"openconfig-interfaces:encoded-id\":6756}}"
+    },
+    {
+      "title": "Test bogus interface name, expect NotFound",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "openconfig/interfaces/interface[name=NotAInterface]/config/encoded-id",
+      "target": "OC_YANG",
+      "type": "object",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/1/1" : {
+              "encoded_id": "12:12"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "Test non-int encoded id, expect NotFound",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/state/encoded-id",
+      "target": "OC_YANG",
+      "type": "object"
+    }
+  ]
+}

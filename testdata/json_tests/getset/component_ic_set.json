@@ -1,0 +1,241 @@
+{
+  "title": "Set/Get for IC Component Paths",
+  "includeDefs": ["../defs/pfm_ic.json"],
+  "operations":[
+    {
+      "title": "Set with invalid component name is rejected",
+      "operation": "replace",
+      "returnCode": 10,
+      "xpath": "openconfig/components/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-platform:components\": {\"component\": [{\"name\": \"FooBar\", \"integrated-circuit\": {\"config\": {\"node-id\": \"123\"}}}]}}"
+    },
+    {
+      "title": "Set with invalid uint64 string is rejected",
+      "operation": "replace",
+      "returnCode": 10,
+      "xpath": "openconfig/components/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-platform:components\": {\"component\": [{\"name\": \"integrated_circuit0\", \"integrated-circuit\": {\"config\": {\"node-id\": \"Not a uint64\"}}}]}}"
+    },
+    {
+      "title": "Set with mismatched name/key is rejected",
+      "operation": "replace",
+      "returnCode": 10,
+      "xpath": "openconfig/components/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-platform:components\": {\"component\": [{\"name\": \"integrated_circuit0\", \"config\": {\"name\": \"0tiucric_detargetni\"}, \"integrated-circuit\": {\"config\": {\"node-id\": \"13\"}}}]}}"
+    },
+    {
+      "title": "Verify integrated_circuit node-id before delete",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=integrated_circuit0]/integrated-circuit/config/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:config"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:config": { "$ref": "#/globalDef/pfm_ic/IC0_ic_cfg" }
+      }
+    },
+    {
+      "title": "Delete integrated-circuit node-id",
+      "operation": "delete",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=integrated_circuit0]/integrated-circuit/config/node-id",
+      "target": "OC_YANG"
+    },
+    {
+      "title": "Verify integrated_circuit node-id after delete",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=integrated_circuit0]/integrated-circuit/config/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [],
+      "additionalProperties": false,
+      "properties": {}
+    },
+    {
+      "title": "SetReplace integrated_circuit0 fully-qualified-name and node-id",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/components/",
+      "target": "OC_YANG",
+switch\"},\"integrated-circuit\": {\"config\": {\"node-id\": \"183930889\"}}}]}}"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=integrated_circuit0]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:component"],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["config", "integrated-circuit", "state"],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": ["name", "openconfig-pins-platform:fully-qualified-name"],
+                "properties": {
+                  "name": { "$ref": "#/globalDef/pfm_ic/IC0_name" },
+                  "openconfig-pins-platform:fully-qualified-name": {
+                    "type": "string",
+switch"
+                  }
+                }
+              },
+              "integrated-circuit": {
+                "type": "object",
+                "required": ["config", "state", "openconfig-platform-integrated-circuit:memory", "openconfig-platform-pipeline-counters:pipeline-counters"],
+                "additionalProperties": false,
+                "properties": {
+                  "config": {
+                    "type": "object",
+                    "required": ["openconfig-p4rt:node-id"],
+                    "additionalProperties": false,
+                    "properties": {
+                      "openconfig-p4rt:node-id": { "type": "string", "const": "183930889" }
+                    }
+                  },
+                  "state": {
+                    "type": "object",
+                    "required": ["openconfig-p4rt:node-id", "google-pins-platform:blackhole", "google-pins-platform:congestion"],
+                    "additionalProperties": false,
+                    "properties": {
+                      "openconfig-p4rt:node-id": { "type": "string", "const": "183930889" },
+                      "google-pins-platform:blackhole": { "$ref": "#/globalDef/pfm_ic/IC0_ic_st_bh" },
+                      "google-pins-platform:congestion": { "$ref": "#/globalDef/pfm_ic/IC0_ic_st_cg" }
+                    }
+                  },
+                  "openconfig-platform-integrated-circuit:memory": { "$ref": "#/globalDef/pfm_ic/IC0_ic_mem" },
+                  "openconfig-platform-pipeline-counters:pipeline-counters": { "$ref": "#/globalDef/pfm_ic/IC0_ic_plc" }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": ["name", "openconfig-pins-platform:fully-qualified-name", "parent", "type"],
+                "additionalProperties": false,
+                "properties": {
+                  "name": { "$ref": "#/globalDef/pfm_ic/IC0_name" },
+                  "parent": { "$ref": "#/globalDef/pfm_ic/IC0_parent" },
+                  "type": { "$ref": "#/globalDef/pfm_ic/IC0_type" },
+                  "openconfig-pins-platform:fully-qualified-name": {
+                    "type": "string",
+switch"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=integrated_circuit0]/integrated-circuit/openconfig-platform-integrated-circuit:memory",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform-integrated-circuit:memory"
+      ],
+      "properties": {
+        "openconfig-platform-integrated-circuit:memory": { "$ref": "#/globalDef/pfm_ic/IC0_ic_mem" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=integrated_circuit0]/integrated-circuit/memory/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform-integrated-circuit:state"
+      ],
+      "properties": {
+        "openconfig-platform-integrated-circuit:state": { "$ref": "#/globalDef/pfm_ic/IC0_ic_mem_st" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=integrated_circuit0]/integrated-circuit/openconfig-platform-integrated-circuit:memory/state/corrected-parity-errors",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform-integrated-circuit:corrected-parity-errors"
+      ],
+      "properties": {
+        "openconfig-platform-integrated-circuit:corrected-parity-errors": { "$ref": "#/globalDef/pfm_ic/IC0_ic_mem_st_cpe" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=integrated_circuit0]/integrated-circuit/openconfig-platform-integrated-circuit:memory/state/total-parity-errors",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform-integrated-circuit:total-parity-errors"
+      ],
+      "properties": {
+        "openconfig-platform-integrated-circuit:total-parity-errors": { "$ref": "#/globalDef/pfm_ic/IC0_ic_mem_st_tpe" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=integrated_circuit0]/integrated-circuit/pipeline-counters/drop/lookup-block/state/no-route",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform-pipeline-counters:no-route"
+      ],
+      "properties": {
+        "openconfig-platform-pipeline-counters:no-route": { "$ref": "#/globalDef/pfm_ic/IC0_ic_plc_drop_st_no_rte" }
+      }
+    },
+    {
+      "title": "SetUpdate integrated_circuit0 fully-qualified-name",
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/components/",
+      "target": "OC_YANG",
+switch\"}}]}}"
+    },
+    {
+      "title": "SetUpdate integrated_circuit0 node-id",
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/components/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-platform:components\": {\"component\": [{\"name\": \"integrated_circuit0\",\"integrated-circuit\": {\"config\": {\"node-id\": \"1234567\"}}}]}}"
+    },
+    {
+      "title": "Get after restoring node-id and fully-qualified-name",
+      "operation": "get",
+      "operProto": "prefix:{origin:'openconfig' target:'SomeTarget'} type:ALL encoding:JSON_IETF path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}}",
+      "returnCode": 0,
+      "type": "object",
+      "required": ["openconfig-platform:component"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:component" : {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "$ref": "#/globalDef/pfm_ic/IC0"
+          }
+        }
+      }
+    }
+  ]
+}

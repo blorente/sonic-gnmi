@@ -1,0 +1,20 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "tls",
+    srcs = ["tls.go"],
+    importpath = "github.com/sonic-net/sonic-gnmi/testdata/tls",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "tls_test",
+    srcs = ["tls_test.go"],
+    embed = [":tls"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":tls",
+    visibility = ["//visibility:public"],
+)

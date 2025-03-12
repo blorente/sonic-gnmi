@@ -1,0 +1,319 @@
+{
+  "title": "Optical Switch Port Statuses Path Tests",
+  "operations": [
+    {
+      "title": "Root-Level Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-statuses",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:port-statuses"
+      ],
+      "properties": {
+        "openconfig-optical-switch:port-statuses": {
+          "type": "object",
+          "required": ["port-status"],
+          "properties": {
+            "port-status": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "required": ["slot-number", "port-number", "state"],
+                  "properties": {
+                    "slot-number": {
+                      "type": "integer",
+                      "enum": [1]
+                    },
+                    "port-number": {
+                      "type": "integer",
+                      "enum": [1]
+                    },
+                    "state": {
+                      "type": "object",
+                      "required": ["port-status", "port-status-message"],
+                      "properties": {
+                        "port-status": {
+                          "type": "string",
+                          "enum": ["STATUS_ENABLED"]
+                        },
+                        "port-status-message": {
+                          "type": "string",
+                          "enum": ["no message."]
+                        }
+                      }
+                    }
+                  }
+                },
+
+                {
+                  "type": "object",
+                  "required": ["slot-number", "port-number", "state"],
+                  "properties": {
+                    "slot-number": {
+                      "type": "integer",
+                      "enum": [1]
+                    },
+                    "port-number": {
+                      "type": "integer",
+                      "enum": [99]
+                    },
+                    "state": {
+                      "type": "object",
+                      "required": ["port-status", "port-status-message"],
+                      "properties": {
+                        "port-status": {
+                          "type": "string",
+                          "enum": ["STATUS_DISABLED"]
+                        },
+                        "port-status-message": {
+                          "type": "string",
+                          "enum": ["no message."]
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+
+    {
+      "title": "Specific port-status 1|1 Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-statuses/port-status[slot-number=1][port-number=1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:port-status"
+      ],
+      "properties": {
+        "openconfig-optical-switch:port-status": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "required": ["slot-number", "port-number", "state"],
+              "properties": {
+                "slot-number": {
+                  "type": "integer",
+                  "enum": [1]
+                },
+                "port-number": {
+                  "type": "integer",
+                  "enum": [1]
+                },
+                "state": {
+                  "type": "object",
+                  "required": ["port-status", "port-status-message"],
+                  "properties": {
+                    "port-status": {
+                      "type": "string",
+                      "enum": ["STATUS_ENABLED"]
+                    },
+                    "port-status-message": {
+                      "type": "string",
+                      "enum": ["no message."]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+
+    {
+      "title": "Specific port-status 1|99 Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-statuses/port-status[slot-number=1][port-number=99]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:port-status"
+      ],
+      "properties": {
+        "openconfig-optical-switch:port-status": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "required": ["slot-number", "port-number", "state"],
+              "properties": {
+                "slot-number": {
+                  "type": "integer",
+                  "enum": [1]
+                },
+                "port-number": {
+                  "type": "integer",
+                  "enum": [99]
+                },
+                "state": {
+                  "type": "object",
+                  "required": ["port-status", "port-status-message"],
+                  "properties": {
+                    "port-status": {
+                      "type": "string",
+                      "enum": ["STATUS_DISABLED"]
+                    },
+                    "port-status-message": {
+                      "type": "string",
+                      "enum": ["no message."]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+
+    {
+      "title": "Specific port-status/state 1|99 Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-statuses/port-status[slot-number=1][port-number=99]/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:state"
+      ],
+      "properties": {
+        "openconfig-optical-switch:state": {
+          "type": "object",
+          "required": ["port-status", "port-status-message"],
+          "properties": {
+            "port-status": {
+              "type": "string",
+              "enum": ["STATUS_DISABLED"]
+            },
+            "port-status-message": {
+              "type": "string",
+              "enum": ["no message."]
+            }
+          }
+        }
+      }
+    },
+
+    {
+      "title": "Specific port-status/state/port-status 1|99 Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-statuses/port-status[slot-number=1][port-number=99]/state/port-status",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:port-status"
+      ],
+      "properties": {
+        "openconfig-optical-switch:port-status": {
+          "type": "string",
+          "enum": ["STATUS_DISABLED"]
+        }
+      }
+    },
+
+    {
+      "title": "Specific port-status/state/port-status-message 1|99 Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-statuses/port-status[slot-number=1][port-number=99]/state/port-status-message",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:port-status-message"
+      ],
+      "properties": {
+        "openconfig-optical-switch:port-status-message": {
+          "type": "string",
+          "enum": ["no message."]
+        }
+      }
+    },
+
+    {
+      "title": "Bad slot-number, Negative",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-statuses/port-status[slot-number=-1][port-number=99]/state/port-status",
+      "target": "OC_YANG",
+      "type": "object"
+    },
+
+    {
+      "title": "Bad slot-number, Out-of-Range",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-statuses/port-status[slot-number=5618973][port-number=99]/state/port-status",
+      "target": "OC_YANG",
+      "type": "object"
+    },
+
+    {
+      "title": "Bad port-number, Negative",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-statuses/port-status[slot-number=1][port-number=-1]/state/port-status",
+      "target": "OC_YANG",
+      "type": "object"
+    },
+
+    {
+      "title": "Bad port-number, Out-of-Range",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-statuses/port-status[slot-number=1][port-number=8948949]/state/port-status",
+      "target": "OC_YANG",
+      "type": "object",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "title": "Set bad port-status enum",
+          "db": "STATE_DB",
+          "value": {
+            "OCS_PORT_STATUSES|1|1": {
+              "port-status": "NOTAPORTSTATUS"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "title": "Edgecase, Bad port-status Value, Fails",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-statuses/port-status[slot-number=1][port-number=1]/state/port-status",
+      "target": "OC_YANG",
+      "type": "object",
+      "subOpers": [
+        {
+          "oper": "dbHDel",
+          "title": "Set missing port-status enum",
+          "db": "STATE_DB",
+          "value": {
+            "OCS_PORT_STATUSES|1|1": ["port-status"]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Edgecase, Missing port-status Value, Fails",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-statuses/port-status[slot-number=1][port-number=1]/state/port-status",
+      "target": "OC_YANG",
+      "type": "object"
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+// WhiteBoxTest represents a list of test APIs that facilitates testing the
+// switch/controller (injecting events, mutating switch state etc.)
+
+syntax = "proto3";
+
+package gpins.gnoi;
+option go_package = "proto/gnoi/whitebox";
+
+service WhiteBoxTest {
+  // This RPC blocks or permits GNMI and P4RT connections from controller either
+  // on in band or out of band or on both channels.
+  // The goal is to simulate controller connection loss in various tests.
+  rpc SetControllerConnectionState(SetControllerConnectionStateRequest)
+      returns (SetControllerConnectionStateResponse) {}
+
+  // This RPC injects specific failures into the switch.
+  rpc InjectFailure(InjectFailureRequest) returns (InjectFailureResponse);
+}
+
+message SetControllerConnectionStateRequest {
+  enum State {
+    UNKNOWN_STATE = 0;
+    BLOCK = 1;  // Block connections to switch.
+    REMOVE_BLOCK = 2;  // Permit connections to switch.
+  }
+
+  enum ConnectionType {
+    UNKNOWN_TYPE = 0;
+    ALL_CONNECTIONS = 1;  // Both in band and out of band connecions.
+    IN_BAND = 2;  // only in band connections.
+    OUT_OF_BAND = 3;  // only out of band connections.
+  }
+
+  State state = 1;
+  ConnectionType type = 2;
+
+  // Controller ipv4 addresses in prefix format ex: 10.1.1.1/32.
+  repeated string ipv4_prefix = 3;
+
+  // Controller ipv6 addresses in prefix format ex: 1000::1/128.
+  repeated string ipv6_prefix = 4;
+}
+
+message SetControllerConnectionStateResponse {}
+
+message StateVerificationFailure {
+  enum Result {
+    RESULT_UNSPECIFIED = 0;
+    // Explicitly set state verification result to failed.
+    FAILED = 1;
+    // Explicitly set state verification result to not_run.
+    NOT_RUN = 2;
+    // Make state verification timeout by not updating the result.
+    TIMEOUT = 3;
+  }
+
+  Result result = 1;
+}
+
+message WarmbootFailure {
+  message WarmbootStageFailure {
+    enum Stage {
+      STAGE_UNSPECIFIED = 0;
+      FREEZE = 1;
+      CHECKPOINT = 2;
+      RECONCILIATION = 3;
+      UNFREEZE = 4;
+    }
+
+    enum Result {
+      RESULT_UNSPECIFIED = 0;
+      // Explicitly set warm-boot state to failed.
+      FAILED = 1;
+      // Make warm-boot stage timeout by not updating the warm-boot state.
+      TIMEOUT = 2;
+    }
+
+    Stage stage = 1;
+    Result result = 2;
+  }
+
+  message WarmbootStateVerificationFailure {
+    enum Stage {
+      STAGE_UNSPECIFIED = 0;
+      WARM_SHUTDOWN = 1;
+      WARM_BOOTUP = 2;
+    }
+
+    StateVerificationFailure failure = 1;
+    Stage stage = 2;
+  }
+
+  message QuiescenceFailure {
+    enum FailureType {
+      TYPE_NONE = 0;
+      // Stay in frozen state. Never update state to quiescent.
+      KEEP_FROZEN = 1;
+      // Keep flapping states between frozen and quiescent.
+      FLAP_STATES = 2;
+    }
+
+    FailureType failure_type = 1;
+  }
+
+  enum DeleteCheckpointedFile {
+    COMPONENT_NONE = 0;
+    SYNCD = 1;
+    TEAMD = 2;
+    REDIS = 3;
+  }
+
+  oneof failure {
+    // Warm-boot stage failure (freeze/checkpoint/reconciliation/unfreeze).
+    WarmbootStageFailure warmboot_stage = 1;
+
+    // State verification failure during warm-boot.
+    WarmbootStateVerificationFailure state_verification = 2;
+
+    // Fail quiescence with specific failure type (flap states, never update
+    // state to quiescent etc.).
+    QuiescenceFailure quiescence_failure = 3;
+
+    // Delete checkpointed files.
+    DeleteCheckpointedFile delete_checkpointed_file = 4;
+  }
+}
+
+message InjectFailureRequest {
+  message Failure {
+    oneof failure {
+      // Inject failure during warm reboot.
+      WarmbootFailure warmboot_failure = 1;
+    }
+  }
+
+  repeated Failure failures = 1;
+}
+
+message InjectFailureResponse {}

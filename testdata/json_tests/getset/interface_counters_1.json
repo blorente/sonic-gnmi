@@ -1,0 +1,207 @@
+{
+  "title": "Get Interface counters",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["state"],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": ["counters"],
+                "properties": {
+                  "counters": {
+                    "type": "object",
+                    "required": ["in-broadcast-pkts"],
+                    "properties": {
+                      "counters": {
+                      "type": "string",
+                      "enum": ["70"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=CPU]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["state"],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": ["counters"],
+                "properties": {
+                  "counters": {
+                    "type": "object",
+                    "required": ["in-broadcast-pkts"],
+                    "properties": {
+                      "counters": {
+                        "type": "string",
+                        "enum": ["700"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["state"],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": ["counters"],
+                "properties": {
+                  "counters": {
+                    "type": "object",
+                    "required": [
+                      "google-pins-interfaces:in-buffer-discards",
+                      "google-pins-interfaces:out-ecn-marked-pkts",
+                      "in-broadcast-pkts",
+                      "in-discards",
+                      "in-errors",
+                      "in-fcs-errors",
+                      "in-multicast-pkts",
+                      "in-octets",
+                      "in-pkts",
+                      "in-unicast-pkts",
+                      "in-unknown-protos",
+                      "last-clear",
+                      "out-broadcast-pkts",
+                      "out-discards",
+                      "out-errors",
+                      "out-multicast-pkts",
+                      "out-octets",
+                      "out-pkts",
+                      "out-unicast-pkts"],
+                    "properties": {
+                      "google-pins-interfaces:in-buffer-discards": {
+                        "type": "string",
+                        "enum": ["320"]
+                      },
+                      "google-pins-interfaces:out-ecn-marked-pkts": {
+                        "type": "string",
+                        "enum": ["500"]
+                      },
+                      "in-broadcast-pkts": {
+                        "type": "string",
+                        "enum": ["140"]
+                      },
+                      "in-discards": {
+                        "type": "string",
+                        "enum": ["380"]
+                      },
+                      "in-errors": {
+                        "type": "string",
+                        "enum": ["580"]
+                      },
+                      "in-fcs-errors": {
+                        "type": "string",
+                        "enum": ["246"]
+                      },
+                      "in-multicast-pkts": {
+                        "type": "string",
+                        "enum": ["100"]
+                      },
+                      "in-octets": {
+                        "type": "string",
+                        "enum": ["340"]
+                      },
+                      "in-pkts": {
+                        "type": "string",
+                        "enum": ["1080"]
+                      },
+                      "in-unicast-pkts": {
+                        "type": "string",
+                        "enum": ["640"]
+                      },
+                      "in-unknown-protos": {
+                        "type": "string",
+                        "enum": ["300"]
+                      },
+                      "last-clear": {
+                        "type": "string",
+                        "enum": ["0"]
+                      },
+                      "out-broadcast-pkts": {
+                        "type": "string",
+                        "enum": ["320"]
+                      },
+                      "out-discards": {
+                        "type": "string",
+                        "enum": ["540"]
+                      },
+                      "out-errors": {
+                        "type": "string",
+                        "enum": ["520"]
+                      },
+                      "out-multicast-pkts": {
+                        "type": "string",
+                        "enum": ["660"]
+                      },
+                      "out-octets": {
+                        "type": "string",
+                        "enum": ["620"]
+                      },
+                      "out-pkts": {
+                        "type": "string",
+                        "enum": ["820"]
+                      },
+                      "out-unicast-pkts": {
+                        "type": "string",
+                        "enum": ["600"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

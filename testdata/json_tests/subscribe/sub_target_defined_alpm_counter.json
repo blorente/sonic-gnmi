@@ -1,0 +1,90 @@
+{
+    "title": "Subscribe with TARGET_DEFINED ALPM miss counter",
+    "globalDef" : {
+      "validators": {
+        "state.no-route.1228": {
+          "type": "object",
+          "required": [
+            "openconfig-platform-pipeline-counters:no-route"
+          ],
+          "properties": {
+            "openconfig-platform-pipeline-counters:no-route": {
+              "type": "string",
+              "const": "1228"
+            }
+          }
+        },
+        "state.no-route.1828": {
+            "type": "object",
+            "required": [
+              "openconfig-platform-pipeline-counters:no-route"
+            ],
+            "properties": {
+              "openconfig-platform-pipeline-counters:no-route": {
+                "type": "string",
+                "const": "1828"
+              }
+            }
+          }
+      }
+    },
+    "operations":[
+      {
+        "title": "subscribe to /components/component[name=integrated_circuit0]/integrated-circuit/pipeline-counters/drop/lookup-block/state/no-route",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'integrated-circuit'}elem:{name:'pipeline-counters'}elem:{name:'drop'}elem:{name:'lookup-block'}elem:{name:'state'}elem:{name:'no-route'}}mode:TARGET_DEFINED sample_interval:1000000000 suppress_redundant: true} mode:STREAM}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 3000,
+            "finalValidator": {
+              "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit/pipeline-counters/drop/lookup-block/state/no-route",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.no-route.1228"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "db": "COUNTERS_DB",
+            "value": {
+              "COUNTERS:oid:0x21000000000000" : {
+                "4128": "1200"
+              }
+            }
+          },
+          {
+            "oper": "validate",
+            "timeout": 3000,
+            "finalValidator": {
+              "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit/pipeline-counters/drop/lookup-block/state/no-route",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.no-route.1828"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "db": "COUNTERS_DB",
+            "value": {
+              "COUNTERS:oid:0x21000000000000" : {
+                "4128": "600"
+              }
+            }
+          },
+          {
+            "oper": "validate",
+            "timeout": 3000,
+            "finalValidator": {
+              "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit/pipeline-counters/drop/lookup-block/state/no-route",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.no-route.1228"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+  

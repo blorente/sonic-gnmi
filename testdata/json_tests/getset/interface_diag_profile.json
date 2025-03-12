@@ -1,0 +1,135 @@
+{
+  "title": "set_interface_diag_profile",
+  "operations":[
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"google-pins-interfaces:diag-profile\": \"blue\"}}",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "BLACKHOLE_PORT_TO_PROFILE_MAP:GLOBAL" : {
+              "Ethernet1/1/1": "blue"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"google-pins-interfaces:diag-profile\": \"grey\"}}",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "BLACKHOLE_PORT_TO_PROFILE_MAP:GLOBAL" : {
+              "Ethernet1/1/5": "grey"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config", "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "google-pins-interfaces:diag-profile"
+                ],
+                "properties": {
+                  "google-pins-interfaces:diag-profile": {
+                    "type": "string",
+                    "enum": ["blue"]
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "google-pins-interfaces:diag-profile"
+                ],
+                "properties": {
+                  "google-pins-interfaces:diag-profile": {
+                    "type": "string",
+                    "enum": ["blue"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config", "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "google-pins-interfaces:diag-profile"
+                ],
+                "properties": {
+                  "google-pins-interfaces:diag-profile": {
+                    "type": "string",
+                    "enum": ["grey"]
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "google-pins-interfaces:diag-profile"
+                ],
+                "properties": {
+                  "google-pins-interfaces:diag-profile": {
+                    "type": "string",
+                    "enum": ["grey"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

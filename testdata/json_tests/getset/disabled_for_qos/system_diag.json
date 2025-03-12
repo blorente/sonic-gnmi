@@ -1,0 +1,331 @@
+{
+  "title": "set_system_diag",
+  "operations":[
+    {
+      "title": "diag replace with valid config",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "/openconfig/system",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-system:system\": {\"google-pins-diag:diag\": {\"config\": {\"blackhole-monitoring-enable\": true, \"congestion-monitoring-enable\": true, \"lpm-misses-threshold\": 3000, \"recovered-parity-errors-threshold\": 3001, \"ecc-single-bit-errors-threshold\": 3002}, \"port-profiles\": {\"port-profile\": [{\"name\": \"blue\", \"config\": {\"name\": \"blue\", \"min-incoming-pkt-threshold\": 1000, \"min-outgoing-pkt-threshold\": 1001, \"fec-not-correctable-threshold\": 1002, \"in-discards-rate-threshold\": 1000, \"out-discards-rate-threshold\": 2000, \"in-errors-threshold\": 1003, \"queue-min-outgoing-pkt-threshold\": 1004}, \"queues\": {\"queue\": [{\"qname\": \"AF1\", \"config\": {\"qname\": \"AF1\", \"dropped-rate-threshold\": 1100}}, {\"qname\": \"AF2\", \"config\": {\"qname\": \"AF2\", \"dropped-rate-threshold\": 2200}}]}}]}}}}",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "BLACKHOLE_MONITORING:GLOBAL" : {
+              "state": "enabled"
+            },
+            "CONGESTION_MONITORING:GLOBAL" : {
+              "state": "enabled"
+            },
+            "BLACKHOLE_SWITCH_PROFILE:GLOBAL" : {
+              "blackhole_switch_ecc_single_bit_errors_thresh": "3002",
+              "blackhole_switch_recovered_parity_errors_thresh": "3001",
+              "blackhole_switch_lpm_misses_thresh": "3000"
+            },
+            "BLACKHOLE_PORT_PROFILE:blue" : {
+              "blackhole_port_min_incoming_pkts_thresh": "1000",
+              "blackhole_port_min_outgoing_pkts_thresh": "1001",
+              "blackhole_port_fec_not_correctable_thresh": "1002",
+              "blackhole_port_in_discards_rate_thresh": "0.01",
+              "blackhole_port_out_discards_rate_thresh": "0.02",
+              "blackhole_port_in_errors_thresh": "1003"
+            },
+            "CONGESTION_PROFILE:blue" : {
+              "congestion_queue_min_outgoing_pkts_thresh": "1004"
+            },
+            "CONGESTION_QUEUE_TO_DROPPED_PKTS_RATE_THRESH_MAP:blue" : {
+              "3": "0.011",
+              "2": "0.022"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "get /system/diag, confirm all",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/diag",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-diag:diag"
+      ],
+      "properties": {
+        "google-pins-diag:diag": {
+          "type": "object",
+          "required": [
+            "config", "port-profiles", "state"
+          ],
+          "properties": {
+            "config": {
+              "type": "object",
+              "required": [
+                "blackhole-monitoring-enable", "congestion-monitoring-enable", "lpm-misses-threshold",
+                "recovered-parity-errors-threshold", "ecc-single-bit-errors-threshold"
+              ],
+              "properties": {
+                "blackhole-monitoring-enable": {
+                  "type": "boolean",
+                  "enum": [ true ]
+                },
+                "congestion-monitoring-enable": {
+                  "type": "boolean",
+                  "enum": [ true ]
+                },
+                "lpm-misses-threshold": {
+                  "type": "integer",
+                  "enum": [ 3000 ]
+                },
+                "recovered-parity-errors-threshold": {
+                  "type": "integer",
+                  "enum": [ 3001 ]
+                },
+                "ecc-single-bit-errors-threshold": {
+                  "type": "integer",
+                  "enum": [ 3002 ]
+                }
+              }
+            },
+            "state": {
+              "type": "object",
+              "required": [
+                "blackhole-monitoring-enable", "congestion-monitoring-enable", "lpm-misses-threshold",
+                "recovered-parity-errors-threshold", "ecc-single-bit-errors-threshold"
+              ],
+              "properties": {
+                "blackhole-monitoring-enable": {
+                  "type": "boolean",
+                  "enum": [ true ]
+                },
+                "congestion-monitoring-enable": {
+                  "type": "boolean",
+                  "enum": [ true ]
+                },
+                "lpm-misses-threshold": {
+                  "type": "integer",
+                  "enum": [ 3000 ]
+                },
+                "recovered-parity-errors-threshold": {
+                  "type": "integer",
+                  "enum": [ 3001 ]
+                },
+                "ecc-single-bit-errors-threshold": {
+                  "type": "integer",
+                  "enum": [ 3002 ]
+                }
+              }
+            },
+            "port-profiles": {
+              "type": "object",
+              "required": [
+                "port-profile"
+              ],
+              "properties": {
+                "port-profile": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "name", "config", "state", "queues"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "enum": ["blue"]
+                      },
+                      "config": {
+                        "type": "object",
+                        "required": [
+                          "name", "min-incoming-pkt-threshold","min-outgoing-pkt-threshold","fec-not-correctable-threshold","in-discards-rate-threshold","out-discards-rate-threshold","in-errors-threshold","queue-min-outgoing-pkt-threshold"
+                        ],
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "enum": ["blue"]
+                          },
+                          "min-incoming-pkt-threshold": {
+                            "type": "integer",
+                            "enum": [ 1000 ]
+                          },
+                          "min-outgoing-pkt-threshold": {
+                            "type": "integer",
+                            "enum": [ 1001 ]
+                          },
+                          "fec-not-correctable-threshold": {
+                            "type": "integer",
+                            "enum": [ 1002 ]
+                          },
+                          "in-discards-rate-threshold": {
+                            "type": "integer",
+                            "enum": [ 1000 ]
+                          },
+                          "out-discards-rate-threshold": {
+                            "type": "integer",
+                            "enum": [ 2000 ]
+                          },
+                          "in-errors-threshold": {
+                            "type": "integer",
+                            "enum": [ 1003 ]
+                          },
+                          "queue-min-outgoing-pkt-threshold": {
+                            "type": "integer",
+                            "enum": [ 1004 ]
+                          }
+                        }
+                      },
+                      "state": {
+                        "type": "object",
+                        "required": [
+                          "name", "min-incoming-pkt-threshold","min-outgoing-pkt-threshold","fec-not-correctable-threshold","in-discards-rate-threshold","out-discards-rate-threshold","in-errors-threshold","queue-min-outgoing-pkt-threshold"
+                        ],
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "enum": ["blue"]
+                          },
+                          "min-incoming-pkt-threshold": {
+                            "type": "integer",
+                            "enum": [ 1000 ]
+                          },
+                          "min-outgoing-pkt-threshold": {
+                            "type": "integer",
+                            "enum": [ 1001 ]
+                          },
+                          "fec-not-correctable-threshold": {
+                            "type": "integer",
+                            "enum": [ 1002 ]
+                          },
+                          "in-discards-rate-threshold": {
+                            "type": "integer",
+                            "enum": [ 1000 ]
+                          },
+                          "out-discards-rate-threshold": {
+                            "type": "integer",
+                            "enum": [ 2000 ]
+                          },
+                          "in-errors-threshold": {
+                            "type": "integer",
+                            "enum": [ 1003 ]
+                          },
+                          "queue-min-outgoing-pkt-threshold": {
+                            "type": "integer",
+                            "enum": [ 1004 ]
+                          }
+                        }
+                      },
+                      "queues": {
+                        "type": "object",
+                        "required": [
+                          "queue"
+                        ],
+                        "properties": {
+                          "queue": {
+                            "type": "array",
+                            "items":
+                            [
+                              {
+                                "type": "object",
+                                "required": [
+                                  "config", "state"
+                                ],
+                                "properties": {
+                                  "config": {
+                                    "type": "object",
+                                    "required": [
+                                      "qname", "dropped-rate-threshold"
+                                    ],
+                                    "properties": {
+                                      "qname": {
+                                        "type": "string",
+                                        "enum": [ "AF1" ]
+                                      },
+                                      "dropped-rate-threshold": {
+                                        "type": "integer",
+                                        "enum": [ 1100 ]
+                                      }
+                                    }
+                                  },
+                                  "state": {
+                                    "type": "object",
+                                    "required": [
+                                      "qname", "dropped-rate-threshold"
+                                    ],
+                                    "properties": {
+                                      "qname": {
+                                        "type": "string",
+                                        "enum": [ "AF1" ]
+                                      },
+                                      "dropped-rate-threshold": {
+                                        "type": "integer",
+                                        "enum": [ 1100 ]
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "required": [
+                                  "config", "state"
+                                ],
+                                "properties": {
+                                  "config": {
+                                    "type": "object",
+                                    "required": [
+                                      "qname", "dropped-rate-threshold"
+                                    ],
+                                    "properties": {
+                                      "qname": {
+                                        "type": "string",
+                                        "enum": [ "AF2" ]
+                                      },
+                                      "dropped-rate-threshold": {
+                                        "type": "integer",
+                                        "enum": [ 2200 ]
+                                      }
+                                    }
+                                  },
+                                  "state": {
+                                    "type": "object",
+                                    "required": [
+                                      "qname", "dropped-rate-threshold"
+                                    ],
+                                    "properties": {
+                                      "qname": {
+                                        "type": "string",
+                                        "enum": [ "AF2" ]
+                                      },
+                                      "dropped-rate-threshold": {
+                                        "type": "integer",
+                                        "enum": [ 2200 ]
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "diag replace with invalid queue",
+      "operation": "replace",
+      "returnCode": 10,
+      "xpath": "/openconfig/system",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-system:system\": {\"google-pins-diag:diag\": {\"config\": {\"blackhole-monitoring-enable\": true, \"congestion-monitoring-enable\": true, \"lpm-misses-threshold\": 3000, \"recovered-parity-errors-threshold\": 3001, \"ecc-single-bit-errors-threshold\": 3002}, \"port-profiles\": {\"port-profile\": [{\"name\": \"blue\", \"config\": {\"name\": \"blue\", \"min-incoming-pkt-threshold\": 1000, \"min-outgoing-pkt-threshold\": 1001, \"fec-not-correctable-threshold\": 1002, \"in-discards-rate-threshold\": 2000, \"out-discards-rate-threshold\": 2001, \"in-errors-threshold\": 1003, \"queue-min-outgoing-pkt-threshold\": 1004}, \"queues\": {\"queue\": [{\"qname\": \"DONTEXIST\", \"config\": {\"qname\": \"DONTEXIST\", \"dropped-rate-threshold\": 1000}}]}}]}}}}"
+    }
+  ]
+}

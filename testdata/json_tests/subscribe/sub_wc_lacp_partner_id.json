@@ -1,0 +1,482 @@
+{
+  "title": "Wildcard OnChange Subscription: /openconfig/lacp/interfaces/interface[name=*]/members/member[interface=*]/state/partner-id",
+  "globalDef" : {
+      "validators": {
+        "partner-id.1": {
+          "type": "object",
+          "required": ["openconfig-lacp:partner-id"],
+          "properties": {
+            "openconfig-lacp:partner-id": {
+              "type": "string",
+              "const": "01:02:03:04:05:06"
+            }
+          }
+        },
+        "partner-id.2": {
+          "type": "object",
+          "required": ["openconfig-lacp:partner-id"],
+          "properties": {
+            "openconfig-lacp:partner-id": {
+              "type": "string",
+              "const": "fc:bd:67:2c:08:f5"
+            }
+          }
+        },
+        "partner-id.3": {
+          "type": "object",
+          "required": ["openconfig-lacp:partner-id"],
+          "properties": {
+            "openconfig-lacp:partner-id": {
+              "type": "string",
+              "const": "fc:bd:67:2c:08:f7"
+            }
+          }
+        }
+      }
+    },
+  "operations":[
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=*]/members/member[interface=Ethernet1/7/3]/state/partner-id",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'*'}}elem:{name:'members'}elem:{name:'member'key:{key:'interface'value:'Ethernet1/7/3'}}elem:{name:'state'}elem:{name:'partner-id'}}mode:ON_CHANGE sample_interval:0} mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces/interface",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": [ "openconfig-lacp:interface" ],
+              "properties": {
+                "openconfig-qos:interface": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "required": [ "name", "members" ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "enum": ["PortChannel1", "PortChannel2"]
+                      },
+                      "members": {
+                        "type": "object",
+                        "required": [ "member" ],
+                        "properties": {
+                          "member": {
+                            "type": "array",
+                            "uniqueItems": true,
+                            "items": {
+                              "type": "object",
+                              "required": [ "interface" ],
+                              "properties": {
+                                "interface": {
+                                  "type": "string",
+                                  "enum": [ "Ethernet1/7/3" ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "additionalItems": false,
+                  "contains": {
+                    "type": "object",
+                    "required": [ "name", "members" ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "const": "PortChannel1"
+                      },
+                      "members": {
+                        "type": "object",
+                        "required": [ "member" ],
+                        "properties": {
+                          "member": {
+                            "type": "array",
+                            "uniqueItems": true,
+                            "items": {
+                              "type": "object",
+                              "required": [ "interface", "state" ],
+                              "properties" : {
+                                "interface": {
+                                  "type": "string",
+                                  "enum": [ "Ethernet1/7/3"]
+                                },
+                                "state": {
+                                  "type": "object",
+                                  "required":["partner-id"],
+                                  "properties": {
+                                    "partner-id": {
+                                      "type": "string",
+                                      "enum": ["fc:bd:67:2c:08:f5"]
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Set partner-id to 01:02:03:04:05:06",
+          "db": "STATE_DB",
+          "value": {
+            "LAG_MEMBER_TABLE|PortChannel1|Ethernet1/7/3" : {
+              "runner.partner_lacpdu_info.system": "01:02:03:04:05:06"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update 1 with PortChannel1|Ethernet1/7/3 partner-id",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/partner-id",
+            "schema": {
+              "$ref": "#/globalDef/validators/partner-id.1"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Set partner-id to fc:bd:67:2c:08:f5",
+          "db": "STATE_DB",
+          "value": {
+            "LAG_MEMBER_TABLE|PortChannel1|Ethernet1/7/3" : {
+              "runner.partner_lacpdu_info.system": "fc:bd:67:2c:08:f5"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update 2 with PortChannel1|Ethernet1/7/3 partner-id",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/partner-id",
+            "schema": {
+              "$ref": "#/globalDef/validators/partner-id.2"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel1]/members/member[interface=*]/state/partner-id",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel1'}}elem:{name:'members'}elem:{name:'member'key:{key:'interface'value:'*'}}elem:{name:'state'}elem:{name:'partner-id'}}mode:ON_CHANGE sample_interval:0} mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces/interface",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": [ "openconfig-lacp:interface" ],
+              "properties": {
+                "openconfig-qos:interface": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "required": [ "name", "members" ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "enum": ["PortChannel1"]
+                      },
+                      "members": {
+                        "type": "object",
+                        "required": [ "member" ],
+                        "properties": {
+                          "member": {
+                            "type": "array",
+                            "uniqueItems": true,
+                            "items": {
+                              "type": "object",
+                              "required": [ "interface" ],
+                              "properties": {
+                                "interface": {
+                                  "type": "string",
+                                  "enum": [ "Ethernet1/7/3", "Ethernet1/7/4" ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "additionalItems": false,
+                  "contains": {
+                    "type": "object",
+                    "required": [ "name", "members" ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "const": "PortChannel1"
+                      },
+                      "members": {
+                        "type": "object",
+                        "required": [ "member" ],
+                        "properties": {
+                          "member": {
+                            "type": "array",
+                            "uniqueItems": true,
+                            "items": {
+                              "type": "object",
+                              "required": [ "interface", "state" ],
+                              "properties" : {
+                                "interface": {
+                                  "type": "string",
+                                  "enum": [ "Ethernet1/7/3"]
+                                },
+                                "state": {
+                                  "type": "object",
+                                  "required":["partner-id"],
+                                  "properties": {
+                                    "partner-id": {
+                                      "type": "string",
+                                      "enum": ["fc:bd:67:2c:08:f5"]
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Set partner-id to 01:02:03:04:05:06",
+          "db": "STATE_DB",
+          "value": {
+            "LAG_MEMBER_TABLE|PortChannel1|Ethernet1/7/3" : {
+              "runner.partner_lacpdu_info.system": "01:02:03:04:05:06"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update 3 with PortChannel1|Ethernet1/7/3 partner-id",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/partner-id",
+            "schema": {
+              "$ref": "#/globalDef/validators/partner-id.1"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Set partner-id to fc:bd:67:2c:08:f5",
+          "db": "STATE_DB",
+          "value": {
+            "LAG_MEMBER_TABLE|PortChannel1|Ethernet1/7/3" : {
+              "runner.partner_lacpdu_info.system": "fc:bd:67:2c:08:f5"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update 4 with PortChannel1|Ethernet1/7/3 partner-id",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/partner-id",
+            "schema": {
+              "$ref": "#/globalDef/validators/partner-id.2"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=*]/members/member[interface=*]/state/partner-id",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'*'}}elem:{name:'members'}elem:{name:'member'key:{key:'interface'value:'*'}}elem:{name:'state'}elem:{name:'partner-id'}}mode:ON_CHANGE sample_interval:0} mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "pathValidators": [
+            {
+              "xpath": "/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/partner-id",
+              "schema": {
+                "$ref": "#/globalDef/validators/partner-id.2"
+              }
+            },
+            {
+              "xpath": "/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/4]/state/partner-id",
+              "schema": {
+                "$ref": "#/globalDef/validators/partner-id.3"
+              }
+            },
+            {
+              "xpath": "/lacp/interfaces/interface[name=PortChannel2]/members/member[interface=Ethernet1/3/5]/state/partner-id",
+              "schema": {
+                "$ref": "#/globalDef/validators/partner-id.2"
+              }
+            }
+          ],
+          "finalValidator": {
+            "xpath": "/lacp/interfaces/interface",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": [ "openconfig-lacp:interface" ],
+              "properties": {
+                "openconfig-qos:interface": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "required": [ "name", "members" ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "enum": ["PortChannel1", "PortChannel2"]
+                      },
+                      "members": {
+                        "type": "object",
+                        "required": [ "member" ],
+                        "properties": {
+                          "member": {
+                            "type": "array",
+                            "uniqueItems": true,
+                            "items": {
+                              "type": "object",
+                              "required": [ "interface" ],
+                              "properties": {
+                                "interface": {
+                                  "type": "string",
+                                  "enum": [ "Ethernet1/7/3", "Ethernet1/7/4", "Ethernet1/3/5" ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "minItems": 3,
+                  "maxItems": 3,
+                  "additionalItems": false,
+                  "contains": {
+                    "type": "object",
+                    "required": [ "name", "members" ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "const": "PortChannel1"
+                      },
+                      "members": {
+                        "type": "object",
+                        "required": [ "member" ],
+                        "properties": {
+                          "member": {
+                            "type": "array",
+                            "uniqueItems": true,
+                            "items": {
+                              "type": "object",
+                              "required": [ "interface", "state" ],
+                              "properties" : {
+                                "interface": {
+                                  "type": "string",
+                                  "enum": [ "Ethernet1/7/3"]
+                                },
+                                "state": {
+                                  "type": "object",
+                                  "required":["partner-id"],
+                                  "properties": {
+                                    "partner-id": {
+                                      "type": "string",
+                                      "enum": ["fc:bd:67:2c:08:f5"]
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Set partner-id to 01:02:03:04:05:06",
+          "db": "STATE_DB",
+          "value": {
+            "LAG_MEMBER_TABLE|PortChannel1|Ethernet1/7/3" : {
+              "runner.partner_lacpdu_info.system": "01:02:03:04:05:06"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update 5 with PortChannel1|Ethernet1/7/3 partner-id",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/partner-id",
+            "schema": {
+              "$ref": "#/globalDef/validators/partner-id.1"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Set patner-id to fc:bd:67:2c:08:f5",
+          "db": "STATE_DB",
+          "value": {
+            "LAG_MEMBER_TABLE|PortChannel1|Ethernet1/7/3" : {
+              "runner.partner_lacpdu_info.system": "fc:bd:67:2c:08:f5"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update 6 with PortChannel1|Ethernet1/7/3 partner-id",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/partner-id",
+            "schema": {
+              "$ref": "#/globalDef/validators/partner-id.2"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

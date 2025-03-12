@@ -1,0 +1,99 @@
+{
+  "title": "Set_Interface_aggregate_id",
+  "operations":[
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/7/3]/ethernet/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"openconfig-if-ethernet:aggregate-id\":\"PortChannel1\"}}"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/7/3]/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-if-ethernet:ethernet": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "openconfig-if-ethernet:config",
+              "openconfig-if-ethernet:state"
+            ],
+            "properties": {
+              "openconfig-if-ethernet:config": {
+                "type": "object",
+                "required": [
+                  "openconfig-if-aggregate:aggregate-id"
+                ],
+                "properties": {
+                  "openconfig-if-aggregate:aggregate-id": {
+                    "type": "integer",
+                    "enum": ["PortChannel1"]
+                  }
+                }
+              },
+              "openconfig-if-ethernet:state": {
+                "type": "object",
+                "required": [
+                  "openconfig-if-aggregate:aggregate-id"
+                ],
+                "properties": {
+                  "openconfig-if-aggregate:aggregate-id": {
+                    "type": "integer",
+                    "enum": ["PortChannel1"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "delete",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/7/3]/ethernet/config/aggregate-id",
+      "target": "OC_YANG"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/7/3]/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["openconfig-if-ethernet:ethernet"],
+            "properties": {
+              "openconfig-if-ethernet:ethernet": {
+                "type": "object",
+                "required": ["config"],
+                "properties": {
+                  "config": {
+                    "type": "object",
+                    "not": {
+                      "required": ["openconfig-if-aggregate:aggregate-id"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

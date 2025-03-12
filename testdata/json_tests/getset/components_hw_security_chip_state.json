@@ -1,0 +1,290 @@
+{
+  "title": "Get_HW_Security_Chip_State_Paths",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=dauntless_usb3_1_1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "google-pins-platform:hardware-security-module", "state"
+            ],
+            "properties": {
+              "google-pins-platform:hardware-security-module": {
+                "type": "object",
+                "required": [
+                  "state"
+                ],
+                "properties": {
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "secure-payload-enforced",
+                      "payload-version",
+                      "payload-signature-type"
+                    ],
+                    "properties": {
+                      "secure-payload-enforced": {
+                        "type": "boolean",
+                        "enum": [
+                          true
+                        ]
+                      },
+                      "payload-version": {
+                        "type": "string",
+                        "enum": [
+                          "999999999.20211102.204917.0"
+                        ]
+                      },
+                      "payload-signature-type": {
+                        "type": "string",
+                        "enum": [
+                          "DEV"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "parent", "name", "firmware-version", "serial-no", "type"
+                ],
+                "properties": {
+                  "parent": {
+                    "type": "string",
+                    "enum": [
+                      "chassis"
+                    ]
+                  },
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "dauntless_usb3_1_1"
+                    ]
+                  },
+                  "firmware-version": {
+                    "type": "string",
+                    "enum": [
+                      "0.3.2021111102/capitaine"
+                    ]
+                  },
+                  "serial-no": {
+                    "type": "string",
+                    "enum": [
+                      "1-95ac52370700b047-150f0001-0-3"
+                    ]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "google-pins-platform:HARDWARE_SECURITY_MODULE"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=haven]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "google-pins-platform:hardware-security-module", "state"
+            ],
+            "properties": {
+              "google-pins-platform:hardware-security-module": {
+                "type": "object",
+                "required": [
+                  "state"
+                ],
+                "properties": {
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "secure-payload-enforced",
+                      "payload-version",
+                      "payload-signature-type"
+                    ],
+                    "properties": {
+                      "secure-payload-enforced": {
+                        "type": "boolean",
+                        "enum": [
+                          true
+                        ]
+                      },
+                      "payload-version": {
+                        "type": "string",
+                        "enum": [
+                          "999999999.20211102.204917.0"
+                        ]
+                      },
+                      "payload-signature-type": {
+                        "type": "string",
+                        "enum": [
+                          "DEV"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "parent", "name", "firmware-version", "serial-no", "type"
+                ],
+                "properties": {
+                  "parent": {
+                    "type": "string",
+                    "enum": [
+                      "chassis"
+                    ]
+                  },
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "haven"
+                    ]
+                  },
+                  "firmware-version": {
+                    "type": "string",
+                    "enum": [
+                      "0.3.2021111102/capitaine"
+                    ]
+                  },
+                  "serial-no": {
+                    "type": "string",
+                    "enum": [
+                      "1-95ac52370700b047-150f0001-0-3"
+                    ]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "google-pins-platform:HARDWARE_SECURITY_MODULE"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=haven]/google-pins-platform:hardware-security-module/state/secure-payload-enforced",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-platform:secure-payload-enforced"
+      ],
+      "properties": {
+        "google-pins-platform:secure-payload-enforced": {
+          "type": "boolean",
+          "enum": [
+            true
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=haven]/google-pins-platform:hardware-security-module/state/payload-version",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-platform:payload-version"
+      ],
+      "properties": {
+        "google-pins-platform:payload-version": {
+          "type": "string",
+          "enum": [
+            "999999999.20211102.204917.0"
+          ]
+        }
+
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=haven]/google-pins-platform:hardware-security-module/state/payload-signature-type",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-platform:payload-signature-type"
+      ],
+      "properties": {
+        "google-pins-platform:payload-signature-type": {
+          "type": "string",
+          "enum": [
+            "DEV"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=haven]/state/firmware-version",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:firmware-version"
+      ],
+      "properties": {
+        "openconfig-platform:firmware-version": {
+          "type": "string",
+          "enum": [
+            "0.3.2021111102/capitaine"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=haven]/state/serial-no",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:serial-no"
+      ],
+      "properties": {
+        "openconfig-platform:serial-no": {
+          "type": "string",
+          "enum": [
+            "1-95ac52370700b047-150f0001-0-3"
+          ]
+        }
+      }
+    }
+  ]
+}

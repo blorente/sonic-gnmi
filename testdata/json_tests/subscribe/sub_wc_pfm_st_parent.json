@@ -1,0 +1,387 @@
+{
+  "title": "Wildcard OnChange Subscription: /openconfig/components/component[name=*]/state/parent",
+  "globalDef": {
+    "validators": {
+      "state.parent.chassis": {
+        "type": "object",
+        "required": [
+          "parent"
+        ],
+        "properties": {
+          "parent": {
+            "type": "string",
+            "const": "chassis"
+          }
+        }
+      },
+      "state.parent.FanTray1": {
+        "type": "object",
+        "required": ["parent"],
+        "properties": {
+          "parent": { "type": "string", "const": "FanTray1" }
+        }
+      },
+      "state.parent.Port1": {
+        "type": "object",
+        "required": ["parent"],
+        "properties": {
+          "parent": { "type": "string", "const": "1/1" }
+        }
+      },
+      "state.parent.integrated_circuit0": {
+        "type": "object",
+        "required": [
+          "parent"
+        ],
+        "properties": {
+          "parent": {
+            "type": "string",
+            "const": "integrated_circuit0"
+          }
+        }
+      },
+      "parent.chassis1234": {
+        "type": "object",
+        "required": [
+          "openconfig-platform:parent"
+        ],
+        "properties": {
+          "openconfig-platform:parent": {
+            "type": "string",
+            "const": "chassis1234"
+          }
+        }
+      },
+      "parent.chassis": {
+        "type": "object",
+        "required": [
+          "openconfig-platform:parent"
+        ],
+        "properties": {
+          "openconfig-platform:parent": {
+            "type": "string",
+            "const": "chassis"
+          }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "Subscribes to /openconfig/components/component[name=*]/state/parent with ON_CHANGE",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'*'}}elem:{name:'state'}elem:{name:'parent'}}mode:ON_CHANGE}mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:component"],
+              "properties": {
+                "openconfig-platform:component": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "required": ["name", "state"],
+                    "properties": {
+                      "state": {
+                        "type": "object",
+                        "properties": {
+                          "parent": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "minItems": 43,
+                  "maxItems": 43,
+                  "additionalItems": false,
+                  "allOf": [
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "PSU 1"},
+                          "state": { "$ref": "#/globalDef/validators/state.parent.chassis" }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "fan1"},
+                          "state": { "$ref": "#/globalDef/validators/state.parent.chassis" }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "fan2"},
+                          "state": { "$ref": "#/globalDef/validators/state.parent.FanTray1" }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "fpga_0"},
+                          "state": { "$ref": "#/globalDef/validators/state.parent.chassis" }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "/dev/sda"},
+                          "state": { "$ref": "#/globalDef/validators/state.parent.chassis" }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "Ethernet1"},
+                          "state": { "$ref": "#/globalDef/validators/state.parent.Port1" }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "cpu_sensor_1"},
+                          "state": { "$ref": "#/globalDef/validators/state.parent.chassis" }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "integrated_circuit0"},
+                          "state": { "$ref": "#/globalDef/validators/state.parent.chassis" }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "network_stack0"},
+                          "state": {
+                            "$ref": "#/globalDef/validators/state.parent.chassis"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "os1"},
+                          "state": {
+                            "$ref": "#/globalDef/validators/state.parent.chassis"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "boot_loader"},
+                          "state": {
+                            "$ref": "#/globalDef/validators/state.parent.chassis"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "1/1"},
+                          "state": {
+                            "$ref": "#/globalDef/validators/state.parent.integrated_circuit0"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "haven"},
+                          "state": {
+                            "$ref": "#/globalDef/validators/state.parent.chassis"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "01:00.0"},
+                          "state": {
+                            "$ref": "#/globalDef/validators/state.parent.chassis"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "voltage_regulator_1"},
+                          "state": {
+                            "$ref": "#/globalDef/validators/state.parent.chassis"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "power_brick_1"},
+                          "state": {
+                            "$ref": "#/globalDef/validators/state.parent.chassis"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "hotswap_1"},
+                          "state": {
+                            "$ref": "#/globalDef/validators/state.parent.chassis"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "power_sequencer_adm1266-i2c-10001-44"},
+                          "state": {
+                            "$ref": "#/globalDef/validators/state.parent.chassis"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes integrated_circuit0.parent to chassis1234",
+          "db": "CONFIG_DB",
+          "value": {
+            "NODE_CFG|integrated_circuit0": {
+              "parent": "chassis1234"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with integrated_circuit0.parent chassis1234",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/components/component[name=integrated_circuit0]/state/parent",
+              "schema": {
+                "$ref": "#/globalDef/validators/parent.chassis1234"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes integrated_circuit0.parent back to chassis",
+          "db": "CONFIG_DB",
+          "value": {
+            "NODE_CFG|integrated_circuit0": {
+              "parent": "chassis"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with integrated_circuit0.parent chassis",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/components/component[name=integrated_circuit0]/state/parent",
+              "schema": {
+                "$ref": "#/globalDef/validators/parent.chassis"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Creates new port breakout 1/1234",
+          "db": "STATE_DB",
+          "value": {
+            "PORT_BREAKOUT|Ethernet1/1234/1": {
+              "parent": "chassis1234",
+              "name": "1/1234"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with 1/1234.parent chassis1234",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/components/component[name=1/1234]/state/parent",
+              "schema": {
+                "$ref": "#/globalDef/validators/parent.chassis1234"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Deletes component PORT_BREAKOUT 1/1234",
+          "db": "STATE_DB",
+          "value": {
+            "PORT_BREAKOUT|Ethernet1/1234/1": []
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates delete update for 1/1234.parent",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/components/component[name=1/1234]/state/parent"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

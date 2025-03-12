@@ -1,0 +1,89 @@
+{
+  "title": "Get System Cpu Total",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/cpus/cpu[index=0]/state/total",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:total"
+      ],
+      "properties": {
+        "openconfig-system:total": {
+          "type": "object",
+          "required": [
+            "avg", "interval"
+          ],
+          "properties": {
+            "avg": {
+              "type": "integer",
+              "enum": [50]
+            },
+            "interval": {
+              "type": "string",
+              "enum": ["2"]
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/cpus/cpu[index=2]/state/total",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:total"
+      ],
+      "properties": {
+        "openconfig-system:total": {
+          "type": "object",
+          "required": [
+            "avg", "interval"
+          ],
+          "properties": {
+            "avg": {
+              "type": "integer",
+              "enum": [80]
+            },
+            "interval": {
+              "type": "string",
+              "enum": ["4"]
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/cpus/cpu[index=1]/state/total",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:total"
+      ],
+      "properties": {
+        "openconfig-system:total": {
+          "type": "object",
+          "required": [
+            "avg", "interval"
+          ],
+          "properties": {
+            "avg": {
+              "type": "integer",
+              "enum": [60]
+            },
+            "interval": {
+              "type": "string",
+              "enum": ["3"]
+            }
+          }
+        }
+      }
+    }
+  ]
+}

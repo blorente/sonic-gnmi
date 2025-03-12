@@ -1,0 +1,455 @@
+{
+    "title": "Port_breakout_with_existing_lag_members",
+    "operations":[
+      {
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:interface"
+        ],
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "title": "Create PORT|Ethernet1/20/1 in CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORT|Ethernet1/20/1": {
+                "index": "20",
+                "admin_status": "up",
+                "mtu": "9104",
+                "speed": "400000",
+                "lanes": "106,107,108,109"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create PORT|Ethernet1/20/5 in CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORT|Ethernet1/20/5": {
+                "index": "20",
+                "admin_status": "up",
+                "mtu": "9104",
+                "speed": "400000",
+                "lanes": "106,107,108,109"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create PORTCHANNEL|PortChannel4 in CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORTCHANNEL|PortChannel4": {
+                "admin_status": "up",
+                "id": "2049",
+                "alias": "PortChannel4Alias",
+                "type": "iana-if-type:ieee8023adLag",
+                "description": "some description string.",
+                "mtu": "9104",
+                "lag_type": "LACP",
+                "members@": "Ethernet1/20/1,Ethernet1/20/5",
+                "min_links": "1",
+                "fast_rate": "true",
+                "active": "true",
+                "system_id": "fc:bd:67:2c:08:f4",
+                "lacp_key": "1"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create PORTCHANNEL_MEMBER|PortChannel4|Ethernet1/20/1 in CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORTCHANNEL_MEMBER|PortChannel4|Ethernet1/20/1": {
+                "NULL": "NULL"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create PORTCHANNEL_MEMBER|PortChannel4|Ethernet1/20/5 in CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORTCHANNEL_MEMBER|PortChannel4|Ethernet1/20/5": {
+                "NULL": "NULL"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create PORT_TABLE:Ethernet1/20/1 in APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_TABLE:Ethernet1/20/1": {
+                "index": "20",
+                "admin_status": "up"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create PORT_TABLE:Ethernet1/20/5 in APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_TABLE:Ethernet1/20/5": {
+                "index": "20",
+                "admin_status": "up"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create INTF_TABLE:Ethernet1/20/1 in APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "INTF_TABLE:Ethernet1/20/1": {
+                "unnumbered_enabled": "true"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create INTF_TABLE:Ethernet1/20/5 in APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "INTF_TABLE:Ethernet1/20/5": {
+                "unnumbered_enabled": "true"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create LAG_TABLE:PortChannel4 in APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "LAG_TABLE:PortChannel4": {
+                "alias": "PortChannel4Alias",
+                "type": "iana-if-type:ieee8023adLag",
+                "description": "some description string.",
+                "mtu": "9104"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create LAG_MEMBER_TABLE:PortChannel4:Ethernet1/20/1 in APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "LAG_MEMBER_TABLE:PortChannel4:Ethernet1/20/1": {
+                "NULL": "NULL"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create LAG_MEMBER_TABLE:PortChannel4:Ethernet1/20/5 in APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "LAG_MEMBER_TABLE:PortChannel4:Ethernet1/20/5": {
+                "NULL": "NULL"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create LAG_TABLE|PortChannel4 in STATE_DB",
+            "db": "STATE_DB",
+            "value": {
+              "LAG_TABLE|PortChannel4": {
+                "state": "ok",
+                "setup.runner_name": "lacp",
+                "setup.pid": "29",
+                "runner.min_ports": "1",
+                "team_device.ifinfo.ifindex": "271"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create LAG_MEMBER_TABLE|PortChannel4|Ethernet1/20/1 in STATE_DB",
+            "db": "STATE_DB",
+            "value": {
+              "LAG_MEMBER_TABLE|PortChannel4|Ethernet1/20/1": {
+                "link.speed": "100000",
+                "runner.actor_lacpdu_info.state": 63
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create LAG_MEMBER_TABLE|PortChannel4|Ethernet1/20/5 in STATE_DB",
+            "db": "STATE_DB",
+            "value": {
+              "LAG_MEMBER_TABLE|PortChannel4|Ethernet1/20/5": {
+                "link.speed": "100000",
+                "runner.actor_lacpdu_info.state": 0
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_STATE:Ethernet1/20/1" : {
+                "phase": "pending_delete"
+              },
+              "PORT_STATE:Ethernet1/20/5" : {
+                "phase": "pending_delete"
+              },
+              "PORT_STATE:Ethernet1/20/7" : {
+                "phase": "pending_delete"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/",
+        "target": "OC_YANG",
+        "attributeData": "{\"openconfig-interfaces:interfaces\" : {\"interface\" : [{\"config\" : {\"enabled\" : true,\"mtu\" : 1600,\"name\" : \"Ethernet1/20/1\",\"openconfig-p4rt:id\" : 20,\"type\" : \"iana-if-type:ethernetCsmacd\"},\"name\" : \"Ethernet1/20/1\",\"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"aggregate-id\" : \"PortChannel4\",\"fec-mode\" : \"openconfig-if-ethernet:FEC_RS544_2X_INTERLEAVE\",\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}},\"subinterfaces\" : {\"subinterface\" : [{\"config\" : {\"index\" : 0},\"index\" : 0,\"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}]}},{\"config\" : {\"enabled\" : true,\"mtu\" : 1600,\"name\" : \"Ethernet1/20/5\",\"openconfig-p4rt:id\" : 514,\"type\" : \"iana-if-type:ethernetCsmacd\"},\"name\" : \"Ethernet1/20/5\",\"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"aggregate-id\" : \"PortChannel4\",\"fec-mode\" : \"openconfig-if-ethernet:FEC_RS544_2X_INTERLEAVE\",\"port-speed\" : \"openconfig-if-ethernet:SPEED_200GB\"}},\"subinterfaces\" : {\"subinterface\" : [{\"config\" : {\"index\" : 0},\"index\" : 0,\"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}]}},{\"config\" : {\"enabled\" : true,\"mtu\" : 1600,\"name\" : \"Ethernet1/20/7\",\"openconfig-p4rt:id\" : 517,\"type\" : \"iana-if-type:ethernetCsmacd\"},\"name\" : \"Ethernet1/20/7\",\"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"fec-mode\" : \"openconfig-if-ethernet:FEC_RS544_2X_INTERLEAVE\",\"port-speed\" : \"openconfig-if-ethernet:SPEED_200GB\"}},\"subinterfaces\" : {\"subinterface\" : [{\"config\" : {\"index\" : 0},\"index\" : 0,\"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}]}},{\"config\" : {\"description\" : \"\",\"enabled\" : true,\"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:PortChannel4\",\"mtu\" : 1600,\"name\" : \"PortChannel4\",\"openconfig-p4rt:id\" : 2049,\"type\" : \"iana-if-type:ieee8023adLag\"},\"name\" : \"PortChannel4\",\"openconfig-if-aggregate:aggregation\" : {\"config\" : {\"lag-type\" : \"LACP\",\"min-links\" : 1}}}]},\"openconfig-lacp:lacp\" : {\"interfaces\" : {\"interface\" : [{\"config\" : {\"google-pins-lacp:lacp-key\" : 1,\"interval\" : \"FAST\",\"lacp-mode\" : \"ACTIVE\",\"name\" : \"PortChannel4\"},\"name\" : \"PortChannel4\"}]}},\"openconfig-platform:components\" : {\"component\" : [{\"config\" : {\"name\" : \"1/20\"},\"name\" : \"1/20\",\"port\" : {\"config\" : {\"openconfig-pins-platform-port:port-id\" : 20},\"openconfig-platform-port:breakout-mode\" : {\"groups\" : {\"group\" : [{ \"config\" : { \"breakout-speed\" : \"openconfig-if-ethernet:SPEED_400GB\",\"index\" : 0,\"num-breakouts\" : 1,\"num-physical-channels\" : 4},\"index\" : 0},{ \"config\" : { \"breakout-speed\" : \"openconfig-if-ethernet:SPEED_200GB\",\"index\" : 1,\"num-breakouts\" : 2,\"num-physical-channels\" : 2},\"index\" : 1}]}}}}]}}"
+      },
+      {
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/20/1]",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:interface"
+        ],
+        "properties": {
+          "openconfig-interfaces:interface": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "config"
+              ],
+              "properties": {
+                "config": {
+                  "type": "object",
+                  "required": [
+                    "enabled", "mtu", "name", "openconfig-p4rt:id", "type"
+                  ],
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean",
+                      "enum": [true]
+                    },
+                    "mtu": {
+                      "type": "integer",
+                      "enum": [1600]
+                    },
+                    "name": {
+                      "type": "string",
+                      "enum": ["Ethernet1/20/1"]
+                    },
+                    "openconfig-p4rt:id": {
+                      "type": "integer",
+                      "enum": [20]
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": ["iana-if-type:ethernetCsmacd"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/",
+        "target": "OC_YANG",
+        "attributeData": "{\"openconfig-interfaces:interfaces\" : {\"interface\" : [{\"config\" : {\"enabled\" : true,\"mtu\" : 1600,\"name\" : \"Ethernet1/20/1\",\"openconfig-p4rt:id\" : 20,\"type\" : \"iana-if-type:ethernetCsmacd\"},\"name\" : \"Ethernet1/20/1\",\"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"aggregate-id\" : \"PortChannel4\",\"fec-mode\" : \"openconfig-if-ethernet:FEC_RS544_2X_INTERLEAVE\",\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}},\"subinterfaces\" : {\"subinterface\" : [{\"config\" : {\"index\" : 0},\"index\" : 0,\"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}]}},{\"config\" : {\"enabled\" : true,\"mtu\" : 1600,\"name\" : \"Ethernet1/20/5\",\"openconfig-p4rt:id\" : 514,\"type\" : \"iana-if-type:ethernetCsmacd\"},\"name\" : \"Ethernet1/20/5\",\"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"aggregate-id\" : \"PortChannel4\",\"fec-mode\" : \"openconfig-if-ethernet:FEC_RS544_2X_INTERLEAVE\",\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}},\"subinterfaces\" : {\"subinterface\" : [{\"config\" : {\"index\" : 0},\"index\" : 0,\"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}]}},{\"config\" : {\"description\" : \"\",\"enabled\" : true,\"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:PortChannel4\",\"mtu\" : 1600,\"name\" : \"PortChannel4\",\"openconfig-p4rt:id\" : 2049,\"type\" : \"iana-if-type:ieee8023adLag\"},\"name\" : \"PortChannel4\",\"openconfig-if-aggregate:aggregation\" : {\"config\" : {\"lag-type\" : \"LACP\",\"min-links\" : 1}}}]},\"openconfig-lacp:lacp\" : {\"interfaces\" : {\"interface\" : [{\"config\" : {\"google-pins-lacp:lacp-key\" : 1,\"interval\" : \"FAST\",\"lacp-mode\" : \"ACTIVE\",\"name\" : \"PortChannel4\"},\"name\" : \"PortChannel4\"}]}},\"openconfig-platform:components\" : {\"component\" : [{\"config\" : {\"name\" : \"1/20\"},\"name\" : \"1/20\",\"port\" : {\"config\" : {\"openconfig-pins-platform-port:port-id\" : 20},\"openconfig-platform-port:breakout-mode\" : {\"groups\" : {\"group\" : [{ \"config\" : { \"breakout-speed\" : \"openconfig-if-ethernet:SPEED_400GB\",\"index\" : 0,\"num-breakouts\" : 2,\"num-physical-channels\" : 4},\"index\" : 0}]}}}}]}}"
+      },
+      {
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel4]",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-lacp:interface"
+        ],
+        "properties": {
+          "openconfig-lacp:interface": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "config"
+              ],
+              "properties": {
+                "config": {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "google-pins-lacp:lacp-key",
+                    "lacp-mode"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "enum": ["PortChannel4"]
+                    },
+                    "openconfig-pins-lacp:lacp-key": {
+                      "type": "integer",
+                      "enum": [1]
+                    },
+                    "lacp-mode": {
+                      "type": "string",
+                      "enum": ["ACTIVE"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "subOpers": [
+          {
+            "oper": "dbHGetValidate",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORTCHANNEL|PortChannel4" : {
+                "members@": "Ethernet1/20/1,Ethernet1/20/5"
+              }
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete PORT|Ethernet1/20/1 from CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORT|Ethernet1/20/1": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete PORT|Ethernet1/20/5 from CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORT|Ethernet1/20/5": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete PORTCHANNEL|PortChannel4 from CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORTCHANNEL|PortChannel4": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete PORTCHANNEL_MEMBER|PortChannel4|Ethernet1/20/1 from CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORTCHANNEL_MEMBER|PortChannel4|Ethernet1/20/1": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete PORTCHANNEL_MEMBER|PortChannel4|Ethernet1/20/5 from CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORTCHANNEL_MEMBER|PortChannel4|Ethernet1/20/5": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete PORT_TABLE:Ethernet1/20/1 from APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_TABLE:Ethernet1/20/1": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete PORT_TABLE:Ethernet1/20/5 from APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_TABLE:Ethernet1/20/5": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete INTF_TABLE:Ethernet1/20/1 from APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "INTF_TABLE:Ethernet1/20/1": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete INTF_TABLE:Ethernet1/20/5 from APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "INTF_TABLE:Ethernet1/20/5": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete LAG_TABLE:PortChannel4 from APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "LAG_TABLE:PortChannel4": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete LAG_MEMBER_TABLE:PortChannel4:Ethernet1/20/1 from APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "LAG_MEMBER_TABLE:PortChannel4:Ethernet1/20/1": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete LAG_MEMBER_TABLE:PortChannel4:Ethernet1/20/5 from APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "LAG_MEMBER_TABLE:PortChannel4:Ethernet1/20/5": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete LAG_TABLE|PortChannel4 from STATE_DB",
+            "db": "STATE_DB",
+            "value": {
+              "LAG_TABLE|PortChannel4": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete LAG_MEMBER_TABLE|PortChannel4|Ethernet1/20/1 from STATE_DB",
+            "db": "STATE_DB",
+            "value": {
+              "LAG_MEMBER_TABLE|PortChannel4|Ethernet1/20/1": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete LAG_MEMBER_TABLE|PortChannel4|Ethernet1/20/5 from STATE_DB",
+            "db": "STATE_DB",
+            "value": {
+              "LAG_MEMBER_TABLE|PortChannel4|Ethernet1/20/5": []
+            }
+          }
+        ]
+      }
+    ]
+  }
+    

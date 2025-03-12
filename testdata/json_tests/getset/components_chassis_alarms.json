@@ -1,0 +1,111 @@
+{
+  "title": "Get_Chassis_Alarm_Status",
+  "operations": [
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=chassis]/chassis/alarms/state/status",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-pins-platform-chassis:status"],
+      "properties": {
+        "openconfig-pins-platform-chassis:status": {
+          "type": "boolean",
+          "const": false
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "STATE_DB",
+          "value": {
+            "CHASSIS_INFO|chassis" : {
+              "alarm_status": "true"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=chassis]/chassis/alarms/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-pins-platform-chassis:state"
+      ],
+      "properties": {
+        "openconfig-pins-platform-chassis:state": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "type": "boolean",
+              "const": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=chassis]/chassis/alarms",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-pins-platform-chassis:alarms"
+      ],
+      "properties": {
+        "openconfig-pins-platform-chassis:alarms": {
+          "type": "object",
+          "required": [
+            "state"
+          ],
+          "properties": {
+            "state": {
+              "type": "object",
+              "required": [
+                "status"
+              ],
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "const": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=chassis]/chassis/alarms/state/status",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-pins-platform-chassis:status"],
+      "properties": {
+        "openconfig-pins-platform-chassis:status": {
+          "type": "boolean",
+          "const": true
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "STATE_DB",
+          "value": {
+            "CHASSIS_INFO|chassis" : {
+              "alarm_status": "false"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

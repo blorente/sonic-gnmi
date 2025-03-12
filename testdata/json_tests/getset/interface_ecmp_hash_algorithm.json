@@ -1,0 +1,82 @@
+{
+  "title": "Set Interface ECMP Hash Algorithm",
+  "operations":[
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"google-pins-interfaces:ecmp-hash-algorithm\":\"google-pins-interfaces:XOR\"}}",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/1/1" : {
+              "ecmp_hash_algorithm": "xor"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config",
+              "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "google-pins-interfaces:ecmp-hash-algorithm"
+                ],
+                "properties": {
+                  "google-pins-interfaces:ecmp-hash-algorithm": {
+                    "type": "string",
+                    "enum": [ "XOR" ]
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "google-pins-interfaces:ecmp-hash-algorithm"
+                ],
+                "properties": {
+                  "google-pins-interfaces:ecmp-hash-algorithm": {
+                    "type": "string",
+                    "enum": [ "XOR" ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/1/1" : {
+              "ecmp_hash_algorithm" : "xor"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

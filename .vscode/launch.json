@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug gnmi_server_test",
+      "preLaunchTask": "Start gnmi_server_debug",
+      "type": "go",
+      "request": "attach",
+      "mode": "remote",
+      "remotePath": "",
+      "stopOnEntry": false,
+      "port": 2345,
+      "host": "127.0.0.1",
+      // Uncomment for debugging connection with remote delve.
+      // "showLog": true,
+      // "trace": "log",
+      // "logOutput": "rpc",
+      "postDebugTask": "Kill gnmi_server_debug",
+      "substitutePath": [
+        {
+          "to":"external/",
+          "from": "${workspaceFolder}/bazel-sonic-gnmi/external/"
+        },
+        {
+          "to":"",
+          "from": "${workspaceFolder}/"
+        }
+      ]
+    }
+  ]
+}

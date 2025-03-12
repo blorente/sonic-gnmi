@@ -1,0 +1,123 @@
+{
+  "title": "Wildcard OnChange Subscription: /openconfig/components/component[name=*]/software-module/state/module-type",
+  "globalDef": {
+    "enums" : {
+      "types": {
+        "type": "string",
+        "enum": [
+          "openconfig-platform-software:UNSET",
+          "openconfig-platform-software:USERSPACE_PACKAGE_BUNDLE",
+          "openconfig-platform-software:USERSPACE_PACKAGE"
+        ]
+      }
+    },
+    "validators": {
+      "type.bundle": {
+        "type": "object",
+        "required": [
+          "openconfig-platform-software:module-type"
+        ],
+        "properties": {
+          "openconfig-platform:type": {
+            "type": "string",
+            "const": "openconfig-platform-software:USERSPACE_PACKAGE_BUNDLE"
+          }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "Subscribes to /openconfig/components/component[name=*]/software-module/state/module-type with ON_CHANGE",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'*'}}elem:{name:'software-module'}elem:{name:'state'}elem:{name:'module-type'}}mode:ON_CHANGE}mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:component"],
+              "properties": {
+                "openconfig-platform:component": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "required": ["name", "software-module"],
+                    "properties": {
+                      "software-module": {
+                        "type": "object",
+                        "required": ["state"],
+                        "properties": {
+                          "state": {
+                            "type": "object",
+                            "properties": {
+                              "openconfig-platform-software:module-type": {
+                                "$ref": "#/globalDef/enums/types"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "additionalItems": false
+                }
+              }
+            }
+          }
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Deletes component network_stack1",
+          "db": "STATE_DB",
+          "value": {
+            "SW_COMP_INFO|network_stack1": []
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates delete update for network_stack1",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/components/component[name=network_stack1]/software-module/state/module-type"
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Restore new network_stack1",
+          "db": "STATE_DB",
+          "value": {
+            "SW_COMP_INFO|network_stack1": {
+              "software-version": "v2021",
+              "oper-status": "active",
+              "storage-side": "a"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with module-type bundle",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/components/component[name=network_stack1]/software-module/state/module-type",
+              "schema": {
+                "$ref": "#/globalDef/validators/type.bundle"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

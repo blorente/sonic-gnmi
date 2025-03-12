@@ -1,0 +1,310 @@
+{
+  "title": "Set Interface loopback-mode",
+  "operations":[
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"openconfig-interfaces:loopback-mode\":\"NONE\"}}"
+
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "loopback-mode"
+                ],
+                "properties": {
+                  "loopback-mode": {
+                    "type": "string",
+                    "enum": [
+                      "NONE"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/5/1]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"openconfig-interfaces:loopback-mode\":\"ASIC_MAC_LOCAL\"}}",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/5/1" : {
+              "loopback-mode" : "mac_local"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/5/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config",
+              "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "loopback-mode"
+                ],
+                "properties": {
+                  "loopback-mode": {
+                    "type": "string",
+                    "enum": [
+                      "ASIC_MAC_LOCAL"
+                    ]
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "loopback-mode"
+                ],
+                "properties": {
+                  "loopback-mode": {
+                    "type": "string",
+                    "enum": [
+                      "ASIC_MAC_LOCAL"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "delete",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/5/1]/config/loopback-mode",
+      "target": "OC_YANG",
+      "subOpers": [
+        {
+          "oper": "dbHDel",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/5/1" : []
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/5/1]/config",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:config"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config",
+              "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "loopback-mode"
+                ],
+                "properties": {
+                  "loopback-mode": {
+                    "type": "string",
+                    "enum": [
+                      "NONE"
+                    ]
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "loopback-mode"
+                ],
+                "properties": {
+                  "loopback-mode": {
+                    "type": "string",
+                    "enum": [
+                      "NONE"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Negitive test on setting invalid loopback-mode enum",
+      "operation": "update",
+      "returnCode": 10,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/5/1]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"openconfig-interfaces:loopback-mode\":\"FACILITY\"}}"
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/5/1]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"openconfig-interfaces:loopback-mode\":\"NONE\"}}",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/5/1" : {
+              "loopback-mode" : "false"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "Negitive test on invalid loopback value in database",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/5/1]/state/loopback-mode",
+      "target": "OC_YANG",
+      "type": "object"
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/5/1]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"openconfig-interfaces:loopback-mode\":\"ASIC_PHY_LOCAL\"}}",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/5/1" : {
+              "loopback-mode" : "phy_local"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/5/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state",
+              "config"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "loopback-mode"
+                ],
+                "properties": {
+                  "loopback-mode": {
+                    "type": "string",
+                    "enum": [
+                      "ASIC_PHY_LOCAL"
+                    ]
+                  }
+                }
+              },
+              "config": {
+                "type": "object",
+                "required": [
+                  "loopback-mode"
+                ],
+                "properties": {
+                  "loopback-mode": {
+                    "type": "string",
+                    "enum": [
+                      "ASIC_PHY_LOCAL"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/5/1": {
+              "index": "5",
+              "alias": "Eth8/1",
+              "admin_status": "up",
+              "admin_status_state": "up",
+              "mtu": "9104",
+              "speed": "400000",
+              "oper_status": "down",
+              "lanes": "41,42,43,44",
+              "hardware_vendor_id": "5"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

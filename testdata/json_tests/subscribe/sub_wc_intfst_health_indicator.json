@@ -1,0 +1,212 @@
+{
+  "title": "Wildcard OnChange Subscription: /openconfig/interfaces/interface[name=*]/state/health-indicator",
+  "globalDef" : {
+    "enums" : {
+      "health-indicator": {
+        "type": "string",
+        "enum": [ "GOOD", "BAD" ]
+      }
+    },
+    "validators": {
+      "state.hi.good": {
+        "type": "object",
+        "required": [
+          "openconfig-pins-interfaces:health-indicator"
+        ],
+        "properties": {
+          "openconfig-pins-interfaces:health-indicator": {
+            "type": "string",
+            "const": "GOOD"
+          }
+        }
+      },
+      "state.hi.bad": {
+        "type": "object",
+        "required": [
+          "openconfig-pins-interfaces:health-indicator"
+        ],
+        "properties": {
+          "openconfig-pins-interfaces:health-indicator": {
+            "type": "string",
+            "const": "BAD"
+          }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "Subscribes to /openconfig/interfaces/interface[name=*]/state/health-indicator",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'*'}}elem:{name:'state'}elem:{name:'health-indicator'}}mode:ON_CHANGE}mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/interfaces/interface",
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-interfaces:interface"],
+              "properties": {
+                "openconfig-interfaces:interface" : {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "required": ["name", "state"],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "enum": [
+                          "Ethernet1/1/1", "Ethernet1/1/5", "Ethernet1/2/1", "Ethernet1/2/5", "Ethernet1/3/1", "Ethernet1/6/1", "Ethernet1/7/3", "Ethernet1/7/4"
+                        ]
+                      },
+                      "state": {
+                        "type": "object",
+                        "properties": {
+                          "openconfig-pins-interfaces:health-indicator": {
+                            "$ref": "#/globalDef/enums/health-indicator"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "minItems" : 8,
+                  "maxItems" : 8,
+                  "additionalItems": false,
+                  "allOf": [
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name" : { "type": "string", "const": "Ethernet1/1/1"},
+                          "state" : {
+                            "type": "object",
+                            "required": [ "openconfig-pins-interfaces:health-indicator" ],
+                            "properties": {
+                              "openconfig-pins-interfaces:health-indicator": {
+                                "type": "string", "const": "GOOD"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Triggers Ethernet1/1/1.health-indicator BAD",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/1/1" : {
+              "health_indicator": "bad"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates update with Ethernet1/1/1.health-indicator BAD",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/1/1]/state/health-indicator",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.hi.bad"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Triggers Ethernet1/1/1.health-indicator GOOD",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/1/1" : {
+              "health_indicator": "good"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates update with Ethernet1/1/1.health-indicator GOOD",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/1/1]/state/health-indicator",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.hi.good"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Creates new interface Ethernet1/01234/1",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/01234/1" : {
+              "health_indicator": "good"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Triggers Ethernet1/01234/1.health-indicator GOOD",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/01234/1" : {
+              "health_indicator": "good"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates update with Ethernet1/01234/1.health-indicator GOOD",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/01234/1]/state/health-indicator",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.hi.good"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Deletes Ethernet1/01234/1 state",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/01234/1" : [  ]
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates delete update for Ethernet1/01234/1/health-indicator",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/01234/1]/state/health-indicator"
+            }
+          ]
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Deletes interface Ethernet1/01234/1",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/01234/1" : []
+          }
+        }
+      ]
+    }
+  ]
+}

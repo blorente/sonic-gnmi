@@ -1,0 +1,750 @@
+{
+  "title": "Get Power Supply Component",
+  "//Comment": "Binary type expected tests result is generated with: https://go.dev/play/p/pr79oRzffY0",
+  "operations": [
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=voltage_regulator_1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+            "type": "array",
+            "items": [
+                {
+                    "type": "object",
+                    "required": [
+                        "power-supply",
+                        "state"
+                    ],
+                    "properties": {
+                        "power-supply": {
+                            "type": "object",
+                            "required": [
+                                "state"
+                            ],
+                            "properties": {
+                                "state": {
+                                    "type": "object",
+                                    "required": [
+                                        "google-pins-platform:frequency"
+                                    ],
+                                    "properties": {
+                                        "google-pins-platform:frequency": {
+                                            "type": "string",
+                                            "enum": [
+                                                "REgAAA=="
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "state": {
+                            "type": "object",
+                            "required": [
+                                "location",
+                                "parent"
+                            ],
+                            "properties": {
+                                "location": {
+                                    "type": "string",
+                                    "enum": [
+                                        "10001-0060"
+                                    ]
+                                },
+                                "parent": {
+                                  "type": "string",
+                                  "enum": [
+                                      "chassis"
+                                  ]
+                              }
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=voltage_regulator_1]/power-supply/state/google-pins-platform:frequency",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-platform:frequency"
+      ],
+      "properties": {
+        "google-pins-platform:frequency": {
+          "type": "string",
+          "enum": [
+            "REgAAA=="
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=voltage_regulator_1]/state/location",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:location"
+      ],
+      "properties": {
+        "openconfig-platform:location": {
+          "type": "string",
+          "enum": [
+            "10001-0060"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=voltage_regulator_1]/state/parent",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:parent"
+      ],
+      "properties": {
+        "openconfig-platform:parent": {
+          "type": "string",
+          "enum": [
+            "chassis"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=voltage_regulator_1]/power-supply/state/frequency",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-platform:frequency"
+      ],
+      "properties": {
+        "google-pins-platform:frequency": {
+          "type": "string",
+          "enum": [
+            "REgAAA=="
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=hotswap_1_1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "required": [
+                "name",
+                "power-supply",
+                "state"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "enum": [
+                    "hotswap_1_1"
+                  ]
+                },
+                "power-supply": {
+                  "type": "object",
+                  "required": [
+                    "state"
+                  ],
+                  "properties": {
+                    "state": {
+                      "type": "object",
+                      "required": [
+                        "google-pins-platform:frequency",
+                        "google-pins-platform:manufacturer-status",
+                        "google-pins-platform:status-gpio",
+                        "google-pins-platform:type",
+                        "google-pins-platform:commanded-frequency"
+                      ],
+                      "properties": {
+                        "google-pins-platform:frequency": {
+                          "type": "string",
+                          "enum": [
+                            "REgAAA=="
+                          ]
+                        },
+                        "google-pins-platform:manufacturer-status": {
+                          "type": "string",
+                          "enum": [
+                            "AAAAQg=="
+                          ]
+                        },
+                        "google-pins-platform:status-gpio": {
+                          "type": "string",
+                          "enum": [
+                            "AAAAAAAAAP8="
+                          ]
+                        },
+                        "google-pins-platform:type": {
+                          "type": "string",
+                          "enum": [
+                            "google-pins-platform:POWER_HOTSWAP"
+                          ]
+                        },
+                        "google-pins-platform:commanded-frequency": {
+                          "type": "string",
+                          "enum": [
+                            "QkgAAA=="
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "state": {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "temperature",
+                    "type",
+                    "location"
+                  ],                  
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "enum": [
+                        "hotswap_1_1"
+                      ]
+                    },
+                    "temperature": {
+                      "type": "object",
+                      "required": [
+                        "instant",
+                        "interval",
+                        "max"
+                      ],
+                      "properties": {
+                        "instant": {
+                          "type": "string",
+                          "enum": [
+                            "48.714"
+                          ]
+                        },
+                        "interval": {
+                          "type": "string",
+                          "enum": [
+                            "2"
+                          ]
+                        },
+                        "max": {
+                          "type": "string",
+                          "enum": [
+                            "42"
+                          ]
+                        }
+                      }
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "openconfig-platform-types:POWER_SUPPLY"
+                      ]
+                    },
+                    "location": {
+                      "type": "string",
+                      "enum": [
+                          ""
+                      ]
+                  }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=power_brick_1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "required": [
+                "state"
+              ],
+              "properties": {
+                "state": {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "temperature",
+                    "type"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "enum": [
+                        "power_brick_1"
+                      ]
+                    },
+                    "temperature": {
+                      "type": "object",
+                      "required": [
+                        "instant"
+                      ],
+                      "properties": {
+                        "instant": {
+                          "type": "string",
+                          "enum": [
+                            "41"
+                          ]
+                        }
+                      }
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "openconfig-platform-types:POWER_SUPPLY"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=power_brick_1]/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:state"
+      ],
+      "properties": {
+        "openconfig-platform:state": {
+          "type": "object",
+          "required": [
+            "name",
+            "temperature",
+            "type"
+          ],
+          "properties": {
+            "name": {
+              "type": "string",
+              "enum": [
+                "power_brick_1"
+              ]
+            },
+            "temperature": {
+              "type": "object",
+              "required": [
+                "instant"
+              ],
+              "properties": {
+                "instant": {
+                  "type": "string",
+                  "enum": [
+                    "41"
+                  ]
+                }
+              }
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "openconfig-platform-types:POWER_SUPPLY"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Get Multiple Rails",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:components"],
+      "properties": {
+        "openconfig-platform:components": {
+          "type": "object",
+          "required": ["component"],
+          "properties": {
+            "component": {
+              "component": {
+                "type": "array",
+                "items": [
+                  {
+                    "type": "object",
+                    "required": ["state", "name", "power-supply"],
+                    "properties": {
+                      "state": {
+                        "type": "object",
+                        "required": ["temperature", "type", "location", "name"],
+                        "properties": {
+                          "temperature": {
+                            "type": "object",
+                            "required": ["instant"],
+                            "properties": {
+                              "instant": {
+                                "type": "string",
+                                "enum": ["48.714"]
+                              }
+                            }
+                          },
+                          "type": {
+                            "type": "string",
+                            "enum": ["openconfig-platform-types:POWER_SUPPLY"]
+                          },
+                          "location": {
+                            "type": "string",
+                            "enum": ["10001-0060"]
+                          },
+                          "name": {
+                            "type": "string",
+                            "enum": ["voltage_regulator_1"]
+                          }
+                        }
+                      },
+                      "name": {
+                        "type": "string",
+                        "enum": ["voltage_regulator_1"]
+                      },
+                      "power-supply": {
+                        "type": "object",
+                        "required": ["google-pins-platform:rails", "state"],
+                        "properties": {
+                          "google-pins-platform:rails": {
+                            "type": "object",
+                            "required": ["rail"],
+                            "properties": {
+                              "rail": {
+                                "rail": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "required": ["name", "state"],
+                                      "properties": {
+                                        "name": {
+                                          "type": "string",
+                                          "enum": ["VDD_12R0"]
+                                        },
+                                        "state": {
+                                          "type": "object",
+                                          "required": [
+                                            "current",
+                                            "direction",
+                                            "energy",
+                                            "name",
+                                            "power",
+                                            "voltage"
+                                          ],
+                                          "properties": {
+                                            "current": {
+                                              "type": "string",
+                                              "enum": ["QA/FBQ=="]
+                                            },
+                                            "direction": {
+                                              "type": "string",
+                                              "enum": ["OUTPUT"]
+                                            },
+                                            "energy": {
+                                              "type": "string",
+                                              "enum": ["QJGZmg=="]
+                                            },
+                                            "name": {
+                                              "type": "string",
+                                              "enum": ["VDD_12R0"]
+                                            },
+                                            "power": {
+                                              "type": "string",
+                                              "enum": ["P51wpA=="]
+                                            },
+                                            "voltage": {
+                                              "type": "string",
+                                              "enum": ["QFUeuA=="]
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "type": "object",
+                                      "required": ["name", "state"],
+                                      "properties": {
+                                        "name": {
+                                          "type": "string",
+                                          "enum": ["VDD_12R1"]
+                                        },
+                                        "state": {
+                                          "type": "object",
+                                          "required": [
+                                            "voltage",
+                                            "current",
+                                            "direction",
+                                            "name"
+                                          ],
+                                          "properties": {
+                                            "voltage": {
+                                              "type": "string",
+                                              "enum": ["QKqPXA=="]
+                                            },
+                                            "current": {
+                                              "type": "string",
+                                              "enum": ["QA/FBQ=="]
+                                            },
+                                            "direction": {
+                                              "type": "string",
+                                              "enum": ["INPUT"]
+                                            },
+                                            "name": {
+                                              "type": "string",
+                                              "enum": ["VDD_12R1"]
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          },
+                          "state": {
+                            "type": "object",
+                            "required": [
+                              "google-pins-platform:frequency",
+                              "google-pins-platform:manufacturer-status",
+                              "google-pins-platform:type"
+                            ],
+                            "properties": {
+                              "google-pins-platform:frequency": {
+                                "type": "string",
+                                "enum": ["REgAAA=="]
+                              },
+                              "google-pins-platform:manufacturer-status": {
+                                "type": "string",
+                                "enum": ["AAAAQg=="]
+                              },
+                              "google-pins-platform:type": {
+                                "type": "string",
+                                "enum": [
+                                  "google-pins-platform:POWER_VOLTAGE_REGULATOR"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": ["name", "power-supply", "state"],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "enum": ["voltage_regulator_2"]
+                      },
+                      "power-supply": {
+                        "type": "object",
+                        "required": ["google-pins-platform:rails", "state"],
+                        "properties": {
+                          "google-pins-platform:rails": {
+                            "type": "object",
+                            "required": ["rail"],
+                            "properties": {
+                              "rail": {
+                                "rail": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "required": ["name", "state"],
+                                      "properties": {
+                                        "name": {
+                                          "type": "string",
+                                          "enum": ["VDD_12R2"]
+                                        },
+                                        "state": {
+                                          "type": "object",
+                                          "required": [
+                                            "current",
+                                            "direction",
+                                            "energy",
+                                            "name",
+                                            "power",
+                                            "voltage"
+                                          ],
+                                          "properties": {
+                                            "current": {
+                                              "type": "string",
+                                              "enum": ["QA/Bvg=="]
+                                            },
+                                            "direction": {
+                                              "type": "string",
+                                              "enum": ["OUTPUT"]
+                                            },
+                                            "energy": {
+                                              "type": "string",
+                                              "enum": ["QCMzMw=="]
+                                            },
+                                            "name": {
+                                              "type": "string",
+                                              "enum": ["VDD_12R2"]
+                                            },
+                                            "power": {
+                                              "type": "string",
+                                              "enum": ["QA64Ug=="]
+                                            },
+                                            "voltage": {
+                                              "type": "string",
+                                              "enum": ["QBUeuA=="]
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "type": "object",
+                                      "required": ["name", "state"],
+                                      "properties": {
+                                        "name": {
+                                          "type": "string",
+                                          "enum": ["VDD_12R3"]
+                                        },
+                                        "state": {
+                                          "type": "object",
+                                          "required": [
+                                            "voltage",
+                                            "current",
+                                            "direction",
+                                            "name"
+                                          ],
+                                          "properties": {
+                                            "voltage": {
+                                              "type": "string",
+                                              "enum": ["QBUeuA=="]
+                                            },
+                                            "current": {
+                                              "type": "string",
+                                              "enum": ["QA/Bvg=="]
+                                            },
+                                            "direction": {
+                                              "type": "string",
+                                              "enum": ["INPUT"]
+                                            },
+                                            "name": {
+                                              "type": "string",
+                                              "enum": ["VDD_12R3"]
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          },
+                          "state": {
+                            "type": "object",
+                            "required": [
+                              "google-pins-platform:frequency",
+                              "google-pins-platform:manufacturer-status",
+                              "google-pins-platform:type"
+                            ],
+                            "properties": {
+                              "google-pins-platform:frequency": {
+                                "type": "string",
+                                "enum": ["Q0gAAA=="]
+                              },
+                              "google-pins-platform:manufacturer-status": {
+                                "type": "string",
+                                "enum": ["AAAAQg=="]
+                              },
+                              "google-pins-platform:type": {
+                                "type": "string",
+                                "enum": [
+                                  "google-pins-platform:POWER_VOLTAGE_REGULATOR"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "state": {
+                        "type": "object",
+                        "required": ["temperature", "type", "location", "name"],
+                        "properties": {
+                          "temperature": {
+                            "type": "object",
+                            "required": ["instant"],
+                            "properties": {
+                              "instant": {
+                                "type": "string",
+                                "enum": ["28.714"]
+                              }
+                            }
+                          },
+                          "type": {
+                            "type": "string",
+                            "enum": ["openconfig-platform-types:POWER_SUPPLY"]
+                          },
+                          "location": {
+                            "type": "string",
+                            "enum": ["10001-0062"]
+                          },
+                          "name": {
+                            "type": "string",
+                            "enum": ["voltage_regulator_2"]
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

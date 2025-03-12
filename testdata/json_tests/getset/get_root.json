@@ -1,0 +1,226 @@
+{
+  "title": "Root Get Tests",
+  "operations":[
+    {
+      "title": "Get-All at Root",
+      "operation": "get",
+      "returnCode": 0,
+      "operProto": "prefix:{origin:'openconfig' target:'SomeTarget'} type:ALL encoding:JSON_IETF",
+      "type": "object",
+      "required": ["openconfig-interfaces:interfaces", "openconfig-lacp:lacp", "openconfig-optical-switch:optical-switch", "openconfig-platform:components", "openconfig-qos:qos", "openconfig-sampling:sampling", "openconfig-system:system"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-interfaces:interfaces": {
+          "type": "object",
+          "required": ["interface"],
+          "additionalProperties": false,
+          "properties": {
+            "interface": { "type": "array" }
+          }
+        },
+        "openconfig-lacp:lacp": {
+          "type": "object",
+          "required": ["config", "interfaces", "state"],
+          "additionalProperties": false,
+          "properties": {
+            "config": { "type": "object" },
+            "interfaces": { "type": "object" },
+            "state": { "type": "object" }
+          }
+        },
+        "openconfig-optical-switch:optical-switch": {
+          "type": "object",
+          "required": ["google-optical-switch:telemetry", "optical-switch-topology", "port-connection-recovery", "port-connections", "port-statuses"],
+          "additionalProperties": false,
+          "properties": {
+            "google-optical-switch:telemetry": { "type": "object" },
+            "optical-switch-topology": { "type": "object" },
+            "port-connection-recovery": { "type": "object" },
+            "port-connections": { "type": "object" },
+            "port-statuses": { "type": "object" }
+          }
+        },
+        "openconfig-platform:components": {
+          "type": "object",
+          "required": ["component"],
+          "additionalProperties": false,
+          "properties": {
+            "component": { "type": "array" }
+          }
+        },
+        "openconfig-qos:qos": { "type": "object" },
+        "openconfig-sampling:sampling": {
+          "type": "object",
+          "required": ["openconfig-sampling-sflow:sflow"],
+          "additionalProperties": false,
+          "properties": {
+            "openconfig-sampling-sflow:sflow": { "type": "object" }
+          }
+        },
+        "openconfig-system:system": { "type": "object" }
+      }
+    },
+    {
+      "title": "Get-Config at Root",
+      "operation": "get",
+      "returnCode": 0,
+      "operProto": "prefix:{origin:'openconfig' target:'SomeTarget'} type:CONFIG encoding:JSON_IETF",
+      "type": "object",
+      "required": ["openconfig-interfaces:interfaces", "openconfig-lacp:lacp", "openconfig-optical-switch:optical-switch", "openconfig-platform:components", "openconfig-qos:qos", "openconfig-sampling:sampling", "openconfig-system:system"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-interfaces:interfaces": {
+          "type": "object",
+          "required": ["interface"],
+          "additionalProperties": false,
+          "properties": {
+            "interface": { "type": "array" }
+          }
+        },
+        "openconfig-lacp:lacp": {
+          "type": "object",
+          "required": ["config", "interfaces"],
+          "additionalProperties": false,
+          "properties": {
+            "config": { "type": "object" },
+            "interfaces": { "type": "object" }
+          }
+        },
+        "openconfig-optical-switch:optical-switch": {
+          "type": "object",
+          "required": ["port-connection-recovery", "port-connections"],
+          "additionalProperties": false,
+          "properties": {
+            "port-connection-recovery": { "type": "object" },
+            "port-connections": { "type": "object" }
+          }
+        },
+        "openconfig-platform:components": {
+          "type": "object",
+          "required": ["component"],
+          "additionalProperties": false,
+          "properties": {
+            "component": { "type": "array" }
+          }
+        },
+        "openconfig-qos:qos": { "type": "object" },
+        "openconfig-sampling:sampling": {
+          "type": "object",
+          "required": ["openconfig-sampling-sflow:sflow"],
+          "additionalProperties": false,
+          "properties": {
+            "openconfig-sampling-sflow:sflow": { "type": "object" }
+          }
+        },
+        "openconfig-system:system": { "type": "object" }
+      }
+    },
+    {
+      "title": "Get-State at Root",
+      "operation": "get",
+      "returnCode": 0,
+      "operProto": "prefix:{origin:'openconfig' target:'SomeTarget'} type:STATE encoding:JSON_IETF",
+      "type": "object",
+      "required": ["openconfig-interfaces:interfaces", "openconfig-lacp:lacp", "openconfig-optical-switch:optical-switch", "openconfig-platform:components", "openconfig-qos:qos", "openconfig-sampling:sampling", "openconfig-system:system"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-interfaces:interfaces": {
+          "type": "object",
+          "required": ["interface"],
+          "additionalProperties": false,
+          "properties": {
+            "interface": { "type": "array" }
+          }
+        },
+        "openconfig-lacp:lacp": {
+          "type": "object",
+          "required": ["interfaces", "state"],
+          "additionalProperties": false,
+          "properties": {
+            "interfaces": { "type": "object" },
+            "state": { "type": "object" }
+          }
+        },
+        "openconfig-optical-switch:optical-switch": {
+          "type": "object",
+          "required": ["google-optical-switch:telemetry", "optical-switch-topology", "port-connection-recovery", "port-connections", "port-statuses"],
+          "additionalProperties": false,
+          "properties": {
+            "google-optical-switch:telemetry": { "type": "object" },
+            "optical-switch-topology": { "type": "object" },
+            "port-connection-recovery": { "type": "object" },
+            "port-connections": { "type": "object" },
+            "port-statuses": { "type": "object" }
+          }
+        },
+        "openconfig-platform:components": {
+          "type": "object",
+          "required": ["component"],
+          "additionalProperties": false,
+          "properties": {
+            "component": { "type": "array" }
+          }
+        },
+        "openconfig-qos:qos": { "type": "object" },
+        "openconfig-sampling:sampling": {
+          "type": "object",
+          "required": ["openconfig-sampling-sflow:sflow"],
+          "additionalProperties": false,
+          "properties": {
+            "openconfig-sampling-sflow:sflow": { "type": "object" }
+          }
+        },
+        "openconfig-system:system": { "type": "object" }
+      }
+    },
+    {
+      "title": "Get-Operational at Root",
+      "operation": "get",
+      "returnCode": 0,
+      "operProto": "prefix:{origin:'openconfig' target:'SomeTarget'} type:OPERATIONAL encoding:JSON_IETF",
+      "type": "object",
+      "required": ["openconfig-interfaces:interfaces", "openconfig-lacp:lacp", "openconfig-optical-switch:optical-switch", "openconfig-platform:components", "openconfig-qos:qos", "openconfig-system:system"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-interfaces:interfaces": {
+          "type": "object",
+          "required": ["interface"],
+          "additionalProperties": false,
+          "properties": {
+            "interface": { "type": "array" }
+          }
+        },
+        "openconfig-lacp:lacp": {
+          "type": "object",
+          "required": ["interfaces"],
+          "additionalProperties": false,
+          "properties": {
+            "interfaces": { "type": "object" }
+          }
+        },
+        "openconfig-optical-switch:optical-switch": {
+          "type": "object",
+          "required": ["google-optical-switch:telemetry", "optical-switch-topology", "port-connection-recovery", "port-statuses"],
+          "additionalProperties": false,
+          "properties": {
+            "google-optical-switch:telemetry": { "type": "object" },
+            "optical-switch-topology": { "type": "object" },
+            "port-connection-recovery": { "type": "object" },
+            "port-statuses": { "type": "object" }
+          }
+        },
+        "openconfig-platform:components": {
+          "type": "object",
+          "required": ["component"],
+          "additionalProperties": false,
+          "properties": {
+            "component": { "type": "array" }
+          }
+        },
+        "openconfig-qos:qos": { "type": "object" },
+        "openconfig-system:system": { "type": "object" }
+      }
+    }
+  ]
+}
+

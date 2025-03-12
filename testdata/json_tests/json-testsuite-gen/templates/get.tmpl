@@ -1,0 +1,169 @@
+{{- /* ================================================================== */ -}}
+{{- /* The entry point for this template */ -}}
+{
+"title": "[Gen] Get {{ template "xpath" . }}",
+"operations":[
+  {{- template "get" . -}}
+]
+}
+
+{{- /* ================================================================== */ -}}
+{{- /* This template generates get test for a single path. */ -}}
+{{- define "get" -}}
+  {
+    "operation": "get",
+    "returnCode": {{- .Result -}},
+    "xpath": "{{- template "xpath" . -}}",
+    "target": "OC_YANG",
+    "type": "object",
+      "required": [
+        {{- if eq .Result 0 -}}
+        "{{- template "prefix" . -}}:{{- .Name -}}"
+        {{- end -}}
+      ],
+    "properties": {
+      {{- if eq .Result 0 -}}
+      {{- template "prefix-element" . -}}
+      {{- end -}}
+    }
+  }
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /* Generates XPATH. */ -}}
+{{- define "xpath" -}}
+  {{- if .Parent -}}
+    {{- template "xpath" .Parent -}}/
+  {{- end -}}
+  {{- .Name -}}{{- if eq .Type "array" -}}[{{- .Key.Name -}}={{- .Key.Val -}}]{{- end -}}
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /* Provides prefix. If not specified explicitly finds one in its parent. */ -}}
+{{- define "prefix" -}}
+  {{- if .Prefix -}}
+    {{- .Prefix -}}
+  {{- else if .Parent -}}
+    {{- template "prefix" .Parent -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /* Generates an entry for an element with a prefix.
+       Finds the prefix from the parent if not provided explicitly */ -}}
+{{- define "prefix-element" -}}
+"{{- template "prefix" . -}}:{{- .Name -}}": {
+  {{- template "element" . -}}
+}
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /* Generates an entry for an element with a prefix if specified */ -}}
+{{- define "no-prefix-element" -}}
+  "{{- if .Prefix -}}{{- .Prefix -}}:{{- end -}}{{- .Name -}}": {
+    {{- template "element" . -}}
+  }
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /* A 'switch/case' selecting a handler based on element's type. */ -}}
+{{- define "element" -}}
+{{- if eq .Type "object" -}}
+  {{- template "object-impl" . -}}
+{{- else if eq .Type "array" -}}
+  {{- template "array" . -}}
+{{- else if eq .Type "integer" -}}
+  {{- template "integer" . -}}
+{{- else if eq .Type "float" -}}
+  {{- template "float" . -}}
+{{- else if and .Pattern (eq .Type "string") -}}
+  {{- template "regex" . -}}
+{{- else if and .Val (eq .Type "string") -}}
+  {{- template "string" . -}}
+{{- else if eq .Type "bool" -}}
+  {{- template "bool" . -}}
+{{- else -}}
+  {{- /* In a case of unknown/misspelled type generate JSON formatting error! */ -}}
+  "{{- .Type -}}"
+{{- end -}}
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /* Specialized handler for integers. */ -}}
+{{- define "integer" -}}
+  "type": "integer",
+  "enum": [
+    {{- .Val -}}
+  ]
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /* Specialized handler for float numbers. */ -}}
+{{- define "float" -}}
+  "type": "float",
+  "enum": [
+    {{- .Val -}}
+  ]
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /* Specialized handler for strings. */ -}}
+{{- define "string" -}}
+  "type": "string",
+  "val": "{{- .Val -}}"
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /* Specialized handler for strings. */ -}}
+{{- define "regex" -}}
+  "type": "string",
+  "pattern": "{{- .Pattern -}}"
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /* Specialized handler for boolean values. */ -}}
+{{- define "bool" -}}
+  "type": "boolean",
+  "enum": [
+    {{- .Val -}}
+  ]
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /* Generates the body of an 'object'. */ -}}
+{{- define "object-impl" -}}
+  "type": "object",
+  "required": [
+    {{- range $index, $element := .Children -}}
+      {{- if ne $index 0 -}}, {{- end -}}
+      "{{- if $element.Prefix -}}{{- $element.Prefix -}}:{{- end -}}{{- $element.Name -}}"
+    {{- end -}}
+  ],
+  "properties": {
+    {{- range $index, $element := .Children -}}
+      {{- if ne $index 0 -}},{{- end -}}
+        {{- template "no-prefix-element" $element -}}
+    {{- end -}}
+  }
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /* This template handles `array` elements */ -}}
+{{- define "array" -}}
+  "type": "array",
+  "items": {
+      "type": "object",
+      "required": [
+        {{- range $index, $element := .Children -}}
+          {{- if ne $index 0 -}}, {{- end -}}
+          "{{- if $element.Prefix -}}{{- $element.Prefix -}}:{{- end -}}{{- $element.Name -}}"
+        {{- end -}}
+      ],
+      "properties": {
+    {{- range $index, $element := .Children -}}
+      {{- if ne $index 0 -}},{{- end -}}
+        {{- template "no-prefix-element" $element -}}
+      }
+    }
+    {{- end -}}
+{{- end -}}

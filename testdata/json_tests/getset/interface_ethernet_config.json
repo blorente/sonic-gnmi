@@ -1,0 +1,243 @@
+{
+  "title": "Set interface ethernet subtree config",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/4/1]/ethernet",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-if-ethernet:ethernet"
+      ],
+      "properties": {
+        "openconfig-if-ethernet:ethernet": {
+          "type": "object",
+          "required": [
+            "config", "state"
+          ],
+          "properties": {
+            "config": {
+              "type": "object",
+              "required": [
+                "port-speed"
+              ],
+              "properties": {
+                "port-speed": {
+                  "type": "string",
+                  "enum": ["openconfig-if-ethernet:SPEED_400GB"]
+                }
+              }
+            },
+            "state": {
+              "type": "object",
+              "required": [
+                "port-speed"
+              ],
+              "properties": {
+                "port-speed": {
+                  "type": "string",
+                  "enum": ["openconfig-if-ethernet:SPEED_400GB"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Loopback4]/ethernet",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-if-ethernet:ethernet"
+      ],
+      "properties": {
+        "openconfig-if-ethernet:ethernet": {
+          "type": "object",
+          "required": [
+            "state"
+          ],
+          "properties": {
+            "state": {
+              "type": "object",
+              "required": [
+                "mac-address"
+              ],
+              "properties": {
+                "mac-address": {
+                  "type": "string",
+                  "enum": ["01:02:03:04:05:06"]
+                }
+              }
+            }
+          }
+        }
+      }
+      ,
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/4/1" : {
+              "ingress-delay": "INVALID_VAL",
+              "egress-delay": "INVALID_VAL"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT_TABLE|Ethernet1/4/1" : {
+              "ingress-delay": "INVALID_VAL",
+              "egress-delay": "INVALID_VAL"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/4/1]/ethernet",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-if-ethernet:ethernet"
+      ],
+      "properties": {
+        "openconfig-if-ethernet:ethernet": {
+          "type": "object",
+          "required": [
+            "config"
+          ],
+          "properties": {
+            "config": {
+              "type": "object",
+              "required": [
+                "port-speed"
+              ],
+              "properties": {
+                "port-speed": {
+                  "type": "string",
+                  "enum": ["openconfig-if-ethernet:SPEED_400GB"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/4/1]/ethernet/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"openconfig-if-ethernet:port-speed\":\"openconfig-if-ethernet:SPEED_200GB\", \"openconfig-if-ethernet:fec-mode\":\"openconfig-if-ethernet:FEC_RS528\", \"google-pins-interfaces:ingress-delay\":\"QSGZmg==\", \"google-pins-interfaces:egress-delay\":\"QKZmZg==\"}}",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/4/1" : {
+              "ingress-delay": "10.2",
+              "egress-delay": "10.5",
+              "fec": "rs528"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "db": "STATE_DB",
+          "value": {
+            "PORT_TABLE|Ethernet1/4/1" : {
+              "ingress-delay": "10.3",
+              "egress-delay": "10.6"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/4/1]/ethernet",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-if-ethernet:ethernet"
+      ],
+      "properties": {
+        "openconfig-if-ethernet:ethernet": {
+          "type": "object",
+          "required": [
+            "config", "state"
+          ],
+          "properties": {
+            "config": {
+              "type": "object",
+              "required": [
+                "fec-mode", "port-speed", "google-pins-interfaces:ingress-delay", "google-pins-interfaces:egress-delay"
+              ],
+              "properties": {
+                "fec-mode": {
+                  "type": "string",
+                  "enum": ["openconfig-if-ethernet:FEC_RS528"]
+                },
+                "port-speed": {
+                  "type": "string",
+                  "enum": ["openconfig-if-ethernet:SPEED_200GB"]
+                },
+                "google-pins-interfaces:ingress-delay": {
+                  "type": "string",
+                  "enum": ["QSGZmg=="]
+                },
+                "google-pins-interfaces:egress-delay": {
+                  "type": "string",
+                  "enum": ["QKZmZg=="]
+                }
+              }
+            },
+            "state": {
+              "type": "object",
+              "required": [
+                "fec-mode", "port-speed", "google-pins-interfaces:ingress-delay", "google-pins-interfaces:egress-delay", "google-pins-interfaces:ingress-delay-applied", "google-pins-interfaces:egress-delay-applied"
+              ],
+              "properties": {
+                "fec-mode": {
+                  "type": "string",
+                  "enum": ["openconfig-if-ethernet:FEC_RS528"]
+                },
+                "port-speed": {
+                  "type": "string",
+                  "enum": ["openconfig-if-ethernet:SPEED_400GB"]
+                },
+                "google-pins-interfaces:ingress-delay": {
+                  "type": "string",
+                  "enum": ["QSMzMw=="]
+                },
+                "google-pins-interfaces:egress-delay": {
+                  "type": "string",
+                  "enum": ["QSgAAA=="]
+                },
+                "google-pins-interfaces:ingress-delay-applied": {
+                  "type": "string",
+                  "enum": ["QSTMzQ=="]
+                },
+                "google-pins-interfaces:egress-delay-applied": {
+                  "type": "string",
+                  "enum": ["QSmZmg=="]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+

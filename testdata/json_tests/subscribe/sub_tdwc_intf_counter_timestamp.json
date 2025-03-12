@@ -1,0 +1,248 @@
+{
+    "title": "TARGET_DEFINED subscribe with wildcard for interface counters with timestamp",
+    "globalDef" : {
+      "validators": {
+        "state.counters.in-broadcast-pkts.70": {
+          "type": "object",
+          "required": [
+            "openconfig-interfaces:in-broadcast-pkts"
+          ],
+          "properties": {
+            "openconfig-interfaces:in-broadcast-pkts": {
+              "type": "string",
+              "const": "70"
+            }
+          }
+        },
+        "state.counters.in-broadcast-pkts.200": {
+          "type": "object",
+          "required": [
+            "openconfig-interfaces:in-broadcast-pkts"
+          ],
+          "properties": {
+            "openconfig-interfaces:in-broadcast-pkts": {
+              "type": "string",
+              "const": "200"
+            }
+          }
+        },
+        "state.counters.in-broadcast-pkts.700": {
+          "type": "object",
+          "required": [
+            "openconfig-interfaces:in-broadcast-pkts"
+          ],
+          "properties": {
+            "openconfig-interfaces:in-broadcast-pkts": {
+              "type": "string",
+              "const": "700"
+            }
+          }
+        }
+      }
+    },
+    "operations":[
+      {
+        "title": "subscribe to /interfaces/interface[name=*]/state/counters",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'*'}}elem:{name:'state'}elem:{name:'counters'}}mode:TARGET_DEFINED sample_interval:1000000000 suppress_redundant: true} mode:STREAM}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "title": "Validates initial updates",
+            "timeout": 3000,
+            "pathValidators" : [
+              {
+                "xpath": "/interfaces/interface[name=Ethernet1/1/1]/state/counters/in-broadcast-pkts",
+                "timestamp": "1628778558111111000",
+                "schema": {
+                  "$ref": "#/globalDef/validators/state.counters.in-broadcast-pkts.70"
+                }
+              }
+            ],
+            "finalValidator": {
+              "xpath": "/interfaces/interface",
+              "schema": {
+                "type": "object",
+                "required": ["openconfig-interfaces:interface"],
+                "properties": {
+                  "openconfig-interfaces:interface" : {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "object",
+                      "required": ["name", "state"],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "state": {
+                          "type": "object",
+                          "required": [ "counters" ],
+                          "properties": {
+                            "counters": {
+                              "type": "object",
+                              "properties": {
+                                "in-broadcast-pkts": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Set Ethernet1/1/1 in-broadcast-pkts to 200",
+            "db": "COUNTERS_DB",
+            "value": {
+              "COUNTERS:oid:0x1000000000012" : {
+                "PORT_STAT_TIME_STAMP_USEC": "1628778558191233",
+                "SAI_PORT_STAT_IF_IN_BROADCAST_PKTS": 200
+              }
+            }
+          },
+          {
+            "oper": "validate",
+            "timeout": 2000,
+            "pathValidators" : [
+              {
+                "xpath": "/interfaces/interface[name=Ethernet1/1/1]/state/counters/in-broadcast-pkts",
+                "timestamp": "1628778558191233000",
+                "schema": {
+                  "$ref": "#/globalDef/validators/state.counters.in-broadcast-pkts.200"
+                }
+              }
+            ]
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Set Ethernet1/1/1 in-broadcast-pkts back to 70",
+            "db": "COUNTERS_DB",
+            "value": {
+              "COUNTERS:oid:0x1000000000012" : {
+                "PORT_STAT_TIME_STAMP_USEC": "1628778558111111",
+                "SAI_PORT_STAT_IF_IN_BROADCAST_PKTS": 70
+              }
+            }
+          },
+          {
+            "oper": "validate",
+            "timeout": 2000,
+            "pathValidators" : [
+              {
+                "xpath": "/interfaces/interface[name=Ethernet1/1/1]/state/counters/in-broadcast-pkts",
+                "timestamp": "1628778558111111000",
+                "schema": {
+                  "$ref": "#/globalDef/validators/state.counters.in-broadcast-pkts.70"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "subscribe to /interfaces/interface[name=CPU]/state/counters/in-broadcast-pkts",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'CPU'}}elem:{name:'state'}elem:{name:'counters'}elem:{name:'in-broadcast-pkts'}}mode:TARGET_DEFINED sample_interval:1000000000 suppress_redundant: true} mode:STREAM}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "title": "Validates initial updates",
+            "timeout": 3000,
+            "finalValidator": {
+              "xpath": "/interfaces/interface",
+              "schema": {
+                "type": "object",
+                "required": ["openconfig-interfaces:interface"],
+                "properties": {
+                  "openconfig-interfaces:interface" : {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "object",
+                      "required": ["name", "state"],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "state": {
+                          "type": "object",
+                          "required": [ "counters" ],
+                          "properties": {
+                            "counters": {
+                              "type": "object",
+                              "properties": {
+                                "in-broadcast-pkts": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Set CPU in-broadcast-pkts to 200",
+            "db": "COUNTERS_DB",
+            "value": {
+              "COUNTERS:oid:0x1000000000001" : {
+                "PORT_STAT_TIME_STAMP_USEC": "123123123123",
+                "SAI_PORT_STAT_IF_IN_BROADCAST_PKTS": 200
+              }
+            }
+          },
+          {
+            "oper": "validate",
+            "timeout": 2000,
+            "pathValidators" : [
+              {
+                "xpath": "/interfaces/interface[name=CPU]/state/counters/in-broadcast-pkts",
+                "timestamp": "123123123123000",
+                "schema": {
+                  "$ref": "#/globalDef/validators/state.counters.in-broadcast-pkts.200"
+                }
+              }
+            ]
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Set CPU in-broadcast-pkts back to 700",
+            "db": "COUNTERS_DB",
+            "value": {
+              "COUNTERS:oid:0x1000000000001" : {
+                "PORT_STAT_TIME_STAMP_USEC": "123412341234",
+                "SAI_PORT_STAT_IF_IN_BROADCAST_PKTS": 700
+              }
+            }
+          },
+          {
+            "oper": "validate",
+            "timeout": 2000,
+            "pathValidators" : [
+              {
+                "xpath": "/interfaces/interface[name=CPU]/state/counters/in-broadcast-pkts",
+                "timestamp": "123412341234000",
+                "schema": {
+                  "$ref": "#/globalDef/validators/state.counters.in-broadcast-pkts.700"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }

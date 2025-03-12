@@ -1,0 +1,41 @@
+{
+  "title": "Get interface hardware-port",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "openconfig-platform-port:hardware-port"
+                ],
+                "properties": {
+                  "openconfig-platform-port:hardware-port": {
+                    "type": "string",
+                    "enum": ["1/1"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+

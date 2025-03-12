@@ -1,0 +1,23 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("//testdata/json_tests/json-testsuite-gen:rules.bzl", "test_tar_file")
+
+go_library(
+    name = "json-testsuite-gen_lib",
+    srcs = ["json-testsuite-gen.go"],
+    # Gazelle throws a warning because it can't handle glob, Keep supresses it.
+    embedsrcs = glob(["templates/*.tmpl"]),  # keep
+    importpath = "github.com/sonic-net/sonic-gnmi/testdata/json_tests/json-testsuite-gen",
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "json-testsuite-gen",
+    embed = [":json-testsuite-gen_lib"],
+    visibility = ["//visibility:public"],
+)
+
+test_tar_file(
+    name = "gentests_tar",
+    src = "paths.json",
+    visibility = ["//visibility:public"],
+)

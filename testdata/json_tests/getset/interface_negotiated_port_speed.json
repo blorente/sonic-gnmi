@@ -1,0 +1,41 @@
+{
+  "title": "Get interface negotiated-port-speed",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-if-ethernet:ethernet": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "negotiated-port-speed"
+                ],
+                "properties": {
+                  "negotiated-port-speed": {
+                    "type": "string",
+                    "enum": ["openconfig-if-ethernet:SPEED-100GB"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+

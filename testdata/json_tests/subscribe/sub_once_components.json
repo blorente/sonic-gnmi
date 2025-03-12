@@ -1,0 +1,115 @@
+{
+  "title": "ONCE Subscribe to components",
+  "operations":[
+    {
+      "title": "subscribe to node id",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'integrated-circuit'}elem:{name:'state'}elem:{name:'node-id'}}}mode:ONCE}",
+      "returnCode": 0,
+
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:component"],
+              "properties": {
+                "openconfig-platform:component": {
+                  "type": "array",
+                  "items": {
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "additionalItems": false,
+                    "required": ["integrated-circuit", "name"],
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "enum": ["integrated_circuit0"]
+                      },
+                      "integrated-circuit": {
+                        "type": "object",
+                        "required": ["state"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "state": {
+                            "type": "object",
+                            "required": ["openconfig-p4rt:node-id"],
+                            "properties": {
+                              "openconfig-p4rt:node-id": {
+                                "type": "string",
+                                "enum": ["1234567"]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe (ONCE) to /components/component/state/model-name",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'chassis'}}elem:{name:'state'}elem:{name:'model-name'}}}mode:ONCE}",
+      "returnCode": 0,
+
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:component"],
+              "properties": {
+                "openconfig-platform:component": {
+                  "type": "array",
+                  "items": {
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "additionalItems": false,
+                    "required": ["state", "name"],
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "enum": ["chassis"]
+                      },
+                      "state": {
+                        "type": "object",
+                        "required": ["model-name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "model-name": {
+                            "type": "string",
+                            "enum": ["BX"]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

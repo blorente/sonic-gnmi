@@ -1,0 +1,641 @@
+{
+    "title": "Set_Update_Partial_Config",
+    "operations":[
+      {
+        "title": "Set admin-status to true",
+        "operation": "update",
+        "returnCode": 0,
+        "xpath": "openconfig",
+        "target": "OC_YANG",
+        "attributeData":  "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"config\": {\"enabled\": true, \"name\": \"Ethernet1/1/1\"}, \"name\": \"Ethernet1/1/1\"}]}}"
+      },
+      {
+        "title": "Verify that admin-status was set to true",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/config/enabled",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": ["openconfig-interfaces:enabled"],
+        "properties": {
+          "openconfig-interfaces:enabled": {
+            "type": "boolean",
+            "enum": [true]
+          }
+        }
+      },
+      {
+        "title": "Set admin-status to false",
+        "operation": "update",
+        "returnCode": 0,
+        "xpath": "openconfig",
+        "target": "OC_YANG",
+        "attributeData":  "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"config\": {\"enabled\": false, \"name\": \"Ethernet1/1/1\"}, \"name\": \"Ethernet1/1/1\"}]}}"
+      },
+      {
+        "title": "Verify that admin-status was set to false",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/config/enabled",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": ["openconfig-interfaces:enabled"],
+        "properties": {
+          "openconfig-interfaces:enabled": {
+            "type": "boolean",
+            "enum": [false]
+          }
+        }
+      },
+      {
+        "title": "Set health-indicator to BAD",
+        "operation": "update",
+        "returnCode": 0,
+        "xpath": "openconfig/",
+        "target": "OC_YANG",
+        "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"config\": {\"openconfig-pins-interfaces:health-indicator\":\"BAD\", \"name\": \"Ethernet1/1/1\"}, \"name\": \"Ethernet1/1/1\"}]}}"
+      },
+      {
+        "title": "Verify that health-indicator was set to BAD",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/config/health-indicator",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": ["openconfig-pins-interfaces:health-indicator"],
+        "properties": {
+          "openconfig-pins-interfaces:health-indicator": {
+            "type": "string",
+            "enum": ["BAD"]
+          }
+        }
+      },
+      {
+        "title": "Set health-indicator to GOOD",
+        "operation": "update",
+        "returnCode": 0,
+        "xpath": "openconfig/",
+        "target": "OC_YANG",
+        "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"config\": {\"openconfig-pins-interfaces:health-indicator\":\"GOOD\", \"name\": \"Ethernet1/1/1\"}, \"name\": \"Ethernet1/1/1\"}]}}"
+      },
+      {
+        "title": "Verify that health-indicator was set to GOOD",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/config/health-indicator",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": ["openconfig-pins-interfaces:health-indicator"],
+        "properties": {
+          "openconfig-pins-interfaces:health-indicator": {
+            "type": "string",
+            "enum": ["GOOD"]
+          }
+        }
+      },
+      {
+        "title": "Set system-priority to 512",
+        "operation": "update",
+        "returnCode": 0,
+        "xpath": "openconfig/",
+        "target": "OC_YANG",
+        "attributeData": "{\"openconfig-lacp:lacp\": {\"interfaces\": {\"interface\": [{\"config\": {\"system-priority\":512, \"name\": \"PortChannel1\"}, \"name\": \"PortChannel1\"}]}}}"
+      },
+      {
+        "title": "Verify that system-priority was set to 512",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/config/system-priority",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": ["openconfig-lacp:system-priority"],
+        "properties": {
+          "openconfig-lacp:system-priority": {
+            "type": "integer",
+            "enum": [512]
+          }
+        },
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "title": "Change fast_rate and active to check that UMF is not overwriting these fields",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORTCHANNEL|PortChannel1": {
+                "fast_rate": "false",
+                "active": "false"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "Set system-priority to 256",
+        "operation": "update",
+        "returnCode": 0,
+        "xpath": "openconfig/",
+        "target": "OC_YANG",
+        "attributeData": "{\"openconfig-lacp:lacp\": {\"interfaces\": {\"interface\": [{\"config\": {\"system-priority\":256, \"name\": \"PortChannel1\"}, \"name\": \"PortChannel1\"}]}}}"
+      },
+      {
+        "title": "Verify that system-priority was set to 256",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/config/system-priority",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": ["openconfig-lacp:system-priority"],
+        "properties": {
+          "openconfig-lacp:system-priority": {
+            "type": "integer",
+            "enum": [256]
+          }
+        }
+      },
+      {
+        "title": "Verify that interval and lacp-mode were not overwritten",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/config/",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": ["openconfig-lacp:config"],
+        "properties": {
+          "openconfig-lacp:config": {
+            "type": "object",
+            "required": [
+              "interval", "lacp-mode"
+            ],
+            "properties": {
+              "interval": {
+                "type": "string",
+                "const": "SLOW"
+              },
+              "lacp-mode": {
+                "type": "string",
+                "const": "PASSIVE"
+              }
+            }
+          }
+        },
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "title": "Restore fast_rate and active",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORTCHANNEL|PortChannel1": {
+                "fast_rate": "true",
+                "active": "true"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "Push QoS Config",
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/",
+        "target": "OC_YANG",
+        "attributeData": "{\"openconfig-qos:qos\":{\"queues\":{\"queue\":[{\"config\":{\"name\":\"NC1\",\"queue-id\":7},\"name\":\"NC1\"},{\"config\":{\"name\":\"AF4\",\"queue-id\":6},\"name\":\"AF4\"},{\"config\":{\"name\":\"AF3\",\"queue-id\":5},\"name\":\"AF3\"},{\"config\":{\"name\":\"AF2\",\"queue-id\":4},\"name\":\"AF2\"},{\"config\":{\"name\":\"AF1\",\"queue-id\":3},\"name\":\"AF1\"},{\"config\":{\"name\":\"BE1\",\"queue-id\":2},\"name\":\"BE1\"},{\"config\":{\"name\":\"LLQ2\",\"queue-id\":1},\"name\":\"LLQ2\"},{\"config\":{\"name\":\"LLQ1\",\"queue-id\":0},\"name\":\"LLQ1\"}]},\"google-pins-qos:shared-buffer-pools\":{\"shared-buffer-pool\":[{\"config\":{\"size\":\"113620296\"},\"name\":\"egress_shared_pool\"}]},\"buffer-allocation-profiles\":{\"buffer-allocation-profile\":[{\"config\":{\"name\":\"staggered_queue\"},\"name\":\"staggered_queue\",\"queues\":{\"queue\":[{\"config\":{\"dedicated-buffer\":\"0\",\"dynamic-limit-scaling-factor\":1,\"name\":\"AF1\",\"shared-buffer-limit-type\":\"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\":true,\"buffer-pool-name\":\"egress_shared_pool\"},\"name\":\"AF1\"},{\"config\":{\"dedicated-buffer\":\"0\",\"dynamic-limit-scaling-factor\":3,\"name\":\"AF2\",\"shared-buffer-limit-type\":\"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\":true,\"buffer-pool-name\":\"egress_shared_pool\"},\"name\":\"AF2\"},{\"config\":{\"dedicated-buffer\":\"0\",\"dynamic-limit-scaling-factor\":3,\"name\":\"AF3\",\"shared-buffer-limit-type\":\"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\":true,\"buffer-pool-name\":\"egress_shared_pool\"},\"name\":\"AF3\"},{\"config\":{\"dedicated-buffer\":\"0\",\"dynamic-limit-scaling-factor\":3,\"name\":\"AF4\",\"shared-buffer-limit-type\":\"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\":true,\"buffer-pool-name\":\"egress_shared_pool\"},\"name\":\"AF4\"},{\"config\":{\"dedicated-buffer\":\"0\",\"dynamic-limit-scaling-factor\":-1,\"name\":\"BE1\",\"shared-buffer-limit-type\":\"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\":true,\"buffer-pool-name\":\"egress_shared_pool\"},\"name\":\"BE1\"},{\"config\":{\"dedicated-buffer\":\"0\",\"dynamic-limit-scaling-factor\":-3,\"name\":\"LLQ1\",\"shared-buffer-limit-type\":\"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\":true,\"buffer-pool-name\":\"egress_shared_pool\"},\"name\":\"LLQ1\"},{\"config\":{\"dedicated-buffer\":\"0\",\"dynamic-limit-scaling-factor\":-3,\"name\":\"LLQ2\",\"shared-buffer-limit-type\":\"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\":true,\"buffer-pool-name\":\"egress_shared_pool\"},\"name\":\"LLQ2\"},{\"config\":{\"dedicated-buffer\":\"0\",\"dynamic-limit-scaling-factor\":3,\"name\":\"NC1\",\"shared-buffer-limit-type\":\"openconfig-qos:DYNAMIC_BASED_ON_SCALING_FACTOR\",\"use-shared-buffer\":true,\"buffer-pool-name\":\"egress_shared_pool\"},\"name\":\"NC1\"}]}}]},\"forwarding-groups\":{\"forwarding-group\":[{\"config\":{\"fabric-priority\":7,\"name\":\"target-group-NC1\",\"unicast-output-queue\":\"NC1\",\"multicast-output-queue\":\"NC1\"},\"name\":\"target-group-NC1\"},{\"config\":{\"fabric-priority\":4,\"name\":\"target-group-AF4\",\"unicast-output-queue\":\"AF4\",\"multicast-output-queue\":\"AF4\"},\"name\":\"target-group-AF4\"},{\"config\":{\"fabric-priority\":3,\"name\":\"target-group-AF3\",\"unicast-output-queue\":\"AF3\",\"multicast-output-queue\":\"AF3\"},\"name\":\"target-group-AF3\"},{\"config\":{\"fabric-priority\":2,\"name\":\"target-group-AF2\",\"unicast-output-queue\":\"AF2\",\"multicast-output-queue\":\"AF2\"},\"name\":\"target-group-AF2\"},{\"config\":{\"fabric-priority\":1,\"name\":\"target-group-AF1\",\"unicast-output-queue\":\"AF1\",\"multicast-output-queue\":\"AF1\"},\"name\":\"target-group-AF1\"},{\"config\":{\"fabric-priority\":0,\"name\":\"target-group-BE1\",\"unicast-output-queue\":\"BE1\",\"multicast-output-queue\":\"BE1\"},\"name\":\"target-group-BE1\"},{\"config\":{\"fabric-priority\":6,\"name\":\"target-group-LLQ2\",\"unicast-output-queue\":\"LLQ2\",\"multicast-output-queue\":\"LLQ2\"},\"name\":\"target-group-LLQ2\"},{\"config\":{\"fabric-priority\":5,\"name\":\"target-group-LLQ1\",\"unicast-output-queue\":\"LLQ1\",\"multicast-output-queue\":\"LLQ1\"},\"name\":\"target-group-LLQ1\"}]},\"queue-management-profiles\":{\"queue-management-profile\":[{\"config\":{\"name\":\"staggered_queue\"},\"name\":\"staggered_queue\",\"wred\":{\"uniform\":{\"config\":{\"drop\":false,\"enable-ecn\":true,\"max-drop-probability-percent\":1,\"max-threshold\":\"80000\",\"min-threshold\":\"80000\"}}}}]},\"scheduler-policies\":{\"scheduler-policy\":[{\"config\":{\"name\":\"scheduler_200gb\"},\"name\":\"scheduler_200gb\",\"schedulers\":{\"scheduler\":[{\"config\":{\"priority\":\"STRICT\",\"sequence\":0,\"type\":\"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"NC1\",\"input-type\":\"QUEUE\",\"queue\":\"NC1\"},\"id\":\"NC1\"}]},\"sequence\":0,\"two-rate-three-color\":{\"config\":{\"cir\":\"1000000000\",\"pir\":\"2000000000\"}}},{\"config\":{\"priority\":\"STRICT\",\"sequence\":1,\"type\":\"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"AF4\",\"input-type\":\"QUEUE\",\"queue\":\"AF4\"},\"id\":\"AF4\"}]},\"sequence\":1,\"two-rate-three-color\":{\"config\":{\"cir\":\"0\",\"pir\":\"100000000000\"}}},{\"config\":{\"priority\":\"STRICT\",\"sequence\":2,\"type\":\"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"AF3\",\"input-type\":\"QUEUE\",\"queue\":\"AF3\"},\"id\":\"AF3\"}]},\"sequence\":2,\"two-rate-three-color\":{\"config\":{\"cir\":\"0\",\"pir\":\"100000000000\"}}},{\"config\":{\"priority\":\"STRICT\",\"sequence\":3,\"type\":\"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"AF2\",\"input-type\":\"QUEUE\",\"queue\":\"AF2\"},\"id\":\"AF2\"}]},\"sequence\":3,\"two-rate-three-color\":{\"config\":{\"cir\":\"0\",\"pir\":\"100000000000\"}}},{\"config\":{\"priority\":\"STRICT\",\"sequence\":4,\"type\":\"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"AF1\",\"input-type\":\"QUEUE\",\"queue\":\"AF1\"},\"id\":\"AF1\"}]},\"sequence\":4,\"two-rate-three-color\":{\"config\":{\"cir\":\"0\",\"pir\":\"100000000000\"}}},{\"config\":{\"priority\":\"STRICT\",\"sequence\":5,\"type\":\"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"BE1\",\"input-type\":\"QUEUE\",\"queue\":\"BE1\"},\"id\":\"BE1\"}]},\"sequence\":5,\"two-rate-three-color\":{\"config\":{\"cir\":\"0\",\"pir\":\"100000000000\"}}},{\"config\":{\"priority\":\"STRICT\",\"sequence\":6,\"type\":\"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"LLQ2\",\"input-type\":\"QUEUE\",\"queue\":\"LLQ2\"},\"id\":\"LLQ2\"}]},\"sequence\":6,\"two-rate-three-color\":{\"config\":{\"cir\":\"0\",\"pir\":\"100000000000\"}}},{\"config\":{\"priority\":\"STRICT\",\"sequence\":7,\"type\":\"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"LLQ1\",\"input-type\":\"QUEUE\",\"queue\":\"LLQ1\"},\"id\":\"LLQ1\"}]},\"sequence\":7,\"two-rate-three-color\":{\"config\":{\"cir\":\"0\",\"pir\":\"100000000000\"}}}]}},{\"config\":{\"name\":\"scheduler_400gb\"},\"name\":\"scheduler_400gb\",\"schedulers\":{\"scheduler\":[{\"config\":{\"priority\":\"STRICT\",\"sequence\":0,\"type\":\"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"NC1\",\"input-type\":\"QUEUE\",\"queue\":\"NC1\"},\"id\":\"NC1\"}]},\"sequence\":0,\"two-rate-three-color\":{\"config\":{\"cir\":\"4000000000\",\"pir\":\"8000000000\"}}},{\"config\":{\"priority\":\"STRICT\",\"sequence\":1,\"type\":\"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"AF4\",\"input-type\":\"QUEUE\",\"queue\":\"AF4\"},\"id\":\"AF4\"}]},\"sequence\":1,\"two-rate-three-color\":{\"config\":{\"cir\":\"0\",\"pir\":\"400000000000\"}}},{\"config\":{\"priority\":\"STRICT\",\"sequence\":2,\"type\":\"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"AF3\",\"input-type\":\"QUEUE\",\"queue\":\"AF3\"},\"id\":\"AF3\"}]},\"sequence\":2,\"two-rate-three-color\":{\"config\":{\"cir\":\"0\",\"pir\":\"400000000000\"}}},{\"config\":{\"priority\":\"STRICT\",\"sequence\":3,\"type\":\"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"AF2\",\"input-type\":\"QUEUE\",\"queue\":\"AF2\"},\"id\":\"AF2\"}]},\"sequence\":3,\"two-rate-three-color\":{\"config\":{\"cir\":\"0\",\"pir\":\"400000000000\"}}},{\"config\":{\"priority\":\"STRICT\",\"sequence\":4,\"type\":\"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"AF1\",\"input-type\":\"QUEUE\",\"queue\":\"AF1\"},\"id\":\"AF1\"}]},\"sequence\":4,\"two-rate-three-color\":{\"config\":{\"cir\":\"0\",\"pir\":\"400000000000\"}}},{\"config\":{\"priority\":\"STRICT\",\"sequence\":5,\"type\":\"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"BE1\",\"input-type\":\"QUEUE\",\"queue\":\"BE1\"},\"id\":\"BE1\"}]},\"sequence\":5,\"two-rate-three-color\":{\"config\":{\"cir\":\"0\",\"pir\":\"400000000000\"}}},{\"config\":{\"priority\":\"STRICT\",\"sequence\":6,\"type\":\"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"LLQ2\",\"input-type\":\"QUEUE\",\"queue\":\"LLQ2\"},\"id\":\"LLQ2\"}]},\"sequence\":6,\"two-rate-three-color\":{\"config\":{\"cir\":\"0\",\"pir\":\"400000000000\"}}},{\"config\":{\"priority\":\"STRICT\",\"sequence\":7,\"type\":\"openconfig-qos-types:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"LLQ1\",\"input-type\":\"QUEUE\",\"queue\":\"LLQ1\"},\"id\":\"LLQ1\"}]},\"sequence\":7,\"two-rate-three-color\":{\"config\":{\"cir\":\"0\",\"pir\":\"400000000000\"}}}]}}]}}}"
+      },
+      {
+        "title": "Set 1/1/5 speed to 200GB",
+        "operation": "update",
+        "returnCode": 0,
+        "xpath": "openconfig/",
+        "target": "OC_YANG",
+        "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"name\": \"Ethernet1/1/5\", \"config\": {\"name\": \"Ethernet1/1/5\"}, \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_200GB\", \"fec-mode\" : \" openconfig-if-ethernet:FEC_RS528\"}}}]}, \"openconfig-platform:components\": {\"component\": [{\"name\": \"1/1\", \"config\": {\"name\": \"1/1\"}, \"port\": {\"breakout-mode\": {\"groups\": { \"group\" : [{ \"index\": 0, \"config\": {\"index\": 0, \"num-breakouts\": 1, \"breakout-speed\": \"openconfig-if-ethernet:SPEED_400GB\", \"num-physical-channels\" : 4}}, { \"index\": 1, \"config\": {\"index\": 1, \"num-breakouts\": 1, \"breakout-speed\": \"openconfig-if-ethernet:SPEED_200GB\", \"num-physical-channels\" : 4}}]}}}}]}, \"openconfig-qos:qos\":{\"scheduler-policies\":{\"scheduler-policy\":[{\"config\":{\"name\":\"scheduler_200gb\"},\"name\":\"scheduler_200gb\",\"schedulers\":{\"scheduler\":[{\"config\":{\"priority\":\"STRICT\",\"sequence\":0,\"type\":\"openconfig-qos:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"NC1\",\"queue\":\"NC1\",\"input-type\":\"QUEUE\"},\"id\":\"NC1\"}]},\"sequence\":0,\"two-rate-three-color\":{\"config\":{\"cir\":\"0\",\"pir\":\"1000000000\"}}},{\"config\":{\"sequence\":1,\"type\":\"openconfig-qos:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"AF4\",\"queue\":\"AF4\",\"input-type\":\"QUEUE\",\"weight\":\"12\"},\"id\":\"AF4\"}]},\"sequence\":1,\"two-rate-three-color\":{\"config\":{\"cir\":\"1000000000\",\"pir\":\"1000000000\"}}},{\"config\":{\"sequence\":2,\"type\":\"openconfig-qos:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"AF3\",\"queue\":\"AF3\",\"input-type\":\"QUEUE\",\"weight\":\"12\"},\"id\":\"AF3\"}]},\"sequence\":2,\"two-rate-three-color\":{\"config\":{\"cir\":\"1000000000\",\"pir\":\"1000000000\"}}},{\"config\":{\"sequence\":3,\"type\":\"openconfig-qos:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"AF2\",\"queue\":\"AF2\",\"input-type\":\"QUEUE\",\"weight\":\"12\"},\"id\":\"AF2\"}]},\"sequence\":3,\"two-rate-three-color\":{\"config\":{\"cir\":\"1000000000\",\"pir\":\"1000000000\"}}},{\"config\":{\"sequence\":4,\"type\":\"openconfig-qos:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"AF1\",\"queue\":\"AF1\",\"input-type\":\"QUEUE\",\"weight\":\"12\"},\"id\":\"AF1\"}]},\"sequence\":4,\"two-rate-three-color\":{\"config\":{\"cir\":\"1000000000\",\"pir\":\"1000000000\"}}},{\"config\":{\"sequence\":5,\"type\":\"openconfig-qos:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"BE1\",\"queue\":\"BE1\",\"input-type\":\"QUEUE\",\"weight\":\"12\"},\"id\":\"BE1\"}]},\"sequence\":5,\"two-rate-three-color\":{\"config\":{\"cir\":\"1000000000\",\"pir\":\"1000000000\"}}},{\"config\":{\"sequence\":6,\"type\":\"openconfig-qos:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"LLQ2\",\"queue\":\"LLQ2\",\"input-type\":\"QUEUE\",\"weight\":\"12\"},\"id\":\"LLQ2\"}]},\"sequence\":6,\"two-rate-three-color\":{\"config\":{\"cir\":\"1000000000\",\"pir\":\"1000000000\"}}},{\"config\":{\"sequence\":7,\"type\":\"openconfig-qos:TWO_RATE_THREE_COLOR\"},\"sequence\":7,\"two-rate-three-color\":{\"config\":{\"cir\":\"1000000000\",\"pir\":\"1000000000\"}}}]}}]},\"interfaces\":{\"interface\":[{\"config\":{\"interface-id\":\"Ethernet1/1/5\"},\"interface-id\":\"Ethernet1/1/5\",\"output\":{\"scheduler-policy\":{\"config\":{\"name\":\"scheduler_200gb\"}}}}]}}}"
+      },
+      {
+        "title": "Verify breakout mode changed to 1x400_1x200",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/components/component[name=1/1]/port/breakout-mode",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-platform-port:breakout-mode"
+        ],
+        "properties": {
+          "openconfig-platform-port:breakout-mode": {
+            "type": "object",
+            "required": [
+              "groups"
+            ],
+            "properties": {
+              "groups": {
+                "type": "object",
+                "required": [
+                  "group"
+                ],
+                "properties": {
+                  "group": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "title": "0",
+                        "type": "object",
+                        "required": [
+                          "index", "config"
+                        ],
+                        "properties": {
+                          "index": {
+                            "type": "integer",
+                            "enum": [
+                              0
+                            ]
+                          },
+                          "config": {
+                            "type": "object",
+                            "required": [
+                              "index", "num-breakouts", "breakout-speed", "num-physical-channels"
+                            ],
+                            "properties": {
+                              "index": {
+                                "type": "integer",
+                                "enum": [
+                                  0
+                                ]
+                              },
+                              "num-breakouts": {
+                                "type": "integer",
+                                "enum": [
+                                  1
+                                ]
+                              },
+                              "breakout-speed": {
+                                "type": "string",
+                                "enum": [
+                                  "openconfig-if-ethernet:SPEED_400GB"
+                                ]
+                              },
+                              "num-physical-channels": {
+                                "type": "integer",
+                                "enum": [
+                                  4
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "title": "1",
+                        "type": "object",
+                        "required": [
+                          "index", "config"
+                        ],
+                        "properties": {
+                          "index": {
+                            "type": "integer",
+                            "enum": [
+                              1
+                            ]
+                          },
+                          "config": {
+                            "type": "object",
+                            "required": [
+                              "index", "num-breakouts", "breakout-speed", "num-physical-channels"
+                            ],
+                            "properties": {
+                              "index": {
+                                "type": "integer",
+                                "enum": [
+                                  1
+                                ]
+                              },
+                              "num-breakouts": {
+                                "type": "integer",
+                                "enum": [
+                                  1
+                                ]
+                              },
+                              "breakout-speed": {
+                                "type": "string",
+                                "enum": [
+                                  "openconfig-if-ethernet:SPEED_200GB"
+                                ]
+                              },
+                              "num-physical-channels": {
+                                "type": "integer",
+                                "enum": [
+                                  4
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "title": "Verify port speed and fec-mode changed",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/ethernet/config/",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-if-ethernet:config"
+        ],
+        "properties": {
+          "openconfig-if-ethernet:config": {
+            "type": "object",
+            "required": [
+              "port-speed", "fec-mode"
+            ],
+            "properties": {
+              "port-speed": {
+                "type": "string",
+                "enum": ["openconfig-if-ethernet:SPEED_200GB"]
+              },
+              "fec-mode": {
+                "type": "string",
+                "enum": ["openconfig-if-ethernet:FEC_RS528"]
+              }
+            }
+          }
+        }
+      },
+      {
+        "title": "Verify scheduler-policy changed to scheduler_200gb",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/qos/interfaces/interface[interface-id=Ethernet1/1/5]/output/scheduler-policy/config/name",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-qos:name"
+        ],
+        "properties": {
+          "openconfig-qos:name": {
+            "type": "string",
+            "enum": ["scheduler_200gb"]
+          }
+        },
+        "subOpers": [
+          {
+            "oper": "dbHGetValidate",
+            "title": "Validate the lanes for Ethernet1/1/X",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORT|Ethernet1/1/1" : {
+                "lanes" : "9,10,11,12"
+              },
+              "PORT|Ethernet1/1/5" : {
+                "lanes" : "13,14,15,16"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Add a flow reference to 1/1/5 to confirm that port speed override does not result in breakout",
+            "db": "STATE_DB",
+            "value": {
+              "PORT_TABLE|Ethernet1/1/5": {
+                "ref_count": "14"
+              }
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Clean up pending_delete for 1/1/5",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORT_STATE|Ethernet1/1/5": []
+            }
+          }
+        ]
+      },
+      {
+        "title": "Set 1/1/5 speed to 400GB",
+        "operation": "update",
+        "returnCode": 0,
+        "xpath": "openconfig/",
+        "target": "OC_YANG",
+        "attributeData": "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"name\":\"Ethernet1/1/5\",\"config\":{\"name\":\"Ethernet1/1/5\"},\"openconfig-if-ethernet:ethernet\":{\"config\":{\"port-speed\":\"openconfig-if-ethernet:SPEED_400GB\"}}}]},\"openconfig-platform:components\":{\"component\":[{\"name\":\"1/1\",\"config\":{\"name\":\"1/1\"},\"port\":{\"breakout-mode\":{\"groups\":{\"group\":[{\"index\":0,\"config\":{\"index\":0,\"num-breakouts\":2,\"breakout-speed\":\"openconfig-if-ethernet:SPEED_400GB\",\"num-physical-channels\":4}}]}}}}]},\"openconfig-qos:qos\":{\"scheduler-policies\":{\"scheduler-policy\":[{\"config\":{\"name\":\"scheduler_400gb\"},\"name\":\"scheduler_400gb\",\"schedulers\":{\"scheduler\":[{\"config\":{\"priority\":\"STRICT\",\"sequence\":0,\"type\":\"openconfig-qos:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"NC1\",\"queue\":\"NC1\",\"input-type\":\"QUEUE\"},\"id\":\"NC1\"}]},\"sequence\":0,\"two-rate-three-color\":{\"config\":{\"cir\":\"0\",\"pir\":\"1000000000\"}}},{\"config\":{\"sequence\":1,\"type\":\"openconfig-qos:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"AF4\",\"queue\":\"AF4\",\"input-type\":\"QUEUE\",\"weight\":\"12\"},\"id\":\"AF4\"}]},\"sequence\":1,\"two-rate-three-color\":{\"config\":{\"cir\":\"1000000000\",\"pir\":\"1000000000\"}}},{\"config\":{\"sequence\":2,\"type\":\"openconfig-qos:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"AF3\",\"queue\":\"AF3\",\"input-type\":\"QUEUE\",\"weight\":\"12\"},\"id\":\"AF3\"}]},\"sequence\":2,\"two-rate-three-color\":{\"config\":{\"cir\":\"1000000000\",\"pir\":\"1000000000\"}}},{\"config\":{\"sequence\":3,\"type\":\"openconfig-qos:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"AF2\",\"queue\":\"AF2\",\"input-type\":\"QUEUE\",\"weight\":\"12\"},\"id\":\"AF2\"}]},\"sequence\":3,\"two-rate-three-color\":{\"config\":{\"cir\":\"1000000000\",\"pir\":\"1000000000\"}}},{\"config\":{\"sequence\":4,\"type\":\"openconfig-qos:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"AF1\",\"queue\":\"AF1\",\"input-type\":\"QUEUE\",\"weight\":\"12\"},\"id\":\"AF1\"}]},\"sequence\":4,\"two-rate-three-color\":{\"config\":{\"cir\":\"1000000000\",\"pir\":\"1000000000\"}}},{\"config\":{\"sequence\":5,\"type\":\"openconfig-qos:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"BE1\",\"queue\":\"BE1\",\"input-type\":\"QUEUE\",\"weight\":\"12\"},\"id\":\"BE1\"}]},\"sequence\":5,\"two-rate-three-color\":{\"config\":{\"cir\":\"1000000000\",\"pir\":\"1000000000\"}}},{\"config\":{\"sequence\":6,\"type\":\"openconfig-qos:TWO_RATE_THREE_COLOR\"},\"inputs\":{\"input\":[{\"config\":{\"id\":\"LLQ2\",\"queue\":\"LLQ2\",\"input-type\":\"QUEUE\",\"weight\":\"12\"},\"id\":\"LLQ2\"}]},\"sequence\":6,\"two-rate-three-color\":{\"config\":{\"cir\":\"1000000000\",\"pir\":\"1000000000\"}}},{\"config\":{\"sequence\":7,\"type\":\"openconfig-qos:TWO_RATE_THREE_COLOR\"},\"sequence\":7,\"two-rate-three-color\":{\"config\":{\"cir\":\"1000000000\",\"pir\":\"1000000000\"}}}]}}]},\"interfaces\":{\"interface\":[{\"config\":{\"interface-id\":\"Ethernet1/1/5\"},\"interface-id\":\"Ethernet1/1/5\",\"output\":{\"scheduler-policy\":{\"config\":{\"name\":\"scheduler_400gb\"}}}}]}}}"
+      },
+      {
+        "title": "Verify breakout mode changed to 2x400",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/components/component[name=1/1]/port/breakout-mode",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-platform-port:breakout-mode"
+        ],
+        "properties": {
+          "openconfig-platform-port:breakout-mode": {
+            "type": "object",
+            "required": [
+              "groups"
+            ],
+            "properties": {
+              "groups": {
+                "type": "object",
+                "required": [
+                  "group"
+                ],
+                "properties": {
+                  "group": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "title": "0",
+                        "type": "object",
+                        "required": [
+                          "index", "config"
+                        ],
+                        "properties": {
+                          "index": {
+                            "type": "integer",
+                            "enum": [
+                              0
+                            ]
+                          },
+                          "config": {
+                            "type": "object",
+                            "required": [
+                              "index", "num-breakouts", "breakout-speed", "num-physical-channels"
+                            ],
+                            "properties": {
+                              "index": {
+                                "type": "integer",
+                                "enum": [
+                                  0
+                                ]
+                              },
+                              "num-breakouts": {
+                                "type": "integer",
+                                "enum": [
+                                  2
+                                ]
+                              },
+                              "breakout-speed": {
+                                "type": "string",
+                                "enum": [
+                                  "openconfig-if-ethernet:SPEED_400GB"
+                                ]
+                              },
+                              "num-physical-channels": {
+                                "type": "integer",
+                                "enum": [
+                                  4
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "title": "Verify port speed changed to 400GB",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/ethernet/config/port-speed",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-if-ethernet:port-speed"
+        ],
+        "properties": {
+          "openconfig-if-ethernet:port-speed": {
+            "type": "string",
+            "enum": ["openconfig-if-ethernet:SPEED_400GB"]
+          }
+        }
+      },
+      {
+        "title": "Verify scheduler-policy changed to scheduler_400gb",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/qos/interfaces/interface[interface-id=Ethernet1/1/5]/output/scheduler-policy/config/name",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-qos:name"
+        ],
+        "properties": {
+          "openconfig-qos:name": {
+            "type": "string",
+            "enum": ["scheduler_400gb"]
+          }
+        },
+        "subOpers": [
+          {
+            "oper": "dbHGetValidate",
+            "title": "Validate that the lanes did not change for Ethernet1/1/X",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORT|Ethernet1/1/1" : {
+                "lanes" : "9,10,11,12"
+              },
+              "PORT|Ethernet1/1/5" : {
+                "lanes" : "13,14,15,16"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Restore 1/1/5 ref_count",
+            "db": "STATE_DB",
+            "value": {
+              "PORT_TABLE|Ethernet1/1/5": {
+                "ref_count": "1"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "Set insert-ingress-timestamp and insert-egress-timestamp to false",
+        "operation": "update",
+        "returnCode": 0,
+        "xpath": "openconfig/",
+        "target": "OC_YANG",
+        "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"name\": \"Ethernet1/1/5\", \"config\": {\"name\": \"Ethernet1/1/5\"}, \"openconfig-if-ethernet:ethernet\" : {\"config\": {\"google-pins-interfaces:insert-ingress-timestamp\": false, \"google-pins-interfaces:insert-egress-timestamp\": false}}}]}}"
+      },
+      {
+        "title": "Verify insert-ingress-timestamp and insert-egress-timestamp were set to false",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/ethernet/config",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-if-ethernet:config"
+        ],
+        "properties": {
+          "openconfig-if-ethernet:config": {
+            "type": "object",
+            "reqired": [
+              "google-pins-interfaces:insert-ingress-timestamp", "google-pins-interfaces:insert-egress-timestamp"
+            ],
+            "properties": {
+              "google-pins-interfaces:insert-ingress-timestamp": {
+                "type": "boolean",
+                "enum": [false]
+              },
+              "google-pins-interfaces:insert-egress-timestamp": {
+                "type": "boolean",
+                "enum": [false]
+              }
+            }
+          }
+        }
+      },
+      {
+        "title": "Set insert-ingress-timestamp and insert-egress-timestamp to true",
+        "operation": "update",
+        "returnCode": 0,
+        "xpath": "openconfig/",
+        "target": "OC_YANG",
+        "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"name\": \"Ethernet1/1/5\", \"config\": {\"name\": \"Ethernet1/1/5\"}, \"openconfig-if-ethernet:ethernet\" : {\"config\": {\"google-pins-interfaces:insert-ingress-timestamp\": true, \"google-pins-interfaces:insert-egress-timestamp\": true}}}]}}"
+      },
+      {
+        "title": "Verify insert-ingress-timestamp and insert-egress-timestamp were set to true",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/ethernet/config",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-if-ethernet:config"
+        ],
+        "properties": {
+          "openconfig-if-ethernet:config": {
+            "type": "object",
+            "reqired": [
+              "google-pins-interfaces:insert-ingress-timestamp", "google-pins-interfaces:insert-egress-timestamp"
+            ],
+            "properties": {
+              "google-pins-interfaces:insert-ingress-timestamp": {
+                "type": "boolean",
+                "enum": [true]
+              },
+              "google-pins-interfaces:insert-egress-timestamp": {
+                "type": "boolean",
+                "enum": [true]
+              }
+            }
+          }
+        }
+      }
+    ]
+  }

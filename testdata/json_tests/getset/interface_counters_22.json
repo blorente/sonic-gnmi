@@ -1,0 +1,122 @@
+{
+    "title": "Get Interface counters",
+    "operations":[
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/counters/fec-uncorrectable-words",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-interfaces:fec-uncorrectable-words"
+            ],
+            "properties": {
+                "counters": {
+                    "type": "string",
+                    "enum": ["50"]
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/counters/fec-symbol-errors",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-interfaces:fec-symbol-errors"
+            ],
+            "properties": {
+                "counters": {
+                    "type": "string",
+                    "enum": ["1"]
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/counters/fec-correctable-words",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-interfaces:fec-correctable-words"
+            ],
+            "properties": {
+                "counters": {
+                    "type": "string",
+                    "enum": ["180"]
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+              "openconfig-interfaces:interface"
+            ],
+            "properties": {
+                "openconfig-interfaces:interface": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "openconfig-if-ethernet:ethernet"
+                      ],
+                      "properties": {
+                        "openconfig-if-ethernet:ethernet": {
+                          "type": "object",
+                          "required": [
+                            "state"
+                          ],
+                          "properties": {
+                            "state": {
+                              "type": "object",
+                              "required": [
+                                "counters"
+                              ],
+                              "properties": {
+                                "counters": {
+                                  "type": "object",
+                                  "required": [
+                                    "google-pins-interfaces:fec-correctable-words",
+                                    "google-pins-interfaces:fec-symbol-errors",
+                                    "google-pins-interfaces:fec-uncorrectable-words"
+                                  ],
+                                  "properties": {
+                                    "google-pins-interfaces:fec-correctable-words": {
+                                      "type": "string",
+                                      "enum": [
+                                        "180"
+                                      ]
+                                    },
+                                    "google-pins-interfaces:fec-symbol-errors": {
+                                      "type": "string",
+                                      "enum": [
+                                        "1"
+                                      ]
+                                    },
+                                    "google-pins-interfaces:fec-uncorrectable-words": {
+                                      "type": "string",
+                                      "enum": [
+                                        "50"
+                                      ]
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                ]
+              }
+            }
+        }
+    ]
+}

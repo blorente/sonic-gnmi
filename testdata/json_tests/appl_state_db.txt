@@ -1,0 +1,557 @@
+{
+    "LAG_TABLE:PortChannel1": {
+       "admin_status": "up",
+       "oper_status": "up",
+       "alias": "PortChannel1Alias",
+       "type": "iana-if-type:ieee8023adLag",
+       "description": "some description string.",
+       "mtu": "9104",
+       "last-change-seconds": "1612516511",
+        "last-change-nanoseconds": "848811"
+    },
+    "LAG_MEMBER_TABLE:PortChannel1:Ethernet1/7/3": {
+       "NULL": "NULL"
+    },
+    "LAG_MEMBER_TABLE:PortChannel1:Ethernet1/7/4": {
+       "NULL": "NULL"
+    },
+    "LAG_TABLE:PortChannel2": {
+       "admin_status": "up",
+       "oper_status": "up",
+       "alias": "PortChannel2Alias",
+       "type": "iana-if-type:ieee8023adLag",
+       "description": "some description string.",
+       "mtu": "9104",
+       "last-change-seconds": "1612516522",
+        "last-change-nanoseconds": "848822"
+    },
+    "LAG_MEMBER_TABLE:PortChannel2:Ethernet1/3/5": {
+       "NULL": "NULL"
+    },
+    "PORT_TABLE:Ethernet1/1/1": {
+        "index": "1",
+        "alias": "Eth1/1",
+        "autoneg": "on",
+        "admin_status": "up",
+        "admin_status_state": "up",
+        "mtu": "9100",
+        "speed": "100000",
+        "negotiated-port-speed": "100000",
+        "forwarding-viable": "true",
+        "description": "Eth0",
+        "duplex-mode": "FULL",
+        "oper_status": "up",
+        "loopback-mode": "mac_local",
+        "health_indicator": "good",
+        "lanes": "9,10,11,12,13,14,15,16",
+        "mac-address": "01:02:03:04:05:06",
+        "fully-qualified-interface-name": "eth-1/1",
+        "last-change-seconds": "1612516544",
+        "last-change-nanoseconds": "848847",
+        "link_training": "off",
+        "num-status-changes": "4",
+        "xcvr_qualified": "True",
+        "port_direction": "host_facing",
+        "hardware_vendor_id": "1",
+        "presence": "1"
+    },
+    "PORT_TABLE:Ethernet1/1/5": {
+        "index": "1",
+        "alias": "Eth1/2",
+        "admin_status": "up",
+        "admin_status_state": "up",
+        "mtu": "9100",
+        "speed": "100000",
+        "autoneg": "on",
+        "negotiated-port-speed": "100000",
+        "description": "Eth4",
+        "under_test": "1",
+        "oper_status": "down",
+        "loopback-mode": "none",
+        "health_indicator": "bad",
+        "lanes": "69,70,71,72",
+        "controllerc_mode": "auto",
+        "hardware_vendor_id": "1",
+        "presence": "1"
+    },
+    "PORT_TABLE:Ethernet1/2/1": {
+        "index": "3",
+        "alias": "Eth1/3",
+        "admin_status": "up",
+        "admin_status_state": "up",
+        "mtu": "9104",
+        "speed": "100000",
+        "autoneg": "on",
+        "negotiated-port-speed": "50000",
+        "description": "Eth8",
+        "oper_status": "testing",
+        "loopback-mode": "mac_local",
+        "health_indicator": "good",
+        "lanes": "73,74,75,76",
+        "hardware_vendor_id": "2",
+        "presence": "1"
+    },
+    "PORT_TABLE:Ethernet1/2/5": {
+        "index": "4",
+        "alias": "Eth1/4",
+        "admin_status": "down",
+        "admin_status_state": "down",
+        "mtu": "9104",
+        "speed": "100000",
+        "autoneg": "on",
+        "negotiated-port-speed": "25000",
+        "description": "Eth12",
+        "oper_status": "down",
+        "loopback-mode": "none",
+        "health_indicator": "good",
+        "lanes": "77,78,79,80",
+        "hardware_vendor_id": "2",
+        "presence": "1"
+    },
+    "PORT_TABLE:Ethernet1/3/1": {
+        "index": "5",
+        "alias": "Eth1/5",
+        "admin_status": "up",
+        "admin_status_state": "up",
+        "mtu": "9104",
+        "speed": "100000",
+        "autoneg": "on",
+        "negotiated-port-speed": "10",
+        "description": "Eth16",
+        "oper_status": "down",
+        "loopback-mode": "mac_local",
+        "health_indicator": "bad",
+        "lanes": "81,82,83,84",
+        "hardware_vendor_id": "3"
+    },
+    "PORT_TABLE:Ethernet1/4/1": {
+        "index": "4",
+        "alias": "Eth6/1",
+        "admin_status": "up",
+        "admin_status_state": "up",
+        "mtu": "9104",
+        "speed": "400000",
+        "oper_status": "down",
+        "lanes": "89,90,91,92",
+        "hardware_vendor_id": "4",
+        "presence": "1"
+    },
+    "PORT_TABLE:Ethernet1/4/5": {
+        "index": "4",
+        "alias": "Eth7/1",
+        "admin_status": "up",
+        "admin_status_state": "up",
+        "mtu": "9104",
+        "speed": "400000",
+        "oper_status": "down",
+        "lanes": "93,94,95,96",
+        "hardware_vendor_id": "4",
+        "presence": "1"
+    },
+    "PORT_TABLE:Ethernet1/5/1": {
+        "index": "5",
+        "alias": "Eth8/1",
+        "admin_status": "up",
+        "admin_status_state": "up",
+        "mtu": "9104",
+        "speed": "400000",
+        "oper_status": "down",
+        "lanes": "41,42,43,44",
+        "hardware_vendor_id": "5",
+        "presence": "1"
+    },
+    "PORT_TABLE:Ethernet1/5/5": {
+        "index": "5",
+        "alias": "Eth9/1",
+        "admin_status": "up",
+        "admin_status_state": "up",
+        "mtu": "9104",
+        "speed": "400000",
+        "oper_status": "down",
+        "lanes": "45,46,47,48",
+        "hardware_vendor_id": "5",
+        "presence": "1"
+    },
+    "PORT_TABLE:Ethernet1/6/1": {
+        "index": "11",
+        "admin_status": "up",
+        "admin_status_state": "up",
+        "mtu": "9104",
+        "speed": "100000",
+        "autoneg": "on",
+        "negotiated-port-speed": "10",
+        "description": "Eth40",
+        "oper_status": "up",
+        "loopback-mode": "mac_local",
+        "health_indicator": "bad",
+        "NULL": "NULL",
+        "hardware_vendor_id": "6",
+        "presence": "1"
+    },
+    "PORT_TABLE:Ethernet1/7/3": {
+        "index": "5",
+        "admin_status": "up",
+        "admin_status_state": "up",
+        "mtu": "9104",
+        "speed": "100000",
+        "autoneg": "on",
+        "negotiated-port-speed": "10",
+        "description": "Eth5/1",
+        "oper_status": "up",
+        "loopback-mode": "mac_local",
+        "health_indicator": "good",
+        "NULL": "NULL",
+        "hardware_vendor_id": "7",
+        "presence": "1"
+    },
+    "PORT_TABLE:Ethernet1/7/4": {
+        "index": "5",
+        "admin_status": "up",
+        "admin_status_state": "up",
+        "mtu": "9104",
+        "speed": "100000",
+        "autoneg": "on",
+        "negotiated-port-speed": "10",
+        "description": "Eth5/2",
+        "oper_status": "up",
+        "loopback-mode": "mac_local",
+        "health_indicator": "good",
+        "NULL": "NULL",
+        "hardware_vendor_id": "7",
+        "presence": "1"
+    },
+    "PORT_TABLE:Ethernet1/8/1": {
+        "index": "8",
+        "alias": "Eth8/1",
+        "admin_status": "up",
+        "admin_status_state": "up",
+        "mtu": "9104",
+        "speed": "400000",
+        "oper_status": "down",
+        "lanes": "49,50,51,52",
+        "hardware_vendor_id": "8",
+        "presence": "1"
+    },
+    "PORT_TABLE:Ethernet1/8/5": {
+        "index": "8",
+        "alias": "Eth8/1",
+        "admin_status": "up",
+        "admin_status_state": "up",
+        "mtu": "9104",
+        "speed": "400000",
+        "oper_status": "down",
+        "lanes": "53,54,55,56",
+        "hardware_vendor_id": "8",
+        "presence": "1"
+    },
+    "PORT_TABLE:Ethernet1/9/1": {
+        "index": "9",
+        "alias": "Eth9/1",
+        "admin_status": "up",
+        "admin_status_state": "up",
+        "mtu": "9104",
+        "speed": "400000",
+        "oper_status": "down",
+        "lanes": "73,74,75,76",
+        "hardware_vendor_id": "9",
+        "presence": "1"
+    },
+    "PORT_TABLE:Ethernet1/9/5": {
+        "index": "9",
+        "alias": "Eth9/5",
+        "admin_status": "up",
+        "admin_status_state": "up",
+        "mtu": "9104",
+        "speed": "400000",
+        "oper_status": "down",
+        "lanes": "77,78,79,80",
+        "hardware_vendor_id": "9",
+        "presence": "1"
+    },
+    "PORT_TABLE:Ethernet1/9/7": {
+        "admin_status": "up",
+        "index": "9",
+        "hardware_vendor_id": "9"
+    },
+    "PORT_TABLE:Ethernet1/11/1": {
+        "index": "11",
+        "alias": "Eth11/1",
+        "admin_status": "up",
+        "admin_status_state": "up",
+        "mtu": "9104",
+        "speed": "400000",
+        "oper_status": "down",
+        "lanes": "89,90,91,92",
+        "hardware_vendor_id": "11",
+        "presence": "1"
+    },
+    "PORT_TABLE:Ethernet1/11/5": {
+        "index": "11",
+        "alias": "Eth11/5",
+        "admin_status": "up",
+        "admin_status_state": "up",
+        "mtu": "9104",
+        "speed": "400000",
+        "oper_status": "down",
+        "lanes": "93,94,95,96",
+        "presence": "1"
+    },
+    "PORT_TABLE:CPU": {
+        "mtu": "1500"
+    },
+    "P4RT_PORT_ID_TABLE:Ethernet1/1/1": {
+        "id": "10"
+    },
+    "P4RT_PORT_ID_TABLE:Ethernet1/2/1": {
+        "id": "8"
+    },
+    "P4RT_PORT_ID_TABLE:Ethernet1/3/1": {
+        "id": "16"
+    },
+    "P4RT_PORT_ID_TABLE:Ethernet1/6/1": {
+        "id": "40"
+    },
+    "P4RT_PORT_ID_TABLE:Ethernet1/7/3": {
+        "id": "50"
+    },
+    "P4RT_PORT_ID_TABLE:Ethernet1/7/4": {
+        "id": "51"
+    },
+    "P4RT_PORT_ID_TABLE:PortChannel1": {
+        "id": "2049"
+    },
+    "P4RT_PORT_ID_TABLE:PortChannel2": {
+        "id": "2049"
+    },
+    "P4RT_PORT_ID_TABLE:CPU": {
+        "id": "456"
+    },
+    "MGMT_PORT_TABLE:bond0": {
+        "NULL": "NULL",
+        "speed": "400000",
+        "health_indicator": "good",
+        "mac-address":"01:02:03:04:05:06"
+    },
+    "INTF_TABLE:Ethernet1/4/1": {
+        "unnumbered_enabled": "true"
+    },
+    "INTF_TABLE:Ethernet1/4/5": {
+        "unnumbered_enabled": "true"
+    },
+    "INTF_TABLE:Ethernet1/5/1": {
+        "unnumbered_enabled": "true"
+    },
+    "INTF_TABLE:Ethernet1/5/5": {
+        "unnumbered_enabled": "true"
+    },
+    "INTF_TABLE:Ethernet1/8/1": {
+        "unnumbered_enabled": "true"
+    },
+    "INTF_TABLE:Ethernet1/8/5": {
+        "unnumbered_enabled": "true"
+    },
+    "INTF_TABLE:Ethernet1/9/1": {
+        "unnumbered_enabled": "true"
+    },
+    "INTF_TABLE:Ethernet1/9/5": {
+        "unnumbered_enabled": "true"
+    },
+    "INTF_TABLE:Ethernet1/11/1": {
+        "unnumbered_enabled": "true"
+    },
+    "INTF_TABLE:Ethernet1/11/5": {
+        "unnumbered_enabled": "true"
+    },
+    "MGMT_INTF_TABLE:bond0": {
+        "NULL": "NULL",
+        "ipv4_enabled":"enable",
+        "ipv6_use_link_local_only":"enable"
+    },
+    "MGMT_INTF_TABLE:bond0:2620:1081:1c20::1/64": {
+        "NULL": "NULL"
+    },
+    "MGMT_INTF_TABLE:bond0:192.168.0.1/27": {
+        "NULL": "NULL"
+    },
+    "INTF_TABLE:Loopback4": {
+        "NULL": "NULL",
+        "ipv4_enabled":"enable",
+        "ipv6_use_link_local_only":"enable",
+        "mac-address":"01:02:03:04:05:06"
+    },
+    "INTF_TABLE:Loopback4:172.34.1.0/32": {
+        "NULL": "NULL",
+        "scope": "global",
+        "family": "IPv4"
+    },
+    "INTF_TABLE:Loopback4:2620:1080:2000:100::/64": {
+        "NULL": "NULL",
+        "scope": "global",
+        "family": "IPv6"
+    },
+    "INTF_TABLE:Loopback4:192.168.0.1/32": {
+        "NULL": "NULL",
+        "scope": "global",
+        "family": "IPv4"
+    },
+    "INTF_TABLE:Loopback4:2620:1081:1c20::1/64": {
+        "NULL": "NULL",
+        "scope": "global",
+        "family": "IPv6"
+    },
+    "DSCP_TO_TC_MAP:dscp-to-traffic-class_ipv4": {
+        "0": "2",
+        "2": "7"
+    },
+    "DSCP_TO_TC_MAP:dscp-to-traffic-class_ipv6": {
+        "0": "2",
+        "2": "7"
+    },
+    "DSCP_TO_TC_MAP:dscpnew_ipv4": {
+        "23": "2",
+        "2": "7"
+    },
+    "DSCP_TO_TC_MAP:dscpnew_ipv6": {
+        "23": "2",
+        "2": "7"
+    },
+    "PORT_QOS_MAP:Ethernet1/1/1": {
+        "dscp_to_tc_map": "dscp-to-traffic-class_ipv4",
+        "tc_to_queue_map": "global_tc_to_queue_map"
+    },
+    "TC_TO_QUEUE_MAP:global_tc_to_queue_map": {
+        "7": "7",
+        "8": "3",
+        "2": "2",
+        "3": "2"
+    },
+    "TC_TO_UC_MC_QUEUE_MAP:global_tc_to_uc_mc_queue_map": {
+        "UNICAST:7": "7",
+        "MULTICAST:7": "7"
+    },
+    "QUEUE:Ethernet1/1/1|2": {
+        "NULL": "NULL",
+        "scheduler":"scheduler-policy@1",
+        "wred_profile":"wred-profile-1"
+    },
+    "QUEUE:Ethernet1/1/1|0": {
+        "NULL": "NULL",
+        "scheduler":"scheduler-policy@1",
+        "wred_profile":"wred-profile-1"
+    },
+    "QUEUE:Ethernet1/6/1|2": {
+        "NULL": "NULL",
+        "scheduler":"scheduler-policy@1",
+        "wred_profile":"wred-profile-1"
+    },
+    "QUEUE:Ethernet1/6/1|5": {
+        "NULL": "NULL",
+        "scheduler":"scheduler-policy@2"
+    },
+    "QUEUE:Ethernet1/6/1|6": {
+        "NULL": "NULL",
+        "scheduler":"scheduler-policy@0"
+    },
+    "QUEUE:CPU|2": {
+        "NULL": "NULL",
+        "scheduler":"cpu_scheduler@1"
+    },
+    "BUFFER_QUEUE_TABLE:Ethernet1/1/1:0": {
+        "profile":"buffer-profile-1.0"
+    },
+    "BUFFER_QUEUE_TABLE:Ethernet1/6/1:0": {
+        "profile":"buffer-profile-1.0"
+    },
+    "WRED_PROFILE:wred-profile-1": {
+        "yellow_ecn_mark_min_threshold": "0",
+        "yellow_ecn_mark_max_threshold": "1000000000",
+        "yellow_ecn_mark_probability": "100",
+        "red_ecn_mark_min_threshold": "0",
+        "red_ecn_mark_max_threshold": "1000000000",
+        "red_ecn_mark_probability": "100",
+        "green_ecn_mark_min_threshold": "0",
+        "green_ecn_mark_max_threshold": "1000000000",
+        "green_ecn_mark_probability": "100",
+        "ecn": "ecn_all"
+    },
+    "WRED_PROFILE:wred-profile-2": {
+        "yellow_min_threshold": "0",
+        "yellow_max_threshold": "2000000000",
+        "yellow_drop_probability": "5",
+        "red_min_threshold": "0",
+        "red_max_threshold": "2000000000",
+        "red_drop_probability": "5",
+        "green_min_threshold": "0",
+        "green_max_threshold": "2000000000",
+        "green_drop_probability": "5",
+        "ecn": "ecn_none"
+    },
+    "BUFFER_PROFILE_TABLE:buffer-profile-1.default_egress.1000000000.s1000000": {
+        "size":"1000000000",
+        "static_th":"1000000",
+        "pool":"default_egress"
+    },
+    "BUFFER_PROFILE_TABLE:buffer-profile-1.default_egress.2000000000.s2000000": {
+        "size":"2000000000",
+        "static_th":"2000000",
+        "pool":"default_egress"
+    },
+    "BUFFER_PROFILE_TABLE:buffer-profile-2.default_egress.8000000000.s8000000": {
+        "size":"8000000000",
+        "static_th":"8000000",
+        "pool":"default_egress"
+    },
+    "BUFFER_PROFILE_TABLE:buffer-profile-2.default_egress.7000000000.s7000000": {
+        "size":"7000000000",
+        "static_th":"7000000",
+        "pool":"default_egress"
+    },
+    "SCHEDULER|scheduler_1_gb@0" : {
+        "cir": "1000000000",
+        "pir": "1000000000",
+        "type": "STRICT"
+    },
+    "SCHEDULER|scheduler_1_gb@1" : {
+        "cir": "1000000000",
+        "pir": "1000000000",
+        "type": "STRICT"
+    },
+    "SCHEDULER|scheduler_1_gb@2" : {
+        "cir": "1000000000",
+        "pir": "1000000000",
+        "weight": "12"
+    },
+    "SCHEDULER|scheduler_1_gb@3" : {
+        "cir": "1000000000",
+        "pir": "1000000000",
+        "weight": "8"
+    },
+    "SCHEDULER|scheduler_1_gb@4" : {
+        "cir": "1000000000",
+        "pir": "1000000000",
+        "weight": "4"
+    },
+    "SCHEDULER|scheduler_1_gb@5" : {
+        "cir": "1000000000",
+        "pir": "1000000000",
+        "weight": "4"
+    },
+    "SCHEDULER|scheduler_1_gb@6" : {
+        "cir": "1000000000",
+        "pir": "1000000000",
+        "weight": "1"
+    },
+    "SCHEDULER|scheduler_1_gb@7" : {
+        "cir": "1000000000",
+        "pir": "1000000000",
+        "weight": "1"
+    },
+    "BUFFER_POOL_TABLE:default_egress": {
+        "mode": "dynamic",
+        "size": "113620296",
+        "type": "egress"
+    },
+    "SFLOW_TABLE:global" : {
+        "admin_state": "up"
+    }
+}

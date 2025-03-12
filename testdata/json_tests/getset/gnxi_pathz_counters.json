@@ -1,0 +1,1910 @@
+{
+  "title": "GNXI_pathz_counter_test",
+  "operations": [
+    {
+      "title": "Get gNSI grpc-server writes/access-accepts",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/grpc-servers/grpc-server[name=gnxi]/gnmi-pathz-policy-counters/paths/path[xpath=/]/state/writes/access-accepts",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "gnsi-pathz:access-accepts"
+      ],
+      "properties": {
+        "gnsi-pathz:access-accepts": {
+          "type": "string",
+          "enum": [
+            "145"
+          ]
+        }
+      }
+    },
+    {
+      "title": "Get gNSI grpc-server writes/access-accepts, include subscribe",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/grpc-servers/grpc-server[name=gnxi]/gnmi-pathz-policy-counters/paths/path[xpath=/dev]/state/reads/access-accepts",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "gnsi-pathz:access-accepts"
+      ],
+      "properties": {
+        "gnsi-pathz:access-accepts": {
+          "type": "string",
+          "enum": [
+            "20"
+          ]
+        }
+      }
+    },
+    {
+      "title": "Get gNSI grpc-server writes/access-accepts timestamp",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/grpc-servers/grpc-server[name=gnxi]/gnmi-pathz-policy-counters/paths/path[xpath=/]/state/writes/last-access-accept",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "gnsi-pathz:last-access-accept"
+      ],
+      "properties": {
+        "gnsi-pathz:last-access-accept": {
+          "type": "string",
+          "enum": [
+            "16287785581111671092"
+          ]
+        }
+      }
+    },
+    {
+      "title": "Get gNSI grpc-server writes/access-rejects",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/grpc-servers/grpc-server[name=gnxi]/gnmi-pathz-policy-counters/paths/path[xpath=/]/state/writes/access-rejects",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "gnsi-pathz:access-rejects"
+      ],
+      "properties": {
+        "gnsi-pathz:access-rejects": {
+          "type": "string",
+          "enum": [
+            "146"
+          ]
+        }
+      }
+    },
+    {
+      "title": "Get gNSI grpc-server writes/access-rejects timestamp",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/grpc-servers/grpc-server[name=gnxi]/gnmi-pathz-policy-counters/paths/path[xpath=/]/state/writes/last-access-reject",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "gnsi-pathz:last-access-reject"
+      ],
+      "properties": {
+        "gnsi-pathz:last-access-reject": {
+          "type": "string",
+          "enum": [
+            "16287785580982211000"
+          ]
+        }
+      }
+    },
+    {
+      "title": "Get gNSI grpc-server reads/access-accepts",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/grpc-servers/grpc-server[name=gnxi]/gnmi-pathz-policy-counters/paths/path[xpath=/]/state/reads/access-accepts",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "gnsi-pathz:access-accepts"
+      ],
+      "properties": {
+        "gnsi-pathz:access-accepts": {
+          "type": "string",
+          "enum": [
+            "111"
+          ]
+        }
+      }
+    },
+    {
+      "title": "Get gNSI grpc-server writes/access-accepts timestamp",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/grpc-servers/grpc-server[name=gnxi]/gnmi-pathz-policy-counters/paths/path[xpath=/]/state/reads/last-access-accept",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "gnsi-pathz:last-access-accept"
+      ],
+      "properties": {
+        "gnsi-pathz:last-access-accept": {
+          "type": "string",
+          "enum": [
+            "1628778558191233000"
+          ]
+        }
+      }
+    },
+    {
+      "title": "Get gNSI grpc-server writes/access-rejects",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/grpc-servers/grpc-server[name=gnxi]/gnmi-pathz-policy-counters/paths/path[xpath=/]/state/reads/access-rejects",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "gnsi-pathz:access-rejects"
+      ],
+      "properties": {
+        "gnsi-pathz:access-rejects": {
+          "type": "string",
+          "enum": [
+            "10"
+          ]
+        }
+      }
+    },
+    {
+      "title": "Get gNSI grpc-server writes/access-rejects timestamp",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/grpc-servers/grpc-server[name=gnxi]/gnmi-pathz-policy-counters/paths/path[xpath=/]/state/reads/last-access-reject",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "gnsi-pathz:last-access-reject"
+      ],
+      "properties": {
+        "gnsi-pathz:last-access-reject": {
+          "type": "string",
+          "enum": [
+            "1628778558112211000"
+          ]
+        }
+      }
+    },
+    {
+      "title": "Get gNSI grpc-server reads",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/grpc-servers/grpc-server[name=gnxi]/gnmi-pathz-policy-counters/paths/path[xpath=/]/state/reads",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "gnsi-pathz:reads"
+      ],
+      "properties": {
+        "gnsi-pathz:reads": {
+          "type": "object",
+          "required": [
+            "access-accepts",
+            "access-rejects",
+            "last-access-accept",
+            "last-access-reject"
+          ],
+          "properties": {
+            "access-accepts": {
+              "type": "string",
+              "enum": [
+                "111"
+              ]
+            },
+            "access-rejects": {
+              "type": "string",
+              "enum": [
+                "10"
+              ]
+            },
+            "last-access-accept": {
+              "type": "string",
+              "enum": [
+                "1628778558191233000"
+              ]
+            },
+            "last-access-reject": {
+              "type": "string",
+              "enum": [
+                "1628778558112211000"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Get gNSI grpc-server path/state",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/grpc-servers/grpc-server[name=gnxi]/gnmi-pathz-policy-counters/paths/path[xpath=/]/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "gnsi-pathz:state"
+      ],
+      "properties": {
+        "gnsi-pathz:state": {
+          "type": "object",
+          "required": [
+            "reads",
+            "writes"
+          ],
+          "properties": {
+            "reads": {
+              "type": "object",
+              "required": [
+                "access-accepts",
+                "access-rejects",
+                "last-access-accept",
+                "last-access-reject"
+              ],
+              "properties": {
+                "access-accepts": {
+                  "type": "string",
+                  "enum": [
+                    "111"
+                  ]
+                },
+                "access-rejects": {
+                  "type": "string",
+                  "enum": [
+                    "10"
+                  ]
+                },
+                "last-access-accept": {
+                  "type": "string",
+                  "enum": [
+                    "1628778558191233000"
+                  ]
+                },
+                "last-access-reject": {
+                  "type": "string",
+                  "enum": [
+                    "1628778558112211000"
+                  ]
+                }
+              }
+            },
+            "writes": {
+              "type": "object",
+              "required": [
+                "last-access-reject",
+                "access-accepts",
+                "access-rejects",
+                "last-access-accept"
+              ],
+              "properties": {
+                "last-access-reject": {
+                  "type": "string",
+                  "enum": [
+                    "16287785580982211000"
+                  ]
+                },
+                "access-accepts": {
+                  "type": "string",
+                  "enum": [
+                    "145"
+                  ]
+                },
+                "access-rejects": {
+                  "type": "string",
+                  "enum": [
+                    "146"
+                  ]
+                },
+                "last-access-accept": {
+                  "type": "string",
+                  "enum": [
+                    "16287785581111671092"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Get gNSI grpc-server paths/path",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/grpc-servers/grpc-server[name=gnxi]/gnmi-pathz-policy-counters/paths/path[xpath=/]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "gnsi-pathz:path"
+      ],
+      "properties": {
+        "gnsi-pathz:path": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "required": [
+                "xpath",
+                "state"
+              ],
+              "properties": {
+                "xpath": {
+                  "type": "string",
+                  "enum": [
+                    "/"
+                  ]
+                },
+                "state": {
+                  "type": "object",
+                  "required": [
+                    "writes",
+                    "reads"
+                  ],
+                  "properties": {
+                    "writes": {
+                      "type": "object",
+                      "required": [
+                        "access-rejects",
+                        "last-access-accept",
+                        "last-access-reject",
+                        "access-accepts"
+                      ],
+                      "properties": {
+                        "access-rejects": {
+                          "type": "string",
+                          "enum": [
+                            "146"
+                          ]
+                        },
+                        "last-access-accept": {
+                          "type": "string",
+                          "enum": [
+                            "16287785581111671092"
+                          ]
+                        },
+                        "last-access-reject": {
+                          "type": "string",
+                          "enum": [
+                            "16287785580982211000"
+                          ]
+                        },
+                        "access-accepts": {
+                          "type": "string",
+                          "enum": [
+                            "145"
+                          ]
+                        }
+                      }
+                    },
+                    "reads": {
+                      "type": "object",
+                      "required": [
+                        "last-access-accept",
+                        "last-access-reject",
+                        "access-accepts",
+                        "access-rejects"
+                      ],
+                      "properties": {
+                        "last-access-accept": {
+                          "type": "string",
+                          "enum": [
+                            "1628778558191233000"
+                          ]
+                        },
+                        "last-access-reject": {
+                          "type": "string",
+                          "enum": [
+                            "1628778558112211000"
+                          ]
+                        },
+                        "access-accepts": {
+                          "type": "string",
+                          "enum": [
+                            "111"
+                          ]
+                        },
+                        "access-rejects": {
+                          "type": "string",
+                          "enum": [
+                            "10"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "title": "Get gNSI grpc-server gnmi-pathz-policy-counters/paths",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/grpc-servers/grpc-server[name=gnxi]/gnmi-pathz-policy-counters/paths",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "gnsi-pathz:paths"
+      ],
+      "properties": {
+        "gnsi-pathz:paths": {
+          "type": "object",
+          "required": [
+            "path"
+          ],
+          "properties": {
+            "path": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "required": [
+                    "state",
+                    "xpath"
+                  ],
+                  "properties": {
+                    "state": {
+                      "type": "object",
+                      "required": [
+                        "reads",
+                        "writes"
+                      ],
+                      "properties": {
+                        "reads": {
+                          "type": "object",
+                          "required": [
+                            "access-rejects",
+                            "last-access-accept",
+                            "last-access-reject",
+                            "access-accepts"
+                          ],
+                          "properties": {
+                            "access-rejects": {
+                              "type": "string",
+                              "enum": [
+                                "10"
+                              ]
+                            },
+                            "last-access-accept": {
+                              "type": "string",
+                              "enum": [
+                                "1628778558191233000"
+                              ]
+                            },
+                            "last-access-reject": {
+                              "type": "string",
+                              "enum": [
+                                "1628778558112211000"
+                              ]
+                            },
+                            "access-accepts": {
+                              "type": "string",
+                              "enum": [
+                                "111"
+                              ]
+                            }
+                          }
+                        },
+                        "writes": {
+                          "type": "object",
+                          "required": [
+                            "access-accepts",
+                            "access-rejects",
+                            "last-access-accept",
+                            "last-access-reject"
+                          ],
+                          "properties": {
+                            "access-accepts": {
+                              "type": "string",
+                              "enum": [
+                                "145"
+                              ]
+                            },
+                            "access-rejects": {
+                              "type": "string",
+                              "enum": [
+                                "146"
+                              ]
+                            },
+                            "last-access-accept": {
+                              "type": "string",
+                              "enum": [
+                                "16287785581111671092"
+                              ]
+                            },
+                            "last-access-reject": {
+                              "type": "string",
+                              "enum": [
+                                "16287785580982211000"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "xpath": {
+                      "type": "string",
+                      "enum": [
+                        "/"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "state",
+                    "xpath"
+                  ],
+                  "properties": {
+                    "state": {
+                      "type": "object",
+                      "required": [
+                        "reads",
+                        "writes"
+                      ],
+                      "properties": {
+                        "reads": {
+                          "type": "object",
+                          "required": [
+                            "access-rejects",
+                            "last-access-accept",
+                            "last-access-reject",
+                            "access-accepts"
+                          ],
+                          "properties": {
+                            "access-rejects": {
+                              "type": "string",
+                              "enum": [
+                                "86"
+                              ]
+                            },
+                            "last-access-accept": {
+                              "type": "string",
+                              "enum": [
+                                "1628778558111111009"
+                              ]
+                            },
+                            "last-access-reject": {
+                              "type": "string",
+                              "enum": [
+                                "1628778558112211310"
+                              ]
+                            },
+                            "access-accepts": {
+                              "type": "string",
+                              "enum": [
+                                "20"
+                              ]
+                            }
+                          }
+                        },
+                        "writes": {
+                          "type": "object",
+                          "required": [
+                            "last-access-reject",
+                            "access-accepts",
+                            "access-rejects",
+                            "last-access-accept"
+                          ],
+                          "properties": {
+                            "last-access-reject": {
+                              "type": "string",
+                              "enum": [
+                                "1628778545612211310"
+                              ]
+                            },
+                            "access-accepts": {
+                              "type": "string",
+                              "enum": [
+                                "59"
+                              ]
+                            },
+                            "access-rejects": {
+                              "type": "string",
+                              "enum": [
+                                "91"
+                              ]
+                            },
+                            "last-access-accept": {
+                              "type": "string",
+                              "enum": [
+                                "1628778558675111000"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "xpath": {
+                      "type": "string",
+                      "enum": [
+                        "/dev"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "state",
+                    "xpath"
+                  ],
+                  "properties": {
+                    "state": {
+                      "type": "object",
+                      "required": [
+                        "writes"
+                      ],
+                      "properties": {
+                        "writes": {
+                          "type": "object",
+                          "required": [
+                            "access-rejects",
+                            "last-access-reject"
+                          ],
+                          "properties": {
+                            "access-rejects": {
+                              "type": "string",
+                              "enum": [
+                                "568"
+                              ]
+                            },
+                            "last-access-reject": {
+                              "type": "string",
+                              "enum": [
+                                "1628778558114575010"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "xpath": {
+                      "type": "string",
+                      "enum": [
+                        "/dev/tmp"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Get gNSI grpc-server gnmi-pathz-policy-counters",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/grpc-servers/grpc-server[name=gnxi]/gnmi-pathz-policy-counters",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "gnsi-pathz:gnmi-pathz-policy-counters"
+      ],
+      "properties": {
+        "gnsi-pathz:gnmi-pathz-policy-counters": {
+          "type": "object",
+          "required": [
+            "paths"
+          ],
+          "properties": {
+            "paths": {
+              "type": "object",
+              "required": [
+                "path"
+              ],
+              "properties": {
+                "path": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "xpath",
+                        "state"
+                      ],
+                      "properties": {
+                        "xpath": {
+                          "type": "string",
+                          "enum": [
+                            "/"
+                          ]
+                        },
+                        "state": {
+                          "type": "object",
+                          "required": [
+                            "reads",
+                            "writes"
+                          ],
+                          "properties": {
+                            "reads": {
+                              "type": "object",
+                              "required": [
+                                "access-accepts",
+                                "access-rejects",
+                                "last-access-accept",
+                                "last-access-reject"
+                              ],
+                              "properties": {
+                                "access-accepts": {
+                                  "type": "string",
+                                  "enum": [
+                                    "111"
+                                  ]
+                                },
+                                "access-rejects": {
+                                  "type": "string",
+                                  "enum": [
+                                    "10"
+                                  ]
+                                },
+                                "last-access-accept": {
+                                  "type": "string",
+                                  "enum": [
+                                    "1628778558191233000"
+                                  ]
+                                },
+                                "last-access-reject": {
+                                  "type": "string",
+                                  "enum": [
+                                    "1628778558112211000"
+                                  ]
+                                }
+                              }
+                            },
+                            "writes": {
+                              "type": "object",
+                              "required": [
+                                "access-accepts",
+                                "access-rejects",
+                                "last-access-accept",
+                                "last-access-reject"
+                              ],
+                              "properties": {
+                                "access-accepts": {
+                                  "type": "string",
+                                  "enum": [
+                                    "145"
+                                  ]
+                                },
+                                "access-rejects": {
+                                  "type": "string",
+                                  "enum": [
+                                    "146"
+                                  ]
+                                },
+                                "last-access-accept": {
+                                  "type": "string",
+                                  "enum": [
+                                    "16287785581111671092"
+                                  ]
+                                },
+                                "last-access-reject": {
+                                  "type": "string",
+                                  "enum": [
+                                    "16287785580982211000"
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "state",
+                        "xpath"
+                      ],
+                      "properties": {
+                        "state": {
+                          "type": "object",
+                          "required": [
+                            "reads",
+                            "writes"
+                          ],
+                          "properties": {
+                            "reads": {
+                              "type": "object",
+                              "required": [
+                                "last-access-reject",
+                                "access-accepts",
+                                "access-rejects",
+                                "last-access-accept"
+                              ],
+                              "properties": {
+                                "last-access-reject": {
+                                  "type": "string",
+                                  "enum": [
+                                    "1628778558112211310"
+                                  ]
+                                },
+                                "access-accepts": {
+                                  "type": "string",
+                                  "enum": [
+                                    "20"
+                                  ]
+                                },
+                                "access-rejects": {
+                                  "type": "string",
+                                  "enum": [
+                                    "86"
+                                  ]
+                                },
+                                "last-access-accept": {
+                                  "type": "string",
+                                  "enum": [
+                                    "1628778558111111009"
+                                  ]
+                                }
+                              }
+                            },
+                            "writes": {
+                              "type": "object",
+                              "required": [
+                                "access-accepts",
+                                "access-rejects",
+                                "last-access-accept",
+                                "last-access-reject"
+                              ],
+                              "properties": {
+                                "access-accepts": {
+                                  "type": "string",
+                                  "enum": [
+                                    "59"
+                                  ]
+                                },
+                                "access-rejects": {
+                                  "type": "string",
+                                  "enum": [
+                                    "91"
+                                  ]
+                                },
+                                "last-access-accept": {
+                                  "type": "string",
+                                  "enum": [
+                                    "1628778558675111000"
+                                  ]
+                                },
+                                "last-access-reject": {
+                                  "type": "string",
+                                  "enum": [
+                                    "1628778545612211310"
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "xpath": {
+                          "type": "string",
+                          "enum": [
+                            "/dev"
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "state",
+                        "xpath"
+                      ],
+                      "properties": {
+                        "state": {
+                          "type": "object",
+                          "required": [
+                            "writes"
+                          ],
+                          "properties": {
+                            "writes": {
+                              "type": "object",
+                              "required": [
+                                "access-rejects",
+                                "last-access-reject"
+                              ],
+                              "properties": {
+                                "access-rejects": {
+                                  "type": "string",
+                                  "enum": [
+                                    "568"
+                                  ]
+                                },
+                                "last-access-reject": {
+                                  "type": "string",
+                                  "enum": [
+                                    "1628778558114575010"
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "xpath": {
+                          "type": "string",
+                          "enum": [
+                            "/dev/tmp"
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Get gNSI grpc-servers",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/grpc-servers",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system-grpc:grpc-servers"
+      ],
+      "properties": {
+        "openconfig-system-grpc:grpc-servers": {
+          "type": "object",
+          "required": [
+            "grpc-server"
+          ],
+          "properties": {
+            "grpc-server": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "state",
+                    "gnsi-pathz:gnmi-pathz-policy-counters"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "enum": [
+                        "gnxi"
+                      ]
+                    },
+                    "state": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "enum": [
+                            "gnxi"
+                          ]
+                        }
+                      }
+                    },
+                    "gnsi-pathz:gnmi-pathz-policy-counters": {
+                      "type": "object",
+                      "required": [
+                        "paths"
+                      ],
+                      "properties": {
+                        "paths": {
+                          "type": "object",
+                          "required": [
+                            "path"
+                          ],
+                          "properties": {
+                            "path": {
+                              "type": "array",
+                              "items": [
+                                {
+                                  "type": "object",
+                                  "required": [
+                                    "state",
+                                    "xpath"
+                                  ],
+                                  "properties": {
+                                    "state": {
+                                      "type": "object",
+                                      "required": [
+                                        "reads",
+                                        "writes"
+                                      ],
+                                      "properties": {
+                                        "reads": {
+                                          "type": "object",
+                                          "required": [
+                                            "access-accepts",
+                                            "access-rejects",
+                                            "last-access-accept",
+                                            "last-access-reject"
+                                          ],
+                                          "properties": {
+                                            "access-accepts": {
+                                              "type": "string",
+                                              "enum": [
+                                                "111"
+                                              ]
+                                            },
+                                            "access-rejects": {
+                                              "type": "string",
+                                              "enum": [
+                                                "10"
+                                              ]
+                                            },
+                                            "last-access-accept": {
+                                              "type": "string",
+                                              "enum": [
+                                                "1628778558191233000"
+                                              ]
+                                            },
+                                            "last-access-reject": {
+                                              "type": "string",
+                                              "enum": [
+                                                "1628778558112211000"
+                                              ]
+                                            }
+                                          }
+                                        },
+                                        "writes": {
+                                          "type": "object",
+                                          "required": [
+                                            "access-accepts",
+                                            "access-rejects",
+                                            "last-access-accept",
+                                            "last-access-reject"
+                                          ],
+                                          "properties": {
+                                            "access-accepts": {
+                                              "type": "string",
+                                              "enum": [
+                                                "145"
+                                              ]
+                                            },
+                                            "access-rejects": {
+                                              "type": "string",
+                                              "enum": [
+                                                "146"
+                                              ]
+                                            },
+                                            "last-access-accept": {
+                                              "type": "string",
+                                              "enum": [
+                                                "16287785581111671092"
+                                              ]
+                                            },
+                                            "last-access-reject": {
+                                              "type": "string",
+                                              "enum": [
+                                                "16287785580982211000"
+                                              ]
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "xpath": {
+                                      "type": "string",
+                                      "enum": [
+                                        "/"
+                                      ]
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "required": [
+                                    "state",
+                                    "xpath"
+                                  ],
+                                  "properties": {
+                                    "state": {
+                                      "type": "object",
+                                      "required": [
+                                        "reads",
+                                        "writes"
+                                      ],
+                                      "properties": {
+                                        "reads": {
+                                          "type": "object",
+                                          "required": [
+                                            "access-accepts",
+                                            "access-rejects",
+                                            "last-access-accept",
+                                            "last-access-reject"
+                                          ],
+                                          "properties": {
+                                            "access-accepts": {
+                                              "type": "string",
+                                              "enum": [
+                                                "20"
+                                              ]
+                                            },
+                                            "access-rejects": {
+                                              "type": "string",
+                                              "enum": [
+                                                "86"
+                                              ]
+                                            },
+                                            "last-access-accept": {
+                                              "type": "string",
+                                              "enum": [
+                                                "1628778558111111009"
+                                              ]
+                                            },
+                                            "last-access-reject": {
+                                              "type": "string",
+                                              "enum": [
+                                                "1628778558112211310"
+                                              ]
+                                            }
+                                          }
+                                        },
+                                        "writes": {
+                                          "type": "object",
+                                          "required": [
+                                            "access-accepts",
+                                            "access-rejects",
+                                            "last-access-accept",
+                                            "last-access-reject"
+                                          ],
+                                          "properties": {
+                                            "access-accepts": {
+                                              "type": "string",
+                                              "enum": [
+                                                "59"
+                                              ]
+                                            },
+                                            "access-rejects": {
+                                              "type": "string",
+                                              "enum": [
+                                                "91"
+                                              ]
+                                            },
+                                            "last-access-accept": {
+                                              "type": "string",
+                                              "enum": [
+                                                "1628778558675111000"
+                                              ]
+                                            },
+                                            "last-access-reject": {
+                                              "type": "string",
+                                              "enum": [
+                                                "1628778545612211310"
+                                              ]
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "xpath": {
+                                      "type": "string",
+                                      "enum": [
+                                        "/dev"
+                                      ]
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "required": [
+                                    "state",
+                                    "xpath"
+                                  ],
+                                  "properties": {
+                                    "state": {
+                                      "type": "object",
+                                      "required": [
+                                        "writes"
+                                      ],
+                                      "properties": {
+                                        "writes": {
+                                          "type": "object",
+                                          "required": [
+                                            "access-rejects",
+                                            "last-access-reject"
+                                          ],
+                                          "properties": {
+                                            "access-rejects": {
+                                              "type": "string",
+                                              "enum": [
+                                                "568"
+                                              ]
+                                            },
+                                            "last-access-reject": {
+                                              "type": "string",
+                                              "enum": [
+                                                "1628778558114575010"
+                                              ]
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "xpath": {
+                                      "type": "string",
+                                      "enum": [
+                                        "/dev/tmp"
+                                      ]
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "state"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "enum": [
+                        "p4rt"
+                      ]
+                    },
+                    "state": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "enum": [
+                            "p4rt"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Get gNSI grpc-server gnmi-pathz-policy-counters",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/grpc-servers/grpc-server[name=gnxi]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system-grpc:grpc-server"
+      ],
+      "properties" : {
+        "openconfig-system-grpc:grpc-server" : {
+          "type": "array",
+          "required": [
+            "name",
+            "gnsi-pathz:gnmi-pathz-policy-counters"
+          ],
+          "properties": {
+            "name": {
+              "type": "string",
+              "enum": [
+                "gnxi"
+              ]
+            },
+            "gnsi-pathz:gnmi-pathz-policy-counters": {
+              "type": "object",
+              "required": [
+                "paths"
+              ],
+              "properties": {
+                "paths": {
+                  "type": "object",
+                  "required": [
+                    "path"
+                  ],
+                  "properties": {
+                    "path": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "object",
+                          "required": [
+                            "xpath",
+                            "state"
+                          ],
+                          "properties": {
+                            "xpath": {
+                              "type": "string",
+                              "enum": [
+                                "/"
+                              ]
+                            },
+                            "state": {
+                              "type": "object",
+                              "required": [
+                                "reads",
+                                "writes"
+                              ],
+                              "properties": {
+                                "reads": {
+                                  "type": "object",
+                                  "required": [
+                                    "access-accepts",
+                                    "access-rejects",
+                                    "last-access-accept",
+                                    "last-access-reject"
+                                  ],
+                                  "properties": {
+                                    "access-accepts": {
+                                      "type": "string",
+                                      "enum": [
+                                        "111"
+                                      ]
+                                    },
+                                    "access-rejects": {
+                                      "type": "string",
+                                      "enum": [
+                                        "10"
+                                      ]
+                                    },
+                                    "last-access-accept": {
+                                      "type": "string",
+                                      "enum": [
+                                        "1628778558191233000"
+                                      ]
+                                    },
+                                    "last-access-reject": {
+                                      "type": "string",
+                                      "enum": [
+                                        "1628778558112211000"
+                                      ]
+                                    }
+                                  }
+                                },
+                                "writes": {
+                                  "type": "object",
+                                  "required": [
+                                    "access-accepts",
+                                    "access-rejects",
+                                    "last-access-accept",
+                                    "last-access-reject"
+                                  ],
+                                  "properties": {
+                                    "access-accepts": {
+                                      "type": "string",
+                                      "enum": [
+                                        "145"
+                                      ]
+                                    },
+                                    "access-rejects": {
+                                      "type": "string",
+                                      "enum": [
+                                        "146"
+                                      ]
+                                    },
+                                    "last-access-accept": {
+                                      "type": "string",
+                                      "enum": [
+                                        "16287785581111671092"
+                                      ]
+                                    },
+                                    "last-access-reject": {
+                                      "type": "string",
+                                      "enum": [
+                                        "16287785580982211000"
+                                      ]
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "required": [
+                            "state",
+                            "xpath"
+                          ],
+                          "properties": {
+                            "state": {
+                              "type": "object",
+                              "required": [
+                                "reads",
+                                "writes"
+                              ],
+                              "properties": {
+                                "reads": {
+                                  "type": "object",
+                                  "required": [
+                                    "last-access-reject",
+                                    "access-accepts",
+                                    "access-rejects",
+                                    "last-access-accept"
+                                  ],
+                                  "properties": {
+                                    "last-access-reject": {
+                                      "type": "string",
+                                      "enum": [
+                                        "1628778558112211310"
+                                      ]
+                                    },
+                                    "access-accepts": {
+                                      "type": "string",
+                                      "enum": [
+                                        "20"
+                                      ]
+                                    },
+                                    "access-rejects": {
+                                      "type": "string",
+                                      "enum": [
+                                        "86"
+                                      ]
+                                    },
+                                    "last-access-accept": {
+                                      "type": "string",
+                                      "enum": [
+                                        "1628778558111111009"
+                                      ]
+                                    }
+                                  }
+                                },
+                                "writes": {
+                                  "type": "object",
+                                  "required": [
+                                    "access-accepts",
+                                    "access-rejects",
+                                    "last-access-accept",
+                                    "last-access-reject"
+                                  ],
+                                  "properties": {
+                                    "access-accepts": {
+                                      "type": "string",
+                                      "enum": [
+                                        "59"
+                                      ]
+                                    },
+                                    "access-rejects": {
+                                      "type": "string",
+                                      "enum": [
+                                        "91"
+                                      ]
+                                    },
+                                    "last-access-accept": {
+                                      "type": "string",
+                                      "enum": [
+                                        "1628778558675111000"
+                                      ]
+                                    },
+                                    "last-access-reject": {
+                                      "type": "string",
+                                      "enum": [
+                                        "1628778545612211310"
+                                      ]
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "xpath": {
+                              "type": "string",
+                              "enum": [
+                                "/dev"
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "required": [
+                            "state",
+                            "xpath"
+                          ],
+                          "properties": {
+                            "state": {
+                              "type": "object",
+                              "required": [
+                                "writes"
+                              ],
+                              "properties": {
+                                "writes": {
+                                  "type": "object",
+                                  "required": [
+                                    "access-rejects",
+                                    "last-access-reject"
+                                  ],
+                                  "properties": {
+                                    "access-rejects": {
+                                      "type": "string",
+                                      "enum": [
+                                        "568"
+                                      ]
+                                    },
+                                    "last-access-reject": {
+                                      "type": "string",
+                                      "enum": [
+                                        "1628778558114575010"
+                                      ]
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "xpath": {
+                              "type": "string",
+                              "enum": [
+                                "/dev/tmp"
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Get system",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:system"
+      ],
+      "properties": {
+        "openconfig-system:system": {
+          "type": "object",
+          "required": [
+            "openconfig-system-grpc:grpc-servers"
+          ],
+          "properties": {
+            "openconfig-system-grpc:grpc-servers": {
+              "type": "object",
+              "required": [
+                "grpc-server"
+              ],
+              "properties": {
+                "grpc-server": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "gnsi-pathz:gnmi-pathz-policy-counters"
+                      ],
+                      "properties": {
+                        "gnsi-pathz:gnmi-pathz-policy-counters": {
+                          "type": "object",
+                          "required": [
+                            "paths"
+                          ],
+                          "properties": {
+                            "paths": {
+                              "type": "object",
+                              "required": [
+                                "path"
+                              ],
+                              "properties": {
+                                "path": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "required": [
+                                        "state",
+                                        "xpath"
+                                      ],
+                                      "properties": {
+                                        "state": {
+                                          "type": "object",
+                                          "required": [
+                                            "reads",
+                                            "writes"
+                                          ],
+                                          "properties": {
+                                            "reads": {
+                                              "type": "object",
+                                              "required": [
+                                                "access-accepts",
+                                                "access-rejects",
+                                                "last-access-accept",
+                                                "last-access-reject"
+                                              ],
+                                              "properties": {
+                                                "access-accepts": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "111"
+                                                  ]
+                                                },
+                                                "access-rejects": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "10"
+                                                  ]
+                                                },
+                                                "last-access-accept": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "1628778558191233000"
+                                                  ]
+                                                },
+                                                "last-access-reject": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "1628778558112211000"
+                                                  ]
+                                                }
+                                              }
+                                            },
+                                            "writes": {
+                                              "type": "object",
+                                              "required": [
+                                                "access-accepts",
+                                                "access-rejects",
+                                                "last-access-accept",
+                                                "last-access-reject"
+                                              ],
+                                              "properties": {
+                                                "access-accepts": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "145"
+                                                  ]
+                                                },
+                                                "access-rejects": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "146"
+                                                  ]
+                                                },
+                                                "last-access-accept": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "16287785581111671092"
+                                                  ]
+                                                },
+                                                "last-access-reject": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "16287785580982211000"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "xpath": {
+                                          "type": "string",
+                                          "enum": [
+                                            "/"
+                                          ]
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "type": "object",
+                                      "required": [
+                                        "state",
+                                        "xpath"
+                                      ],
+                                      "properties": {
+                                        "state": {
+                                          "type": "object",
+                                          "required": [
+                                            "reads",
+                                            "writes"
+                                          ],
+                                          "properties": {
+                                            "reads": {
+                                              "type": "object",
+                                              "required": [
+                                                "access-accepts",
+                                                "access-rejects",
+                                                "last-access-accept",
+                                                "last-access-reject"
+                                              ],
+                                              "properties": {
+                                                "access-accepts": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "20"
+                                                  ]
+                                                },
+                                                "access-rejects": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "86"
+                                                  ]
+                                                },
+                                                "last-access-accept": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "1628778558111111009"
+                                                  ]
+                                                },
+                                                "last-access-reject": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "1628778558112211310"
+                                                  ]
+                                                }
+                                              }
+                                            },
+                                            "writes": {
+                                              "type": "object",
+                                              "required": [
+                                                "last-access-reject",
+                                                "access-accepts",
+                                                "access-rejects",
+                                                "last-access-accept"
+                                              ],
+                                              "properties": {
+                                                "last-access-reject": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "1628778545612211310"
+                                                  ]
+                                                },
+                                                "access-accepts": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "59"
+                                                  ]
+                                                },
+                                                "access-rejects": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "91"
+                                                  ]
+                                                },
+                                                "last-access-accept": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "1628778558675111000"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "xpath": {
+                                          "type": "string",
+                                          "enum": [
+                                            "/dev"
+                                          ]
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "type": "object",
+                                      "required": [
+                                        "state",
+                                        "xpath"
+                                      ],
+                                      "properties": {
+                                        "state": {
+                                          "type": "object",
+                                          "required": [
+                                            "writes"
+                                          ],
+                                          "properties": {
+                                            "writes": {
+                                              "type": "object",
+                                              "required": [
+                                                "access-rejects",
+                                                "last-access-reject"
+                                              ],
+                                              "properties": {
+                                                "access-rejects": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "568"
+                                                  ]
+                                                },
+                                                "last-access-reject": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "1628778558114575010"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "xpath": {
+                                          "type": "string",
+                                          "enum": [
+                                            "/dev/tmp"
+                                          ]
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "type": "object",
+                                      "required": [
+                                        "state",
+                                        "xpath"
+                                      ],
+                                      "properties": {
+                                        "state": {
+                                          "type": "object",
+                                          "required": [
+                                            "writes"
+                                          ],
+                                          "properties": {
+                                            "writes": {
+                                              "type": "object",
+                                              "required": [
+                                                "last-access-reject",
+                                                "access-rejects"
+                                              ],
+                                              "properties": {
+                                                "last-access-reject": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "1628778558111112100"
+                                                  ]
+                                                },
+                                                "access-rejects": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "87"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "xpath": {
+                                          "type": "string",
+                                          "enum": [
+                                            "/mount_point"
+                                          ]
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

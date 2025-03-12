@@ -1,0 +1,188 @@
+load("@io_bazel_rules_docker//container:container.bzl", "container_bundle", "container_image")
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test", "nogo")
+load("@rules_pkg//:pkg.bzl", "pkg_deb", "pkg_tar")
+
+#No working tests in telemetry_test
+#gazelle:ignore */telemetry_test.go
+
+nogo(
+    name = "gnmi_nogo",
+    config = "nogo.json",
+    # vet = True,
+    visibility = ["//visibility:public"],  # must have public visibility
+    deps = [
+        # analyzer from a remote repository
+        "@org_golang_x_tools//go/analysis/passes/asmdecl",
+        # "@org_golang_x_tools//go/analysis/passes/assign",
+        "@org_golang_x_tools//go/analysis/passes/atomic",
+        "@org_golang_x_tools//go/analysis/passes/atomicalign",
+        # "@org_golang_x_tools//go/analysis/passes/bools",
+        "@org_golang_x_tools//go/analysis/passes/buildssa",
+        "@org_golang_x_tools//go/analysis/passes/buildtag",
+        # "@org_golang_x_tools//go/analysis/passes/cgocall",
+        # "@org_golang_x_tools//go/analysis/passes/composite",
+        # "@org_golang_x_tools//go/analysis/passes/copylock",
+        "@org_golang_x_tools//go/analysis/passes/ctrlflow",
+        "@org_golang_x_tools//go/analysis/passes/deepequalerrors",
+        # "@org_golang_x_tools//go/analysis/passes/defers",
+        "@org_golang_x_tools//go/analysis/passes/directive",
+        "@org_golang_x_tools//go/analysis/passes/errorsas",
+        # "@org_golang_x_tools//go/analysis/passes/fieldalignment:fieldalignment",
+        "@org_golang_x_tools//go/analysis/passes/findcall",
+        "@org_golang_x_tools//go/analysis/passes/framepointer",
+        "@org_golang_x_tools//go/analysis/passes/httpresponse",
+        "@org_golang_x_tools//go/analysis/passes/ifaceassert",
+        "@org_golang_x_tools//go/analysis/passes/inspect",
+        "@org_golang_x_tools//go/analysis/passes/loopclosure",
+        "@org_golang_x_tools//go/analysis/passes/lostcancel",
+        "@org_golang_x_tools//go/analysis/passes/nilfunc",
+        # "@org_golang_x_tools//go/analysis/passes/nilness",
+        "@org_golang_x_tools//go/analysis/passes/pkgfact",
+        # "@org_golang_x_tools//go/analysis/passes/printf",
+        "@org_golang_x_tools//go/analysis/passes/reflectvaluecompare",
+        # "@org_golang_x_tools//go/analysis/passes/shadow",
+        "@org_golang_x_tools//go/analysis/passes/shift",
+        "@org_golang_x_tools//go/analysis/passes/sigchanyzer",
+        "@org_golang_x_tools//go/analysis/passes/sortslice",
+        "@org_golang_x_tools//go/analysis/passes/stdmethods",
+        "@org_golang_x_tools//go/analysis/passes/stringintconv",
+        # "@org_golang_x_tools//go/analysis/passes/structtag",
+        # "@org_golang_x_tools//go/analysis/passes/testinggoroutine",
+        "@org_golang_x_tools//go/analysis/passes/tests",
+        "@org_golang_x_tools//go/analysis/passes/timeformat",
+        "@org_golang_x_tools//go/analysis/passes/unmarshal",
+        # "@org_golang_x_tools//go/analysis/passes/unreachable",
+        # "@org_golang_x_tools//go/analysis/passes/unsafeptr",
+        "@org_golang_x_tools//go/analysis/passes/unusedresult",
+        # "@org_golang_x_tools//go/analysis/passes/unusedwrite",
+        "@org_golang_x_tools//go/analysis/passes/usesgenerics",
+    ],
+)
+
+go_library(
+    name = "telemetry_lib",
+    srcs = ["telemetry.go"],
+    importpath = "github.com/sonic-net/sonic-gnmi/telemetry",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//gnmi_server",
+        "//gnmi_server/log",
+        "@com_github_golang_glog//:glog",
+        "@sonic-mgmt-common//translib/db",
+    ],
+)
+
+go_binary(
+    name = "telemetry",
+    cdeps = [
+        "@com_github_cesnet_libyang//:libyang",
+    ],
+    cgo = True,  #keep
+    embed = [":telemetry_lib"],
+    visibility = ["//visibility:public"],
+)
+
+container_image(
+    name = "telemetry_image",
+    base = "@telemetry_image//image",
+    entrypoint = ["/entrypoint-prod.sh"],
+    files = [
+        ":telemetry",
+        "//tools/docker:entrypoint-prod.sh",
+        "//tools/docker:supervisord.conf",
+        "//tools/docker:telemetry.sh",
+        "//tools/docker:database_config.json",
+        "@sonic-buildimage//:dockers/docker-base-bullseye/etc/rsyslog.conf",
+        "@sonic-buildimage//:dockers/docker-base-bullseye/etc/rsyslog.d/supervisor.conf",
+        "@sonic-buildimage//:dockers/docker-sonic-gnmi/critical_processes",
+        "@sonic-buildimage//:files/scripts/supervisor-proc-exit-listener",
+        "@sonic-buildimage//:dockers/docker-sonic-gnmi/start.sh",
+        # "@sonic-buildimage//:dockers/docker-sonic-gnmi/supervisord.conf",
+        # "@sonic-buildimage//:dockers/docker-sonic-gnmi/telemetry.sh",
+        "@sonic-buildimage//:dockers/docker-sonic-gnmi/telemetry_vars.j2",
+        # Uncomnent after solving the issue with local libyang compilation.
+        #"@com_github_cesnet_libyang//:libyang",
+    ],
+    symlinks = {
+        # Uncomnent after solving the issue with local libyang compilation.
+        #"/lib/x86_64-linux-gnu/libyang.so": "/libyang.so",
+        #"/lib/x86_64-linux-gnu/libyang.so.1": "/libyang.so.1",
+        "/usr/share/sonic/hwsku/qos_queue_map.json": "/testdata/qos_queue_map.json",
+        "/usr/share/sonic/hwsku/platform.json": "/testdata/platform.json",
+        "/etc/ntp.conf": "/testdata/ntp.conf",
+    },
+    tars = [
+        "//testdata:testdata_tar",
+        "@sonic-buildimage//:sonic-cfggen.tar",
+        "@sonic-mgmt-common//cvl:cvl_tar",
+        "@sonic-mgmt-common//models/yang:models_tar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+container_bundle(
+    name = "telemetry_bundle",
+    images = {
+        "bazel/telemetry_image:latest": ":telemetry_image",
+    },
+)
+
+container_image(
+    name = "host_image",
+    base = "@host_image//image",
+    entrypoint = ["/entrypoint-host.sh"],
+    files = [
+        ":telemetry_bundle.tar",
+        "//tools/docker:entrypoint-host.sh",
+        "//tools/docker:rsyslog.host",
+    ],
+    symlinks = {
+        "/etc/ntp.conf": "/testdata/ntp.conf",
+    },
+    tars = [
+        "//testdata:testdata_tar",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+pkg_tar(
+    name = "telemetry-bin",
+    srcs = [
+        ":telemetry",
+        #TODO Add these packages to deb
+        #":dialout_client_cli",
+        #":gnmi_cli",
+        #":gnmi_get",
+        #":gnmi_set",
+        #":gnoi_client",
+        #":grpc_cli",
+    ],
+    mode = "0755",
+    package_dir = "/usr/sbin",
+    strip_prefix = ".",
+    visibility = ["//visibility:public"],
+)
+
+#bazel build :telemetry_deb_pkg
+#bazel cquery --output=files :telemetry_deb_pkg
+pkg_deb(
+    name = "telemetry_deb_pkg",
+    architecture = "amd64",
+    built_using = "bazel",
+    data = "//telemetry:telemetry-bin",
+    depends = [
+        "libc6",  #(>= 2.25)
+        "libgcc1",  #(>= 1:3.0)
+        "libpam0g",  #(>= 0.99.7.1)
+        "libstdc++6",  #(>= 6)
+        "libsystemd0",  #(>= 233)
+        "libyang",
+    ],
+    description = "Sonic gNMI",
+    maintainer = "GPINS gNMI Team (Google)",
+    package = "sonic-telemetry",
+
+    # Currently uses static naming
+    package_file_name = "sonic-telemetry_0.1_amd64.deb",
+    version = "0.1",
+)

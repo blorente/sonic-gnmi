@@ -1,0 +1,87 @@
+{
+  "title": "Subscribe with TARGET_DEFINED bond Counters out-octets",
+  "globalDef" : {
+    "validators": {
+      "state.counters.out-octets.0": {
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:out-octets"
+        ],
+        "properties": {
+          "openconfig-interfaces:out-octets": {
+            "type": "string",
+            "const": "0"
+          }
+        }
+      },
+      "state.counters.out-octets.0": {
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:out-octets"
+        ],
+        "properties": {
+          "openconfig-interfaces:out-octets": {
+            "type": "string",
+            "const": "0"
+          }
+        }
+      },
+      "state.counters.out-octets.0": {
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:out-octets"
+        ],
+        "properties": {
+          "openconfig-interfaces:out-octets": {
+            "type": "string",
+            "const": "0"
+          }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "subscribe to /interfaces/interface[name=bond0]/state/counters/out-octets",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'bond0'}}elem:{name:'state'}elem:{name:'counters'}elem:{name:'out-octets'}}mode:TARGET_DEFINED sample_interval:1000000000} mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/interfaces/interface[name=bond0]/state/counters/out-octets",
+            "schema": {
+              "$ref": "#/globalDef/validators/state.counters.out-octets.0"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=bond0]/state/counters/out-octets",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.counters.out-octets.0"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "validate",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=bond0]/state/counters/out-octets",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.counters.out-octets.0"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

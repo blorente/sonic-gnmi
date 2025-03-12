@@ -1,0 +1,83 @@
+{
+  "title": "get_interface_blackhole_events",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/state/google-pins-interfaces:blackhole",
+      "target": "OC_YANG",
+      "type": "object",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "COUNTERS_DB",
+          "value": {
+            "COUNTERS_BLACKHOLE_PORT:oid:0x1000000000012" : {
+              "BLACKHOLE_PORT_IN_DISCARD_EVENTS": "1001",
+              "BLACKHOLE_PORT_OUT_DISCARD_EVENTS": "1002",
+              "BLACKHOLE_PORT_IN_ERROR_EVENTS": "1003",
+              "BLACKHOLE_PORT_FEC_NOT_CORRECTABLE_EVENTS": "1004",
+              "PORT_STAT_TIME_STAMP_USEC_last": "123123123123"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["state"],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": ["google-pins-interfaces:blackhole"],
+                "properties": {
+                  "google-pins-interfaces:blackhole": {
+                    "type": "object",
+                    "required": ["in-discard-events", "out-discard-events", "in-error-events", "fec-not-correctable-events"],
+                    "properties": {
+                      "in-discard-events": {
+                        "type": "string",
+                        "enum": ["1001"]
+                      },
+                      "out-discard-events": {
+                        "type": "string",
+                        "enum": ["1002"]
+                      },
+                      "in-error-events": {
+                        "type": "string",
+                        "enum": ["1003"]
+                      },
+                      "fec-not-correctable-events": {
+                        "type": "string",
+                        "enum": ["1004"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "openconfig/interfaces/interface[name=CPU]/state/google-pins-interfaces:blackhole",
+      "target": "OC_YANG",
+      "type": "object"
+    }
+  ]
+}

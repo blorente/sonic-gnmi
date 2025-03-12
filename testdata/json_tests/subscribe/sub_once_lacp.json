@@ -1,0 +1,2354 @@
+{
+  "title": "openconfig-lacp Sub-Once Tests",
+  "globalDef": {
+    "LacpDefs": {
+      "PC1_name": { "type": "string", "const": "PortChannel1" },
+      "PC1_state_name": { "$ref": "#/globalDef/LacpDefs/PC1_name" },
+      "PC1_state_fallback": { "type": "boolean", "const": false },
+      "PC1_state_interval": { "type": "string", "const": "FAST" },
+      "PC1_state_mode": { "type": "string", "const": "PASSIVE" },
+      "PC1_state_mac": { "type": "string", "const": "fc:bd:67:2c:08:f4" },
+      "PC1_state_pri": { "type": "integer", "const": 256 },
+      "PC1_state_key": { "type": "integer", "const": 1 },
+      "PC1_state": {
+        "type": "object",
+        "required": ["name", "fallback", "interval", "lacp-mode", "system-id-mac", "system-priority", "google-pins-lacp:lacp-key"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "$ref": "#/globalDef/LacpDefs/PC1_state_name" },
+          "fallback": { "$ref": "#/globalDef/LacpDefs/PC1_state_fallback" },
+          "interval": { "$ref": "#/globalDef/LacpDefs/PC1_state_interval" },
+          "lacp-mode": { "$ref": "#/globalDef/LacpDefs/PC1_state_mode" },
+          "system-id-mac": { "$ref": "#/globalDef/LacpDefs/PC1_state_mac" },
+          "system-priority": { "$ref": "#/globalDef/LacpDefs/PC1_state_pri" },
+          "google-pins-lacp:lacp-key": { "$ref": "#/globalDef/LacpDefs/PC1_state_key" }
+        }
+      },
+      "PC1_config_name": { "$ref": "#/globalDef/LacpDefs/PC1_name" },
+      "PC1_config_fallback": { "type": "boolean", "const": false },
+      "PC1_config_interval": { "type": "string", "const": "FAST" },
+      "PC1_config_mode": { "type": "string", "const": "ACTIVE" },
+      "PC1_config_mac": { "type": "string", "const": "fc:bd:67:2c:08:f4" },
+      "PC1_config_pri": { "type": "integer", "const": 256 },
+      "PC1_config_key": { "type": "integer", "const": 1 },
+      "PC1_config": {
+        "type": "object",
+        "required": ["name", "fallback", "interval", "lacp-mode", "system-id-mac", "system-priority", "google-pins-lacp:lacp-key"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "$ref": "#/globalDef/LacpDefs/PC1_config_name" },
+          "fallback": { "$ref": "#/globalDef/LacpDefs/PC1_config_fallback" },
+          "interval": { "$ref": "#/globalDef/LacpDefs/PC1_config_interval" },
+          "lacp-mode": { "$ref": "#/globalDef/LacpDefs/PC1_config_mode" },
+          "system-id-mac": { "$ref": "#/globalDef/LacpDefs/PC1_config_mac" },
+          "system-priority": { "$ref": "#/globalDef/LacpDefs/PC1_config_pri" },
+          "google-pins-lacp:lacp-key": { "$ref": "#/globalDef/LacpDefs/PC1_config_key" }
+        }
+      },
+      "PC1_mbr1_intf": { "type": "string", "const": "Ethernet1/7/3" },
+      "PC1_mbr1_state_activity": { "type": "string", "const": "ACTIVE" },
+      "PC1_mbr1_state_tmo": { "type": "string", "const": "LONG" },
+      "PC1_mbr1_state_sync": { "type": "string", "const": "IN_SYNC" },
+      "PC1_mbr1_state_agg": { "type": "boolean", "const": true },
+      "PC1_mbr1_state_col": { "type": "boolean", "const": true },
+      "PC1_mbr1_state_dis": { "type": "boolean", "const": true },
+      "PC1_mbr1_state_sysid": { "type": "string", "const": "fc:bd:67:2c:08:f4" },
+      "PC1_mbr1_state_okey": { "type": "integer", "const": 1 },
+      "PC1_mbr1_state_pid": { "type": "string", "const": "fc:bd:67:2c:08:f5" },
+      "PC1_mbr1_state_pkey": { "type": "integer", "const": 11 },
+      "PC1_mbr1_state_pnum": { "type": "integer", "const": 3 },
+      "PC1_mbr1_state_ppnum": { "type": "integer", "const": 105 },
+      "PC1_mbr1_state_cntrs_in":  { "type": "string", "const": "1234" },
+      "PC1_mbr1_state_cntrs_out": { "type": "string", "const": "4321" },
+      "PC1_mbr1_state_cntrs_err": { "type": "string", "const": "666" },
+      "PC1_mbr1_state_cntrs": {
+        "type": "object",
+        "required": ["lacp-in-pkts", "lacp-out-pkts", "lacp-rx-errors"],
+        "additionalProperties": false,
+        "properties": {
+          "lacp-in-pkts":  { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_cntrs_in" },
+          "lacp-out-pkts": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_cntrs_out" },
+          "lacp-rx-errors": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_cntrs_err" }
+        }
+      },
+      "PC1_mbr1_state": {
+        "type": "object",
+        "required": ["interface", "activity", "timeout", "synchronization", "aggregatable", "collecting", "distributing", "system-id", "oper-key", "partner-id", "partner-key", "port-num", "partner-port-num", "counters"],
+        "additionalProperties": false,
+        "properties": {
+          "interface":        { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_intf" },
+          "activity":         { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_activity" },
+          "timeout":          { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_tmo" },
+          "synchronization":  { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_sync" },
+          "aggregatable":     { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_agg" },
+          "collecting":       { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_col" },
+          "distributing":     { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_dis" },
+          "system-id":        { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_sysid" },
+          "oper-key":         { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_okey" },
+          "partner-id":       { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_pid" },
+          "partner-key":      { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_pkey" },
+          "port-num":         { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_pnum" },
+          "partner-port-num": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_ppnum" },
+          "counters":         { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_cntrs" }
+        }
+      },
+      "PC1_mbr1": {
+        "type": "object",
+        "required": ["interface", "state"],
+        "additionalProperties": false,
+        "properties": {
+          "interface": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_intf" },
+          "state": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state" }
+        }
+      },
+      "PC1_mbr2_intf": { "type": "string", "const": "Ethernet1/7/4" },
+      "PC1_mbr2_state_activity": { "type": "string", "const": "PASSIVE" },
+      "PC1_mbr2_state_tmo": { "type": "string", "const": "SHORT" },
+      "PC1_mbr2_state_sync": { "type": "string", "const": "OUT_SYNC" },
+      "PC1_mbr2_state_agg": { "type": "boolean", "const": false },
+      "PC1_mbr2_state_col": { "type": "boolean", "const": false },
+      "PC1_mbr2_state_dis": { "type": "boolean", "const": false },
+      "PC1_mbr2_state_sysid": { "type": "string", "const": "fc:bd:67:2c:08:f6" },
+      "PC1_mbr2_state_okey": { "type": "integer", "const": 1 },
+      "PC1_mbr2_state_pid": { "type": "string", "const": "fc:bd:67:2c:08:f7" },
+      "PC1_mbr2_state_pkey": { "type": "integer", "const": 22 },
+      "PC1_mbr2_state_cntrs_in":  { "type": "string", "const": "2234" },
+      "PC1_mbr2_state_cntrs_out": { "type": "string", "const": "2321" },
+      "PC1_mbr2_state_cntrs_err": { "type": "string", "const": "266" },
+      "PC1_mbr2_state_cntrs": {
+        "type": "object",
+        "required": ["lacp-in-pkts", "lacp-out-pkts", "lacp-rx-errors"],
+        "additionalProperties": false,
+        "properties": {
+          "lacp-in-pkts":  { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_cntrs_in" },
+          "lacp-out-pkts": { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_cntrs_out" },
+          "lacp-rx-errors": { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_cntrs_err" }
+        }
+      },
+      "PC1_mbr2_state": {
+        "type": "object",
+        "required": ["interface", "activity", "timeout", "synchronization", "aggregatable", "collecting", "distributing", "system-id", "oper-key", "partner-id", "partner-key", "counters"],
+        "additionalProperties": false,
+        "properties": {
+          "interface":        { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_intf" },
+          "activity":         { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_activity" },
+          "timeout":          { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_tmo" },
+          "synchronization":  { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_sync" },
+          "aggregatable":     { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_agg" },
+          "collecting":       { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_col" },
+          "distributing":     { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_dis" },
+          "system-id":        { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_sysid" },
+          "oper-key":         { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_okey" },
+          "partner-id":       { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_pid" },
+          "partner-key":      { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_pkey" },
+          "counters":         { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_cntrs" }
+        }
+      },
+      "PC1_mbr2": {
+        "type": "object",
+        "required": ["interface", "state"],
+        "additionalProperties": false,
+        "properties": {
+          "interface": { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_intf" },
+          "state": { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state" }
+        }
+      },
+      "PC1_member_all": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "uniqueItems": true,
+        "items": [ { "$ref": "#/globalDef/LacpDefs/PC1_mbr1" }, { "$ref": "#/globalDef/LacpDefs/PC1_mbr2" } ]
+      },
+      "PC1_member_a": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 1,
+        "uniqueItems": true,
+        "items": [ { "$ref": "#/globalDef/LacpDefs/PC1_mbr1" } ]
+      },
+      "PC1_member_b": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 1,
+        "uniqueItems": true,
+        "items": [ { "$ref": "#/globalDef/LacpDefs/PC1_mbr2" } ]
+      },
+      "PC1_members": {
+        "type": "object",
+        "required": ["member"],
+        "additionalProperties": false,
+        "properties": {
+          "member": { "$ref": "#/globalDef/LacpDefs/PC1_member_all" }
+        }
+      },
+      "PC1": {
+        "type": "object",
+        "required": ["name", "config", "state", "members"],
+        "additionalProperties": false,
+        "properties": {
+          "name":    { "$ref": "#/globalDef/LacpDefs/PC1_name" },
+          "config":  { "$ref": "#/globalDef/LacpDefs/PC1_config" },
+          "state":   { "$ref": "#/globalDef/LacpDefs/PC1_state" },
+          "members": { "$ref": "#/globalDef/LacpDefs/PC1_members" }
+        }
+      },
+      "PC2_name": { "type": "string", "const": "PortChannel2" },
+      "PC2_state_name": { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+      "PC2_state_fallback": { "type": "boolean", "const": false },
+      "PC2_state_interval": { "type": "string", "const": "SLOW" },
+      "PC2_state_mode": { "type": "string", "const": "ACTIVE" },
+      "PC2_state_mac": { "type": "string", "const": "fc:bd:67:2c:08:f4" },
+      "PC2_state_pri": { "type": "integer", "const": 256 },
+      "PC2_state_key": { "type": "integer", "const": 1 },
+      "PC2_state": {
+        "type": "object",
+        "required": ["name", "interval", "lacp-mode", "system-id-mac", "system-priority", "google-pins-lacp:lacp-key"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "$ref": "#/globalDef/LacpDefs/PC2_state_name" },
+          "fallback": { "$ref": "#/globalDef/LacpDefs/PC2_state_fallback" },
+          "interval": { "$ref": "#/globalDef/LacpDefs/PC2_state_interval" },
+          "lacp-mode": { "$ref": "#/globalDef/LacpDefs/PC2_state_mode" },
+          "system-id-mac": { "$ref": "#/globalDef/LacpDefs/PC2_state_mac" },
+          "system-priority": { "$ref": "#/globalDef/LacpDefs/PC2_state_pri" },
+          "google-pins-lacp:lacp-key": { "$ref": "#/globalDef/LacpDefs/PC2_state_key" }
+        }
+      },
+      "PC2_config_name": { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+      "PC2_config_fallback": { "type": "boolean", "const": false },
+      "PC2_config_interval": { "type": "string", "const": "SLOW" },
+      "PC2_config_mode": { "type": "string", "const": "PASSIVE" },
+      "PC2_config_mac": { "type": "string", "const": "AA:BB:CC:DD:EE:FF" },
+      "PC2_config_key": { "type": "integer", "const": 2 },
+      "PC2_config": {
+        "type": "object",
+        "required": ["name", "fallback", "interval", "lacp-mode", "system-id-mac", "google-pins-lacp:lacp-key"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "$ref": "#/globalDef/LacpDefs/PC2_config_name" },
+          "fallback": { "$ref": "#/globalDef/LacpDefs/PC2_config_fallback" },
+          "interval": { "$ref": "#/globalDef/LacpDefs/PC2_config_interval" },
+          "lacp-mode": { "$ref": "#/globalDef/LacpDefs/PC2_config_mode" },
+          "system-id-mac": { "$ref": "#/globalDef/LacpDefs/PC2_config_mac" },
+          "google-pins-lacp:lacp-key": { "$ref": "#/globalDef/LacpDefs/PC2_config_key" }
+        }
+      },
+      "PC2_mbr1_intf": { "type": "string", "const": "Ethernet1/3/5" },
+      "PC2_mbr1_state_activity": { "type": "string", "const": "ACTIVE" },
+      "PC2_mbr1_state_tmo": { "type": "string", "const": "LONG" },
+      "PC2_mbr1_state_sync": { "type": "string", "const": "IN_SYNC" },
+      "PC2_mbr1_state_agg": { "type": "boolean", "const": true },
+      "PC2_mbr1_state_col": { "type": "boolean", "const": true },
+      "PC2_mbr1_state_dis": { "type": "boolean", "const": true },
+      "PC2_mbr1_state_sysid": { "type": "string", "const": "fc:bd:67:2c:08:f4" },
+      "PC2_mbr1_state_okey": { "type": "integer", "const": 1 },
+      "PC2_mbr1_state_pid": { "type": "string", "const": "fc:bd:67:2c:08:f5" },
+      "PC2_mbr1_state_pkey": { "type": "integer", "const": 11 },
+      "PC2_mbr1_state_cntrs_in":  { "type": "string", "const": "1234" },
+      "PC2_mbr1_state_cntrs_out": { "type": "string", "const": "4321" },
+      "PC2_mbr1_state_cntrs_err": { "type": "string", "const": "666" },
+      "PC2_mbr1_state_cntrs": {
+        "type": "object",
+        "required": ["lacp-in-pkts", "lacp-out-pkts", "lacp-rx-errors"],
+        "additionalProperties": false,
+        "properties": {
+          "lacp-in-pkts":  { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_cntrs_in" },
+          "lacp-out-pkts": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_cntrs_out" },
+          "lacp-rx-errors": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_cntrs_err" }
+        }
+      },
+      "PC2_mbr1_state": {
+        "type": "object",
+        "required": ["interface", "activity", "timeout", "synchronization", "aggregatable", "collecting", "distributing", "system-id", "oper-key", "partner-id", "partner-key", "counters"],
+        "additionalProperties": false,
+        "properties": {
+          "interface":        { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_intf" },
+          "activity":         { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_activity" },
+          "timeout":          { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_tmo" },
+          "synchronization":  { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_sync" },
+          "aggregatable":     { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_agg" },
+          "collecting":       { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_col" },
+          "distributing":     { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_dis" },
+          "system-id":        { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_sysid" },
+          "oper-key":         { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_okey" },
+          "partner-id":       { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_pid" },
+          "partner-key":      { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_pkey" },
+          "counters":         { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_cntrs" }
+        }
+      },
+      "PC2_mbr1": {
+        "type": "object",
+        "required": ["interface", "state"],
+        "additionalProperties": false,
+        "properties": {
+          "interface": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_intf" },
+          "state": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state" }
+        }
+      },
+      "PC2_member_all": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 1,
+        "uniqueItems": true,
+        "items": [ { "$ref": "#/globalDef/LacpDefs/PC2_mbr1" } ]
+      },
+      "PC2_member_a": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 1,
+        "uniqueItems": true,
+        "items": [ { "$ref": "#/globalDef/LacpDefs/PC2_mbr1" } ]
+      },
+      "PC2_members": {
+        "type": "object",
+        "required": ["member"],
+        "additionalProperties": false,
+        "properties": {
+          "member": { "$ref": "#/globalDef/LacpDefs/PC2_member_all" }
+        }
+      },
+      "PC2": {
+        "type": "object",
+        "required": ["name", "config", "state", "members"],
+        "additionalProperties": false,
+        "properties": {
+          "name":    { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+          "config":  { "$ref": "#/globalDef/LacpDefs/PC2_config" },
+          "state":   { "$ref": "#/globalDef/LacpDefs/PC2_state" },
+          "members": { "$ref": "#/globalDef/LacpDefs/PC2_members" }
+        }
+      },
+      "Interface_a": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 1,
+        "uniqueItems": true,
+        "items": [ { "$ref": "#/globalDef/LacpDefs/PC1" } ]
+      },
+      "Interface_b": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 1,
+        "uniqueItems": true,
+        "items": [ { "$ref": "#/globalDef/LacpDefs/PC2" } ]
+      },
+      "Interface": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "uniqueItems": true,
+        "items": [ { "$ref": "#/globalDef/LacpDefs/PC1" }, { "$ref": "#/globalDef/LacpDefs/PC2" } ]
+      },
+      "Interfaces": {
+        "type": "object",
+        "required": ["interface"],
+        "additionalProperties": false,
+        "properties": {
+          "interface": { "$ref": "#/globalDef/LacpDefs/Interface" }
+        }
+      },
+      "Interfaces_a": {
+        "type": "object",
+        "required": ["interface"],
+        "additionalProperties": false,
+        "properties": {
+          "interface": { "$ref": "#/globalDef/LacpDefs/Interface_a" }
+        }
+      },
+      "Interfaces_b": {
+        "type": "object",
+        "required": ["interface"],
+        "additionalProperties": false,
+        "properties": {
+          "interface": { "$ref": "#/globalDef/LacpDefs/Interface_b" }
+        }
+      }
+    }
+  },
+  "operations": [
+    {
+      "title": "subscribe to /lacp/interfaces/",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "$ref": "#/globalDef/LacpDefs/Interfaces"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=*]",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'*'}}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "$ref": "#/globalDef/LacpDefs/Interfaces"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel1]",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel1'}}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "$ref": "#/globalDef/LacpDefs/Interfaces_a"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "$ref": "#/globalDef/LacpDefs/Interfaces_b"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=*]/config",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'*'}}elem:{name:'config'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 2,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["config", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "config": { "$ref": "#/globalDef/LacpDefs/PC1_config" },
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC1_name" }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "required": ["config", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "config": { "$ref": "#/globalDef/LacpDefs/PC2_config" },
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" }
+                        }
+                      }]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]/config",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}elem:{name:'config'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["config", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "config": { "$ref": "#/globalDef/LacpDefs/PC2_config" },
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel1]/config/fallback",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel1'}}elem:{name:'config'}elem:{name:'fallback'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["config", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "config": {
+                            "type": "object",
+                              "required": ["fallback"],
+                              "additionalProperties": false,
+                              "properties": {
+                                "fallback": { "$ref": "#/globalDef/LacpDefs/PC1_config_fallback" }
+                              }
+                          },
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC1_name" }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel1]/config/interval",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel1'}}elem:{name:'config'}elem:{name:'interval'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["config", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "config": {
+                            "type": "object",
+                              "required": ["interval"],
+                              "additionalProperties": false,
+                              "properties": {
+                                "interval": { "$ref": "#/globalDef/LacpDefs/PC1_config_interval" }
+                              }
+                          },
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC1_name" }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel1]/config/lacp-mode",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel1'}}elem:{name:'config'}elem:{name:'lacp-mode'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["config", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "config": {
+                            "type": "object",
+                              "required": ["lacp-mode"],
+                              "additionalProperties": false,
+                              "properties": {
+                                "lacp-mode": { "$ref": "#/globalDef/LacpDefs/PC1_config_mode" }
+                              }
+                          },
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC1_name" }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel1]/config/system-id-mac",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel1'}}elem:{name:'config'}elem:{name:'system-id-mac'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["config", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "config": {
+                            "type": "object",
+                              "required": ["system-id-mac"],
+                              "additionalProperties": false,
+                              "properties": {
+                                "system-id-mac": { "$ref": "#/globalDef/LacpDefs/PC1_config_mac" }
+                              }
+                          },
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC1_name" }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel1]/config/system-priority",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel1'}}elem:{name:'config'}elem:{name:'system-priority'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["config", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "config": {
+                            "type": "object",
+                              "required": ["system-priority"],
+                              "additionalProperties": false,
+                              "properties": {
+                                "system-priority": { "$ref": "#/globalDef/LacpDefs/PC1_config_pri" }
+                              }
+                          },
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC1_name" }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel1]/config/lacp-key",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel1'}}elem:{name:'config'}elem:{name:'lacp-key'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["config", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "config": {
+                            "type": "object",
+                              "required": ["google-pins-lacp:lacp-key"],
+                              "additionalProperties": false,
+                              "properties": {
+                                "google-pins-lacp:lacp-key": { "$ref": "#/globalDef/LacpDefs/PC1_config_key" }
+                              }
+                          },
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC1_name" }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]/state",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}elem:{name:'state'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["state", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "state": { "$ref": "#/globalDef/LacpDefs/PC2_state" },
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]/state/fallback",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}elem:{name:'state'}elem:{name:'fallback'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["state", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "state": {
+                            "type": "object",
+                              "required": ["fallback"],
+                              "additionalProperties": false,
+                              "properties": {
+                                "fallback": { "$ref": "#/globalDef/LacpDefs/PC2_state_fallback" }
+                              }
+                          },
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]/members",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}elem:{name:'members'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["members", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "members": { "$ref": "#/globalDef/LacpDefs/PC2_members" },
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]/members/member[Ethernet1/3/5]",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}elem:{name:'members'}elem:{name:'member'key:{key:'interface'value:'Ethernet1/3/5'}}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["members", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "members": { "$ref": "#/globalDef/LacpDefs/PC2_members" },
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]/members/member[Ethernet1/3/5]/interface",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}elem:{name:'members'}elem:{name:'member'key:{key:'interface'value:'Ethernet1/3/5'}}elem:{name:'interface'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["members", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+                          "members": {
+                            "type": "object",
+                            "required": ["member"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "member": {
+                                "type": "array",
+                                "minItems": 1,
+                                "maxItems": 1,
+                                "uniqueItems": true,
+                                "items": [ {
+                                  "type": "object",
+                                  "required": ["interface"],
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "interface": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_intf" }
+                                  }
+                                } ]
+                              }
+                            }
+                          }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]/members/member[Ethernet1/3/5]/state",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}elem:{name:'members'}elem:{name:'member'key:{key:'interface'value:'Ethernet1/3/5'}}elem:{name:'state'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["members", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+                          "members": {
+                            "type": "object",
+                            "required": ["member"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "member": {
+                                "type": "array",
+                                "minItems": 1,
+                                "maxItems": 1,
+                                "uniqueItems": true,
+                                "items": [ {
+                                  "type": "object",
+                                  "required": ["interface", "state"],
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "interface": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_intf" },
+                                    "state": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state" }
+                                  }
+                                } ]
+                              }
+                            }
+                          }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]/members/member[Ethernet1/3/5]/state/interface",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}elem:{name:'members'}elem:{name:'member'key:{key:'interface'value:'Ethernet1/3/5'}}elem:{name:'state'}elem:{name:'interface'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["members", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+                          "members": {
+                            "type": "object",
+                            "required": ["member"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "member": {
+                                "type": "array",
+                                "minItems": 1,
+                                "maxItems": 1,
+                                "uniqueItems": true,
+                                "items": [ {
+                                  "type": "object",
+                                  "required": ["interface", "state"],
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "interface": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_intf" },
+                                    "state": {
+                                      "type": "object",
+                                      "required": ["interface"],
+                                      "additionalProperties": false,
+                                      "properties": {
+                                        "interface": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_intf" }
+                                      }
+                                    }
+                                  }
+                                } ]
+                              }
+                            }
+                          }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]/members/member[Ethernet1/3/5]/state/activity",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}elem:{name:'members'}elem:{name:'member'key:{key:'interface'value:'Ethernet1/3/5'}}elem:{name:'state'}elem:{name:'activity'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["members", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+                          "members": {
+                            "type": "object",
+                            "required": ["member"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "member": {
+                                "type": "array",
+                                "minItems": 1,
+                                "maxItems": 1,
+                                "uniqueItems": true,
+                                "items": [ {
+                                  "type": "object",
+                                  "required": ["interface", "state"],
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "interface": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_intf" },
+                                    "state": {
+                                      "type": "object",
+                                      "required": ["activity"],
+                                      "additionalProperties": false,
+                                      "properties": {
+                                        "activity": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_activity" }
+                                      }
+                                    }
+                                  }
+                                } ]
+                              }
+                            }
+                          }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]/members/member[Ethernet1/3/5]/state/timeout",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}elem:{name:'members'}elem:{name:'member'key:{key:'interface'value:'Ethernet1/3/5'}}elem:{name:'state'}elem:{name:'timeout'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["members", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+                          "members": {
+                            "type": "object",
+                            "required": ["member"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "member": {
+                                "type": "array",
+                                "minItems": 1,
+                                "maxItems": 1,
+                                "uniqueItems": true,
+                                "items": [ {
+                                  "type": "object",
+                                  "required": ["interface", "state"],
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "interface": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_intf" },
+                                    "state": {
+                                      "type": "object",
+                                      "required": ["timeout"],
+                                      "additionalProperties": false,
+                                      "properties": {
+                                        "timeout": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_tmo" }
+                                      }
+                                    }
+                                  }
+                                } ]
+                              }
+                            }
+                          }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]/members/member[Ethernet1/3/5]/state/synchronization",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}elem:{name:'members'}elem:{name:'member'key:{key:'interface'value:'Ethernet1/3/5'}}elem:{name:'state'}elem:{name:'synchronization'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["members", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+                          "members": {
+                            "type": "object",
+                            "required": ["member"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "member": {
+                                "type": "array",
+                                "minItems": 1,
+                                "maxItems": 1,
+                                "uniqueItems": true,
+                                "items": [ {
+                                  "type": "object",
+                                  "required": ["interface", "state"],
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "interface": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_intf" },
+                                    "state": {
+                                      "type": "object",
+                                      "required": ["synchronization"],
+                                      "additionalProperties": false,
+                                      "properties": {
+                                        "synchronization": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_sync" }
+                                      }
+                                    }
+                                  }
+                                } ]
+                              }
+                            }
+                          }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]/members/member[Ethernet1/3/5]/state/aggregatable",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}elem:{name:'members'}elem:{name:'member'key:{key:'interface'value:'Ethernet1/3/5'}}elem:{name:'state'}elem:{name:'aggregatable'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["members", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+                          "members": {
+                            "type": "object",
+                            "required": ["member"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "member": {
+                                "type": "array",
+                                "minItems": 1,
+                                "maxItems": 1,
+                                "uniqueItems": true,
+                                "items": [ {
+                                  "type": "object",
+                                  "required": ["interface", "state"],
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "interface": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_intf" },
+                                    "state": {
+                                      "type": "object",
+                                      "required": ["aggregatable"],
+                                      "additionalProperties": false,
+                                      "properties": {
+                                        "aggregatable": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_agg" }
+                                      }
+                                    }
+                                  }
+                                } ]
+                              }
+                            }
+                          }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]/members/member[Ethernet1/3/5]/state/collecting",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}elem:{name:'members'}elem:{name:'member'key:{key:'interface'value:'Ethernet1/3/5'}}elem:{name:'state'}elem:{name:'collecting'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["members", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+                          "members": {
+                            "type": "object",
+                            "required": ["member"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "member": {
+                                "type": "array",
+                                "minItems": 1,
+                                "maxItems": 1,
+                                "uniqueItems": true,
+                                "items": [ {
+                                  "type": "object",
+                                  "required": ["interface", "state"],
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "interface": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_intf" },
+                                    "state": {
+                                      "type": "object",
+                                      "required": ["collecting"],
+                                      "additionalProperties": false,
+                                      "properties": {
+                                        "collecting": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_col" }
+                                      }
+                                    }
+                                  }
+                                } ]
+                              }
+                            }
+                          }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]/members/member[Ethernet1/3/5]/state/distributing",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}elem:{name:'members'}elem:{name:'member'key:{key:'interface'value:'Ethernet1/3/5'}}elem:{name:'state'}elem:{name:'distributing'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["members", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+                          "members": {
+                            "type": "object",
+                            "required": ["member"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "member": {
+                                "type": "array",
+                                "minItems": 1,
+                                "maxItems": 1,
+                                "uniqueItems": true,
+                                "items": [ {
+                                  "type": "object",
+                                  "required": ["interface", "state"],
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "interface": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_intf" },
+                                    "state": {
+                                      "type": "object",
+                                      "required": ["distributing"],
+                                      "additionalProperties": false,
+                                      "properties": {
+                                        "distributing": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_dis" }
+                                      }
+                                    }
+                                  }
+                                } ]
+                              }
+                            }
+                          }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]/members/member[Ethernet1/3/5]/state/system-id",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}elem:{name:'members'}elem:{name:'member'key:{key:'interface'value:'Ethernet1/3/5'}}elem:{name:'state'}elem:{name:'system-id'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["members", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+                          "members": {
+                            "type": "object",
+                            "required": ["member"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "member": {
+                                "type": "array",
+                                "minItems": 1,
+                                "maxItems": 1,
+                                "uniqueItems": true,
+                                "items": [ {
+                                  "type": "object",
+                                  "required": ["interface", "state"],
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "interface": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_intf" },
+                                    "state": {
+                                      "type": "object",
+                                      "required": ["system-id"],
+                                      "additionalProperties": false,
+                                      "properties": {
+                                        "system-id": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_sysid" }
+                                      }
+                                    }
+                                  }
+                                } ]
+                              }
+                            }
+                          }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]/members/member[Ethernet1/3/5]/state/oper-key",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}elem:{name:'members'}elem:{name:'member'key:{key:'interface'value:'Ethernet1/3/5'}}elem:{name:'state'}elem:{name:'oper-key'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["members", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+                          "members": {
+                            "type": "object",
+                            "required": ["member"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "member": {
+                                "type": "array",
+                                "minItems": 1,
+                                "maxItems": 1,
+                                "uniqueItems": true,
+                                "items": [ {
+                                  "type": "object",
+                                  "required": ["interface", "state"],
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "interface": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_intf" },
+                                    "state": {
+                                      "type": "object",
+                                      "required": ["oper-key"],
+                                      "additionalProperties": false,
+                                      "properties": {
+                                        "oper-key": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_okey" }
+                                      }
+                                    }
+                                  }
+                                } ]
+                              }
+                            }
+                          }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]/members/member[Ethernet1/3/5]/state/partner-id",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}elem:{name:'members'}elem:{name:'member'key:{key:'interface'value:'Ethernet1/3/5'}}elem:{name:'state'}elem:{name:'partner-id'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["members", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+                          "members": {
+                            "type": "object",
+                            "required": ["member"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "member": {
+                                "type": "array",
+                                "minItems": 1,
+                                "maxItems": 1,
+                                "uniqueItems": true,
+                                "items": [ {
+                                  "type": "object",
+                                  "required": ["interface", "state"],
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "interface": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_intf" },
+                                    "state": {
+                                      "type": "object",
+                                      "required": ["partner-id"],
+                                      "additionalProperties": false,
+                                      "properties": {
+                                        "partner-id": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_pid" }
+                                      }
+                                    }
+                                  }
+                                } ]
+                              }
+                            }
+                          }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]/members/member[Ethernet1/3/5]/state/partner-key",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}elem:{name:'members'}elem:{name:'member'key:{key:'interface'value:'Ethernet1/3/5'}}elem:{name:'state'}elem:{name:'partner-key'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["members", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+                          "members": {
+                            "type": "object",
+                            "required": ["member"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "member": {
+                                "type": "array",
+                                "minItems": 1,
+                                "maxItems": 1,
+                                "uniqueItems": true,
+                                "items": [ {
+                                  "type": "object",
+                                  "required": ["interface", "state"],
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "interface": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_intf" },
+                                    "state": {
+                                      "type": "object",
+                                      "required": ["partner-key"],
+                                      "additionalProperties": false,
+                                      "properties": {
+                                        "partner-key": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_pkey" }
+                                      }
+                                    }
+                                  }
+                                } ]
+                              }
+                            }
+                          }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]/members/member[Ethernet1/3/5]/state/counters",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}elem:{name:'members'}elem:{name:'member'key:{key:'interface'value:'Ethernet1/3/5'}}elem:{name:'state'}elem:{name:'counters'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["members", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+                          "members": {
+                            "type": "object",
+                            "required": ["member"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "member": {
+                                "type": "array",
+                                "minItems": 1,
+                                "maxItems": 1,
+                                "uniqueItems": true,
+                                "items": [ {
+                                  "type": "object",
+                                  "required": ["interface", "state"],
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "interface": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_intf" },
+                                    "state": {
+                                      "type": "object",
+                                      "required": ["counters"],
+                                      "additionalProperties": false,
+                                      "properties": {
+                                        "counters": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_cntrs" }
+                                      }
+                                    }
+                                  }
+                                } ]
+                              }
+                            }
+                          }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]/members/member[Ethernet1/3/5]/state/counters/lacp-in-pkts",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}elem:{name:'members'}elem:{name:'member'key:{key:'interface'value:'Ethernet1/3/5'}}elem:{name:'state'}elem:{name:'counters'}elem:{name:'lacp-in-pkts'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["members", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+                          "members": {
+                            "type": "object",
+                            "required": ["member"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "member": {
+                                "type": "array",
+                                "minItems": 1,
+                                "maxItems": 1,
+                                "uniqueItems": true,
+                                "items": [ {
+                                  "type": "object",
+                                  "required": ["interface", "state"],
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "interface": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_intf" },
+                                    "state": {
+                                      "type": "object",
+                                      "required": ["counters"],
+                                      "additionalProperties": false,
+                                      "properties": {
+                                        "counters": {
+                                          "type": "object",
+                                          "required": ["lacp-in-pkts"],
+                                          "additionalProperties": false,
+                                          "properties": {
+                                            "lacp-in-pkts":  { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_cntrs_in" }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                } ]
+                              }
+                            }
+                          }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]/members/member[Ethernet1/3/5]/state/counters/lacp-out-pkts",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}elem:{name:'members'}elem:{name:'member'key:{key:'interface'value:'Ethernet1/3/5'}}elem:{name:'state'}elem:{name:'counters'}elem:{name:'lacp-out-pkts'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["members", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+                          "members": {
+                            "type": "object",
+                            "required": ["member"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "member": {
+                                "type": "array",
+                                "minItems": 1,
+                                "maxItems": 1,
+                                "uniqueItems": true,
+                                "items": [ {
+                                  "type": "object",
+                                  "required": ["interface", "state"],
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "interface": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_intf" },
+                                    "state": {
+                                      "type": "object",
+                                      "required": ["counters"],
+                                      "additionalProperties": false,
+                                      "properties": {
+                                        "counters": {
+                                          "type": "object",
+                                          "required": ["lacp-out-pkts"],
+                                          "additionalProperties": false,
+                                          "properties": {
+                                            "lacp-out-pkts":  { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_cntrs_out" }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                } ]
+                              }
+                            }
+                          }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /lacp/interfaces/interface[name=PortChannel2]/members/member[Ethernet1/3/5]/state/counters/lacp-rx-errors",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'PortChannel2'}}elem:{name:'members'}elem:{name:'member'key:{key:'interface'value:'Ethernet1/3/5'}}elem:{name:'state'}elem:{name:'counters'}elem:{name:'lacp-rx-errors'}}} mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces",
+            "syncResponse": true,
+            "allowDuplicates": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interfaces"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-lacp:interfaces": {
+                  "type": "object",
+                  "required": ["interface"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "interface": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": [ {
+                        "type": "object",
+                        "required": ["members", "name"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+                          "members": {
+                            "type": "object",
+                            "required": ["member"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "member": {
+                                "type": "array",
+                                "minItems": 1,
+                                "maxItems": 1,
+                                "uniqueItems": true,
+                                "items": [ {
+                                  "type": "object",
+                                  "required": ["interface", "state"],
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "interface": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_intf" },
+                                    "state": {
+                                      "type": "object",
+                                      "required": ["counters"],
+                                      "additionalProperties": false,
+                                      "properties": {
+                                        "counters": {
+                                          "type": "object",
+                                          "required": ["lacp-rx-errors"],
+                                          "additionalProperties": false,
+                                          "properties": {
+                                            "lacp-rx-errors":  { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_cntrs_err" }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                } ]
+                              }
+                            }
+                          }
+                        }
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+

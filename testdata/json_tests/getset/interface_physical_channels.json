@@ -1,0 +1,284 @@
+{
+  "title": "Get interface physical channel",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "openconfig-platform-transceiver:physical-channel"
+                ],
+                "properties": {
+                  "openconfig-platform-transceiver:physical-channel": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "type": "integer",
+                        "enum": [0]
+                      },
+                      {
+                        "type": "integer",
+                        "enum": [1]
+                      },
+                      {
+                        "type": "integer",
+                        "enum": [2]
+                      },
+                      {
+                        "type": "integer",
+                        "enum": [3]
+                      },
+                      {
+                        "type": "integer",
+                        "enum": [4]
+                      },
+                      {
+                        "type": "integer",
+                        "enum": [5]
+                      },
+                      {
+                        "type": "integer",
+                        "enum": [6]
+                      },
+                      {
+                        "type": "integer",
+                        "enum": [7]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/33" : {
+              "index": "33",
+              "admin_status": "up",
+              "mtu": "9104",
+              "lanes" : "258",
+              "speed" : "10000"
+            },
+            "PORT|Ethernet1/34" : {
+              "index": "34",
+              "admin_status": "up",
+              "mtu": "9104",
+              "lanes" : "257",
+              "speed" : "10000"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/33" : {
+              "index": "33",
+              "admin_status": "up",
+              "mtu": "9104",
+              "lanes" : "258",
+              "oper_status": "down",
+              "speed" : "10000"
+            },
+            "PORT_TABLE:Ethernet1/34" : {
+              "index": "34",
+              "admin_status": "up",
+              "mtu": "9104",
+              "lanes" : "257",
+              "oper_status": "down",
+              "speed" : "10000"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "openconfig-platform-transceiver:physical-channel"
+                ],
+                "properties": {
+                  "openconfig-platform-transceiver:physical-channel": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "type": "integer",
+                        "enum": [4]
+                      },
+                      {
+                        "type": "integer",
+                        "enum": [5]
+                      },
+                      {
+                        "type": "integer",
+                        "enum": [6]
+                      },
+                      {
+                        "type": "integer",
+                        "enum": [7]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/33]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "openconfig-platform-transceiver:physical-channel"
+                ],
+                "properties": {
+                  "openconfig-platform-transceiver:physical-channel": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "type": "integer",
+                        "enum": [0]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/34]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "openconfig-platform-transceiver:physical-channel"
+                ],
+                "properties": {
+                  "openconfig-platform-transceiver:physical-channel": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "type": "integer",
+                        "enum": [0]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHDel",
+          "title": "Delete Ethernet1/33 from CONFIG_DB",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/33": []
+          }
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Delete Ethernet1/34 from CONFIG_DB",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/34": []
+          }
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Delete Ethernet1/33 from APPL_STATE_DB",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/33": []
+          }
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Delete Ethernet1/34 from APPL_STATE_DB",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/34": []
+          }
+        }
+      ]
+    }
+  ]
+}
+

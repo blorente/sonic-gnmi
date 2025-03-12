@@ -1,0 +1,105 @@
+{
+  "title": "Subscribe with TARGET_DEFINED CPU counters out-pkts",
+  "globalDef" : {
+    "validators": {
+      "state.counters.out-pkts.4100": {
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:out-pkts"
+        ],
+        "properties": {
+          "openconfig-interfaces:out-pkts": {
+            "type": "string",
+            "const": "4100"
+          }
+        }
+      },
+      "state.counters.out-pkts.1300": {
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:out-pkts"
+        ],
+        "properties": {
+          "openconfig-interfaces:out-pkts": {
+            "type": "string",
+            "const": "1300"
+          }
+        }
+      },
+      "state.counters.out-pkts.400": {
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:out-pkts"
+        ],
+        "properties": {
+          "openconfig-interfaces:out-pkts": {
+            "type": "string",
+            "const": "400"
+          }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "subscribe to /interfaces/interface[name=CPU]/state/counters/out-pkts",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'CPU'}}elem:{name:'state'}elem:{name:'counters'}elem:{name:'out-pkts'}}mode:TARGET_DEFINED sample_interval:1000000000 suppress_redundant: true} mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/interfaces/interface[name=CPU]/state/counters/out-pkts",
+            "schema": {
+              "$ref": "#/globalDef/validators/state.counters.out-pkts.4100"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "db": "COUNTERS_DB",
+          "value": {
+            "COUNTERS:oid:0x1000000000001" : {
+              "SAI_PORT_STAT_IF_OUT_UCAST_PKTS":200
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=CPU]/state/counters/out-pkts",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.counters.out-pkts.1300"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "db": "COUNTERS_DB",
+          "value": {
+            "COUNTERS:oid:0x1000000000001" : {
+              "SAI_PORT_STAT_IF_OUT_NON_UCAST_PKTS":200
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=CPU]/state/counters/out-pkts",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.counters.out-pkts.400"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "Description": "Definations of /system/alarm",
+  "globalDef" : {
+    "alarmDefs": {
+      "severity_minor": { "type": "string", "const": "openconfig-alarm-types:MINOR" },
+      "severity_major": { "type": "string", "const": "openconfig-alarm-types:MAJOR" },
+      "severity_warn":  { "type": "string", "const": "openconfig-alarm-types:WARNING" },
+      "type_sw":   { "type": "string", "const": "google-pins-system:SOFTWARE" },
+      "type_eqpt": { "type": "string", "const": "openconfig-alarm-types:EQPT" },
+      "a1_id": { "type": "string", "const": "container_monitor_1611693908000044444" },
+      "a1_rs": { "type": "string", "const": "container_monitor" },
+      "a1_sev": { "$ref": "#/globalDef/alarmDefs/severity_minor" },
+      "a1_text": { "type": "string", "const": "UP: Crash artifact detected: foo,bar" },
+      "a1_time": { "type": "string", "const": "1611693908000044444" },
+      "a1_state": {
+        "type": "object",
+        "required": ["id", "resource", "severity", "text", "time-created", "type-id"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "#/globalDef/alarmDefs/a1_id" },
+          "resource": { "$ref": "#/globalDef/alarmDefs/a1_rs" },
+          "severity": { "$ref": "#/globalDef/alarmDefs/a1_sev" },
+          "text": { "$ref": "#/globalDef/alarmDefs/a1_text" },
+          "time-created": { "$ref": "#/globalDef/alarmDefs/a1_time" },
+          "type-id": { "$ref": "#/globalDef/alarmDefs/type_sw" }
+        }
+      },
+      "a1": {
+        "type": "object",
+        "required": ["id", "state"],
+        "additionalProperties": false,
+        "properties": {
+          "id":{ "$ref": "#/globalDef/alarmDefs/a1_id" },
+          "state":{ "$ref": "#/globalDef/alarmDefs/a1_state" }
+        }
+      },
+      "a2_id": { "type": "string", "const": "linkqual:linkqual_1611693908000099999" },
+      "a2_rs": { "type": "string", "const": "linkqual:linkqual" },
+      "a2_sev": { "$ref": "#/globalDef/alarmDefs/severity_major" },
+      "a2_text": { "type": "string", "const": "INACTIVE: Unknown" },
+      "a2_time": { "type": "string", "const": "1611693908000099999" },
+      "a2_state": {
+        "type": "object",
+        "required": ["id", "resource", "severity", "text", "time-created", "type-id"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "#/globalDef/alarmDefs/a2_id" },
+          "resource": { "$ref": "#/globalDef/alarmDefs/a2_rs" },
+          "severity": { "$ref": "#/globalDef/alarmDefs/a2_sev" },
+          "text": { "$ref": "#/globalDef/alarmDefs/a2_text" },
+          "time-created": { "$ref": "#/globalDef/alarmDefs/a2_time" },
+          "type-id": { "$ref": "#/globalDef/alarmDefs/type_eqpt" }
+        }
+      },
+      "a2": {
+        "type": "object",
+        "required": ["id", "state"],
+        "additionalProperties": false,
+        "properties": {
+          "id":{ "$ref": "#/globalDef/alarmDefs/a2_id" },
+          "state":{ "$ref": "#/globalDef/alarmDefs/a2_state" }
+        }
+      },
+      "a3_id": { "type": "string", "const": "syncd:syncd_1611693908000044444" },
+      "a3_rs": { "type": "string", "const": "syncd:syncd" },
+      "a3_sev": { "$ref": "#/globalDef/alarmDefs/severity_warn" },
+      "a3_text": { "type": "string", "const": "MINOR: Go Panic" },
+      "a3_time": { "type": "string", "const": "1611693908000044444" },
+      "a3_state": {
+        "type": "object",
+        "required": ["id", "resource", "severity", "text", "time-created", "type-id"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "#/globalDef/alarmDefs/a3_id" },
+          "resource": { "$ref": "#/globalDef/alarmDefs/a3_rs" },
+          "severity": { "$ref": "#/globalDef/alarmDefs/a3_sev" },
+          "text": { "$ref": "#/globalDef/alarmDefs/a3_text" },
+          "time-created": { "$ref": "#/globalDef/alarmDefs/a3_time" },
+          "type-id": { "$ref": "#/globalDef/alarmDefs/type_sw" }
+        }
+      },
+      "a3": {
+        "type": "object",
+        "required": ["id", "state"],
+        "additionalProperties": false,
+        "properties": {
+          "id":{ "$ref": "#/globalDef/alarmDefs/a3_id" },
+          "state":{ "$ref": "#/globalDef/alarmDefs/a3_state" }
+        }
+      },
+      "a4_id": { "type": "string", "const": "telemetry:telemetry_1611693908000044444" },
+      "a4_rs": { "type": "string", "const": "telemetry:telemetry" },
+      "a4_sev": { "$ref": "#/globalDef/alarmDefs/severity_minor" },
+      "a4_text": { "type": "string", "const": "UP: Crash artifact detected: file1,file2" },
+      "a4_time": { "type": "string", "const": "1611693908000044444" },
+      "a4_state": {
+        "type": "object",
+        "required": ["id", "resource", "severity", "text", "time-created", "type-id"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "#/globalDef/alarmDefs/a4_id" },
+          "resource": { "$ref": "#/globalDef/alarmDefs/a4_rs" },
+          "severity": { "$ref": "#/globalDef/alarmDefs/a4_sev" },
+          "text": { "$ref": "#/globalDef/alarmDefs/a4_text" },
+          "time-created": { "$ref": "#/globalDef/alarmDefs/a4_time" },
+          "type-id": { "$ref": "#/globalDef/alarmDefs/type_sw" }
+        }
+      },
+      "a4": {
+        "type": "object",
+        "required": ["id", "state"],
+        "additionalProperties": false,
+        "properties": {
+          "id":{ "$ref": "#/globalDef/alarmDefs/a4_id" },
+          "state":{ "$ref": "#/globalDef/alarmDefs/a4_state" }
+        }
+      },
+      "all_alarms": {
+        "type": "object",
+        "required": ["alarm"],
+        "additionalProperties": false,
+        "properties": {
+          "alarm": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "uniqueItems": true,
+            "items": [
+              { "$ref": "#/globalDef/alarmDefs/a1" },
+              { "$ref": "#/globalDef/alarmDefs/a2" },
+              { "$ref": "#/globalDef/alarmDefs/a3" },
+              { "$ref": "#/globalDef/alarmDefs/a4" }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

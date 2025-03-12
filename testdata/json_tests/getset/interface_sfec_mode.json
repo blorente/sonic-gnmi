@@ -1,0 +1,183 @@
+{
+  "title": "Set interface controllerc-mode",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/ethernet/state/controllerc-mode",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-interfaces:controllerc-mode"
+      ],
+      "properties": {
+        "google-pins-interfaces:controllerc-mode": {
+          "type": "string",
+          "enum": ["AUTO"]
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/ethernet/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"google-pins-interfaces:controllerc-mode\":\"google-pins-interfaces:DISABLE\"}}"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "required": [
+                "openconfig-if-ethernet:ethernet"
+              ],
+              "properties": {
+                "openconfig-if-ethernet:ethernet": {
+                  "type": "object",
+                  "required": [
+                    "config"
+                  ],
+                  "properties": {
+                    "config": {
+                      "type": "object",
+                      "required": [
+                        "google-pins-interfaces:controllerc-mode"
+                      ],
+                      "properties": {
+                        "google-pins-interfaces:controllerc-mode": {
+                          "type": "string",
+                          "enum": [
+                            "DISABLE"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/ethernet/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"google-pins-interfaces:controllerc-mode\":\"google-pins-interfaces:AUTO\"}}"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "required": [
+                "openconfig-if-ethernet:ethernet"
+              ],
+              "properties": {
+                "openconfig-if-ethernet:ethernet": {
+                  "type": "object",
+                  "required": [
+                    "config",
+                    "state"
+                  ],
+                  "properties": {
+                    "config": {
+                      "type": "object",
+                      "required": [
+                        "google-pins-interfaces:controllerc-mode"
+                      ],
+                      "properties": {
+                        "google-pins-interfaces:controllerc-mode": {
+                          "type": "string",
+                          "enum": [
+                            "AUTO"
+                          ]
+                        }
+                      }
+                    },
+                    "state": {
+                      "type": "object",
+                      "required": [
+                        "google-pins-interfaces:controllerc-mode",
+                        "google-pins-interfaces:controllerc-oper-mode"
+                      ],
+                      "properties": {
+                        "google-pins-interfaces:controllerc-mode": {
+                          "type": "string",
+                          "enum": [
+                            "AUTO"
+                          ]
+                        },
+                        "google-pins-interfaces:controllerc-oper-mode": {
+                          "type": "string",
+                          "enum": [
+                            "UNKNOWN"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/ethernet/state/controllerc-oper-mode",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-interfaces:controllerc-oper-mode"
+      ],
+      "properties": {
+        "google-pins-interfaces:controllerc-mode": {
+          "type": "string",
+          "enum": ["UNKNOWN"]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/controllerc-oper-mode",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-interfaces:controllerc-oper-mode"
+      ],
+      "properties": {
+        "google-pins-interfaces:controllerc-mode": {
+          "type": "string",
+          "enum": ["ENABLED"]
+        }
+      }
+    }
+  ]
+}

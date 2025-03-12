@@ -1,0 +1,66 @@
+// PortDebugData collects debug, health data related to a logical port.
+
+syntax = "proto3";
+
+package gpins.gnoi;
+option go_package = "github.com/sonic-net/sonic-gnmi/proto/gnoi/debug";
+
+// PortDebugData
+message PortDebugData {
+  // TransceiverEepromPage
+  // page_num - Transceiver EEPROM page number.
+  // eeprom_content - A page of raw transceiver EEPROM content.
+  message TransceiverEepromPage {
+    int32 page_num = 1;
+    bytes eeprom_content = 2;
+  }
+
+  message PhyLinkState {
+    // Port is in hardware link scan mode
+    bool hardware_linkscan = 1;
+    // Port is in software link scan mode
+    bool software_linkscan = 2;
+    // Copper autoneg is enabled
+    bool sgmii_autoneg = 3;
+    // No callback for the port
+    bool info_skip = 4;
+    // Use hardware check for linkscan, no software driver check
+    bool fast_linkscan = 5;
+    // Link is in forwarding mode
+    bool link_forward = 6;
+    // MAC (Media Access Control) is enabled
+    bool mac_enabled = 7;
+    // Link is up
+    bool link_up = 8;
+    // Down event is not yet handled (register is latched and not read yet)
+    bool impending_down = 9;
+    // Software override state
+    bool forced = 10;
+    // Software override link up
+    bool link_up_forced = 11;
+    // Enable tx on mac/phy even when link down
+    bool tx_enabled_without_link = 12;
+    // Mac remote fault
+    bool remote_fault = 13;
+    // Hardware lag failover feature enabled
+    bool enabled_for_lag_failover = 14;
+    // Port is in lag failover state
+    bool failed_lag_failover = 15;
+    // Port is waiting for software to remove from lag failover state (remove
+    // from lag)
+    bool recovering_lag_failover = 16;
+    // Port is disabled
+    bool disabled = 17;
+  }
+
+  //  Phy data.
+  //  following Broadcom shell command: drivshell>dsh -c "phy diag 1 dsc"
+  string phy_data = 1;
+  // This repeated field stores each page's transceiver EEPROM with its page
+  // number.
+  repeated TransceiverEepromPage transceiver_eeprom_pages = 2;
+  // A set of boolean values for phy software information. On a Broadcom chip,
+
+  PhyLinkState phy_link_state = 3;
+}
+

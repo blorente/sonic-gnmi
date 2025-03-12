@@ -1,0 +1,444 @@
+{
+    "title": "Port breakout with existing lag members to no lag members",
+    "operations":[
+      {
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:interface"
+        ],
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "title": "Create PORT|Ethernet1/21/1 in CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORT|Ethernet1/21/1": {
+                "index": "21",
+                "admin_status": "up",
+                "mtu": "9104",
+                "speed": "400000",
+                "lanes": "106,107,108,109"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create PORT|Ethernet1/21/5 in CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORT|Ethernet1/21/5": {
+                "index": "21",
+                "admin_status": "up",
+                "mtu": "9104",
+                "speed": "400000",
+                "lanes": "106,107,108,109"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create PORTCHANNEL|PortChannel5 in CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORTCHANNEL|PortChannel5": {
+                "admin_status": "up",
+                "id": "2049",
+                "alias": "PortChannel5Alias",
+                "type": "iana-if-type:ieee8023adLag",
+                "description": "some description string.",
+                "mtu": "9104",
+                "lag_type": "LACP",
+                "members@": "Ethernet1/21/1,Ethernet1/21/5",
+                "min_links": "1",
+                "fast_rate": "true",
+                "active": "true",
+                "system_id": "fc:bd:67:2c:08:f4",
+                "lacp_key": "1"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create PORTCHANNEL_MEMBER|PortChannel5|Ethernet1/21/1 in CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORTCHANNEL_MEMBER|PortChannel5|Ethernet1/21/1": {
+                "NULL": "NULL"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create PORTCHANNEL_MEMBER|PortChannel5|Ethernet1/21/5 in CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORTCHANNEL_MEMBER|PortChannel5|Ethernet1/21/5": {
+                "NULL": "NULL"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create PORT_TABLE:Ethernet1/21/1 in APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_TABLE:Ethernet1/21/1": {
+                "index": "21",
+                "admin_status_state": "up"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create PORT_TABLE:Ethernet1/21/5 in APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_TABLE:Ethernet1/21/5": {
+                "index": "21",
+                "admin_status_state": "up"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create INTF_TABLE:Ethernet1/21/1 in APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "INTF_TABLE:Ethernet1/21/1": {
+                "unnumbered_enabled": "true"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create INTF_TABLE:Ethernet1/21/5 in APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "INTF_TABLE:Ethernet1/21/5": {
+                "unnumbered_enabled": "true"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create LAG_TABLE:PortChannel5 in APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "LAG_TABLE:PortChannel5": {
+                "alias": "PortChannel5Alias",
+                "type": "iana-if-type:ieee8023adLag",
+                "description": "some description string.",
+                "mtu": "9104"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create LAG_MEMBER_TABLE:PortChannel5:Ethernet1/21/1 in APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "LAG_MEMBER_TABLE:PortChannel5:Ethernet1/21/1": {
+                "NULL": "NULL"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create LAG_MEMBER_TABLE:PortChannel5:Ethernet1/21/5 in APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "LAG_MEMBER_TABLE:PortChannel5:Ethernet1/21/5": {
+                "NULL": "NULL"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create LAG_TABLE|PortChannel5 in STATE_DB",
+            "db": "STATE_DB",
+            "value": {
+              "LAG_TABLE|PortChannel5": {
+                "state": "ok",
+                "setup.runner_name": "lacp",
+                "setup.pid": "29",
+                "runner.min_ports": "1",
+                "team_device.ifinfo.ifindex": "271"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create LAG_MEMBER_TABLE|PortChannel5|Ethernet1/21/1 in STATE_DB",
+            "db": "STATE_DB",
+            "value": {
+              "LAG_MEMBER_TABLE|PortChannel5|Ethernet1/21/1": {
+                "link.speed": "100000",
+                "runner.actor_lacpdu_info.state": 63
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create LAG_MEMBER_TABLE|PortChannel5|Ethernet1/21/5 in STATE_DB",
+            "db": "STATE_DB",
+            "value": {
+              "LAG_MEMBER_TABLE|PortChannel5|Ethernet1/21/5": {
+                "link.speed": "100000",
+                "runner.actor_lacpdu_info.state": 0
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_STATE:Ethernet1/21/1" : {
+                "phase": "pending_delete"
+              },
+              "PORT_STATE:Ethernet1/21/5" : {
+                "phase": "pending_delete"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "Member ports are not configured for PortChannel5 after DPB",
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/",
+        "target": "OC_YANG",
+switch:eth-1/1/2\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/21/5\", \"openconfig-p4rt:id\" : 516, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/21/5\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}]}, \"openconfig-platform:components\": {\"component\": [{\"config\": {\"name\": \"1/21\"}, \"name\": \"1/21\", \"port\" : {\"config\": {\"port-id\": 4}, \"breakout-mode\": {\"groups\": { \"group\" : [{ \"index\": 0, \"config\": { \"index\": 0, \"num-breakouts\": 2, \"breakout-speed\": \"SPEED_400GB\", \"num-physical-channels\" : 4 }}]}}}}]}}",
+        "subOpers": [
+          {
+            "oper": "dbHGetValidate",
+            "db": "CONFIG_DB",
+            "value": {
+                "PORTCHANNEL_MEMBER|PortChannel5|Ethernet1/21/1" : {}
+            }
+          },
+          {
+            "oper": "dbHGetValidate",
+            "db": "CONFIG_DB",
+            "value": {
+                "PORTCHANNEL_MEMBER|PortChannel5|Ethernet1/21/5" : {}
+            }
+          },
+          {
+            "oper": "dbHGetValidate",
+            "db": "CONFIG_DB",
+            "value": {
+                "PORTCHANNEL|PortChannel5" : {}
+            }
+          }
+        ]
+      },
+      {
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:interface"
+        ],
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "title": "Create PORTCHANNEL|PortChannel1 in CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORTCHANNEL|PortChannel1": {
+                "admin_status": "up",
+                "id": "2049",
+                "alias": "PortChannel1Alias",
+                "type": "iana-if-type:ieee8023adLag",
+                "description": "some description string.",
+                "mtu": "9104",
+                "lag_type": "LACP",
+                "members@": "Ethernet1/7/3,Ethernet1/7/4",
+                "min_links": "1",
+                "fast_rate": "true",
+                "active": "true",
+                "system_id": "fc:bd:67:2c:08:f4",
+                "lacp_key": "1",
+                "system_priority": "256"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create PORTCHANNEL_INTERFACE|PortChannel1 in CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORTCHANNEL_INTERFACE|PortChannel1": {
+                "NULL": "NULL"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create PORTCHANNEL_MEMBER|PortChannel1|Ethernet1/7/3 in CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORTCHANNEL_MEMBER|PortChannel1|Ethernet1/7/3": {
+                "NULL": "NULL"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create PORTCHANNEL_MEMBER|PortChannel1|Ethernet1/7/4 in CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORTCHANNEL_MEMBER|PortChannel1|Ethernet1/7/4": {
+                "NULL": "NULL"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create PORTCHANNEL|PortChannel2 in CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORTCHANNEL|PortChannel2": {
+                "admin_status": "up",
+                "id": "2049",
+                "alias": "PortChannel2Alias",
+                "type": "iana-if-type:ieee8023adLag",
+                "description": "some description string.",
+                "mtu": "9104",
+                "lag_type": "LACP",
+                "members@": "Ethernet1/3/5",
+                "min_links": "1",
+                "fast_rate": "true",
+                "active": "true",
+                "system_id": "AA:BB:CC:DD:EE:FF",
+                "lacp_key": "2"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create PORTCHANNEL_INTERFACE|PortChannel2 in CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORTCHANNEL_INTERFACE|PortChannel2": {
+                "NULL": "NULL"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create PORTCHANNEL_MEMBER|PortChannel2|Ethernet1/3/5 in CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORTCHANNEL_MEMBER|PortChannel2|Ethernet1/3/5": {
+                "NULL": "NULL"
+              }
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete PORT|Ethernet1/21/1 from CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORT|Ethernet1/21/1": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete PORT|Ethernet1/21/5 from CONFIG_DB",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORT|Ethernet1/21/5": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete PORT_TABLE:Ethernet1/21/1 from APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_TABLE:Ethernet1/21/1": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete PORT_TABLE:Ethernet1/21/5 from APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_TABLE:Ethernet1/21/5": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete INTF_TABLE:Ethernet1/21/1 from APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "INTF_TABLE:Ethernet1/21/1": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete INTF_TABLE:Ethernet1/21/5 from APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "INTF_TABLE:Ethernet1/21/5": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete LAG_TABLE:PortChannel5 from APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "LAG_TABLE:PortChannel5": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete LAG_MEMBER_TABLE:PortChannel5:Ethernet1/21/1 from APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "LAG_MEMBER_TABLE:PortChannel5:Ethernet1/21/1": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete LAG_MEMBER_TABLE:PortChannel5:Ethernet1/21/5 from APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "LAG_MEMBER_TABLE:PortChannel5:Ethernet1/21/5": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete LAG_TABLE|PortChannel5 from STATE_DB",
+            "db": "STATE_DB",
+            "value": {
+              "LAG_TABLE|PortChannel5": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete LAG_MEMBER_TABLE|PortChannel5|Ethernet1/21/1 from STATE_DB",
+            "db": "STATE_DB",
+            "value": {
+              "LAG_MEMBER_TABLE|PortChannel5|Ethernet1/21/1": []
+            }
+          },
+          {
+            "oper": "dbHDel",
+            "title": "Delete LAG_MEMBER_TABLE|PortChannel5|Ethernet1/21/5 from STATE_DB",
+            "db": "STATE_DB",
+            "value": {
+              "LAG_MEMBER_TABLE|PortChannel5|Ethernet1/21/5": []
+            }
+          }
+        ]
+      }
+    ]
+}

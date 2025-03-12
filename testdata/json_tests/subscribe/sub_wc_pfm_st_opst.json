@@ -1,0 +1,224 @@
+{
+  "title": "Wildcard OnChange Subscription: /openconfig/components/component[name=*]/state/oper-status",
+  "globalDef": {
+    "enums" : {
+      "status": {
+        "type": "string",
+        "enum": [
+          "openconfig-platform-types:UNSET",
+          "openconfig-platform-types:ACTIVE",
+          "openconfig-platform-types:INACTIVE",
+          "openconfig-platform-types:DISABLED"
+        ]
+      }
+    },
+    "validators": {
+      "st.oper.active": {
+        "type": "object",
+        "required": [
+          "oper-status"
+        ],
+        "properties": {
+          "oper-status": {
+            "type": "string",
+            "const": "openconfig-platform-types:ACTIVE"
+          }
+        }
+      },
+      "st.oper.inactive": {
+        "type": "object",
+        "required": [
+          "oper-status"
+        ],
+        "properties": {
+          "oper-status": {
+            "type": "string",
+            "const": "openconfig-platform-types:INACTIVE"
+          }
+        }
+      },
+      "oper.active": {
+        "type": "object",
+        "required": [
+          "openconfig-platform:oper-status"
+        ],
+        "properties": {
+          "openconfig-platform:oper-status": {
+            "type": "string",
+            "const": "openconfig-platform-types:ACTIVE"
+          }
+        }
+      },
+      "oper.inactive": {
+        "type": "object",
+        "required": [
+          "openconfig-platform:oper-status"
+        ],
+        "properties": {
+          "openconfig-platform:oper-status": {
+            "type": "string",
+            "const": "openconfig-platform-types:INACTIVE"
+          }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "Subscribes to /openconfig/components/component[name=*]/state/oper-status with ON_CHANGE",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'*'}}elem:{name:'state'}elem:{name:'oper-status'}}mode:ON_CHANGE}mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:component"],
+              "properties": {
+                "openconfig-platform:component": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "required": ["name", "state"],
+                    "properties": {
+                      "state": {
+                        "type": "object",
+                        "properties": {
+                          "oper-status": {
+                            "$ref": "#/globalDef/enums/status"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "minItems": 7,
+                  "maxItems": 7,
+                  "additionalItems": false,
+                  "allOf": [
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "network_stack0"},
+                          "state": {
+                            "$ref": "#/globalDef/validators/st.oper.active"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "os1"},
+                          "state": {
+                            "$ref": "#/globalDef/validators/st.oper.inactive"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes network_stack0 to inactive",
+          "db": "STATE_DB",
+          "value": {
+            "SW_COMP_INFO|network_stack0": {
+              "oper-status": "inactive"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with network_stack0 INACTIVE",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/components/component[name=network_stack0]/state/oper-status",
+              "schema": {
+                "$ref": "#/globalDef/validators/oper.inactive"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Restore network_stack0 to active",
+          "db": "STATE_DB",
+          "value": {
+            "SW_COMP_INFO|network_stack0": {
+              "oper-status": "active"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with network_stack0 ACTIVE",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/components/component[name=network_stack0]/state/oper-status",
+              "schema": {
+                "$ref": "#/globalDef/validators/oper.active"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Deletes component os1",
+          "db": "STATE_DB",
+          "value": {
+            "SW_COMP_INFO|os1": []
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates delete update for os1",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/components/component[name=os1]/state/oper-status"
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Restore os1",
+          "db": "STATE_DB",
+          "value": {
+            "SW_COMP_INFO|os1": {
+              "software-version": "os-v3",
+              "oper-status": "inactive",
+              "storage-side": "b"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with os1 INACTIVE",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/components/component[name=os1]/state/oper-status",
+              "schema": {
+                "$ref": "#/globalDef/validators/oper.inactive"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

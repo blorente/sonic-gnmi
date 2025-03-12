@@ -1,0 +1,124 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "gnmi.sonic";
+
+option java_multiple_files = true;
+
+// GnmiSubscriptionClientInfo contains the subscription information of all
+// clients to UMF.
+message GnmiSubscriptionClientInfo {
+  // Mode of subscription made by the client.
+  enum Mode {
+    MODE_UNKNOWN = 0;  // This is the mode used when the subscribe request has
+                       // not been received by UMF yet from the client.
+    MODE_STREAM = 1;
+    MODE_ONCE = 2;
+    MODE_POLL = 3;
+  }
+  enum SubMode {
+    SUB_MODE_UNKNOWN = 0;  // This is the sub mode used when the subscription
+                           // mode is not STREAM or when
+    // the subscribe request has not been received by UMF yet.
+    SUB_MODE_ON_CHANGE =
+        1;  // The client uses ON_CHANGE sub mode for one or more paths.
+    SUB_MODE_SAMPLE_ONLY = 2;  // The client uses SAMPLE sub mode for all paths.
+  }
+  // The IP address used by the gNMI client to connect to UMF.
+  string ip_address = 1;
+  // The TCP port used by the gNMI client to connect to UMF.
+  uint64 tcp_source_port = 2;
+  // Describes the subscription mode used by the client.
+  Mode subscription_mode = 3;
+  // Describes the subscription sub mode used by the client.
+  SubMode subscription_sub_mode = 4;
+  // The time the subscription was received.
+  google.protobuf.Timestamp subscription_start = 5;
+  // The time the UMF server sent the sync response.
+  google.protobuf.Timestamp sync_response_time = 6;
+  // The current depth of the RPC queue.
+  uint64 current_queue_depth = 7;
+  // The max depth of the RPC queue.
+  uint64 max_queue_depth = 8;
+}
+
+// GnmiRequestTimingInfo contains timestamps for when a Get request
+// started and ended processing.
+message GnmiRequestTimingInfo {
+  // The IP address used by the gNMI client to connect to UMF.
+  string ip_address = 1;
+  // The TCP port used by the gNMI client to connect to UMF.
+  uint64 tcp_source_port = 2;
+  // The time that the UMF server started processing the request.
+  google.protobuf.Timestamp start_time = 3;
+  // The time that the UMF server finished processing the request.
+  google.protobuf.Timestamp end_time = 4;
+}
+
+// DbClientCounters contains stats for UMF's connections to Redis.
+message DbCounters {
+  // The number of transactional Redis clients open in UMF currently.
+  uint32 current_transactional_clients = 1;
+  // The number of requested Redis clients that use a connection pool.
+  uint64 total_pool_clients_requested = 2;
+  // The number of requested Redis clients that are used for transactions.
+  uint64 total_transactional_clients_requested = 3;
+  // The connection pool stats per Redis database.
+  repeated DbConnectionPoolStats db_pool_stats = 4;
+}
+
+// The connection pool stats for a Redis database.
+message DbConnectionPoolStats {
+  // The DB name.
+  string db_name = 1;
+  // The number of times a free connection was found in the pool.
+  uint32 hits = 2;
+  // The number of times a free connection was not found in the pool.
+  uint32 misses = 3;
+  // The number of times a wait timeout occurred.
+  uint32 timeouts = 4;
+  // The number of total active connections in the pool.
+  uint32 total_active_connections = 5;
+  // The number of idle connections in the pool.
+  uint32 idle_connections = 6;
+  // The number of stale connections removed from the pool.
+  uint32 stale_connections = 7;
+}
+
+// Go Metrics that are read from the runtime. See https://pkg.go.dev/runtime/metrics.
+message GoRuntimeMetric {
+  string name = 1;
+  oneof value {
+    uint64 uint64_val = 2;
+    double double_val = 3;
+  }
+}
+
+// The RPC limits stats from Connection Manager.
+message ConnectionManagerStats {
+  // The limit for active streaming RPCs.
+  uint32 streaming_rpc_threshold = 1;
+  // The number of active streaming RPCs.
+  uint32 active_streaming_rpc = 2;
+  // The total number of rejected Streaming RPCs.
+  uint32 rejected_streaming_rpc = 3;
+  // The limit of active unary RPCs.
+  uint32 unary_rpc_threshold = 4;
+  // The number of active unary RPCs.
+  uint32 active_unary_rpc = 5;
+  // The total number of rejected Unary RPCs.
+  uint32 rejected_unary_rpc = 6;
+}
+
+// UmfDebugInfo contains all debug information of interest collected from UMF.
+message UmfDebugInfo {
+  repeated GnmiSubscriptionClientInfo subscription_client_info = 1;
+  repeated GnmiRequestTimingInfo get_request_timing_info = 2;
+  DbCounters db_counters = 3;
+  // The number of active goroutines in the telemetry process.
+  uint32 num_goroutines = 4;
+  repeated GoRuntimeMetric go_runtime_metric = 5;
+  ConnectionManagerStats connection_manager_stats = 6;
+  repeated GnmiRequestTimingInfo set_request_timing_info = 7;
+}

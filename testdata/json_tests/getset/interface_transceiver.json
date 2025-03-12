@@ -1,0 +1,41 @@
+{
+  "title": "Get interface transceiver",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "openconfig-platform-transceiver:transceiver"
+                ],
+                "properties": {
+                  "openconfig-platform-transceiver:transceiver": {
+                    "type": "string",
+                    "enum": ["Ethernet1"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+

@@ -1,0 +1,34 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Start gnmi_server_debug",
+            "type": "shell",
+            "command": "tools/debug-test.sh",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "args": ["${input:testName}"]
+        },
+        {
+            "label": "Kill gnmi_server_debug",
+            "type": "shell",
+            "command": "docker kill gnmi_server_debug",
+            "group": {
+                "kind": "test",
+                "isDefault": false
+            },
+        },
+    ],
+    "inputs": [
+        {
+            "type": "promptString",
+            "id": "testName",
+            "description": "Which test do you want to debug? (Blank for all)",
+            "default": ""
+        }
+    ]
+}

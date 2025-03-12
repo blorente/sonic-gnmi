@@ -1,0 +1,75 @@
+{
+  "title": "Get Interface Transceiver Qualified",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-if-ethernet:ethernet": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "google-pins-if:transceiver-qualified"
+                ],
+                "properties": {
+                  "google-pins-if:transceiver-qualified": {
+                    "type": "boolean",
+                    "enum": [true]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-if-ethernet:ethernet": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "google-pins-if:transceiver-qualified"
+                ],
+                "properties": {
+                  "google-pins-if:transceiver-qualified": {
+                    "type": "boolean",
+                    "enum": [false]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

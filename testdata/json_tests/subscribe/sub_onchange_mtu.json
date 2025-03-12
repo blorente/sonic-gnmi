@@ -1,0 +1,94 @@
+{
+  "title": "Subscribe with OnChange (mtu)",
+  "globalDef" : {
+    "validators": {
+      "state.mtu.9100": {
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:mtu"
+        ],
+        "properties": {
+          "openconfig-interfaces:mtu": {
+            "type": "number",
+            "const": 9122
+          }
+        }
+      },
+      "state.mtu.9200": {
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:mtu"
+        ],
+        "properties": {
+          "openconfig-interfaces:mtu": {
+            "type": "number",
+            "const": 9222
+          }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "subscribe to /interfaces/interface[name=Ethernet1/1/1]/state/mtu",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'Ethernet1/1/1'}}elem:{name:'state'}elem:{name:'mtu'}}mode:ON_CHANGE}mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/interfaces/interface[name=Ethernet1/1/1]/state/mtu",
+            "syncResponse": true,
+            "schema": {
+              "$ref": "#/globalDef/validators/state.mtu.9100"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/1/1" : {
+              "mtu": 9200
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/1/1]/state/mtu",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.mtu.9200"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/1/1" : {
+              "mtu": 9100
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/1/1]/state/mtu",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.mtu.9100"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

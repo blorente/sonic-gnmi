@@ -1,0 +1,94 @@
+{
+    "title": "Subscribe ONCE /openconfig/sampling/sflow/collectors",
+    "operations": [
+        {
+            "operation": "subscribe",
+            "returnCode": 0,
+            "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'sampling'}elem:{name:'sflow'}elem:{name:'collectors'}} }mode:ONCE}",
+            "subOpers": [
+                {
+                    "oper": "validate",
+                    "title": "Validates initial updates",
+                    "timeout": 5000,
+                    "finalValidator": {
+                        "xpath": "/sampling/sflow/collectors",
+                        "syncResponse": true,
+                        "allowDuplicateUpdates": false,
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "openconfig-sampling-sflow:collectors"
+                            ],
+                            "properties": {
+                                "openconfig-sampling-sflow:collectors": {
+                                    "type": "object",
+                                    "required": ["collector"],
+                                    "properties": {
+                                        "collector": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "minItems": 3,
+                                                "maxItems": 3,
+                                                "required": [
+                                                    "address", "port", "config", "state"
+                                                ],
+                                                "properties": {
+                                                    "address": {
+                                                        "type": "string",
+                                                        "enum": ["127.0.0.1", "2001:0db8:0000:ff00:0042:7879::1"]
+                                                    },
+                                                    "port": {
+                                                        "type": "integer",
+                                                        "enum": [6343, 6344]
+                                                    },
+                                                    "config": {
+                                                        "type": "object",
+                                                        "required": ["address", "port"]
+                                                    },
+                                                    "state": {
+                                                        "type": "object",
+                                                        "required": ["address", "port", "packets-sent"]
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "operation": "subscribe",
+            "returnCode": 0,
+            "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'sampling'}elem:{name:'sflow'}elem:{name:'collectors'}elem:{name:'collector'key:{key:'address'value:'127.0.0.1'}key:{key:'port'value:'6343'}}elem:{name:'state'}elem:{name:'address'}} }mode:ONCE}",
+            "subOpers": [
+                {
+                    "oper": "validate",
+                    "title": "Validates initial updates",
+                    "timeout": 5000,
+                    "finalValidator": {
+                        "xpath": "/sampling/sflow/collectors/collector[address=127.0.0.1][port=6343]/state/address",
+                        "syncResponse": true,
+                        "allowDuplicateUpdates": false,
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "openconfig-sampling-sflow:address"
+                            ],
+                            "properties": {
+                                "openconfig-sampling-sflow:address": {
+                                    "type": "string",
+                                    "const": "127.0.0.1"
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+  "title": "Get Interface counters",
+  "operations":[
+   {
+     "operation": "get",
+     "returnCode": 0,
+     "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/state/counters/in-fcs-errors",
+     "target": "OC_YANG",
+     "type": "object",
+     "required": ["openconfig-interfaces:in-fcs-errors"],
+       "properties": {
+         "counters": {
+          "type": "string",
+          "enum": ["0"]
+         }
+       }
+   }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "title": "Subscribe with TARGET_DEFINED to subinterface ip state",
+  "globalDef" : {
+    "validators": {
+      "ipv6_1": {
+        "type": "object",
+        "required": [ "openconfig-if-ip:ip" ],
+        "properties": {
+          "openconfig-if-ip:ip": {
+            "type": "string",
+            "const": "2620:1080:2000:100::"
+          }
+        }
+      },
+      "ipv6_2": {
+        "type": "object",
+        "required": [ "openconfig-if-ip:ip" ],
+        "properties": {
+          "openconfig-if-ip:ip": {
+            "type": "string",
+            "const": "2620:1080:2000:100::"
+          }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "subscribe to /interfaces/interface/subinterfaces/subinterface/ipv6/addresses/address/state/ip",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'Loopback4'}}elem:{name:'subinterfaces'}elem:{name:'subinterface'key:{key:'index'value:'0'}}elem:{name:'ipv6'}elem:{name:'addresses'}elem:{name:'address'key:{key:'ip'value:'2620:1080:2000:100::'}}elem:{name:'state'}elem:{name:'ip'}}mode:TARGET_DEFINED} mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "pathValidators": [
+            {
+              "xpath": "/interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv6/addresses/address[ip=2620:1080:2000:100::]/state/ip",
+              "schema": {
+                "$ref": "#/globalDef/validators/ipv6_1"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "validate",
+          "timeout": 11000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv6/addresses/address[ip=2620:1080:2000:100::]/state/ip",
+              "schema": {
+                "$ref": "#/globalDef/validators/ipv6_1"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "validate",
+          "timeout": 11000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv6/addresses/address[ip=2620:1080:2000:100::]/state/ip",
+              "schema": {
+                "$ref": "#/globalDef/validators/ipv6_1"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

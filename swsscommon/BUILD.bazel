@@ -1,0 +1,71 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+#gazelle:exclude empty.go
+
+genrule(
+    name = "swsscommon-gen",
+    srcs = [
+        "@sonic-swss-common//:swig_template",
+        "@sonic-swss-common//:all_hdrs",
+    ],
+    outs = [
+        "swsscommon.go",
+        "swsscommon_wrap.cxx",
+        "swsscommon_wrap.h",
+    ],
+    cmd = """
+          mkdir -p gen_tmp
+          cp $(location @sonic-swss-common//:swig_template) ./gen_tmp
+          cp $(locations @sonic-swss-common//:all_hdrs) ./gen_tmp
+          pushd gen_tmp
+          swig -go -cgo -c++ -intgosize 64 -I. swsscommon.i
+          # Swig is generating C++ code that does not compile.  A const string
+          # (const char*) is being assigned to a non const char *.  The
+          # following two sed statements workaround that for now.
+          sed -i -e 's/char \\*result =/const char \\*result =/g' swsscommon_wrap.cxx
+          sed -i -e 's/(char\\*)result/result/g' swsscommon_wrap.cxx
+          popd
+          for i in $(OUTS); do
+              fpath=`dirname $${i}`
+              fname=`basename $${i}`
+              cp ./gen_tmp/$${fname} $${fpath}
+          done
+          """,
+)
+
+go_library(
+    name = "swsscommon",
+    srcs = [
+        "swsscommon.go",
+        "swsscommon_wrap.cxx",  #keep
+        "swsscommon_wrap.h",
+    ],
+    cdeps = [
+        "@com_github_cesnet_libyang//:libyang",
+        "@sonic-swss-common//:swsscommon_base",
+        ":swsscommon_go_cpp",
+    ],
+    cgo = True,  #keep
+    cppopts = ["-Iexternal/sonic-swss-common/common"],  #keep
+    importpath = "github.com/sonic-net/sonic-gnmi/swsscommon",
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "swsscommon_go_cpp",
+    srcs = [
+        "swsscommon_wrap.cxx",
+    ],
+    hdrs = ["swsscommon_wrap.h"],
+    copts = ["-Iexternal/sonic-swss-common/common"],
+    deps = [
+        "@com_github_cesnet_libyang//:libyang",
+        "@sonic-swss-common//:swsscommon_base",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":swsscommon",
+    visibility = ["//visibility:public"],
+)

@@ -1,0 +1,803 @@
+{
+  "title": "Set and Get System config and state",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:system"
+      ],
+      "properties": {
+        "openconfig-system:system": {
+          "type": "object",
+          "required": [
+            "config", "state"
+          ],
+          "properties": {
+            "config": {
+              "type": "object",
+              "required": [
+                "google-pins-system:config-meta-data", "hostname"
+              ],
+              "properties": {
+                "google-pins-system:config-meta-data": {
+                  "type": "string",
+                  "enum": [
+                    ""
+                  ]
+                },
+                "hostname": {
+                  "type": "string",
+                  "enum": [
+                    "sonic"
+                  ]
+                }
+              }
+            },
+            "state": {
+              "type": "object",
+              "required": [
+                "boot-time", "google-pins-system:config-meta-data", "hostname", "last-configuration-timestamp", "up-time", "google-pins-system:verification-status", "google-pins-system:boot-type", "google-pins-system:warmboot-count", "google-pins-system:last-coldboot-timestamp", "google-pins-system:last-coldboot-version"
+              ],
+              "properties": {
+                "boot-time": {
+                  "type": "string",
+                  "default": "",
+                  "examples": [
+                    "1615263741"
+                  ],
+                  "pattern": "^[1-9][0-9]*$"
+                },
+                "google-pins-system:config-meta-data": {
+                  "type": "string",
+                  "enum": [
+                    ""
+                  ]
+                },
+                "hostname": {
+                  "type": "string",
+                  "enum": [
+                    "sonicv4"
+                  ]
+                },
+                "last-configuration-timestamp": {
+                  "type": "string",
+                  "enum": [
+                    "1611693908"
+                  ]
+                },
+                "up-time": {
+                  "type": "string",
+                  "default": "",
+                  "examples": [
+                    "1615263741"
+                  ],
+                  "pattern": "^[1-9][0-9]*$"
+                },
+                "google-pins-system:verification-status": {
+                  "type": "string",
+                  "enum": [
+                    "NOT_OK"
+                  ]
+                },
+                "google-pins-system:boot-type": {
+                  "type": "string",
+                  "enum": [
+                    "WARMBOOT"
+                  ]
+                },
+                "google-pins-system:warmboot-count": {
+                  "type": "integer",
+                  "enum": [
+                    3
+                  ]
+                },
+                "google-pins-system:last-coldboot-timestamp": {
+                  "type": "string",
+                  "enum": [
+                    "1707707898000000000"
+                  ]
+                },
+                "google-pins-system:last-coldboot-version": {
+                  "type": "string",
+                  "enum": [
+                    "gpins_release_20240202_17_prod_RC00"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/state/config-meta-data",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-system:config-meta-data"
+      ],
+      "properties": {
+        "google-pins-system:config-meta-data": {
+          "type": "string",
+          "enum": [
+            ""
+          ]
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "/openconfig/system",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-system:system\": {\"config\": {\"google-pins-system:config-meta-data\":\"\", \"hostname\":\"sonicv2\"}}}"
+
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:system"
+      ],
+      "properties": {
+        "openconfig-system:system": {
+          "type": "object",
+          "required": [
+            "config", "state"
+          ],
+          "properties": {
+            "config": {
+              "type": "object",
+              "required": [
+                "google-pins-system:config-meta-data", "hostname"
+              ],
+              "properties": {
+                "google-pins-system:config-meta-data": {
+                  "type": "string",
+                  "default": "",
+                  "enum": [
+                    ""
+                  ]
+                },
+                "hostname": {
+                  "type": "string",
+                  "enum": [
+                    "sonicv2"
+                  ]
+                }
+              }
+            },
+            "state": {
+              "type": "object",
+              "required": [
+                "boot-time", "google-pins-system:config-meta-data", "hostname", "last-configuration-timestamp", "up-time", "google-pins-system:verification-status", "google-pins-system:boot-type", "google-pins-system:warmboot-count", "google-pins-system:last-coldboot-timestamp", "google-pins-system:last-coldboot-version"
+              ],
+              "properties": {
+                "boot-time": {
+                  "type": "string",
+                  "default": "",
+                  "examples": [
+                    "1615263741"
+                  ],
+                  "pattern": "^[1-9][0-9]*$"
+                },
+                "google-pins-system:config-meta-data": {
+                  "type": "string",
+                  "enum": [
+                    ""
+                  ]
+                },
+                "hostname": {
+                  "type": "string",
+                  "enum": [
+                    "sonicv4"
+                  ]
+                },
+                "last-configuration-timestamp": {
+                  "type": "string",
+                  "enum": [
+                    "1611693908"
+                  ]
+                },
+                "up-time": {
+                  "type": "string",
+                  "default": "",
+                  "examples": [
+                    "1615263741"
+                  ],
+                  "pattern": "^[1-9][0-9]*$"
+                },
+                "google-pins-system:verification-status": {
+                  "type": "string",
+                  "enum": [
+                    "NOT_OK"
+                  ]
+                },
+                "google-pins-system:boot-type": {
+                  "type": "string",
+                  "enum": [
+                    "WARMBOOT"
+                  ]
+                },
+                "google-pins-system:warmboot-count": {
+                  "type": "integer",
+                  "enum": [
+                    3
+                  ]
+                },
+                "google-pins-system:last-coldboot-timestamp": {
+                  "type": "string",
+                  "enum": [
+                    "1707707898000000000"
+                  ]
+                },
+                "google-pins-system:last-coldboot-version": {
+                  "type": "string",
+                  "enum": [
+                    "gpins_release_20240202_17_prod_RC00"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/state/config-meta-data",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-system:config-meta-data"
+      ],
+      "properties": {
+        "google-pins-system:config-meta-data": {
+          "type": "string",
+          "enum": [
+            ""
+          ]
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "/openconfig/system",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-system:system\": {\"config\": {\"google-pins-system:config-meta-data\":\"v1\", \"hostname\":\"sonicv2\"}}}",
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "DEVICE_METADATA|localhost" : {
+              "config-meta-data": "v1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:system"
+      ],
+      "properties": {
+        "openconfig-system:system": {
+          "type": "object",
+          "required": [
+            "config", "state"
+          ],
+          "properties": {
+            "config": {
+              "type": "object",
+              "required": [
+                "google-pins-system:config-meta-data", "hostname"
+              ],
+              "properties": {
+                "google-pins-system:config-meta-data": {
+                  "type": "string",
+                  "enum": [
+                    "v1"
+                  ]
+                },
+                "hostname": {
+                  "type": "string",
+                  "enum": [
+                    "sonicv2"
+                  ]
+                }
+              }
+            },
+            "state": {
+              "type": "object",
+              "required": [
+                "boot-time", "google-pins-system:config-meta-data", "hostname", "last-configuration-timestamp", "up-time", "google-pins-system:verification-status", "google-pins-system:boot-type", "google-pins-system:warmboot-count", "google-pins-system:last-coldboot-timestamp", "google-pins-system:last-coldboot-version"
+              ],
+              "properties": {
+                "boot-time": {
+                  "type": "string",
+                  "default": "",
+                  "examples": [
+                    "1615263741"
+                  ],
+                  "pattern": "^[1-9][0-9]*$"
+                },
+                "google-pins-system:config-meta-data": {
+                  "type": "string",
+                  "enum": [
+                    "v1"
+                  ]
+                },
+                "hostname": {
+                  "type": "string",
+                  "enum": [
+                    "sonicv4"
+                  ]
+                },
+                "last-configuration-timestamp": {
+                  "type": "string",
+                  "enum": [
+                    "1611693908"
+                  ]
+                },
+                "up-time": {
+                  "type": "string",
+                  "default": "",
+                  "examples": [
+                    "1615263741"
+                  ],
+                  "pattern": "^[1-9][0-9]*$"
+                },
+                "google-pins-system:verification-status": {
+                  "type": "string",
+                  "enum": [
+                    "NOT_OK"
+                  ]
+                },
+                "google-pins-system:boot-type": {
+                  "type": "string",
+                  "enum": [
+                    "WARMBOOT"
+                  ]
+                },
+                "google-pins-system:warmboot-count": {
+                  "type": "integer",
+                  "enum": [
+                    3
+                  ]
+                },
+                "google-pins-system:last-coldboot-timestamp": {
+                  "type": "string",
+                  "enum": [
+                    "1707707898000000000"
+                  ]
+                },
+                "google-pins-system:last-coldboot-version": {
+                  "type": "string",
+                  "enum": [
+                    "gpins_release_20240202_17_prod_RC00"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/state/config-meta-data",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-system:config-meta-data"
+      ],
+      "properties": {
+        "google-pins-system:config-meta-data": {
+          "type": "string",
+          "enum": [
+            "v1"
+          ]
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "DEVICE_METADATA|localhost" : {
+              "hostname": "sonicv2",
+              "platform": "test",
+              "mac": "00:01:02:03:04:05",
+              "config-meta-data": "v1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "delete",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/config/config-meta-data",
+      "target": "OC_YANG",
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "DEVICE_METADATA|localhost" : {
+              "hostname": "sonicv2",
+              "platform": "test",
+              "mac": "00:01:02:03:04:05"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/state/config-meta-data",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-system:config-meta-data"
+      ],
+      "properties": {
+        "google-pins-system:config-meta-data": {
+          "type": "string",
+          "enum": [
+            ""
+          ]
+        }
+      }
+    },
+    {
+      "operation": "delete",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/config/hostname",
+      "target": "OC_YANG",
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "DEVICE_METADATA|localhost" : {
+              "platform": "test",
+              "mac": "00:01:02:03:04:05"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/config/hostname",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:hostname"
+      ],
+      "properties": {
+        "openconfig-system:hostname": {
+          "type": "string",
+          "const": ""
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "title": "Restore hostname",
+          "db": "CONFIG_DB",
+          "value": {
+            "DEVICE_METADATA|localhost" : {
+              "hostname": "sonicv2"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "delete",
+      "title": "Test unsupported subtree delete",
+      "returnCode": 10,
+      "xpath": "/openconfig/system/config",
+      "target": "OC_YANG"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/state/last-configuration-timestamp",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:last-configuration-timestamp"
+      ],
+      "properties": {
+        "openconfig-system:last-configuration-timestamp": {
+          "type": "string",
+          "enum": [
+            "1611693908"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/state/boot-time",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:boot-time"
+      ],
+      "properties": {
+        "openconfig-system:boot-time": {
+          "type": "string",
+          "examples": [
+            "1697599098000000000"
+          ],
+          "pattern": "^[1-9][0-9]*$"
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "STATE_DB",
+          "value": {
+            "CHASSIS_INFO|chassis" : {
+              "boot-time": "10/18/2023 03:18:18 +0000 UTC"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/state/boot-time",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:boot-time"
+      ],
+      "properties": {
+        "openconfig-system:boot-time": {
+          "type": "string",
+          "enum": [
+            "1697599098000000000"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/state/up-time",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:up-time"
+      ],
+      "properties": {
+        "openconfig-system:up-time": {
+          "type": "string",
+          "examples": [
+            "1697599098000000000"
+          ],
+          "pattern": "^[1-9][0-9]*$"
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/state/verification-status",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-system:verification-status"
+      ],
+      "properties": {
+        "google-pins-system:verification-status": {
+          "type": "string",
+          "enum": [
+            "NOT_OK"
+          ]
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "STATE_DB",
+          "value": {
+            "VERIFY_STATE_RESP_TABLE|all": {
+              "timestamp": "2021-01-26 08:45:08",
+              "status": "pass",
+              "err_str": ""
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/state/verification-status",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-system:verification-status"
+      ],
+      "properties": {
+        "google-pins-system:verification-status": {
+          "type": "string",
+          "enum": [
+            "OK"
+          ]
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "STATE_DB",
+          "value": {
+            "VERIFY_STATE_RESP_TABLE|all": {
+              "timestamp": "2021-01-26 08:45:08",
+              "status": "not_run",
+              "err_str": ""
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/state/verification-status",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-system:verification-status"
+      ],
+      "properties": {
+        "google-pins-system:verification-status": {
+          "type": "string",
+          "enum": [
+            "OK"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/state/boot-type",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-system:boot-type"
+      ],
+      "properties": {
+        "google-pins-system:boot-type": {
+          "type": "string",
+          "enum": [
+            "WARMBOOT"
+          ]
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "STATE_DB",
+          "value": {
+            "BOOT_INFO|system": {
+              "boot-type": "cold_boot"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/state/boot-type",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-system:boot-type"
+      ],
+      "properties": {
+        "google-pins-system:boot-type": {
+          "type": "string",
+          "enum": [
+            "COLDBOOT"
+          ]
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "STATE_DB",
+          "value": {
+            "BOOT_INFO|system": {
+              "boot-type": "warm_boot"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/state/warmboot-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-system:warmboot-count"
+      ],
+      "properties": {
+        "google-pins-system:warmboot-count": {
+          "type": "integer",
+          "enum": [
+            3
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/state/last-coldboot-timestamp",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-system:last-coldboot-timestamp"
+      ],
+      "properties": {
+        "google-pins-system:last-coldboot-timestamp": {
+          "type": "string",
+          "enum": [
+            "1707707898000000000"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/state/last-coldboot-version",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-system:last-coldboot-version"
+      ],
+      "properties": {
+        "google-pins-system:last-coldboot-version": {
+          "type": "string",
+          "enum": [
+            "gpins_release_20240202_17_prod_RC00"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{{- define "integer" -}}
+  "type": "integer",
+  "enum": [
+    {{- .Val -}}
+  ]
+{{- end -}}
+
+{{- define "float" -}}
+  "type": "float",
+  "enum": [
+    {{- .Val -}}
+  ]
+{{- end -}}
+
+{{- define "string" -}}
+  "type": "string",
+  "enum": [
+    "{{- .Val -}}"
+  ]
+{{- end -}}
+
+{{- define "bool" -}}
+  "type": "boolean",
+  "enum": [
+    {{- .Val -}}
+  ]
+{{- end -}}
+
+{{- define "object" -}}
+  "type": "object",
+  "required": [
+    {{- range $index, $element := .Children -}}
+      {{- if ne $index 0 -}}, {{- end -}}"{{- $element.Name -}}"
+    {{- end -}}
+  ],
+  "properties": {
+    {{- range $index, $element := .Children -}}
+      {{- if ne $index 0 -}},{{- end -}}
+      "{{- $element.Name -}}": {
+        {{- template "select" $element -}}
+      }
+    {{- end -}}
+  }
+{{- end -}}
+
+{{- define "array" -}}
+  "type": "array",
+  "items": [
+    {{- range $index, $element := .Children -}}
+      {{- if ne $index 0 -}},{{- end -}}
+    {
+      {{- template "select" $element -}}
+    }
+    {{- end -}}
+  ]
+{{- end -}}
+
+{{- define "select" -}}
+{{- if eq .Type "object" -}}
+  {{- template "object" . -}}
+{{- else if eq .Type "array" -}}
+  {{- template "array" . -}}
+{{- else if eq .Type "integer" -}}
+  {{- template "integer" . -}}
+{{- else if eq .Type "float" -}}
+  {{- template "float" . -}}
+{{- else if eq .Type "string" -}}
+  {{- template "string" . -}}
+{{- else if eq .Type "bool" -}}
+  {{- template "bool" . -}}
+{{- end -}}
+{{- end -}}
+
+{
+{{- template "select" . -}}
+}

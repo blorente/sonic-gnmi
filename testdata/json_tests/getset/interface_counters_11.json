@@ -1,0 +1,79 @@
+{
+  "title": "Get Interface counters",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["state"],
+            "properties": {
+              "state": {
+                "type": "object",
+                  "required": ["counters"],
+            "properties": {
+              "counters": {
+                "type": "object",
+                  "required": ["out-multicast-pkts"],
+                  "properties": {
+                    "counters": {
+                     "type": "string",
+                     "enum": ["330"]
+                    }
+                  }
+		        }
+	           }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=CPU]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["state"],
+            "properties": {
+              "state": {
+                "type": "object",
+                  "required": ["counters"],
+                  "properties": {
+                    "counters": {
+                      "type": "object",
+                      "required": ["out-multicast-pkts"],
+                      "properties": {
+                        "counters": {
+                         "type": "string",
+                         "enum": ["3300"]
+                        }
+                      }
+                    }
+                  }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

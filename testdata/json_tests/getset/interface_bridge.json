@@ -1,0 +1,522 @@
+{
+    "title": "Set_interface_bridge",
+    "operations":[
+      {
+        "title": "Push interfaces and bridge config",
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces",
+        "target": "OC_YANG",
+        "attributeData": "{  \"interfaces\" : {     \"interface\" : [        {          \"config\": {            \"description\": \"unmodeled\",            \"enabled\": true,            \"google-pins-interfaces:fully-qualified-interface-name\": \"\",            \"loopback-mode\": \"NONE\",            \"mtu\": 9216,            \"name\": \"Ethernet-BP1/35\",            \"openconfig-pins-interfaces:health-indicator\": \"GOOD\",            \"type\": \"iana-if-type:ethernetCsmacd\"          },          \"hold-time\": {            \"config\": {              \"down\": 0,              \"up\": 8000            }          },          \"name\": \"Ethernet-BP1/35\",          \"openconfig-if-ethernet:ethernet\": {            \"config\": {              \"fec-mode\": \"openconfig-if-ethernet:FEC_DISABLED\",              \"port-speed\": \"openconfig-if-ethernet:SPEED_1GB\"            }          },          \"subinterfaces\": {            \"subinterface\": [              {                \"config\": {                  \"index\": 0                },                \"index\": 0,                \"openconfig-if-ip:ipv6\": {                  \"unnumbered\": {                    \"config\": {                      \"enabled\": true                    }                  }                }              }            ]          }        },        {          \"config\": {            \"bridge-id\": \"br0\",            \"name\": \"eth0\",            \"type\": \"iana-if-type:ethernetCsmacd\"          },          \"name\": \"eth0\"        },        {          \"config\": {            \"bridge-id\": \"br0\",            \"name\": \"eth1\",            \"type\": \"iana-if-type:ethernetCsmacd\"          },          \"name\": \"eth1\"        },        {          \"config\": {            \"mtu\": 9000,            \"name\": \"br0\",            \"type\": \"iana-if-type:bridge\"          },          \"name\": \"br0\"        }     ]  }}",
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "BRIDGE_TABLE:br0": {
+                "mtu": "8978"
+              },
+              "BRIDGE_MEMBER_TABLE:br0:eth0": {
+                "NULL": "NULL"
+              },
+              "BRIDGE_MEMBER_TABLE:br0:eth1": {
+                "NULL": "NULL"
+              }
+            }
+          },
+          {
+            "oper": "dbHGetValidate",
+            "db": "CONFIG_DB",
+            "value": {
+              "BRIDGE|br0" : {
+                "mtu": "8978"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "Verify eth0 bridge-id",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=eth0]",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:interface"
+        ],
+        "properties": {
+          "openconfig-interfaces:interface": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "config", "state"
+              ],
+              "properties": {
+                "config": {
+                  "type": "object",
+                  "required": [
+                    "google-pins-interfaces:bridge-id"
+                  ],
+                  "properties": {
+                    "google-pins-interfaces:bridge-id": {
+                      "type": "string",
+                      "enum": [
+                        "br0"
+                      ]
+                    }
+                  }
+                },
+                "state": {
+                    "type": "object",
+                    "required": [
+                      "google-pins-interfaces:bridge-id"
+                    ],
+                    "properties": {
+                      "google-pins-interfaces:bridge-id": {
+                        "type": "string",
+                        "enum": [
+                          "br0"
+                        ]
+                      }
+                    }
+                  }
+              }
+            }
+          }
+        }
+      },
+      {
+        "title": "Verify eth1 bridge-id",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=eth1]",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:interface"
+        ],
+        "properties": {
+          "openconfig-interfaces:interface": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "config", "state"
+              ],
+              "properties": {
+                "config": {
+                  "type": "object",
+                  "required": [
+                    "google-pins-interfaces:bridge-id"
+                  ],
+                  "properties": {
+                    "google-pins-interfaces:bridge-id": {
+                      "type": "string",
+                      "enum": [
+                        "br0"
+                      ]
+                    }
+                  }
+                },
+                "state": {
+                    "type": "object",
+                    "required": [
+                      "google-pins-interfaces:bridge-id"
+                    ],
+                    "properties": {
+                      "google-pins-interfaces:bridge-id": {
+                        "type": "string",
+                        "enum": [
+                          "br0"
+                        ]
+                      }
+                    }
+                  }
+              }
+            }
+          }
+        }
+      },
+      {
+        "title": "Verify br0 bridge interface",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=br0]",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:interface"
+        ],
+        "properties": {
+          "openconfig-interfaces:interface": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "config", "state", "name"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "enum": [
+                    "br0"
+                  ]
+                },
+                "config": {
+                  "type": "object",
+                  "required": [
+                    "mtu", "type"
+                  ],
+                  "properties": {
+                    "mtu": {
+                      "type": "integer",
+                      "const": 9000
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "iana-if-type:bridge"
+                      ]
+                    }
+                  }
+                },
+                "state": {
+                    "type": "object",
+                    "required": [
+                      "mtu", "type"
+                    ],
+                    "properties": {
+                      "mtu": {
+                        "type": "integer",
+                        "const": 9000
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "iana-if-type:bridge"
+                        ]
+                      }
+                    }
+                  }
+              }
+            }
+          }
+        }
+      },
+      {
+        "title": "Delete bridge interface",
+        "operation": "delete",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=br0]",
+        "target": "OC_YANG",
+        "subOpers": [
+          {
+            "oper": "dbHDel",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "BRIDGE_TABLE:br0": [],
+              "BRIDGE_MEMBER_TABLE:br0:Ethernet-BP1/35": [],
+              "BRIDGE_MEMBER_TABLE:br0:eth0": []
+            }
+          }
+        ]
+      },
+      {
+        "title": "Verify subsequent delete fails",
+        "operation": "delete",
+        "returnCode": 10,
+        "xpath": "openconfig/interfaces/interface[name=br0]",
+        "target": "OC_YANG"
+      },
+      {
+        "title": "Verify br0 bridge interface was deleted",
+        "operation": "get",
+        "returnCode": 5,
+        "xpath": "openconfig/interfaces/interface[name=br0]",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Verify eth0 bridge-id was deleted",
+        "operation": "get",
+        "returnCode": 5,
+        "xpath": "openconfig/interfaces/interface[name=eth0]/config/bridge-id",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Verify eth1 bridge-id was deleted",
+        "operation": "get",
+        "returnCode": 5,
+        "xpath": "openconfig/interfaces/interface[name=eth1]/config/bridge-id",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Push interfaces and bridge config again",
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces",
+        "target": "OC_YANG",
+        "attributeData": "{  \"interfaces\" : {     \"interface\" : [        {          \"config\": {            \"description\": \"unmodeled\",            \"enabled\": true,            \"google-pins-interfaces:fully-qualified-interface-name\": \"\",            \"loopback-mode\": \"NONE\",            \"mtu\": 9216,            \"name\": \"Ethernet-BP1/35\",            \"openconfig-pins-interfaces:health-indicator\": \"GOOD\",            \"type\": \"iana-if-type:ethernetCsmacd\"          },          \"hold-time\": {            \"config\": {              \"down\": 0,              \"up\": 8000            }          },          \"name\": \"Ethernet-BP1/35\",          \"openconfig-if-ethernet:ethernet\": {            \"config\": {              \"fec-mode\": \"openconfig-if-ethernet:FEC_DISABLED\",              \"port-speed\": \"openconfig-if-ethernet:SPEED_1GB\"            }          },          \"subinterfaces\": {            \"subinterface\": [              {                \"config\": {                  \"index\": 0                },                \"index\": 0,                \"openconfig-if-ip:ipv6\": {                  \"unnumbered\": {                    \"config\": {                      \"enabled\": true                    }                  }                }              }            ]          }        },        {          \"config\": {            \"bridge-id\": \"br0\",            \"name\": \"eth0\",            \"type\": \"iana-if-type:ethernetCsmacd\"          },          \"name\": \"eth0\"        },        {          \"config\": {            \"bridge-id\": \"br0\",            \"name\": \"eth1\",            \"type\": \"iana-if-type:ethernetCsmacd\"          },          \"name\": \"eth1\"        },        {          \"config\": {            \"mtu\": 9000,            \"name\": \"br0\",            \"type\": \"iana-if-type:bridge\"          },          \"name\": \"br0\"        }     ]  }}"
+      },
+      {
+        "title": "Verify br0 bridge interface was created",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=br0]",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Verify eth0 bridge-id was created",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=eth0]/config/bridge-id",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Verify eth1 bridge-id was created",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=eth1]/config/bridge-id",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Push interfaces and bridge config with eth1 swapped out for eth2",
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces",
+        "target": "OC_YANG",
+        "attributeData": "{  \"interfaces\" : {     \"interface\" : [        {          \"config\": {            \"description\": \"unmodeled\",            \"enabled\": true,            \"google-pins-interfaces:fully-qualified-interface-name\": \"\",            \"loopback-mode\": \"NONE\",            \"mtu\": 9216,            \"name\": \"Ethernet-BP1/35\",            \"openconfig-pins-interfaces:health-indicator\": \"GOOD\",            \"type\": \"iana-if-type:ethernetCsmacd\"          },          \"hold-time\": {            \"config\": {              \"down\": 0,              \"up\": 8000            }          },          \"name\": \"Ethernet-BP1/35\",          \"openconfig-if-ethernet:ethernet\": {            \"config\": {              \"fec-mode\": \"openconfig-if-ethernet:FEC_DISABLED\",              \"port-speed\": \"openconfig-if-ethernet:SPEED_1GB\"            }          },          \"subinterfaces\": {            \"subinterface\": [              {                \"config\": {                  \"index\": 0                },                \"index\": 0,                \"openconfig-if-ip:ipv6\": {                  \"unnumbered\": {                    \"config\": {                      \"enabled\": true                    }                  }                }              }            ]          }        },        {          \"config\": {            \"bridge-id\": \"br0\",            \"name\": \"eth0\",            \"type\": \"iana-if-type:ethernetCsmacd\"          },          \"name\": \"eth0\"        },        {          \"config\": {            \"bridge-id\": \"br0\",            \"name\": \"eth2\",            \"type\": \"iana-if-type:ethernetCsmacd\"          },          \"name\": \"eth2\"        },        {          \"config\": {            \"mtu\": 9000,            \"name\": \"br0\",            \"type\": \"iana-if-type:bridge\"          },          \"name\": \"br0\"        }     ]  }}"
+      },
+      {
+        "title": "Verify br0 bridge interface was not deleted",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=br0]",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Verify eth0 bridge-id is still configured",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=eth0]/config/bridge-id",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Verify eth2 bridge-id was created",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=eth2]/config/bridge-id",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Verify eth1 bridge-id was deleted",
+        "operation": "get",
+        "returnCode": 5,
+        "xpath": "openconfig/interfaces/interface[name=eth1]/config/bridge-id",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Push interfaces config without bridges to test SET Replace",
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces",
+        "target": "OC_YANG",
+switch:eth-1/5/5\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/5/5\", \"openconfig-p4rt:id\" : 517, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/5/5\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}]}, \"openconfig-platform:components\": {\"component\": [{\"config\": {\"name\": \"1/5\"}, \"name\": \"1/5\", \"port\" : {\"config\": {\"port-id\": 5}, \"breakout-mode\": {\"groups\": { \"group\" : [{ \"index\": 0, \"config\": { \"index\": 0, \"num-breakouts\": 2, \"breakout-speed\": \"openconfig-if-ethernet:SPEED_400GB\", \"num-physical-channels\" : 4 }}]}}}}]}}"
+      },
+      {
+        "title": "Verify br0 bridge interface was deleted",
+        "operation": "get",
+        "returnCode": 5,
+        "xpath": "openconfig/interfaces/interface[name=br0]",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Verify eth0 bridge-id was deleted",
+        "operation": "get",
+        "returnCode": 5,
+        "xpath": "openconfig/interfaces/interface[name=eth0]/config/bridge-id",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Verify eth2 bridge-id was deleted",
+        "operation": "get",
+        "returnCode": 5,
+        "xpath": "openconfig/interfaces/interface[name=eth2]/config/bridge-id",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Push interfaces and bridge config again",
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces",
+        "target": "OC_YANG",
+        "attributeData": "{  \"interfaces\" : {     \"interface\" : [        {          \"config\": {            \"description\": \"unmodeled\",            \"enabled\": true,            \"google-pins-interfaces:fully-qualified-interface-name\": \"\",            \"loopback-mode\": \"NONE\",            \"mtu\": 9216,            \"name\": \"Ethernet-BP1/35\",            \"openconfig-pins-interfaces:health-indicator\": \"GOOD\",            \"type\": \"iana-if-type:ethernetCsmacd\"          },          \"hold-time\": {            \"config\": {              \"down\": 0,              \"up\": 8000            }          },          \"name\": \"Ethernet-BP1/35\",          \"openconfig-if-ethernet:ethernet\": {            \"config\": {              \"fec-mode\": \"openconfig-if-ethernet:FEC_DISABLED\",              \"port-speed\": \"openconfig-if-ethernet:SPEED_1GB\"            }          },          \"subinterfaces\": {            \"subinterface\": [              {                \"config\": {                  \"index\": 0                },                \"index\": 0,                \"openconfig-if-ip:ipv6\": {                  \"unnumbered\": {                    \"config\": {                      \"enabled\": true                    }                  }                }              }            ]          }        },        {          \"config\": {            \"bridge-id\": \"br0\",            \"name\": \"eth0\",            \"type\": \"iana-if-type:ethernetCsmacd\"          },          \"name\": \"eth0\"        },        {          \"config\": {            \"bridge-id\": \"br0\",            \"name\": \"eth1\",            \"type\": \"iana-if-type:ethernetCsmacd\"          },          \"name\": \"eth1\"        },        {          \"config\": {            \"name\": \"br0\",            \"type\": \"iana-if-type:bridge\"          },          \"name\": \"br0\"        }     ]  }}"
+      },
+      {
+        "title": "Verify br0 bridge interface was created",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=br0]",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Verify eth0 bridge-id was created",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=eth0]/config/bridge-id",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Verify eth1 bridge-id was created",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=eth1]/config/bridge-id",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Push interfaces and bridge config with eth1 swapped out for eth2",
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces",
+        "target": "OC_YANG",
+        "attributeData": "{  \"interfaces\" : {     \"interface\" : [        {          \"config\": {            \"description\": \"unmodeled\",            \"enabled\": true,            \"google-pins-interfaces:fully-qualified-interface-name\": \"\",            \"loopback-mode\": \"NONE\",            \"mtu\": 9216,            \"name\": \"Ethernet-BP1/35\",            \"openconfig-pins-interfaces:health-indicator\": \"GOOD\",            \"type\": \"iana-if-type:ethernetCsmacd\"          },          \"hold-time\": {            \"config\": {              \"down\": 0,              \"up\": 8000            }          },          \"name\": \"Ethernet-BP1/35\",          \"openconfig-if-ethernet:ethernet\": {            \"config\": {              \"fec-mode\": \"openconfig-if-ethernet:FEC_DISABLED\",              \"port-speed\": \"openconfig-if-ethernet:SPEED_1GB\"            }          },          \"subinterfaces\": {            \"subinterface\": [              {                \"config\": {                  \"index\": 0                },                \"index\": 0,                \"openconfig-if-ip:ipv6\": {                  \"unnumbered\": {                    \"config\": {                      \"enabled\": true                    }                  }                }              }            ]          }        },        {          \"config\": {            \"bridge-id\": \"br0\",            \"name\": \"eth0\",            \"type\": \"iana-if-type:ethernetCsmacd\"          },          \"name\": \"eth0\"        },        {          \"config\": {            \"bridge-id\": \"br0\",            \"name\": \"eth2\",            \"type\": \"iana-if-type:ethernetCsmacd\"          },          \"name\": \"eth2\"        },        {          \"config\": {            \"name\": \"br0\",            \"type\": \"iana-if-type:bridge\"          },          \"name\": \"br0\"        }     ]  }}"
+      },
+      {
+        "title": "Verify br0 bridge interface was not deleted",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=br0]",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Verify eth0 bridge-id is still configured",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=eth0]/config/bridge-id",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Verify eth2 bridge-id was created",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=eth2]/config/bridge-id",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Verify eth1 bridge-id was deleted",
+        "operation": "get",
+        "returnCode": 5,
+        "xpath": "openconfig/interfaces/interface[name=eth1]/config/bridge-id",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Push interfaces config without bridges to test SET Replace",
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces",
+        "target": "OC_YANG",
+switch:eth-1/5/5\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/5/5\", \"openconfig-p4rt:id\" : 517, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/5/5\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}]}, \"openconfig-platform:components\": {\"component\": [{\"config\": {\"name\": \"1/5\"}, \"name\": \"1/5\", \"port\" : {\"config\": {\"port-id\": 5}, \"breakout-mode\": {\"groups\": { \"group\" : [{ \"index\": 0, \"config\": { \"index\": 0, \"num-breakouts\": 2, \"breakout-speed\": \"openconfig-if-ethernet:SPEED_400GB\", \"num-physical-channels\" : 4 }}]}}}}]}}"
+      },
+      {
+        "title": "Verify br0 bridge interface was deleted",
+        "operation": "get",
+        "returnCode": 5,
+        "xpath": "openconfig/interfaces/interface[name=br0]",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Verify eth0 bridge-id was deleted",
+        "operation": "get",
+        "returnCode": 5,
+        "xpath": "openconfig/interfaces/interface[name=eth0]/config/bridge-id",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Verify eth2 bridge-id was deleted",
+        "operation": "get",
+        "returnCode": 5,
+        "xpath": "openconfig/interfaces/interface[name=eth2]/config/bridge-id",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Restore changed config",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces",
+        "target": "OC_YANG",
+        "type": "object",
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "db": "CONFIG_DB",
+            "value": {
+              "PORTCHANNEL|PortChannel1": {
+                "admin_status": "up",
+                "id": "2049",
+                "alias": "PortChannel1Alias",
+                "type": "iana-if-type:ieee8023adLag",
+                "description": "some description string.",
+                "mtu": "9104",
+                "lag_type": "LACP",
+                "members@": "Ethernet1/7/3,Ethernet1/7/4",
+                "min_links": "1",
+                "fast_rate": "true",
+                "active": "true",
+                "system_id": "fc:bd:67:2c:08:f4",
+                "lacp_key": "1",
+                "system_priority": "256"
+              },
+              "PORTCHANNEL_MEMBER|PortChannel1|Ethernet1/7/3": {
+                "NULL": "NULL"
+              },
+              "PORTCHANNEL_MEMBER|PortChannel1|Ethernet1/7/4": {
+                  "NULL": "NULL"
+              },
+              "PORTCHANNEL|PortChannel2": {
+                  "admin_status": "up",
+                  "id": "2049",
+                  "alias": "PortChannel2Alias",
+                  "type": "iana-if-type:ieee8023adLag",
+                  "description": "some description string.",
+                  "mtu": "9104",
+                  "lag_type": "LACP",
+                  "members@": "Ethernet1/3/5",
+                  "min_links": "1",
+                  "fast_rate": "true",
+                  "active": "true",
+                  "system_id": "AA:BB:CC:DD:EE:FF",
+                  "lacp_key": "2"
+              },
+              "PORTCHANNEL_MEMBER|PortChannel2|Ethernet1/3/5": {
+                "NULL": "NULL"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }

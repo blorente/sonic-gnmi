@@ -1,0 +1,588 @@
+{
+  "title": "Subscribe-Once tests for openconfig-platforms fan",
+  "includeDefs": ["../defs/pfm_fan.json"],
+  "operations":[
+    {
+      "title": "SubOnce /openconfig/components/component[name=fan1]",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'fan1'}}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": true,
+            "schema": { "$ref": "#/globalDef/pfm_fan/arrayFan1" }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=*]",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'*'}}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates multiple components came back, one of which is Fan1",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:component"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:component" : {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "minItems": 3,
+                  "maxItems": 1000,
+                  "contains": {
+                    "$ref": "#/globalDef/pfm_fan/Fan1"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=fan1]/state",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'fan1'}}elem:{name:'state'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=fan1]/state",
+            "syncResponse": true,
+            "schema": { "$ref": "#/globalDef/pfm_fan/Fan1StateOnly" }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=fan1]/state/empty",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'fan1'}}elem:{name:'state'}elem:{name:'empty'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=fan1]/state/empty",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:empty"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:empty": { "$ref": "#/globalDef/pfm_fan/Fan1_st_empty" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=fan1]/state/hardware-version",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'fan1'}}elem:{name:'state'}elem:{name:'hardware-version'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=fan1]/state/hardware-version",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:hardware-version"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:hardware-version": { "$ref": "#/globalDef/pfm_fan/Fan1_st_hv" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=fan1]/state/location",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'fan1'}}elem:{name:'state'}elem:{name:'location'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=fan1]/state/location",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:location"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:location": { "$ref": "#/globalDef/pfm_fan/Fan1_st_loc" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=fan1]/state/mfg-date",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'fan1'}}elem:{name:'state'}elem:{name:'mfg-date'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=fan1]/state/mfg-date",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:mfg-date"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:mfg-date": { "$ref": "#/globalDef/pfm_fan/Fan1_st_md" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=fan1]/state/name",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'fan1'}}elem:{name:'state'}elem:{name:'name'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=fan1]/state/name",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:name"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:name": { "$ref": "#/globalDef/pfm_fan/Fan1_st_name" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=fan1]/state/oper-status",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'fan1'}}elem:{name:'state'}elem:{name:'oper-status'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=fan1]/state/oper-status",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:oper-status"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:oper-status": { "$ref": "#/globalDef/pfm_fan/Fan1_st_op" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=fan1]/state/parent",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'fan1'}}elem:{name:'state'}elem:{name:'parent'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=fan1]/state/parent",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:parent"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:parent": { "$ref": "#/globalDef/pfm_fan/Fan1_st_par" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=fan1]/state/part-no",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'fan1'}}elem:{name:'state'}elem:{name:'part-no'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=fan1]/state/part-no",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:part-no"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:part-no": { "$ref": "#/globalDef/pfm_fan/Fan1_st_pn" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=fan1]/state/removable",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'fan1'}}elem:{name:'state'}elem:{name:'removable'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=fan1]/state/removable",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:removable"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:removable": { "$ref": "#/globalDef/pfm_fan/Fan1_st_rm" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=fan1]/state/serial-no",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'fan1'}}elem:{name:'state'}elem:{name:'serial-no'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=fan1]/state/serial-no",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:serial-no"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:serial-no": { "$ref": "#/globalDef/pfm_fan/Fan1_st_sn" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=fan1]/state/type",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'fan1'}}elem:{name:'state'}elem:{name:'type'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=fan1]/state/type",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:type"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:type": { "$ref": "#/globalDef/pfm_fan/Fan1_st_type" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=*]/fan",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'*'}}elem:{name:'fan'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:component"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:component" : {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "contains": {
+                    "type": "object",
+                    "required": ["name", "fan"],
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": { "$ref": "#/globalDef/pfm_fan/Fan1_name" },
+                      "fan": { "$ref": "#/globalDef/pfm_fan/Fan1_fan" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=fan1]/fan",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'fan1'}}elem:{name:'fan'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=fan1]/fan",
+            "syncResponse": true,
+            "schema": { "$ref": "#/globalDef/pfm_fan/Fan1FanOnly" }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=integrated_circuit0]/fan",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'fan'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {}
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=fan1]/fan/state",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'fan1'}}elem:{name:'fan'}elem:{name:'state'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=fan1]/fan/state",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:state"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:state": {
+                  "$ref": "#/globalDef/pfm_fan/Fan1_fan_st"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=*]/fan/state",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'*'}}elem:{name:'fan'}elem:{name:'state'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=fan1]/fan/state",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:state"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:state": {
+                  "$ref": "#/globalDef/pfm_fan/Fan1_fan_st"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=fan1]/fan/state/speed-control-pct",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'fan1'}}elem:{name:'fan'}elem:{name:'state'}elem:{name:'speed-control-pct'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=fan1]/fan/state",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:state"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:state": {
+                  "type": "object",
+                  "required": ["google-pins-platform:speed-control-pct"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "google-pins-platform:speed-control-pct": { "$ref": "#/globalDef/pfm_fan/Fan1_fan_st_scp" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=fan1]/integrated-circuit/state/speed",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'fan1'}}elem:{name:'fan'}elem:{name:'state'}elem:{name:'speed'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=fan1]/fan/state",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:state"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:state": {
+                  "type": "object",
+                  "required": ["openconfig-platform-fan:speed"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "openconfig-platform-fan:speed": { "$ref": "#/globalDef/pfm_fan/Fan1_fan_st_spd" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=FanTray1]",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'FanTray1'}}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": true,
+            "schema": { "$ref": "#/globalDef/pfm_fan/arrayFanTray1" }
+          }
+        }
+      ]
+    }
+  ]
+}
+

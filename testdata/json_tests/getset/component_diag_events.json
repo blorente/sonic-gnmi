@@ -1,0 +1,185 @@
+{
+  "title": "get_component_diag_events",
+  "operations":[
+    {
+      "title": "missing tables",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=integrated_circuit0]/integrated-circuit",
+      "target": "OC_YANG",
+      "type": "object",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "COUNTERS_DB",
+          "value": {
+            "COUNTERS_BLACKHOLE:SWITCH_COUNTERS": {
+               "BLACKHOLE_IN_DISCARD_EVENTS": "1",
+               "BLACKHOLE_OUT_DISCARD_EVENTS": "2",
+               "BLACKHOLE_IN_ERROR_EVENTS": "3",
+               "BLACKHOLE_LPM_MISS_EVENTS": "4",
+               "BLACKHOLE_FEC_NOT_CORRECTABLE_EVENTS": "5",
+               "BLACKHOLE_MEMORY_ERROR_EVENTS": "6",
+               "BLACKHOLE": "7"
+            },
+            "COUNTERS_CONGESTION:SWITCH_COUNTERS": {
+                "CONGESTION": "8"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "tables present, no timestamps",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=integrated_circuit0]/integrated-circuit",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:integrated-circuit"
+      ],
+      "properties": {
+        "openconfig-platform:integrated-circuit": {
+          "type": "object",
+          "required": ["state"],
+          "properties": {
+            "state": {
+              "type": "object",
+              "required": ["google-pins-platform:blackhole", "google-pins-platform:congestion"],
+              "properties": {
+                "google-pins-platform:blackhole": {
+                  "type": "object",
+                  "required": ["in-discard-events", "out-discard-events", "in-error-events", "lpm-miss-events", "fec-not-correctable-events", "memory-error-events", "blackhole-events"],
+                  "properties": {
+                    "in-discard-events": {
+                      "type": "string",
+                      "enum": ["1"]
+                    },
+                    "out-discard-events": {
+                      "type": "string",
+                      "enum": ["2"]
+                    },
+                    "in-error-events": {
+                      "type": "string",
+                      "enum": ["3"]
+                    },
+                    "lpm-miss-events": {
+                      "type": "string",
+                      "enum": ["4"]
+                    },
+                    "fec-not-correctable-events": {
+                      "type": "string",
+                      "enum": ["5"]
+                    },
+                    "memory-error-events": {
+                      "type": "string",
+                      "enum": ["6"]
+                    },
+                    "blackhole-events": {
+                      "type": "string",
+                      "enum": ["7"]
+                    }
+                  }
+                },
+                "google-pins-platform:congestion": {
+                  "type": "object",
+                  "required": ["congestion-events"],
+                  "properties": {
+                    "congestion-events": {
+                      "type": "string",
+                      "enum": ["8"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "COUNTERS_DB",
+          "value": {
+            "COUNTERS_BLACKHOLE:SWITCH_COUNTERS": {
+              "SWITCH_STAT_TIME_STAMP_USEC": "123123123"
+            },
+            "COUNTERS_CONGESTION:SWITCH_COUNTERS": {
+                "SWITCH_STAT_TIME_STAMP_USEC": "123123123"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "tables and timestamps present",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=integrated_circuit0]/integrated-circuit",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:integrated-circuit"
+      ],
+      "properties": {
+        "openconfig-platform:integrated-circuit": {
+          "type": "object",
+          "required": ["state"],
+          "properties": {
+            "state": {
+              "type": "object",
+              "required": ["google-pins-platform:blackhole", "google-pins-platform:congestion"],
+              "properties": {
+                "google-pins-platform:blackhole": {
+                  "type": "object",
+                  "required": ["in-discard-events", "out-discard-events", "in-error-events", "lpm-miss-events", "fec-not-correctable-events", "memory-error-events", "blackhole-events"],
+                  "properties": {
+                    "in-discard-events": {
+                      "type": "string",
+                      "enum": ["1"]
+                    },
+                    "out-discard-events": {
+                      "type": "string",
+                      "enum": ["2"]
+                    },
+                    "in-error-events": {
+                      "type": "string",
+                      "enum": ["3"]
+                    },
+                    "lpm-miss-events": {
+                      "type": "string",
+                      "enum": ["4"]
+                    },
+                    "fec-not-correctable-events": {
+                      "type": "string",
+                      "enum": ["5"]
+                    },
+                    "memory-error-events": {
+                      "type": "string",
+                      "enum": ["6"]
+                    },
+                    "blackhole-events": {
+                      "type": "string",
+                      "enum": ["7"]
+                    }
+                  }
+                },
+                "google-pins-platform:congestion": {
+                  "type": "object",
+                  "required": ["congestion-events"],
+                  "properties": {
+                    "congestion-events": {
+                      "type": "string",
+                      "enum": ["8"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

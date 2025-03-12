@@ -1,0 +1,390 @@
+{
+  "title": "Get Software Module Component State paths",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=network_stack0]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state", "software-module"
+            ],
+            "properties": {
+              "software-module": {
+                "type": "object",
+                "required": [
+                  "state"
+                ],
+                "properties": {
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "openconfig-platform-software:module-type"
+                    ],
+                    "properties": {
+                      "openconfig-platform-software:module-type": {
+                        "type": "string",
+                        "enum": [
+                          "openconfig-platform-software:USERSPACE_PACKAGE_BUNDLE"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "software-version", "oper-status", "parent", "google-pins-platform:storage-side", "type"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "network_stack0"
+                    ]
+                  },
+                  "software-version": {
+                    "type": "string",
+                    "enum": [
+                      "v2021"
+                    ]
+                  },
+                  "oper-status": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-platform-types:ACTIVE"
+                    ]
+                  },
+                  "parent": {
+                    "type": "string",
+                    "enum": [
+                      "chassis"
+                    ]
+                  },
+                  "google-pins-platform:storage-side": {
+                    "type": "string",
+                    "enum": [
+                      "SIDE_A"
+                    ]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-platform-types:SOFTWARE_MODULE"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=network_stack1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state", "software-module"
+            ],
+            "properties": {
+              "software-module": {
+                "type": "object",
+                "required": [
+                  "state"
+                ],
+                "properties": {
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "openconfig-platform-software:module-type"
+                    ],
+                    "properties": {
+                      "openconfig-platform-software:module-type": {
+                        "type": "string",
+                        "enum": [
+                          "openconfig-platform-software:USERSPACE_PACKAGE_BUNDLE"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "software-version", "oper-status", "parent", "google-pins-platform:storage-side", "type"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "network_stack1"
+                    ]
+                  },
+                  "software-version": {
+                    "type": "string",
+                    "enum": [
+                      "v2021"
+                    ]
+                  },
+                  "oper-status": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-platform-types:INACTIVE"
+                    ]
+                  },
+                  "parent": {
+                    "type": "string",
+                    "enum": [
+                      "chassis"
+                    ]
+                  },
+                  "google-pins-platform:storage-side": {
+                    "type": "string",
+                    "enum": [
+                      "SIDE_B"
+                    ]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-platform-types:SOFTWARE_MODULE"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=os0]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "software-version", "oper-status", "parent", "type", "google-pins-platform:storage-side"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "os0"
+                    ]
+                  },
+                  "software-version": {
+                    "type": "string",
+                    "enum": [
+                      "os-v2"
+                    ]
+                  },
+                  "oper-status": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-platform-types:ACTIVE"
+                    ]
+                  },
+                  "parent": {
+                    "type": "string",
+                    "enum": [
+                      "chassis"
+                    ]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-platform-types:OPERATING_SYSTEM"
+                    ]
+                  },
+                  "google-pins-platform:storage-side": {
+                    "type": "string",
+                    "enum": [
+                      "SIDE_A"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=os1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "software-version", "oper-status", "parent", "type", "google-pins-platform:storage-side"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "os1"
+                    ]
+                  },
+                  "software-version": {
+                    "type": "string",
+                    "enum": [
+                      "os-v3"
+                    ]
+                  },
+                  "oper-status": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-platform-types:INACTIVE"
+                    ]
+                  },
+                  "parent": {
+                    "type": "string",
+                    "enum": [
+                      "chassis"
+                    ]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-platform-types:OPERATING_SYSTEM"
+                    ]
+                  },
+                  "google-pins-platform:storage-side": {
+                    "type": "string",
+                    "enum": [
+                      "SIDE_B"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=boot_loader]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "software-version", "parent", "type"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "boot_loader"
+                    ]
+                  },
+                  "software-version": {
+                    "type": "string",
+                    "enum": [
+                      "netlo-v1"
+                    ]
+                  },
+                  "parent": {
+                    "type": "string",
+                    "enum": [
+                      "chassis"
+                    ]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-platform-types:BOOT_LOADER"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=network_stack0]/software-module/state/module-type",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform-software:module-type"
+      ],
+      "properties": {
+        "openconfig-platform-software:module-type": {
+          "type": "string",
+          "enum": [
+            "openconfig-platform-software:USERSPACE_PACKAGE_BUNDLE"
+          ]
+        }
+      }
+    }
+  ]
+}

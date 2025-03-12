@@ -1,0 +1,64 @@
+{
+  "title": "Get System logging",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/logging",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:logging"
+      ],
+      "properties": {
+        "openconfig-system:logging": {
+          "type": "object",
+          "required": [
+            "remote-servers"
+          ],
+          "properties": {
+            "remote-servers": {
+              "type": "object",
+              "required": [
+                "remote-server"
+              ],
+              "properties": {
+                "remote-server": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "host", "state"
+                    ],
+                    "properties": {
+                      "host": {
+                        "type": "string",
+                        "enum": [
+                          "127.0.0.1"
+                        ]
+                      },
+                      "state": {
+                        "type": "object",
+                        "required": [
+                          "host"
+                        ],
+                        "properties": {
+                          "host": {
+                            "type": "string",
+                            "enum": [
+                              "127.0.0.1"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

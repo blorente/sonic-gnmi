@@ -1,0 +1,335 @@
+{
+  "title": "Optical Switch Port Connection Recovery Path Tests",
+  "operations": [
+    {
+      "title": "Root-Level Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connection-recovery",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:port-connection-recovery"
+      ],
+      "properties": {
+        "openconfig-optical-switch:port-connection-recovery": {
+          "type": "object",
+          "required": [
+            "state", "config"
+          ],
+          "properties": {
+            "state": {
+              "type": "object",
+              "required": [
+                "port-connection-recovery-behavior", "port-connection-recovery-capability"
+              ],
+              "properties": {
+                "port-connection-recovery-capability": {
+                  "type": "string",
+                  "enum": ["CONNECTIONS_PERSIST_REBOOT_RECOVERABLE_BY_NVM"]
+                },
+                "port-connection-recovery-behavior": {
+                  "type": "string",
+                  "enum": ["RECOVER_PORT_CONNECTIONS_FROM_MEMORY"]
+                }
+              }
+            },
+            "config": {
+              "type": "object",
+              "required": [
+                "port-connection-recovery-behavior"
+              ],
+              "properties": {
+                "port-connection-recovery-behavior":{
+                  "type": "string",
+                  "enum": ["RECOVER_PORT_CONNECTIONS_FROM_MEMORY"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Config-Level Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connection-recovery/config",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:config"
+      ],
+      "properties": {
+        "openconfig-optical-switch:config": {
+          "type": "object",
+          "required": [
+            "port-connection-recovery-behavior"
+          ],
+          "properties": {
+            "port-connection-recovery-behavior":{
+              "type": "string",
+              "enum": ["RECOVER_PORT_CONNECTIONS_FROM_MEMORY"]
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "State-Level Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connection-recovery/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:state"
+      ],
+      "properties": {
+        "openconfig-optical-switch:state": {
+          "type": "object",
+          "required": [
+            "port-connection-recovery-behavior", "port-connection-recovery-capability"
+          ],
+          "properties": {
+            "port-connection-recovery-capability": {
+              "type": "string",
+              "enum": ["CONNECTIONS_PERSIST_REBOOT_RECOVERABLE_BY_NVM"]
+            },
+            "port-connection-recovery-behavior": {
+              "type": "string",
+              "enum": ["RECOVER_PORT_CONNECTIONS_FROM_MEMORY"]
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "state/port-connection-recovery-behavior Leaf Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connection-recovery/state/port-connection-recovery-behavior",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:port-connection-recovery-behavior"
+      ],
+      "properties": {
+        "openconfig-optical-switch:port-connection-recovery-behavior": {
+          "type": "string",
+          "enum": ["RECOVER_PORT_CONNECTIONS_FROM_MEMORY"]
+        }
+      }
+    },
+    {
+      "title": "state/port-connection-recovery-capability Leaf Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connection-recovery/state/port-connection-recovery-capability",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:port-connection-recovery-capability"
+      ],
+      "properties": {
+        "openconfig-optical-switch:port-connection-recovery-capability": {
+          "type": "string",
+          "enum": ["CONNECTIONS_PERSIST_REBOOT_RECOVERABLE_BY_NVM"]
+        }
+      }
+    },
+    {
+      "title": "config/port-connection-recovery-behavior Leaf Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connection-recovery/config/port-connection-recovery-behavior",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:port-connection-recovery-behavior"
+      ],
+      "properties": {
+        "openconfig-optical-switch:port-connection-recovery-behavior": {
+          "type": "string",
+          "enum": ["RECOVER_PORT_CONNECTIONS_FROM_MEMORY"]
+        }
+      }
+    },
+    {
+      "title": "Update config/port-connection-recovery-behavior Leaf, Success",
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connection-recovery/config/port-connection-recovery-behavior",
+      "target": "OC_YANG",
+      "type": "object",
+      "attributeData": "{\"openconfig-optical-switch:port-connection-recovery-behavior\": \"RECOVER_PORT_CONNECTIONS_NEVER\"}"
+    },
+    {
+      "title": "Update config/port-connection-recovery-behavior Leaf With Bad Value, Fails",
+      "operation": "update",
+      "returnCode": 10,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connection-recovery/config/port-connection-recovery-behavior",
+      "target": "OC_YANG",
+      "type": "object",
+      "attributeData": "{\"openconfig-optical-switch:port-connection-recovery-behavior\": \"NOT_A_VALID_ENUM\"}"
+    },
+    {
+      "title": "Get config/port-connection-recovery-behavior Leaf After Update, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connection-recovery/config/port-connection-recovery-behavior",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:port-connection-recovery-behavior"
+      ],
+      "properties": {
+        "openconfig-optical-switch:port-connection-recovery-behavior": {
+          "type": "string",
+          "enum": ["RECOVER_PORT_CONNECTIONS_NEVER"]
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "title": "Set bad state port recovery behavior enum",
+          "db": "STATE_DB",
+          "value": {
+            "OCS_XCONNECT_RECOVERY|global_xconnect_recovery": {
+              "port-connection-recovery-behavior": "NOTVALID"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "Edgecase, Bad Recovery Behavior Enum, Fails",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connection-recovery/state/port-connection-recovery-behavior",
+      "target": "OC_YANG",
+      "type": "object",
+      "subOpers": [
+        {
+          "oper": "dbHDel",
+          "title": "Set missing state port recovery behavior enum",
+          "db": "STATE_DB",
+          "value": {
+            "OCS_XCONNECT_RECOVERY|global_xconnect_recovery": [            "port-connection-recovery-behavior"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Edgecase, Missing Recovery Behavior Enum, Fails",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connection-recovery/state/port-connection-recovery-behavior",
+      "target": "OC_YANG",
+      "type": "object",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "title": "Restore state port recovery behavior enum",
+          "db": "STATE_DB",
+          "value": {
+            "OCS_XCONNECT_RECOVERY|global_xconnect_recovery": {
+              "port-connection-recovery-behavior": "RECOVER_PORT_CONNECTIONS_FROM_MEMORY"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Set state bad port recovery capability enum",
+          "db": "STATE_DB",
+          "value": {
+            "OCS_XCONNECT_RECOVERY|global_xconnect_recovery": {
+              "port-connection-recovery-capability": "NOTVALID"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "title": "Edgecase, Bad Recovery Capability Enum, Fails",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connection-recovery/state/port-connection-recovery-capability",
+      "target": "OC_YANG",
+      "type": "object",
+      "subOpers": [
+        {
+          "oper": "dbHDel",
+          "title": "Set missing state port recovery capability enum",
+          "db": "STATE_DB",
+          "value": {
+            "OCS_XCONNECT_RECOVERY|global_xconnect_recovery": [
+              "port-connection-recovery-capability"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Edgecase, Missing Recovery Behavior Enum, Fails",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connection-recovery/state/port-connection-recovery-capability",
+      "target": "OC_YANG",
+      "type": "object",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "title": "Restore state port recovery capability enum",
+          "db": "STATE_DB",
+          "value": {
+            "OCS_XCONNECT_RECOVERY|global_xconnect_recovery": {
+              "port-connection-recovery-capability": "CONNECTIONS_PERSIST_REBOOT_RECOVERABLE_BY_NVM"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Set bad cfg port recovery behavior enum",
+          "db": "CONFIG_DB",
+          "value": {
+            "OCS_XCONNECT_RECOVERY|global_xconnect_recovery": {
+              "port-connection-recovery-behavior": "NOTVALID"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "title": "Edgecase, Bad Recovery Behavior Enum, Fails",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connection-recovery/config/port-connection-recovery-behavior",
+      "target": "OC_YANG",
+      "type": "object",
+      "subOpers": [
+        {
+          "oper": "dbHDel",
+          "title": "Set missing cfg state port recovery behavior enum",
+          "db": "CONFIG_DB",
+          "value": {
+            "OCS_XCONNECT_RECOVERY|global_xconnect_recovery": [
+              "port-connection-recovery-behavior"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Edgecase, Missing Recovery Behavior Enum, Fails",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connection-recovery/config/port-connection-recovery-behavior",
+      "target": "OC_YANG",
+      "type": "object"
+    }
+  ]
+}

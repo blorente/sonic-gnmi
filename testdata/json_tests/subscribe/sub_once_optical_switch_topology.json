@@ -1,0 +1,117 @@
+{
+  "title": "Optical Switch Topology Subscribe Once",
+  "globalDef" : {
+    "validators": {
+      "topology.state": {
+        "type": "object",
+        "required": [
+            "port-connectivity",
+            "total-port-count",
+            "total-optical-module-count",
+            "ingress-port-count",
+            "egress-port-count",
+            "ingress-start-index",
+            "egress-start-index",
+            "inter-module-connection-support"
+        ],
+        "properties": {
+          "port-connectivity": {
+            "type": "string",
+            "enum": ["INGRESS_EGRESS"]
+          },
+          "total-port-count": {
+            "type": "integer",
+            "enum": [100]
+          },
+          "total-optical-module-count": {
+            "type": "integer",
+            "enum": [1]
+          },
+          "ingress-port-count": {
+            "type": "integer",
+            "enum": [100]
+          },
+          "egress-port-count": {
+            "type": "integer",
+            "enum": [100]
+          },
+          "ingress-start-index": {
+            "type": "integer",
+            "enum": [1]
+          },
+          "egress-start-index": {
+            "type": "integer",
+            "enum": [10000]
+          },
+          "inter-module-connection-support": {
+            "type": "boolean",
+            "enum": [true]
+          }
+        }
+      }
+    }
+  },
+  "operations": [
+    {
+      "title": "subscribe to /optical-switch-topology/state ONCE",
+      "operation": "subscribe",
+      "operProto": "subscribe: { prefix: { origin:'openconfig' target:'OC_YANG' } encoding:PROTO subscription: { path: { elem: { name:'optical-switch'} elem: { name:'optical-switch-topology' } elem: { name:'state' } } } mode:ONCE }",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/optical-switch/optical-switch-topology/state",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "openconfig-optical-switch:state"
+              ],
+              "properties": {
+                "openconfig-optical-switch:state": {
+                  "$ref": "#/globalDef/validators/topology.state"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "title": "subscribe to /optical-switch-topology ONCE",
+      "operation": "subscribe",
+      "operProto": "subscribe: { prefix: { origin:'openconfig' target:'OC_YANG' } encoding:PROTO subscription: { path: { elem: { name:'optical-switch'} elem: { name:'optical-switch-topology' } } } mode:ONCE }",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/optical-switch/optical-switch-topology",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "openconfig-optical-switch:optical-switch-topology"
+              ],
+              "properties": {
+                "openconfig-optical-switch:optical-switch-topology": {
+                  "type": "object",
+                  "required": ["state"],
+                  "properties": {
+                    "state": {
+                      "$ref": "#/globalDef/validators/topology.state"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

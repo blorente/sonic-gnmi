@@ -1,0 +1,124 @@
+{
+  "title": "Get System Mount Points State",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/mount-points",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:mount-points"
+      ],
+      "properties": {
+        "openconfig-system:mount-points": {
+          "type": "object",
+          "required": [
+            "mount-point"
+          ],
+          "properties": {
+            "mount-point": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "required": [
+                    "state",
+                    "name"
+                  ],
+                  "properties": {
+                    "state": {
+                      "type": "object",
+                      "required": [
+                        "available",
+                        "name",
+                        "size",
+                        "utilized",
+                        "google-pins-system:type"
+                      ],
+                      "properties": {
+                        "available": {
+                          "type": "string",
+                          "enum": [ "63144" ]
+                        },
+                        "name": {
+                          "type": "string",
+                          "enum": [ "/var/log/tmp" ]
+                        },
+                        "size": {
+                          "type": "string",
+                          "enum": [ "65536" ]
+                        },
+                        "utilized": {
+                          "type": "string",
+                          "enum": [ "2392" ]
+                        },
+                        "google-pins-system:type": {
+                          "type": "string",
+                          "enum": [
+                            "google-pins-system:RAMFS_FS"
+                          ]
+                        }
+                      }
+                    },
+                    "name": {
+                      "type": "string",
+                      "enum": [
+                        "/var/log/tmp"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "state"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "enum": [ "udev" ]
+                    },
+                    "state": {
+                      "type": "object",
+                      "required": [
+                        "utilized",
+                        "available",
+                        "name",
+                        "size",
+                        "google-pins-system:type"
+                      ],
+                      "properties": {
+                        "utilized": {
+                          "type": "string",
+                          "enum": [ "222222" ]
+                        },
+                        "available": {
+                          "type": "string",
+                          "enum": [ "111111" ]
+                        },
+                        "name": {
+                          "type": "string",
+                          "enum": [ "udev" ]
+                        },
+                        "size": {
+                          "type": "string",
+                          "enum": [ "333333" ]
+                        },
+                        "google-pins-system:type": {
+                          "type": "string",
+                          "enum": [ "google-pins-system:EXT4_FS" ]
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}

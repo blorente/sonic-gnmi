@@ -1,0 +1,91 @@
+{
+  "title": "Set Interface health-indicator",
+  "operations":[
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"openconfig-pins-interfaces:health-indicator\":\"BAD\"}}"
+
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "openconfig-pins-interfaces:health-indicator"
+                ],
+                "properties": {
+                  "openconfig-pins-interfaces:health-indicator": {
+                    "type": "string",
+                    "enum": ["BAD"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"openconfig-pins-interfaces:health-indicator\":\"GOOD\"}}"
+
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/state/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:state"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "openconfig-pins-interfaces:health-indicator"
+                ],
+                "properties": {
+                  "openconfig-pins-interfaces:health-indicator": {
+                    "type": "string",
+                    "enum": ["GOOD"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,740 @@
+{
+  "title": "Subscribe-Once tests for openconfig-platforms integrated-circuit",
+  "includeDefs": ["../defs/pfm_ic.json"],
+  "operations":[
+    {
+      "title": "SubOnce /openconfig/components/component[name=integrated_circuit0]",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": true,
+            "schema": { "$ref": "#/globalDef/pfm_ic/arrayIC0" }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=*]",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'*'}}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates multiple components came back, one of which is the IC",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:component"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:component" : {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "minItems": 2,
+                  "maxItems": 1000,
+                  "contains": {
+                    "$ref": "#/globalDef/pfm_ic/IC0"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=integrated_circuit0]/config",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'config'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/config",
+            "syncResponse": true,
+            "schema": { "$ref": "#/globalDef/pfm_ic/IC0ConfigOnly" }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=integrated_circuit0]/config/name",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'config'}elem:{name:'name'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/config/name",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:name"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:name": { "$ref": "#/globalDef/pfm_ic/IC0_name" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=integrated_circuit0]/config/fully-qualified-name",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'config'}elem:{name:'fully-qualified-name'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/config/fully-qualified-name",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-pins-platform:fully-qualified-name"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-pins-platform:fully-qualified-name": { "$ref": "#/globalDef/pfm_ic/IC0_fq_name" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=integrated_circuit0]/state",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'state'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/state",
+            "syncResponse": true,
+            "schema": { "$ref": "#/globalDef/pfm_ic/IC0StateOnly" }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=integrated_circuit0]/state/name",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'state'}elem:{name:'name'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/state/name",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:name"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:name": { "$ref": "#/globalDef/pfm_ic/IC0_name" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=integrated_circuit0]/state/fully-qualified-name",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'state'}elem:{name:'fully-qualified-name'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/state/fully-qualified-name",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-pins-platform:fully-qualified-name"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-pins-platform:fully-qualified-name": { "$ref": "#/globalDef/pfm_ic/IC0_fq_name" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=integrated_circuit0]/state/parent",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'state'}elem:{name:'parent'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/state/parent",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:parent"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:parent": { "$ref": "#/globalDef/pfm_ic/IC0_parent" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=integrated_circuit0]/state/type",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'state'}elem:{name:'type'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/state/type",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:type"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:type": { "$ref": "#/globalDef/pfm_ic/IC0_type" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=*]/integrated-circuit",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'*'}}elem:{name:'integrated-circuit'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:component"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:component" : {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "contains": {
+                    "type": "object",
+                    "required": ["name", "integrated-circuit"],
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": { "$ref": "#/globalDef/pfm_ic/IC0_name" },
+                      "integrated-circuit": { "$ref": "#/globalDef/pfm_ic/IC0_ic" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=integrated_circuit0]/integrated-circuit",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'integrated-circuit'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit",
+            "syncResponse": true,
+            "schema": { "$ref": "#/globalDef/pfm_ic/IC0ICOnly" }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=fan1]/integrated-circuit",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'fan1'}}elem:{name:'integrated-circuit'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {}
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=integrated_circuit0]/integrated-circuit/config",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'integrated-circuit'}elem:{name:'config'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit/config",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:config"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:config": {
+                  "$ref": "#/globalDef/pfm_ic/IC0_ic_cfg"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=*]/integrated-circuit/config",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'*'}}elem:{name:'integrated-circuit'}elem:{name:'config'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit/config",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:config"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:config": {
+                  "$ref": "#/globalDef/pfm_ic/IC0_ic_cfg"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=integrated_circuit0]/integrated-circuit/state",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'integrated-circuit'}elem:{name:'state'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit/state",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:state"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:state": {
+                  "$ref": "#/globalDef/pfm_ic/IC0_ic_st"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=*]/integrated-circuit/state",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'*'}}elem:{name:'integrated-circuit'}elem:{name:'state'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit/state",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:state"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:state": {
+                  "$ref": "#/globalDef/pfm_ic/IC0_ic_st"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=integrated_circuit0]/integrated-circuit/state/blackhole",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'integrated-circuit'}elem:{name:'state'}elem:{name:'blackhole'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit/state",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:state"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:state": {
+                  "type": "object",
+                  "required": ["google-pins-platform:blackhole"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "google-pins-platform:blackhole": { "$ref": "#/globalDef/pfm_ic/IC0_ic_st_bh" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=*]/integrated-circuit/state/blackhole",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'*'}}elem:{name:'integrated-circuit'}elem:{name:'state'}elem:{name:'blackhole'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit/state",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:state"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:state": {
+                  "type": "object",
+                  "required": ["google-pins-platform:blackhole"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "google-pins-platform:blackhole": { "$ref": "#/globalDef/pfm_ic/IC0_ic_st_bh" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=integrated_circuit0]/integrated-circuit/state/congestion",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'integrated-circuit'}elem:{name:'state'}elem:{name:'congestion'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit/state",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:state"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:state": {
+                  "type": "object",
+                  "required": ["google-pins-platform:congestion"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "google-pins-platform:congestion": { "$ref": "#/globalDef/pfm_ic/IC0_ic_st_cg" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=*]/integrated-circuit/state/congestion",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'*'}}elem:{name:'integrated-circuit'}elem:{name:'state'}elem:{name:'congestion'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit/state",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:state"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:state": {
+                  "type": "object",
+                  "required": ["google-pins-platform:congestion"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "google-pins-platform:congestion": { "$ref": "#/globalDef/pfm_ic/IC0_ic_st_cg" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=integrated_circuit0]/integrated-circuit/pipeline-counters",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'integrated-circuit'}elem:{name:'pipeline-counters'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit/pipelne-counters",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform-pipeline-counters:pipeline-counters"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform-pipeline-counters:pipeline-counters": {
+                  "$ref": "#/globalDef/pfm_ic/IC0_ic_plc"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=*]/integrated-circuit/pipeline-counters",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'*'}}elem:{name:'integrated-circuit'}elem:{name:'pipeline-counters'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit/pipelne-counters",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform-pipeline-counters:pipeline-counters"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform-pipeline-counters:pipeline-counters": {
+                  "$ref": "#/globalDef/pfm_ic/IC0_ic_plc"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=integrated_circuit0]/integrated-circuit/memory",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'integrated-circuit'}elem:{name:'memory'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit/memory",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform-integrated-circuit:memory"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform-integrated-circuit:memory": {
+                  "$ref": "#/globalDef/pfm_ic/IC0_ic_mem"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubSample /openconfig/components/component[name=integrated_circuit0]/integrated-circuit/memory",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'integrated-circuit'}elem:{name:'memory'}}mode:SAMPLE sample_interval:3000000000}mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit/memory",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform-integrated-circuit:memory"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform-integrated-circuit:memory": {
+                  "$ref": "#/globalDef/pfm_ic/IC0_ic_mem"
+                }
+              }
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates second sample",
+          "timeout": 4000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit/memory",
+            "syncResponse": false,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform-integrated-circuit:memory"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform-integrated-circuit:memory": {
+                  "$ref": "#/globalDef/pfm_ic/IC0_ic_mem"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "SubOnce /openconfig/components/component[name=*]/integrated-circuit/memory",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'*'}}elem:{name:'integrated-circuit'}elem:{name:'memory'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates response",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit/memory",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform-integrated-circuit:memory"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform-integrated-circuit:memory": {
+                  "$ref": "#/globalDef/pfm_ic/IC0_ic_mem"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+

@@ -1,0 +1,163 @@
+// A generic network operational interface gRPC service to perform burnin
+// operations on a network device.
+
+syntax = "proto3";
+
+package gpins.gnoi;
+option go_package = "github.com/sonic-net/sonic-gnmi/proto/gnoi/burnin";
+
+import "google/protobuf/any.proto";
+
+service Burnin {
+  // Instructs the chassis to start a Burnin operation.
+  rpc StartBurnin(StartBurninRequest) returns (StartBurninResponse) {}
+
+  // Instructs the chassis to stop a Burnin operation. This is a best-effort
+  // "stop" RPC for cancellation of the tests mid-stream if the unit is
+  // reachable via the network.
+  rpc StopBurnin(StopBurninRequest) returns (StopBurninResponse) {}
+
+  // Collects the results from the end of a Burnin operation.
+  rpc GetBurninResult(GetBurninResultRequest)
+      returns (GetBurninResultResponse) {}
+}
+
+// This message is the serialized path to a node in the device model (shape).
+// TODO(b/174806617): Update on the hardware model. One potential option is
+// go/gpins-oc-platform.
+message HardwarePath {
+  // Identifies a hardware component at a field-replaceable-unit level.
+  string component_path = 1;
+  // Optionally identify a subcomponent within the FRU.
+  string subcomponent_path = 2;
+}
+
+enum BurninStatus {
+  // Unknown result.
+  BURNIN_STATUS_UNKNOWN = 0;
+
+  // Success.
+  BURNIN_STATUS_SUCCESS = 1;
+
+  // Test failed, not the hardware.
+  BURNIN_STATUS_TEST_FAILURE = 2;
+
+  // Test OK, hardware failed.
+  BURNIN_STATUS_HARDWARE_FAILURE = 3;
+
+  // Test in progress, no result yet.
+  BURNIN_STATUS_IN_PROGRESS = 4;
+}
+
+message StartBurninRequest {
+  // Allowed duration of the burnin operation, in seconds.
+  uint64 duration_seconds = 1;
+
+  // Unique Burnin operation ID specified by the client. Multiple hardware
+  // targets can have the same operation ID. This ID will be used later to stop
+  // the operation and/or get its results.
+  string burnin_operation_id = 2;
+
+  // Hardware Locators to test. If unspecified, all hardware is tested.
+  repeated HardwarePath hardware_targets = 3;
+
+  // If true, test is online, and should not disrupt normal operation.
+  bool online_burnin = 4;
+
+  // Optional parameters to be passed to burnin tests. In normal burnin
+  // operation, this shouldn't be set, primarily for debugging/special
+  // invocations of Burnin (e.g., update test duration for a sub-test).
+  google.protobuf.Any parameters = 5;
+}
+
+message StartBurninResponse {}
+
+message StopBurninRequest {
+  // The same operation ID given when the burnin operation was started. For
+  // tracking the burnin operation, if multiple are in flight.
+  string burnin_operation_id = 1;
+}
+
+message StopBurninResponse {}
+
+message GetBurninResultRequest {
+  // The same operation ID given when the burnin operation was started. For
+  // tracking the burnin operation, if multiple are in flight.
+  string burnin_operation_id = 1;
+}
+
+message TestResult {
+  enum Symptom {
+    SYMPTOM_UNKNOWN = 0;
+    // Failed to communicate with the target.
+    SYMPTOM_COMMUNICATION_ERROR = 1;
+    // Failed as the target/ test configuration is at fault.
+    SYMPTOM_CONFIGURATION_ERROR = 2;
+    // Failed due to security credentials.
+    SYMPTOM_SECURITY_ERROR = 3;
+    // Target is mis-wired.
+    SYMPTOM_MISWIRED = 4;
+
+    // Control loop (i.e., thermal, optical power) is at fault. It is designed
+    // to be generally applicable to a HW fault.
+    SYMPTOM_CONTROL_LOOP_FAULT = 5;
+    // Clock at fault (e.g., not synced).
+    SYMPTOM_CLOCK_FAULT = 6;
+    // Test has not finished in the test duration.
+    SYMPTOM_TIMEOUT_FAULT = 7;
+    // Experienced memory error.
+    SYMPTOM_MEMORY_FAULT = 8;
+    // Experienced software error.
+    SYMPTOM_SOFTWARE_FAULT = 9;
+    // Experienced power issue.
+    SYMPTOM_POWER_FAULT = 10;
+    // Reference voltage is out of spec.
+    SYMPTOM_ANALOG_FAULT = 11;
+    // Sub-component has experienced error.
+    SYMPTOM_SUBCOMPONENT_FAULT = 12;
+
+    // Temperature is below the operating range.
+    SYMPTOM_TEMPERATURE_LOW = 13;
+    // Temperature is above the operating range.
+    SYMPTOM_TEMPERATURE_HIGH = 14;
+    // Voltage is below the operating range.
+    SYMPTOM_VOLTAGE_LOW = 15;
+    // Voltage is above the operating range.
+    SYMPTOM_VOLTAGE_HIGH = 16;
+    // Speed (e.g., fan) is too slow.
+    SYMPTOM_SPEED_LOW = 17;
+    // Speed (e.g., fan) is too fast.
+    SYMPTOM_SPEED_HIGH = 18;
+    // Experienced correctable memory errors.
+    SYMPTOM_ERRORS_CORRECTABLE = 19;
+    // Experienced un-correctable memory errors.
+    SYMPTOM_ERRORS_UNCORRECTABLE = 20;
+    // Interface is up. Expected it to be in a different state.
+    SYMPTOM_INTERFACE_UP = 21;
+    // Interface is down. Expected it to be in a different state.
+    SYMPTOM_INTERFACE_DOWN = 22;
+    // Interface flapped during test.
+    SYMPTOM_INTERFACE_FLAP = 23;
+  }
+
+  // Primary key for the test result.
+  HardwarePath hardware_target = 1;
+
+  // Individual test result.
+  BurninStatus result = 2;
+
+  // Set of symptoms describing the problem.
+  repeated Symptom symptoms = 3;
+}
+
+message GetBurninResultResponse {
+  // Actual duration of the test, in seconds.
+  uint64 actual_duration_seconds = 1;
+
+  // Overall (aggregated) test result. Overall result will only `pass` if all
+  // the tests pass. If any test fails, the overall result is a failure.
+  BurninStatus overall_result = 2;
+
+  // Individual burnin test results.
+  repeated TestResult test_results = 3;
+}

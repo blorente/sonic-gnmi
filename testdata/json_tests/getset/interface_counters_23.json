@@ -1,0 +1,444 @@
+{
+    "title": "Get Interface counters",
+    "operations":[
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/counters/fec-codeword-without-symbol-errors-count",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-interfaces:fec-codeword-without-symbol-errors-count"
+            ],
+            "properties": {
+                "counters": {
+                    "type": "string",
+                    "enum": ["241"]
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/counters/fec-codeword-with-1-symbol-error-count",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-interfaces:fec-codeword-with-1-symbol-error-count"
+            ],
+            "properties": {
+                "counters": {
+                    "type": "string",
+                    "enum": ["196"]
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/counters/fec-codeword-with-2-symbol-errors-count",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-interfaces:fec-codeword-with-2-symbol-errors-count"
+            ],
+            "properties": {
+                "counters": {
+                    "type": "string",
+                    "enum": ["172"]
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/counters/fec-codeword-with-3-symbol-errors-count",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-interfaces:fec-codeword-with-3-symbol-errors-count"
+            ],
+            "properties": {
+                "counters": {
+                    "type": "string",
+                    "enum": ["164"]
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/counters/fec-codeword-with-4-symbol-errors-count",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-interfaces:fec-codeword-with-4-symbol-errors-count"
+            ],
+            "properties": {
+                "counters": {
+                    "type": "string",
+                    "enum": ["157"]
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/counters/fec-codeword-with-5-symbol-errors-count",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-interfaces:fec-codeword-with-5-symbol-errors-count"
+            ],
+            "properties": {
+                "counters": {
+                    "type": "string",
+                    "enum": ["143"]
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/counters/fec-codeword-with-6-symbol-errors-count",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-interfaces:fec-codeword-with-6-symbol-errors-count"
+            ],
+            "properties": {
+                "counters": {
+                    "type": "string",
+                    "enum": ["131"]
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/counters/fec-codeword-with-7-symbol-errors-count",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-interfaces:fec-codeword-with-7-symbol-errors-count"
+            ],
+            "properties": {
+                "counters": {
+                    "type": "string",
+                    "enum": ["129"]
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/counters/fec-codeword-with-8-symbol-errors-count",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-interfaces:fec-codeword-with-8-symbol-errors-count"
+            ],
+            "properties": {
+                "counters": {
+                    "type": "string",
+                    "enum": ["118"]
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/counters/fec-codeword-with-9-symbol-errors-count",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-interfaces:fec-codeword-with-9-symbol-errors-count"
+            ],
+            "properties": {
+                "counters": {
+                    "type": "string",
+                    "enum": ["105"]
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/counters/fec-codeword-with-10-symbol-errors-count",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-interfaces:fec-codeword-with-10-symbol-errors-count"
+            ],
+            "properties": {
+                "counters": {
+                    "type": "string",
+                    "enum": ["97"]
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/counters/fec-codeword-with-11-symbol-errors-count",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-interfaces:fec-codeword-with-11-symbol-errors-count"
+            ],
+            "properties": {
+                "counters": {
+                    "type": "string",
+                    "enum": ["82"]
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/counters/fec-codeword-with-12-symbol-errors-count",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-interfaces:fec-codeword-with-12-symbol-errors-count"
+            ],
+            "properties": {
+                "counters": {
+                    "type": "string",
+                    "enum": ["74"]
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/counters/fec-codeword-with-13-symbol-errors-count",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-interfaces:fec-codeword-with-13-symbol-errors-count"
+            ],
+            "properties": {
+                "counters": {
+                    "type": "string",
+                    "enum": ["65"]
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/counters/fec-codeword-with-14-symbol-errors-count",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-interfaces:fec-codeword-with-14-symbol-errors-count"
+            ],
+            "properties": {
+                "counters": {
+                    "type": "string",
+                    "enum": ["57"]
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/counters/fec-codeword-with-15-symbol-errors-count",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-interfaces:fec-codeword-with-15-symbol-errors-count"
+            ],
+            "properties": {
+                "counters": {
+                    "type": "string",
+                    "enum": ["48"]
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/counters/fec-codeword-with-16-symbol-errors-count",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-interfaces:fec-codeword-with-16-symbol-errors-count"
+            ],
+            "properties": {
+                "counters": {
+                    "type": "string",
+                    "enum": ["31"]
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+              "openconfig-interfaces:interface"
+            ],
+            "properties": {
+                "openconfig-interfaces:interface": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "openconfig-if-ethernet:ethernet"
+                      ],
+                      "properties": {
+                        "openconfig-if-ethernet:ethernet": {
+                          "type": "object",
+                          "required": [
+                            "state"
+                          ],
+                          "properties": {
+                            "state": {
+                              "type": "object",
+                              "required": [
+                                "counters"
+                              ],
+                              "properties": {
+                                "counters": {
+                                  "type": "object",
+                                  "required": [
+                                    "google-pins-interfaces:fec-codeword-without-symbol-errors-count",
+                                    "google-pins-interfaces:fec-codeword-with-1-symbol-error-count",
+                                    "google-pins-interfaces:fec-codeword-with-2-symbol-errors-count",
+                                    "google-pins-interfaces:fec-codeword-with-3-symbol-errors-count",
+                                    "google-pins-interfaces:fec-codeword-with-4-symbol-errors-count",
+                                    "google-pins-interfaces:fec-codeword-with-5-symbol-errors-count",
+                                    "google-pins-interfaces:fec-codeword-with-6-symbol-errors-count",
+                                    "google-pins-interfaces:fec-codeword-with-7-symbol-errors-count",
+                                    "google-pins-interfaces:fec-codeword-with-8-symbol-errors-count",
+                                    "google-pins-interfaces:fec-codeword-with-9-symbol-errors-count",
+                                    "google-pins-interfaces:fec-codeword-with-10-symbol-errors-count",
+                                    "google-pins-interfaces:fec-codeword-with-11-symbol-errors-count",
+                                    "google-pins-interfaces:fec-codeword-with-12-symbol-errors-count",
+                                    "google-pins-interfaces:fec-codeword-with-13-symbol-errors-count",
+                                    "google-pins-interfaces:fec-codeword-with-14-symbol-errors-count",
+                                    "google-pins-interfaces:fec-codeword-with-15-symbol-errors-count",
+                                    "google-pins-interfaces:fec-codeword-with-16-symbol-errors-count"
+                                  ],
+                                  "properties": {
+                                    "google-pins-interfaces:fec-codeword-without-symbol-errors-count": {
+                                      "type": "string",
+                                      "enum": [
+                                        "241"
+                                      ]
+                                    },
+                                    "google-pins-interfaces:fec-codeword-with-1-symbol-error-count": {
+                                      "type": "string",
+                                      "enum": [
+                                        "196"
+                                      ]
+                                    },
+                                    "google-pins-interfaces:fec-codeword-with-2-symbol-errors-count": {
+                                        "type": "string",
+                                        "enum": [
+                                          "172"
+                                        ]
+                                    },
+                                    "google-pins-interfaces:fec-codeword-with-3-symbol-errors-count": {
+                                        "type": "string",
+                                        "enum": [
+                                          "164"
+                                        ]
+                                    },
+                                    "google-pins-interfaces:fec-codeword-with-4-symbol-errors-count": {
+                                        "type": "string",
+                                        "enum": [
+                                          "157"
+                                        ]
+                                    },
+                                    "google-pins-interfaces:fec-codeword-with-5-symbol-errors-count": {
+                                        "type": "string",
+                                        "enum": [
+                                          "143"
+                                        ]
+                                    },
+                                    "google-pins-interfaces:fec-codeword-with-6-symbol-errors-count": {
+                                        "type": "string",
+                                        "enum": [
+                                          "131"
+                                        ]
+                                    },
+                                    "google-pins-interfaces:fec-codeword-with-7-symbol-errors-count": {
+                                        "type": "string",
+                                        "enum": [
+                                          "129"
+                                        ]
+                                    },
+                                    "google-pins-interfaces:fec-codeword-with-8-symbol-errors-count": {
+                                        "type": "string",
+                                        "enum": [
+                                          "118"
+                                        ]
+                                    },
+                                    "google-pins-interfaces:fec-codeword-with-9-symbol-errors-count": {
+                                        "type": "string",
+                                        "enum": [
+                                          "105"
+                                        ]
+                                    },
+                                    "google-pins-interfaces:fec-codeword-with-10-symbol-errors-count": {
+                                        "type": "string",
+                                        "enum": [
+                                          "97"
+                                        ]
+                                    },
+                                    "google-pins-interfaces:fec-codeword-with-11-symbol-errors-count": {
+                                        "type": "string",
+                                        "enum": [
+                                          "82"
+                                        ]
+                                    },
+                                    "google-pins-interfaces:fec-codeword-with-12-symbol-errors-count": {
+                                        "type": "string",
+                                        "enum": [
+                                          "74"
+                                        ]
+                                    },
+                                    "google-pins-interfaces:fec-codeword-with-13-symbol-errors-count": {
+                                        "type": "string",
+                                        "enum": [
+                                          "65"
+                                        ]
+                                    },
+                                    "google-pins-interfaces:fec-codeword-with-14-symbol-errors-count": {
+                                        "type": "string",
+                                        "enum": [
+                                          "57"
+                                        ]
+                                    },
+                                    "google-pins-interfaces:fec-codeword-with-15-symbol-errors-count": {
+                                        "type": "string",
+                                        "enum": [
+                                          "48"
+                                        ]
+                                    },
+                                    "google-pins-interfaces:fec-codeword-with-16-symbol-errors-count": {
+                                        "type": "string",
+                                        "enum": [
+                                          "31"
+                                        ]
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                ]
+              }
+            }
+        }
+    ]
+}

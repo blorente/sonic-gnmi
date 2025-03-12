@@ -1,0 +1,255 @@
+{
+  "title": "Optical Switch Port Statuses Subscribe On Change",
+  "operations": [
+    {
+      "title": "subscribe to /port-statuses/port-status[1,99]/state ON_CHANGE",
+      "operation": "subscribe",
+      "operProto": "subscribe: { prefix: { origin:'openconfig' target:'OC_YANG' } encoding:PROTO subscription: { path: { elem: { name:'optical-switch'} elem: { name:'port-statuses' } elem: { name:'port-status' key: { key:'slot-number' value:'1' } key: { key:'port-number' value:'99' } } elem: { name: 'state' } } mode:ON_CHANGE } mode:STREAM }",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/optical-switch/port-statuses/port-status[port-number=99][slot-number=1]",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "openconfig-optical-switch:port-status"
+              ],
+              "properties": {
+                "openconfig-optical-switch:port-status": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "required": [
+                        "state",
+                        "port-number",
+                        "slot-number"
+                      ],
+                      "properties": {
+                        "state": {
+                          "type": "object",
+                          "required": [
+                            "port-status",
+                            "port-status-message"
+                          ],
+                          "properties": {
+                            "port-status": {
+                              "type": "string",
+                              "enum": [ "STATUS_DISABLED" ]
+                            },
+                            "port-status-message": {
+                              "type": "string",
+                              "enum": [ "no message." ]
+                            }
+                          }
+                        },
+                        "port-number": {
+                          "type": "integer",
+                          "enum": [ 99 ]
+                        },
+                        "slot-number": {
+                          "type": "integer",
+                          "enum": [ 1 ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "db": "STATE_DB",
+          "value": {
+            "OCS_PORT_STATUSES|1|99": {
+              "port-status": "STATUS_FAILED"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "pathValidators": [
+            {
+              "xpath": "/optical-switch/port-statuses/port-status[port-number=99][slot-number=1]/state/port-status",
+              "schema": {
+                "type": "object",
+                "required": [
+                  "openconfig-optical-switch:port-status"
+                ],
+                "properties": {
+                  "openconfig-optical-switch:port-status": {
+                    "type": "string",
+                    "enum": ["STATUS_FAILED"]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "title": "subscribe to /port-statuses/port-status[*,*]/state ON_CHANGE",
+      "operation": "subscribe",
+      "operProto": "subscribe: { prefix: { origin:'openconfig' target:'OC_YANG' } encoding:PROTO subscription: { path: { elem: { name:'optical-switch'} elem: { name:'port-statuses' } elem: { name:'port-status' key: { key:'slot-number' value:'*' } key: { key:'port-number' value:'*' } } elem: { name: 'state' } } mode:ON_CHANGE } mode:STREAM }",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/optical-switch/port-statuses/port-status",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "openconfig-optical-switch:port-status"
+              ],
+              "properties": {
+                "openconfig-optical-switch:port-status": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "required": [
+                        "state",
+                        "port-number",
+                        "slot-number"
+                      ],
+                      "properties": {
+                        "state": {
+                          "type": "object",
+                          "required": [
+                            "port-status"
+                          ],
+                          "properties": {
+                            "port-status": {
+                              "type": "string",
+                              "enum": [ "STATUS_ENABLED" ]
+                            }
+                          }
+                        },
+                        "port-number": {
+                          "type": "integer",
+                          "enum": [
+                            1
+                          ]
+                        },
+                        "slot-number": {
+                          "type": "integer",
+                          "enum": [
+                            1
+                          ]
+                        }
+                      }
+                    },
+
+                    {
+                      "required": [
+                        "state",
+                        "port-number",
+                        "slot-number"
+                      ],
+                      "properties": {
+                        "state": {
+                          "type": "object",
+                          "required": [
+                            "port-status"
+                          ],
+                          "properties": {
+                            "port-status": {
+                              "type": "string",
+                              "enum": [ "STATUS_FAILED" ]
+                            }
+                          }
+                        },
+                        "port-number": {
+                          "type": "integer",
+                          "enum": [
+                            99
+                          ]
+                        },
+                        "slot-number": {
+                          "type": "integer",
+                          "enum": [
+                            1
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "db": "STATE_DB",
+          "value": {
+            "OCS_PORT_STATUSES|1|99": {
+              "port-status": "STATUS_ENABLED"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "pathValidators": [
+            {
+              "xpath": "/optical-switch/port-statuses/port-status[port-number=99][slot-number=1]/state/port-status",
+              "schema": {
+                "type": "object",
+                "required": [
+                  "openconfig-optical-switch:port-status"
+                ],
+                "properties": {
+                  "openconfig-optical-switch:port-status": {
+                    "type": "string",
+                    "enum": [ "STATUS_ENABLED" ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "db": "STATE_DB",
+          "value": {
+            "OCS_PORT_STATUSES|1|1": {
+              "port-status": "STATUS_DISABLED"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "timeout": 3000,
+          "pathValidators": [
+            {
+              "xpath": "/optical-switch/port-statuses/port-status[port-number=1][slot-number=1]/state/port-status",
+              "schema": {
+                "type": "object",
+                "required": [
+                  "openconfig-optical-switch:port-status"
+                ],
+                "properties": {
+                  "openconfig-optical-switch:port-status": {
+                    "type": "string",
+                    "enum": [ "STATUS_DISABLED" ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

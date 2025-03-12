@@ -1,0 +1,883 @@
+{
+  "title": "Optical Switch Port Connection Path Tests",
+  "operations":[
+    {
+      "title": "Root-Level Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:port-connections"
+      ],
+      "properties": {
+        "openconfig-optical-switch:port-connections": {
+          "type": "object",
+          "required": ["port-connection"],
+          "properties": {
+            "port-connection": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "required": ["slot-number", "port-number", "config", "state"],
+                  "properties": {
+                    "slot-number": {
+                      "type": "integer",
+                      "enum": [1]
+                    },
+                    "port-number": {
+                      "type": "integer",
+                      "enum": [1]
+                    },
+                    "config": {
+                      "type": "object",
+                      "required": ["peer-port-number"],
+                      "properties": {
+                        "peer-port-number": {
+                          "type": "integer",
+                          "enum": [10099]
+                        }
+                      }
+                    },
+                    "state": {
+                      "type": "object",
+                      "required": ["peer-port-number"],
+                      "properties": {
+                        "peer-port-number": {
+                          "type": "integer",
+                          "enum": [10098]
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "required": ["slot-number", "port-number", "config", "state"],
+                  "properties": {
+                    "slot-number": {
+                      "type": "integer",
+                      "enum": [1]
+                    },
+                    "port-number": {
+                      "type": "integer",
+                      "enum": [99]
+                    },
+                    "config": {
+                      "type": "object",
+                      "required": ["peer-port-number"],
+                      "properties": {
+                        "peer-port-number": {
+                          "type": "integer",
+                          "enum": [10001]
+                        }
+                      }
+                    },
+                    "state": {
+                      "type": "object",
+                      "required": ["peer-port-number"],
+                      "properties": {
+                        "peer-port-number": {
+                          "type": "integer",
+                          "enum": [10002]
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Specific port-connection 1|1 Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:port-connection"
+      ],
+      "properties": {
+        "openconfig-optical-switch:port-connection": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "required": ["slot-number", "port-number", "config", "state"],
+              "properties": {
+                "slot-number": {
+                  "type": "integer",
+                  "enum": [1]
+                },
+                "port-number": {
+                  "type": "integer",
+                  "enum": [1]
+                },
+                "config": {
+                  "type": "object",
+                  "required": ["peer-port-number"],
+                  "properties": {
+                    "peer-port-number": {
+                      "type": "integer",
+                      "enum": [10099]
+                    }
+                  }
+                },
+                "state": {
+                  "type": "object",
+                  "required": ["peer-port-number"],
+                  "properties": {
+                    "peer-port-number": {
+                      "type": "integer",
+                      "enum": [10098]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "title": "Specific port-connection 1|99 Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=99]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:port-connection"
+      ],
+      "properties": {
+        "openconfig-optical-switch:port-connection": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "required": ["slot-number", "port-number", "config", "state"],
+              "properties": {
+                "slot-number": {
+                  "type": "integer",
+                  "enum": [1]
+                },
+                "port-number": {
+                  "type": "integer",
+                  "enum": [99]
+                },
+                "config": {
+                  "type": "object",
+                  "required": ["peer-port-number"],
+                  "properties": {
+                    "peer-port-number": {
+                      "type": "integer",
+                      "enum": [10001]
+                    }
+                  }
+                },
+                "state": {
+                  "type": "object",
+                  "required": ["peer-port-number"],
+                  "properties": {
+                    "peer-port-number": {
+                      "type": "integer",
+                      "enum": [10002]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "title": "Specific port-connection/config 1|99 Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=99]/config",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:config"
+      ],
+      "properties": {
+        "openconfig-optical-switch:config": {
+          "type": "object",
+          "required": ["peer-port-number"],
+          "properties": {
+            "peer-port-number": {
+              "type": "integer",
+              "enum": [10001]
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Specific port-connection/state 1|99 Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=99]/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:state"
+      ],
+      "properties": {
+        "openconfig-optical-switch:state": {
+          "type": "object",
+          "required": ["peer-port-number"],
+          "properties": {
+            "peer-port-number": {
+              "type": "integer",
+              "enum": [10002]
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Specific port-connection/config/peer-port-number 1|99 Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=99]/config/peer-port-number",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:peer-port-number"
+      ],
+      "properties": {
+        "peer-port-numberpeer-port-number": {
+          "type": "integer",
+          "enum": [10001]
+        }
+      }
+    },
+    {
+      "title": "Specific port-connection/state/peer-port-number 1|99 Get, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=99]/state/peer-port-number",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:peer-port-number"
+      ],
+      "properties": {
+        "peer-port-numberpeer-port-number": {
+          "type": "integer",
+          "enum": [10002]
+        }
+      }
+    },
+    {
+      "title": "Bad slot-number, Negative",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=-1][port-number=99]/state/peer-port-number",
+      "target": "OC_YANG",
+      "type": "object"
+    },
+    {
+      "title": "Bad slot-number, Out-of-Range",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=5618973][port-number=99]/state/peer-port-number",
+      "target": "OC_YANG",
+      "type": "object"
+    },
+    {
+      "title": "Bad slot-number, Not An Int",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=potatoes][port-number=99]/state/peer-port-number",
+      "target": "OC_YANG",
+      "type": "object"
+    },
+    {
+      "title": "Bad port-number, Negative",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=-1]/state/peer-port-number",
+      "target": "OC_YANG",
+      "type": "object"
+    },
+    {
+      "title": "Bad port-number, Out-of-Range",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=8948949]/state/peer-port-number",
+      "target": "OC_YANG",
+      "type": "object"
+    },
+    {
+      "title": "Bad port-number, Not An Int",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=potatoes]/state/peer-port-number",
+      "target": "OC_YANG",
+      "type": "object"
+    },
+    {
+      "title": "Update Existing peer-port-number 1|99, Success",
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=99]/config/peer-port-number",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-optical-switch:peer-port-number\": 10055}"
+    },
+    {
+      "title": "Read Back Modified peer-port-number 1|99, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=99]/config/peer-port-number",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:peer-port-number"
+      ],
+      "properties": {
+        "openconfig-optical-switch:peer-port-number": {
+          "type": "integer",
+          "enum": [10055]
+        }
+      }
+    },
+    {
+      "title": "Delete peer-port-number 1|99, Success",
+      "operation": "delete",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=99]",
+      "target": "OC_YANG",
+      "type": "object",
+      "subOpers": [
+        {
+          "oper": "dbHDel",
+          "title": "Delete of same port number in state DB.",
+          "db": "STATE_DB",
+          "value": {
+            "OCS_XCONNECTS|1|99": []
+          }
+        }
+      ]
+    },
+    {
+      "title": "Read Back deleted peer-port-number 1|99, NotFound",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=99]",
+      "target": "OC_YANG",
+      "type": "object"
+    },
+
+    {
+      "title": "Add Cross Connection 1|55, Success",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=55]",
+      "target": "OC_YANG",
+      "attributeData": "{\"port-connection\": [{\"slot-number\": 1, \"port-number\": 55, \"config\": {\"peer-port-number\": 10011, \"peer-slot-number\": 1}}]}"
+    },
+    {
+      "title": "Read Back New Cross Connection 1|55, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=55]/config/peer-port-number",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:peer-port-number"
+      ],
+      "properties": {
+        "openconfig-optical-switch:peer-port-number": {
+          "type": "integer",
+          "enum": [10011]
+        }
+      }
+    },
+
+    {
+      "title": "Add Cross Connection, port-number Out-of-Range",
+      "operation": "replace",
+      "returnCode": 10,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=550000]",
+      "target": "OC_YANG",
+      "attributeData": "{\"port-connection\": [{\"slot-number\": 1, \"port-number\": 55, \"config\": {\"peer-port-number\": 550000}}]}"
+    },
+
+    {
+      "title": "Add Cross Connection @ /port-connection/config, NotFound",
+      "operation": "replace",
+      "returnCode": 10,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=25]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"peer-port-number\": 10025}}"
+    },
+    {
+      "title": "Replace Cross Connection @ /port-connection/state, Error",
+      "operation": "replace",
+      "returnCode": 10,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=25]/state",
+      "target": "OC_YANG",
+      "attributeData": "{\"state\": {\"peer-port-number\": 10025}}"
+    },
+    {
+      "title": "Update Cross Connection @ /port-connection/state, Error",
+      "operation": "update",
+      "returnCode": 10,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=25]/state",
+      "target": "OC_YANG",
+      "attributeData": "{\"state\": {\"peer-port-number\": 10025}}"
+    },
+    {
+      "title": "Add Cross Connection @ /port-connection 1|25, Success",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=25]",
+      "target": "OC_YANG",
+      "attributeData": "{\"port-connection\": [{\"slot-number\": 1, \"port-number\": 25, \"config\": {\"peer-port-number\": 10025, \"peer-slot-number\": 1}}]}"
+    },
+
+    {
+      "title": "Replace Existing Cross Connection @ /port-connection 1|25, Success",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=25]",
+      "target": "OC_YANG",
+      "attributeData": "{\"port-connection\": [{\"slot-number\": 1, \"port-number\": 25, \"config\": {\"peer-port-number\": 10035, \"peer-slot-number\": 1}}]}"
+    },
+    {
+      "title": "Read Back Modified peer-port-number 1|25, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=25]/config/peer-port-number",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:peer-port-number"
+      ],
+      "properties": {
+        "openconfig-optical-switch:peer-port-number": {
+          "type": "integer",
+          "enum": [10035]
+        }
+      }
+    },
+
+    {
+      "title": "Replace Existing Cross Connection @ /port-connection/config 1|25, Success",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=25]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"port-number\": 25, \"slot-number\": 1, \"peer-port-number\": 10036, \"peer-slot-number\": 1}}"
+    },
+    {
+      "title": "Read Back Modified peer-port-number 1|25, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=25]/config/peer-port-number",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:peer-port-number"
+      ],
+      "properties": {
+        "openconfig-optical-switch:peer-port-number": {
+          "type": "integer",
+          "enum": [10036]
+        }
+      }
+    },
+
+    {
+      "title": "Update Existing Cross Connection @ /port-connection 1|25, Success",
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=25]",
+      "target": "OC_YANG",
+      "attributeData": "{\"port-connection\": [{\"slot-number\": 1, \"port-number\": 25, \"config\": {\"peer-port-number\": 10035, \"peer-slot-number\": 1}}]}"
+    },
+    {
+      "title": "Read Back Modified peer-port-number 1|25, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=25]/config/peer-port-number",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:peer-port-number"
+      ],
+      "properties": {
+        "openconfig-optical-switch:peer-port-number": {
+          "type": "integer",
+          "enum": [10035]
+        }
+      }
+    },
+
+    {
+      "title": "Update Existing Cross Connection @ /port-connection/config 1|25, Success",
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=25]/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"peer-port-number\": 10036, \"peer-slot-number\": 1}}"
+    },
+    {
+      "title": "Read Back Modified peer-port-number 1|25, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=25]/config/peer-port-number",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:peer-port-number"
+      ],
+      "properties": {
+        "openconfig-optical-switch:peer-port-number": {
+          "type": "integer",
+          "enum": [10036]
+        }
+      }
+    },
+
+    {
+      "title": "Update Existing Cross Connection @ /port-connection/config/peer-port-number 1|25, Success",
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=25]/config/peer-port-number",
+      "target": "OC_YANG",
+      "attributeData": "{\"peer-port-number\": 10037}"
+    },
+    {
+      "title": "Read Back Modified peer-port-number 1|25, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=25]/config/peer-port-number",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:peer-port-number"
+      ],
+      "properties": {
+        "openconfig-optical-switch:peer-port-number": {
+          "type": "integer",
+          "enum": [10037]
+        }
+      }
+    },
+
+    {
+      "title": "Delete peer-port-number 1|25, Success",
+      "operation": "delete",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=25]/config",
+      "target": "OC_YANG",
+      "type": "object"
+
+    },
+    {
+      "title": "Read Back deleted peer-port-number 1|25, NotFound",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=25]",
+      "target": "OC_YANG",
+      "type": "object"
+    },
+
+    {
+      "title": "Delete peer-port-number 1|55, Success",
+      "operation": "delete",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=55]/config",
+      "target": "OC_YANG",
+      "type": "object"
+    },
+    {
+      "title": "Read Back deleted peer-port-number 1|55, NotFound",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=1][port-number=55]",
+      "target": "OC_YANG",
+      "type": "object"
+    },
+
+    {
+      "title": "Delete all Cross Connections, Success",
+      "operation": "delete",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections",
+      "target": "OC_YANG"
+    },
+    {
+      "title": "Replace All Cross Connections, Success",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections",
+      "target": "OC_YANG",
+      "attributeData":"{ \"port-connections\": { \"port-connection\": [ { \"slot-number\": 1, \"port-number\": 13, \"config\": { \"peer-port-number\": 10013, \"peer-slot-number\": 1, \"slot-number\": 1, \"port-number\": 13 } }, { \"slot-number\": 1, \"port-number\": 29, \"config\": { \"peer-port-number\": 10029, \"peer-slot-number\": 1, \"slot-number\": 1, \"port-number\": 29 } }, { \"slot-number\": 1, \"port-number\": 35, \"config\": { \"peer-port-number\": 10035, \"peer-slot-number\": 1, \"slot-number\": 1, \"port-number\": 35 } } ] }}",
+      "subOpers": [
+        {
+          "oper": "dbHDel",
+          "title": "Delete of 1|1 (exists but not specified in replace) in state DB.",
+          "db": "STATE_DB",
+          "value": {
+            "OCS_XCONNECTS|1|1": []
+          }
+        }
+      ]
+    },
+    {
+      "title": "Read Back Replaced Cross Connections, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:port-connections"
+      ],
+      "properties": {
+        "openconfig-optical-switch:port-connections": {
+          "type": "object",
+          "required": ["port-connection"],
+          "properties": {
+            "port-connection": {
+              "type": "array",
+              "maxItems": 3,
+              "items": [
+                {
+                  "type": "object",
+                  "required": ["slot-number", "port-number", "config"],
+                  "properties": {
+                    "slot-number": {
+                      "type": "integer",
+                      "enum": [1]
+                    },
+                    "port-number": {
+                      "type": "integer",
+                      "enum": [13]
+                    },
+                    "config": {
+                      "type": "object",
+                      "required": ["peer-port-number"],
+                      "properties": {
+                        "peer-port-number": {
+                          "type": "integer",
+                          "enum": [10013]
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "required": ["slot-number", "port-number", "config"],
+                  "properties": {
+                    "slot-number": {
+                      "type": "integer",
+                      "enum": [1]
+                    },
+                    "port-number": {
+                      "type": "integer",
+                      "enum": [29]
+                    },
+                    "config": {
+                      "type": "object",
+                      "required": ["peer-port-number"],
+                      "properties": {
+                        "peer-port-number": {
+                          "type": "integer",
+                          "enum": [10029]
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "required": ["slot-number", "port-number", "config"],
+                  "properties": {
+                    "slot-number": {
+                      "type": "integer",
+                      "enum": [1]
+                    },
+                    "port-number": {
+                      "type": "integer",
+                      "enum": [35]
+                    },
+                    "config": {
+                      "type": "object",
+                      "required": ["peer-port-number"],
+                      "properties": {
+                        "peer-port-number": {
+                          "type": "integer",
+                          "enum": [10035]
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Update Multiple Cross Connections, Success",
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections",
+      "target": "OC_YANG",
+      "attributeData":"{ \"port-connections\": { \"port-connection\": [ { \"slot-number\": 1, \"port-number\": 13, \"config\": { \"peer-port-number\": 10099, \"peer-slot-number\": 1, \"slot-number\": 1, \"port-number\": 13 } }, { \"slot-number\": 1, \"port-number\": 29, \"config\": { \"peer-port-number\": 10099, \"peer-slot-number\": 1, \"slot-number\": 1, \"port-number\": 29 } }, { \"slot-number\": 1, \"port-number\": 44, \"config\": { \"peer-port-number\": 10044, \"peer-slot-number\": 1, \"slot-number\": 1, \"port-number\": 44 } } ] }}"
+    },
+    {
+      "title": "Read Back Updated Cross Connections, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-optical-switch:port-connections"
+      ],
+      "properties": {
+        "openconfig-optical-switch:port-connections": {
+          "type": "object",
+          "required": ["port-connection"],
+          "properties": {
+            "port-connection": {
+              "type": "array",
+              "maxItems": 4,
+              "items": [
+                {
+                  "type": "object",
+                  "required": ["slot-number", "port-number", "config"],
+                  "properties": {
+                    "slot-number": {
+                      "type": "integer",
+                      "enum": [1]
+                    },
+                    "port-number": {
+                      "type": "integer",
+                      "enum": [13]
+                    },
+                    "config": {
+                      "type": "object",
+                      "required": ["peer-port-number"],
+                      "properties": {
+                        "peer-port-number": {
+                          "type": "integer",
+                          "enum": [10099]
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "required": ["slot-number", "port-number", "config"],
+                  "properties": {
+                    "slot-number": {
+                      "type": "integer",
+                      "enum": [1]
+                    },
+                    "port-number": {
+                      "type": "integer",
+                      "enum": [29]
+                    },
+                    "config": {
+                      "type": "object",
+                      "required": ["peer-port-number"],
+                      "properties": {
+                        "peer-port-number": {
+                          "type": "integer",
+                          "enum": [10099]
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "required": ["slot-number", "port-number", "config"],
+                  "properties": {
+                    "slot-number": {
+                      "type": "integer",
+                      "enum": [1]
+                    },
+                    "port-number": {
+                      "type": "integer",
+                      "enum": [35]
+                    },
+                    "config": {
+                      "type": "object",
+                      "required": ["peer-port-number"],
+                      "properties": {
+                        "peer-port-number": {
+                          "type": "integer",
+                          "enum": [10035]
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "required": ["slot-number", "port-number", "config"],
+                  "properties": {
+                    "slot-number": {
+                      "type": "integer",
+                      "enum": [1]
+                    },
+                    "port-number": {
+                      "type": "integer",
+                      "enum": [44]
+                    },
+                    "config": {
+                      "type": "object",
+                      "required": ["peer-port-number"],
+                      "properties": {
+                        "peer-port-number": {
+                          "type": "integer",
+                          "enum": [10044]
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Delete all Cross Connections, Success",
+      "operation": "delete",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections",
+      "target": "OC_YANG"
+    },
+    {
+      "title": "Check for Empty Cross Connections, Success",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig-optical-switch:optical-switch/port-connections",
+      "target": "OC_YANG",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+      }
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+// Debug represents a list of APIs that are used for debugging purposes.
+
+syntax = "proto3";
+
+package gpins.gnoi;
+option go_package = "github.com/sonic-net/sonic-gnmi/proto/gnoi/debug";
+
+service Debug {
+  // TunnelCommand executes a command on the device.
+  // Commands should only be executed one at a time. And it is recommented to
+  // have rate limiting of this RPC service. Implementation should also perform
+  // command validation to prevent pipe and redirect if needed.
+  rpc TunnelCommand(TunnelCommandRequest) returns (TunnelCommandResponse) {}
+}
+
+message TunnelCommandRequest {
+  // Command to be executed.
+  string command = 1;
+  // List of arguments for the command.
+  repeated bytes arg = 2;
+}
+
+message TunnelCommandResponse {
+  // The return status code of the command.
+  // This status should be independent of the gRPC status. If the RPC is
+  // successful but the command returns failure, the gRPC status should be OK.
+  uint32 status = 1;
+  // The output of the command.
+  bytes stdout = 2;
+  // The error output of the command.
+  bytes stderr = 3;
+}

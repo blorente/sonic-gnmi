@@ -1,0 +1,384 @@
+{
+  "title": "Get_interface_oper-status",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "oper-status"
+                ],
+                "properties": {
+                  "oper-status": {
+                    "type": "string",
+                    "enum": ["UP"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "oper-status"
+                ],
+                "properties": {
+                  "oper-status": {
+                    "type": "string",
+                    "enum": ["TESTING"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/2/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "oper-status"
+                ],
+                "properties": {
+                  "oper-status": {
+                    "type": "string",
+                    "enum": ["TESTING"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/2/5]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "oper-status"
+                ],
+                "properties": {
+                  "oper-status": {
+                    "type": "string",
+                    "enum": ["DOWN"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/3/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "oper-status"
+                ],
+                "properties": {
+                  "oper-status": {
+                    "type": "string",
+                    "enum": ["DOWN"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/3/1" : {
+              "presence": "0"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/3/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "oper-status"
+                ],
+                "properties": {
+                  "oper-status": {
+                    "type": "string",
+                    "enum": ["DOWN"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=bond0]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "oper-status"
+                ],
+                "properties": {
+                  "oper-status": {
+                    "type": "string",
+                    "enum": ["UP"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "STATE_DB",
+          "value": {
+            "MGMT_PORT_TABLE|eth0": {
+              "oper_status": "up"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"name\": \"eth0\",\"config\": {\"name\": \"eth0\", \"type\": \"iana-if-type:ethernetCsmacd\"}}]}}"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=eth0]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "cpu", "management", "name", "oper-status", "type"
+                ],
+                "properties": {
+                  "cpu": {
+                    "type": "boolean",
+                    "enum": [false]
+                  },
+                  "management": {
+                    "type": "boolean",
+                    "enum": [true]
+                  },
+                  "name": {
+                    "type": "string",
+                    "enum": ["eth0"]
+                  },
+                  "oper-status": {
+                    "type": "string",
+                    "enum": ["UP"]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["iana-if-type:ethernetCsmacd"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHDel",
+          "title": "Delete MGMT_PORT from CONFIG_DB",
+          "db": "CONFIG_DB",
+          "value": {
+            "MGMT_PORT|eth0": []
+          }
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Delete MGMT_PORT_TABLE from STATE_DB",
+          "db": "STATE_DB",
+          "value": {
+            "MGMT_PORT_TABLE|eth0": []
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Loopback4]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "oper-status"
+                ],
+                "properties": {
+                  "oper-status": {
+                    "type": "string",
+                    "enum": ["UP"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+

@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package gpins.gnoi;
+option go_package = "proto/gnoi/ocs";
+
+enum OcsErrorStatus {
+  NO_ERROR = 0;
+  // General error codes (1-99).
+  NOT_IMPLEMENTED = 1;
+  REQUEST_REJECTED = 2;
+  // System in NSF.
+  NSF_IN_PROGRESS = 3;
+
+  // Connection/Disconnection related error codes (100-199).
+  PORT_ALREADY_CONNECTED = 100;
+  PORT_NOT_CONNECTED = 101;
+  PORT_SIDE_MISMATCH = 102;
+  NO_SUCH_PORT = 103;
+  // Interference detected in the ROI before making a connection.
+  INTERFERENCE_IN_ROI = 104;
+  // HV issues.
+  HV_NOT_INITIALIZED = 105;
+  // Port has issues connecting within specified time.
+  PORT_HAS_ISSUE_CONNECTING = 106;
+  // Port has issues staying connected.
+  PORT_CONNECTION_NOT_STABLE = 107;
+
+  // LDS related
+  LDS_NOT_PRESENT = 200;
+  LDS_INSUFFICIENT_PORTS = 201;
+  LDS_BAD_CALIBRATION_DATA = 202;
+  LDS_TX_OUTSIDE_CALIBRATION_RANGE = 203;
+  LDS_RX_OUTSIDE_CALIBRATION_RANGE = 204;
+  LDS_SELF_CHECK_INCOMPLETE = 205;
+  LDS_NO_FUNCTIONAL_PORT = 206;
+  LDS_READ_ERROR = 207;
+  LDS_TX_START_ERROR = 208;
+}
+
+message OcsErrorDetail {
+  optional OcsErrorStatus status = 1;
+  optional string description = 2;
+}

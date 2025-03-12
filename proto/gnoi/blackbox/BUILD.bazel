@@ -1,0 +1,40 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+proto_library(
+    name = "blackbox_proto",
+    srcs = ["blackbox_test.proto"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_openconfig_gnoi//types:types_proto",
+        "@com_github_openconfig_ygot//proto/yext:yext_proto",
+        "@googleapis//google/rpc:status_proto",
+    ],
+)
+
+go_proto_library(
+    name = "blackbox_go_proto",
+    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
+    importpath = "github.com/sonic-net/sonic-gnmi/proto/gnoi/blackbox",
+    proto = ":blackbox_proto",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_openconfig_gnoi//types",
+        "@com_github_openconfig_ygot//proto/yext:yext_go_proto",
+        "@org_golang_google_genproto_googleapis_rpc//status",
+    ],
+)
+
+go_library(
+    name = "blackbox",
+    embed = [":blackbox_go_proto"],
+    importpath = "github.com/sonic-net/sonic-gnmi/proto/gnoi/blackbox",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":blackbox",
+    visibility = ["//visibility:public"],
+)

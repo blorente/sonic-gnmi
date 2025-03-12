@@ -1,0 +1,423 @@
+{
+  "title": "Wildcard OnChange Subscription: /openconfig/components/component[name=*]/state/type",
+  "globalDef": {
+    "validators": {
+      "type.xcvr": {
+        "type": "object",
+        "required": [
+          "openconfig-platform:type"
+        ],
+        "properties": {
+          "openconfig-platform:type": {
+            "type": "string",
+            "const": "openconfig-platform-types:TRANSCEIVER"
+          }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "Subscribes to /openconfig/components/component[name=*]/state/type with ON_CHANGE",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'*'}}elem:{name:'state'}elem:{name:'type'}}mode:ON_CHANGE}mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:component"],
+              "properties": {
+                "openconfig-platform:component": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "required": ["name", "state"],
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": { "type": "string" },
+                      "state": {
+                        "type": "object",
+                        "required": [ "type" ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "type": { "type": "string" }
+                        }
+                      }
+                    }
+                  },
+                  "minItems": 42,
+                  "maxItems": 42,
+                  "additionalItems": false,
+                  "allOf": [
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "/dev/sda"},
+                          "state": {
+                            "type": "object",
+                            "required": [ "type" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "type": { "type": "string", "const": "openconfig-platform-types:STORAGE" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "1/1"},
+                          "state": {
+                            "type": "object",
+                            "required": [ "type" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "type": { "type": "string", "const": "openconfig-platform-types:PORT" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "Ethernet1"},
+                          "state": {
+                            "type": "object",
+                            "required": [ "type" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "type": { "type": "string", "const": "openconfig-platform-types:TRANSCEIVER" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "FanTray1"},
+                          "state": {
+                            "type": "object",
+                            "required": [ "type" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "type": { "type": "string", "const": "openconfig-platform-types:FAN" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "fan1"},
+                          "state": {
+                            "type": "object",
+                            "required": [ "type" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "type": { "type": "string", "const": "openconfig-platform-types:FAN" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "PSU 1"},
+                          "state": {
+                            "type": "object",
+                            "required": [ "type" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "type": { "type": "string", "const": "openconfig-platform-types:POWER_SUPPLY" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "boot_loader"},
+                          "state": {
+                            "type": "object",
+                            "required": [ "type" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "type": { "type": "string", "const": "openconfig-platform-types:BOOT_LOADER" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "network_stack0"},
+                          "state": {
+                            "type": "object",
+                            "required": [ "type" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "type": { "type": "string", "const": "openconfig-platform-types:SOFTWARE_MODULE" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "os0"},
+                          "state": {
+                            "type": "object",
+                            "required": [ "type" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "type": { "type": "string", "const": "openconfig-platform-types:OPERATING_SYSTEM" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "chassis"},
+                          "state": {
+                            "type": "object",
+                            "required": [ "type" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "type": { "type": "string", "const": "openconfig-platform-types:CHASSIS" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "heatsink_sensor_1"},
+                          "state": {
+                            "type": "object",
+                            "required": [ "type" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "type": { "type": "string", "const": "openconfig-platform-types:SENSOR" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "cpu_sensor_1"},
+                          "state": {
+                            "type": "object",
+                            "required": [ "type" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "type": { "type": "string", "const": "openconfig-platform-types:CPU" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "integrated_circuit0"},
+                          "state": {
+                            "type": "object",
+                            "required": [ "type" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "type": { "type": "string", "const": "openconfig-platform-types:INTEGRATED_CIRCUIT" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "fpga_0"},
+                          "state": {
+                            "type": "object",
+                            "required": [ "type" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "type": { "type": "string", "const": "google-pins-platform:FPGA" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "haven"},
+                          "state": {
+                            "type": "object",
+                            "required": [ "type" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "type": { "type": "string", "const": "google-pins-platform:HARDWARE_SECURITY_MODULE" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "hotswap_1"},
+                          "state": {
+                            "type": "object",
+                            "required": [ "type" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "type": { "type": "string", "const": "openconfig-platform-types:POWER_SUPPLY" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "power_brick_1"},
+                          "state": {
+                            "type": "object",
+                            "required": [ "type" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "type": { "type": "string", "const": "openconfig-platform-types:POWER_SUPPLY" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "power_sequencer_adm1266-i2c-10001-44"},
+                          "state": {
+                            "type": "object",
+                            "required": [ "type" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "type": { "type": "string", "const": "openconfig-platform-types:POWER_SUPPLY" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "voltage_regulator_1"},
+                          "state": {
+                            "type": "object",
+                            "required": [ "type" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "type": { "type": "string", "const": "openconfig-platform-types:POWER_SUPPLY" }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Creates new transceiver",
+          "db": "STATE_DB",
+          "value": {
+            "TRANSCEIVER_INFO|Ethernet01234": {
+              "name": "Ethernet01234",
+              "vendor_name": "V01234"
+            },
+            "TRANSCEIVER_DOM_SENSOR|Ethernet01234": {
+              "vendor_name": "V01234"
+            },
+            "TRANSCEIVER_STATUS|Ethernet01234": {
+              "status": "1"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with Ethernet01234.type TRANSCEIVER",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/components/component[name=Ethernet01234]/state/type",
+              "schema": {
+                "$ref": "#/globalDef/validators/type.xcvr"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Deletes component TRANSCEIVER Ethernet01234",
+          "db": "STATE_DB",
+          "value": {
+            "TRANSCEIVER_INFO|Ethernet01234":[],
+            "TRANSCEIVER_DOM_SENSOR|Ethernet01234":[],
+            "TRANSCEIVER_STATUS|Ethernet01234":[]
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates delete update for TRANSCEIVER Ethernet01234",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/components/component[name=Ethernet01234]/state/type"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
+
+exports_files(["database_config.json"])
+
+filegroup(
+    name = "testdata",
+    srcs = glob(
+        ["**/*"],
+        exclude = [
+            ".*",
+            "**/.*",
+        ],
+    ),
+    visibility = ["//visibility:public"],
+)
+
+pkg_tar(
+    name = "testdata_tar",
+    srcs = [":testdata"],
+    mode = "0644",
+    package_dir = "/testdata",
+    strip_prefix = "/testdata",
+    visibility = ["//visibility:public"],
+)

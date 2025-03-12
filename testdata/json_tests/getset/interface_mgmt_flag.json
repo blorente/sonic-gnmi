@@ -1,0 +1,109 @@
+{
+  "title": "Get Interface management flags",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:state"
+      ],
+      "properties": {
+        "openconfig-interfaces:state": {
+          "type": "object",
+          "required": [
+            "management"
+          ],
+          "properties": {
+            "management": {
+              "type": "boolean",
+              "enum": [
+                false
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=bond0]/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:state"
+      ],
+      "properties": {
+        "openconfig-interfaces:state": {
+          "type": "object",
+          "required": [
+            "management"
+          ],
+          "properties": {
+            "management": {
+              "type": "boolean",
+              "enum": [
+                true
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=CPU]/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:state"
+      ],
+      "properties": {
+        "openconfig-interfaces:state": {
+          "type": "object",
+          "required": [
+            "management"
+          ],
+          "properties": {
+            "management": {
+              "type": "boolean",
+              "enum": [
+                false
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:state"
+      ],
+      "properties": {
+        "openconfig-interfaces:state": {
+          "type": "object",
+          "required": [
+            "management"
+          ],
+          "properties": {
+            "management": {
+              "type": "boolean",
+              "enum": [
+                false
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}

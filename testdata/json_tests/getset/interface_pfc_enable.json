@@ -1,0 +1,920 @@
+{
+    "title": "Interface_PFC_Enable",
+    "operations": [
+      {
+        "title": "Set enable-pfc-rx leaf to true",
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/config",
+        "target": "OC_YANG",
+        "attributeData": "{\"config\": {\"google-pins-interfaces:enable-pfc-rx\": true}}",
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_TABLE:Ethernet1/1/1": {
+                "pfc_asym": "on"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "Get config/state enable-pfc-rx leaf",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-if-ethernet:ethernet"
+        ],
+        "properties": {
+          "openconfig-if-ethernet:ethernet": {
+            "type": "object",
+            "required": [
+              "config",
+              "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "google-pins-interfaces:enable-pfc-rx"
+                ],
+                "properties": {
+                  "google-pins-interfaces:enable-pfc-rx": {
+                    "type": "boolean",
+                    "enum": [true]
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "google-pins-interfaces:enable-pfc-rx"
+                ],
+                "properties": {
+                  "google-pins-interfaces:enable-pfc-rx": {
+                    "type": "boolean",
+                    "enum": [true]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "subOpers": [
+          {
+            "oper": "dbHGetValidate",
+            "db": "CONFIG_DB",
+            "value": {
+              "PFC_WD|Ethernet1/1/1" : {
+                "action": "forward",
+                "detection_time": "1000",
+                "restoration_time": "1000"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/google-pins-interfaces:pfc",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "google-pins-interfaces:pfc"
+        ],
+        "properties": {
+          "google-pins-interfaces:pfc": {
+            "type": "object",
+            "required": [
+              "priority"
+            ],
+            "properties": {
+              "priority": {
+                "type": "array",
+                "items": [
+                  {
+                    "title": "0",
+                    "type": "object",
+                    "required": [
+                      "priority", "state"
+                    ],
+                    "properties": {
+                      "priority": {
+                        "type": "integer",
+                        "enum": [
+                          0
+                        ]
+                      },
+                      "state": {
+                        "type": "object",
+                        "required": [
+                          "priority", "counters"
+                        ],
+                        "properties": {
+                          "priority": {
+                            "type": "integer",
+                            "enum": [
+                              0
+                            ]
+                          },
+                          "counters": {
+                            "type": "object",
+                            "required": [
+                              "rx-packets", "on2off-rx-packets"
+                            ],
+                            "properties": {
+                              "rx-packets": {
+                                "type": "string",
+                                "enum": [
+                                  "210"
+                                ]
+                              },
+                              "on2off-rx-packets": {
+                                "type": "string",
+                                "enum": [
+                                  "10"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "title": "1",
+                    "type": "object",
+                    "required": [
+                      "priority", "state"
+                    ],
+                    "properties": {
+                      "priority": {
+                        "type": "integer",
+                        "enum": [
+                          1
+                        ]
+                      },
+                      "state": {
+                        "type": "object",
+                        "required": [
+                          "priority", "counters"
+                        ],
+                        "properties": {
+                          "priority": {
+                            "type": "integer",
+                            "enum": [
+                              1
+                            ]
+                          },
+                          "counters": {
+                            "type": "object",
+                            "required": [
+                              "rx-packets", "on2off-rx-packets"
+                            ],
+                            "properties": {
+                              "rx-packets": {
+                                "type": "string",
+                                "enum": [
+                                  "30"
+                                ]
+                              },
+                              "on2off-rx-packets": {
+                                "type": "string",
+                                "enum": [
+                                  "20"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "title": "2",
+                    "type": "object",
+                    "required": [
+                      "priority", "state"
+                    ],
+                    "properties": {
+                      "priority": {
+                        "type": "integer",
+                        "enum": [
+                          2
+                        ]
+                      },
+                      "state": {
+                        "type": "object",
+                        "required": [
+                          "priority", "counters"
+                        ],
+                        "properties": {
+                          "priority": {
+                            "type": "integer",
+                            "enum": [
+                              2
+                            ]
+                          },
+                          "counters": {
+                            "type": "object",
+                            "required": [
+                              "rx-packets", "on2off-rx-packets"
+                            ],
+                            "properties": {
+                              "rx-packets": {
+                                "type": "string",
+                                "enum": [
+                                  "180"
+                                ]
+                              },
+                              "on2off-rx-packets": {
+                                "type": "string",
+                                "enum": [
+                                  "30"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "title": "3",
+                    "type": "object",
+                    "required": [
+                      "priority", "state"
+                    ],
+                    "properties": {
+                      "priority": {
+                        "type": "integer",
+                        "enum": [
+                          3
+                        ]
+                      },
+                      "state": {
+                        "type": "object",
+                        "required": [
+                          "priority", "counters"
+                        ],
+                        "properties": {
+                          "priority": {
+                            "type": "integer",
+                            "enum": [
+                              3
+                            ]
+                          },
+                          "counters": {
+                            "type": "object",
+                            "required": [
+                              "rx-packets", "on2off-rx-packets"
+                            ],
+                            "properties": {
+                              "rx-packets": {
+                                "type": "string",
+                                "enum": [
+                                  "80"
+                                ]
+                              },
+                              "on2off-rx-packets": {
+                                "type": "string",
+                                "enum": [
+                                  "40"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "title": "4",
+                    "type": "object",
+                    "required": [
+                      "priority", "state"
+                    ],
+                    "properties": {
+                      "priority": {
+                        "type": "integer",
+                        "enum": [
+                          4
+                        ]
+                      },
+                      "state": {
+                        "type": "object",
+                        "required": [
+                          "priority", "counters"
+                        ],
+                        "properties": {
+                          "priority": {
+                            "type": "integer",
+                            "enum": [
+                              4
+                            ]
+                          },
+                          "counters": {
+                            "type": "object",
+                            "required": [
+                              "rx-packets", "on2off-rx-packets"
+                            ],
+                            "properties": {
+                              "rx-packets": {
+                                "type": "string",
+                                "enum": [
+                                  "90"
+                                ]
+                              },
+                              "on2off-rx-packets": {
+                                "type": "string",
+                                "enum": [
+                                  "50"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "title": "5",
+                    "type": "object",
+                    "required": [
+                      "priority", "state"
+                    ],
+                    "properties": {
+                      "priority": {
+                        "type": "integer",
+                        "enum": [
+                          5
+                        ]
+                      },
+                      "state": {
+                        "type": "object",
+                        "required": [
+                          "priority", "counters"
+                        ],
+                        "properties": {
+                          "priority": {
+                            "type": "integer",
+                            "enum": [
+                              5
+                            ]
+                          },
+                          "counters": {
+                            "type": "object",
+                            "required": [
+                              "rx-packets", "on2off-rx-packets"
+                            ],
+                            "properties": {
+                              "rx-packets": {
+                                "type": "string",
+                                "enum": [
+                                  "100"
+                                ]
+                              },
+                              "on2off-rx-packets": {
+                                "type": "string",
+                                "enum": [
+                                  "60"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "title": "6",
+                    "type": "object",
+                    "required": [
+                      "priority", "state"
+                    ],
+                    "properties": {
+                      "priority": {
+                        "type": "integer",
+                        "enum": [
+                          6
+                        ]
+                      },
+                      "state": {
+                        "type": "object",
+                        "required": [
+                          "priority", "counters"
+                        ],
+                        "properties": {
+                          "priority": {
+                            "type": "integer",
+                            "enum": [
+                              6
+                            ]
+                          },
+                          "counters": {
+                            "type": "object",
+                            "required": [
+                              "rx-packets", "on2off-rx-packets"
+                            ],
+                            "properties": {
+                              "rx-packets": {
+                                "type": "string",
+                                "enum": [
+                                  "120"
+                                ]
+                              },
+                              "on2off-rx-packets": {
+                                "type": "string",
+                                "enum": [
+                                  "70"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "title": "7",
+                    "type": "object",
+                    "required": [
+                      "priority", "state"
+                    ],
+                    "properties": {
+                      "priority": {
+                        "type": "integer",
+                        "enum": [
+                          7
+                        ]
+                      },
+                      "state": {
+                        "type": "object",
+                        "required": [
+                          "priority", "counters"
+                        ],
+                        "properties": {
+                          "priority": {
+                            "type": "integer",
+                            "enum": [
+                              7
+                            ]
+                          },
+                          "counters": {
+                            "type": "object",
+                            "required": [
+                              "rx-packets", "on2off-rx-packets"
+                            ],
+                            "properties": {
+                              "rx-packets": {
+                                "type": "string",
+                                "enum": [
+                                  "200"
+                                ]
+                              },
+                              "on2off-rx-packets": {
+                                "type": "string",
+                                "enum": [
+                                  "80"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/google-pins-interfaces:pfc/priority[priority=0]/state/counters/rx-packets",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "google-pins-interfaces:rx-packets"
+        ],
+        "properties": {
+          "google-pins-interfaces:rx-packets": {
+            "type": "string",
+            "enum": ["210"]
+          }
+        }
+      },
+      {
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/google-pins-interfaces:pfc/priority[priority=7]/state/counters/on2off-rx-packets",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "google-pins-interfaces:on2off-rx-packets"
+        ],
+        "properties": {
+          "google-pins-interfaces:on2off-rx-packets": {
+            "type": "string",
+            "enum": ["80"]
+          }
+        }
+      },
+      {
+        "title": "Set enable-pfc-rx leaf to false",
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/config",
+        "target": "OC_YANG",
+        "attributeData": "{\"config\": {\"google-pins-interfaces:enable-pfc-rx\": false}}",
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_TABLE:Ethernet1/1/1": {
+                "pfc_asym": "off"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "Get config/state enable-pfc-rx leaf",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-if-ethernet:ethernet"
+        ],
+        "properties": {
+          "openconfig-if-ethernet:ethernet": {
+            "type": "object",
+            "required": [
+              "config",
+              "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "google-pins-interfaces:enable-pfc-rx"
+                ],
+                "properties": {
+                  "google-pins-interfaces:enable-pfc-rx": {
+                    "type": "boolean",
+                    "enum": [false]
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "google-pins-interfaces:enable-pfc-rx"
+                ],
+                "properties": {
+                  "google-pins-interfaces:enable-pfc-rx": {
+                    "type": "boolean",
+                    "enum": [false]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "title": "Create PORT_STATE:Ethernet1/1/* in APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_STATE:Ethernet1/1/1" : {
+                "phase": "pending_delete"
+              },
+              "PORT_STATE:Ethernet1/1/5" : {
+                "phase": "pending_delete"
+              },
+              "INTF_TABLE:Ethernet1/1/1": {
+                "unnumbered_enabled": "true"
+              },
+              "INTF_TABLE:Ethernet1/1/5": {
+                "unnumbered_enabled": "true"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "Set interfaces and breakout config for {Ethernet1/1/1, Ethernet1/1/5 -> Ethernet1/1/1, Ethernet1/1/5 (PFC enabled), Ethernet1/1/7 (PFC enabled)} with PFC enabled",
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/",
+        "target": "OC_YANG",
+        "attributeData": "{\"openconfig-interfaces:interfaces\" : {\"interface\" : [{\"config\" : {\"enabled\" : true,\"mtu\" : 9216,\"name\" : \"Ethernet1/1/1\",\"openconfig-p4rt:id\" : 1,\"type\" : \"iana-if-type:ethernetCsmacd\"},\"name\" : \"Ethernet1/1/1\",\"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"fec-mode\" : \"openconfig-if-ethernet:FEC_RS544_2X_INTERLEAVE\",\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\", \"google-pins-interfaces:enable-pfc-rx\": true}},\"subinterfaces\" : {\"subinterface\" : [{\"config\" : {\"index\" : 0},\"index\" : 0,\"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}]}},{\"config\" : {\"enabled\" : true,\"mtu\" : 9216,\"name\" : \"Ethernet1/1/5\",\"openconfig-p4rt:id\" : 513,\"type\" : \"iana-if-type:ethernetCsmacd\"},\"name\" : \"Ethernet1/1/5\",\"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"fec-mode\" : \"openconfig-if-ethernet:FEC_RS544_2X_INTERLEAVE\",\"port-speed\" : \"openconfig-if-ethernet:SPEED_200GB\", \"google-pins-interfaces:enable-pfc-rx\": true}},\"subinterfaces\" : {\"subinterface\" : [{\"config\" : {\"index\" : 0},\"index\" : 0,\"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}]}},{\"config\" : {\"enabled\" : true,\"mtu\" : 9216,\"name\" : \"Ethernet1/1/7\",\"openconfig-p4rt:id\" : 517,\"type\" : \"iana-if-type:ethernetCsmacd\"},\"name\" : \"Ethernet1/1/7\",\"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"fec-mode\" : \"openconfig-if-ethernet:FEC_RS544_2X_INTERLEAVE\",\"port-speed\" : \"openconfig-if-ethernet:SPEED_200GB\", \"google-pins-interfaces:enable-pfc-rx\": true}},\"subinterfaces\" : {\"subinterface\" : [{\"config\" : {\"index\" : 0},\"index\" : 0,\"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}]}}]},\"openconfig-platform:components\" : {\"component\" : [{\"config\" : {\"name\" : \"1/1\"},\"name\" : \"1/1\",\"port\" : {\"config\" : {\"openconfig-pins-platform-port:port-id\" : 1},\"openconfig-platform-port:breakout-mode\" : {\"groups\" : {\"group\" : [{ \"config\" : { \"breakout-speed\" : \"openconfig-if-ethernet:SPEED_400GB\",\"index\" : 0,\"num-breakouts\" : 1,\"num-physical-channels\" : 4},\"index\" : 0},{ \"config\" : { \"breakout-speed\" : \"openconfig-if-ethernet:SPEED_200GB\",\"index\" : 1,\"num-breakouts\" : 2,\"num-physical-channels\" : 2},\"index\" : 1}]}}}}]}}"
+      },
+      {
+        "title": "Get config enable-pfc-rx leaf for Ethernet1/1/1",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-if-ethernet:ethernet"
+        ],
+        "properties": {
+          "openconfig-if-ethernet:ethernet": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "google-pins-interfaces:enable-pfc-rx"
+                ],
+                "properties": {
+                  "google-pins-interfaces:enable-pfc-rx": {
+                    "type": "boolean",
+                    "enum": [true]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "title": "Get config enable-pfc-rx leaf for Ethernet1/1/5",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/ethernet",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-if-ethernet:ethernet"
+        ],
+        "properties": {
+          "openconfig-if-ethernet:ethernet": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "google-pins-interfaces:enable-pfc-rx"
+                ],
+                "properties": {
+                  "google-pins-interfaces:enable-pfc-rx": {
+                    "type": "boolean",
+                    "enum": [true]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "title": "Get config enable-pfc-rx leaf for Ethernet1/1/7",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/7]/ethernet",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-if-ethernet:ethernet"
+        ],
+        "properties": {
+          "openconfig-if-ethernet:ethernet": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "google-pins-interfaces:enable-pfc-rx"
+                ],
+                "properties": {
+                  "google-pins-interfaces:enable-pfc-rx": {
+                    "type": "boolean",
+                    "enum": [true]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "subOpers": [
+          {
+            "oper": "dbHGetValidate",
+            "db": "CONFIG_DB",
+            "value": {
+              "PFC_WD|Ethernet1/1/1" : {
+                "action": "forward",
+                "detection_time": "1000",
+                "restoration_time": "1000"
+              },
+              "PFC_WD|Ethernet1/1/5" : {
+                "action": "forward",
+                "detection_time": "1000",
+                "restoration_time": "1000"
+              },
+              "PFC_WD|Ethernet1/1/7" : {
+                "action": "forward",
+                "detection_time": "1000",
+                "restoration_time": "1000"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create PORT_STATE:Ethernet1/1/7 pending_delete in APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_STATE:Ethernet1/1/7" : {
+                "phase": "pending_delete"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "Reset interfaces and breakout config with PFC: {Ethernet1/1/1, Ethernet1/1/5 (PFC enabled), Ethernet1/1/7 (PFC enabled) -> Ethernet1/1/1, Ethernet1/1/5}",
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/",
+        "target": "OC_YANG",
+        "attributeData": "{\"openconfig-interfaces:interfaces\" : {\"interface\" : [{\"config\" : {\"enabled\" : true,\"mtu\" : 9216,\"name\" : \"Ethernet1/1/1\",\"openconfig-p4rt:id\" : 1,\"type\" : \"iana-if-type:ethernetCsmacd\"},\"name\" : \"Ethernet1/1/1\",\"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"fec-mode\" : \"openconfig-if-ethernet:FEC_RS544_2X_INTERLEAVE\",\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}},\"subinterfaces\" : {\"subinterface\" : [{\"config\" : {\"index\" : 0},\"index\" : 0,\"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}]}},{\"config\" : {\"enabled\" : true,\"mtu\" : 9216,\"name\" : \"Ethernet1/1/5\",\"openconfig-p4rt:id\" : 513,\"type\" : \"iana-if-type:ethernetCsmacd\"},\"name\" : \"Ethernet1/1/5\",\"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"fec-mode\" : \"openconfig-if-ethernet:FEC_RS544_2X_INTERLEAVE\",\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}},\"subinterfaces\" : {\"subinterface\" : [{\"config\" : {\"index\" : 0},\"index\" : 0,\"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}]}}]},\"openconfig-platform:components\" : {\"component\" : [{\"config\" : {\"name\" : \"1/1\"},\"name\" : \"1/1\",\"port\" : {\"config\" : {\"openconfig-pins-platform-port:port-id\" : 1},\"openconfig-platform-port:breakout-mode\" : {\"groups\" : {\"group\" : [{ \"config\" : { \"breakout-speed\" : \"openconfig-if-ethernet:SPEED_400GB\",\"index\" : 0,\"num-breakouts\" : 2,\"num-physical-channels\" : 4},\"index\" : 0}]}}}}]}}"
+      },
+      {
+        "title": "Set interfaces and breakout config for {Ethernet1/1/1, Ethernet1/1/5 -> Ethernet1/1/1, Ethernet1/1/5 (PFC disabled), Ethernet1/1/7 (PFC disabled)} with PFC disabled",
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/",
+        "target": "OC_YANG",
+        "attributeData": "{\"openconfig-interfaces:interfaces\" : {\"interface\" : [{\"config\" : {\"enabled\" : true,\"mtu\" : 9216,\"name\" : \"Ethernet1/1/1\",\"openconfig-p4rt:id\" : 1,\"type\" : \"iana-if-type:ethernetCsmacd\"},\"name\" : \"Ethernet1/1/1\",\"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"fec-mode\" : \"openconfig-if-ethernet:FEC_RS544_2X_INTERLEAVE\",\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\", \"google-pins-interfaces:enable-pfc-rx\": false}},\"subinterfaces\" : {\"subinterface\" : [{\"config\" : {\"index\" : 0},\"index\" : 0,\"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}]}},{\"config\" : {\"enabled\" : true,\"mtu\" : 9216,\"name\" : \"Ethernet1/1/5\",\"openconfig-p4rt:id\" : 513,\"type\" : \"iana-if-type:ethernetCsmacd\"},\"name\" : \"Ethernet1/1/5\",\"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"fec-mode\" : \"openconfig-if-ethernet:FEC_RS544_2X_INTERLEAVE\",\"port-speed\" : \"openconfig-if-ethernet:SPEED_200GB\", \"google-pins-interfaces:enable-pfc-rx\": false}},\"subinterfaces\" : {\"subinterface\" : [{\"config\" : {\"index\" : 0},\"index\" : 0,\"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}]}},{\"config\" : {\"enabled\" : true,\"mtu\" : 9216,\"name\" : \"Ethernet1/1/7\",\"openconfig-p4rt:id\" : 517,\"type\" : \"iana-if-type:ethernetCsmacd\"},\"name\" : \"Ethernet1/1/7\",\"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"fec-mode\" : \"openconfig-if-ethernet:FEC_RS544_2X_INTERLEAVE\",\"port-speed\" : \"openconfig-if-ethernet:SPEED_200GB\", \"google-pins-interfaces:enable-pfc-rx\": false}},\"subinterfaces\" : {\"subinterface\" : [{\"config\" : {\"index\" : 0},\"index\" : 0,\"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}]}}]},\"openconfig-platform:components\" : {\"component\" : [{\"config\" : {\"name\" : \"1/1\"},\"name\" : \"1/1\",\"port\" : {\"config\" : {\"openconfig-pins-platform-port:port-id\" : 1},\"openconfig-platform-port:breakout-mode\" : {\"groups\" : {\"group\" : [{ \"config\" : { \"breakout-speed\" : \"openconfig-if-ethernet:SPEED_400GB\",\"index\" : 0,\"num-breakouts\" : 1,\"num-physical-channels\" : 4},\"index\" : 0},{ \"config\" : { \"breakout-speed\" : \"openconfig-if-ethernet:SPEED_200GB\",\"index\" : 1,\"num-breakouts\" : 2,\"num-physical-channels\" : 2},\"index\" : 1}]}}}}]}}"
+      },
+      {
+        "title": "Get config enable-pfc-rx leaf for Ethernet1/1/1 with PFC disabled",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-if-ethernet:ethernet"
+        ],
+        "properties": {
+          "openconfig-if-ethernet:ethernet": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "google-pins-interfaces:enable-pfc-rx"
+                ],
+                "properties": {
+                  "google-pins-interfaces:enable-pfc-rx": {
+                    "type": "boolean",
+                    "enum": [false]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "title": "Get config enable-pfc-rx leaf for Ethernet1/1/5 with PFC disabled",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/ethernet",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-if-ethernet:ethernet"
+        ],
+        "properties": {
+          "openconfig-if-ethernet:ethernet": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "google-pins-interfaces:enable-pfc-rx"
+                ],
+                "properties": {
+                  "google-pins-interfaces:enable-pfc-rx": {
+                    "type": "boolean",
+                    "enum": [false]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "title": "Get config enable-pfc-rx leaf for Ethernet1/1/7 with PFC disabled",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/7]/ethernet",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-if-ethernet:ethernet"
+        ],
+        "properties": {
+          "openconfig-if-ethernet:ethernet": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "google-pins-interfaces:enable-pfc-rx"
+                ],
+                "properties": {
+                  "google-pins-interfaces:enable-pfc-rx": {
+                    "type": "boolean",
+                    "enum": [false]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "title": "Create PORT_STATE:Ethernet1/1/7 in APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_STATE:Ethernet1/1/7" : {
+                "phase": "pending_delete"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "Reset interfaces and breakin config with PFC: {Ethernet1/1/1, Ethernet1/1/5 (PFC disabled), Ethernet1/1/7 (PFC disabled) -> Ethernet1/1/1, Ethernet1/1/5}",
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/",
+        "target": "OC_YANG",
+        "attributeData": "{\"openconfig-interfaces:interfaces\" : {\"interface\" : [{\"config\" : {\"enabled\" : true,\"mtu\" : 9216,\"name\" : \"Ethernet1/1/1\",\"openconfig-p4rt:id\" : 1,\"type\" : \"iana-if-type:ethernetCsmacd\"},\"name\" : \"Ethernet1/1/1\",\"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"fec-mode\" : \"openconfig-if-ethernet:FEC_RS544_2X_INTERLEAVE\",\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}},\"subinterfaces\" : {\"subinterface\" : [{\"config\" : {\"index\" : 0},\"index\" : 0,\"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}]}},{\"config\" : {\"enabled\" : true,\"mtu\" : 9216,\"name\" : \"Ethernet1/1/5\",\"openconfig-p4rt:id\" : 513,\"type\" : \"iana-if-type:ethernetCsmacd\"},\"name\" : \"Ethernet1/1/5\",\"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"fec-mode\" : \"openconfig-if-ethernet:FEC_RS544_2X_INTERLEAVE\",\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}},\"subinterfaces\" : {\"subinterface\" : [{\"config\" : {\"index\" : 0},\"index\" : 0,\"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}]}}]},\"openconfig-platform:components\" : {\"component\" : [{\"config\" : {\"name\" : \"1/1\"},\"name\" : \"1/1\",\"port\" : {\"config\" : {\"openconfig-pins-platform-port:port-id\" : 1},\"openconfig-platform-port:breakout-mode\" : {\"groups\" : {\"group\" : [{ \"config\" : { \"breakout-speed\" : \"openconfig-if-ethernet:SPEED_400GB\",\"index\" : 0,\"num-breakouts\" : 2,\"num-physical-channels\" : 4},\"index\" : 0}]}}}}]}}"
+      },
+      {
+        "title": "Get config name leaf for Ethernet1/1/1",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/config/name",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:name"
+        ],
+        "properties": {
+          "openconfig-interfaces:name": {
+            "type": "string",
+            "enum": ["Ethernet1/1/1"]
+          }
+        },
+        "subOpers": [
+          {
+            "oper": "dbHDel",
+            "title": "Delete PORT_STATE:Ethernet1/1/7 in APPL_STATE_DB",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_STATE:Ethernet1/1/7" : []
+            }
+          }
+        ]
+      }
+    ]
+  }

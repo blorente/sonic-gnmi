@@ -1,0 +1,1077 @@
+{
+  "title": "openconfig-lacp Get Tests",
+  "globalDef": {
+    "LacpDefs": {
+      "PC1_name": { "type": "string", "const": "PortChannel1" },
+      "PC1_state_name": { "$ref": "#/globalDef/LacpDefs/PC1_name" },
+      "PC1_state_interval": { "type": "string", "const": "FAST" },
+      "PC1_state_mode": { "type": "string", "const": "PASSIVE" },
+      "PC1_state_mac": { "type": "string", "const": "fc:bd:67:2c:08:f4" },
+      "PC1_state_pri": { "type": "integer", "const": 256 },
+      "PC1_state_fallback": { "type": "boolean", "const": false },
+      "PC1_state_key": { "type": "integer", "const": 1 },
+      "PC1_state": {
+        "type": "object",
+        "required": ["name", "interval", "lacp-mode", "system-id-mac", "system-priority", "fallback", "google-pins-lacp:lacp-key"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "$ref": "#/globalDef/LacpDefs/PC1_state_name" },
+          "interval": { "$ref": "#/globalDef/LacpDefs/PC1_state_interval" },
+          "lacp-mode": { "$ref": "#/globalDef/LacpDefs/PC1_state_mode" },
+          "system-id-mac": { "$ref": "#/globalDef/LacpDefs/PC1_state_mac" },
+          "system-priority": { "$ref": "#/globalDef/LacpDefs/PC1_state_pri" },
+          "fallback": { "$ref": "#/globalDef/LacpDefs/PC1_state_fallback" },
+          "google-pins-lacp:lacp-key": { "$ref": "#/globalDef/LacpDefs/PC1_state_key" }
+        }
+      },
+      "PC1_config_name": { "$ref": "#/globalDef/LacpDefs/PC1_name" },
+      "PC1_config_interval": { "type": "string", "const": "FAST" },
+      "PC1_config_mode": { "type": "string", "const": "ACTIVE" },
+      "PC1_config_mac": { "type": "string", "const": "fc:bd:67:2c:08:f4" },
+      "PC1_config_pri": { "type": "integer", "const": 256 },
+      "PC1_config_fallback": { "type": "boolean", "const": false },
+      "PC1_config_key": { "type": "integer", "const": 1 },
+      "PC1_config": {
+        "type": "object",
+        "required": ["name", "interval", "lacp-mode", "system-id-mac", "system-priority", "fallback", "google-pins-lacp:lacp-key"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "$ref": "#/globalDef/LacpDefs/PC1_config_name" },
+          "interval": { "$ref": "#/globalDef/LacpDefs/PC1_config_interval" },
+          "lacp-mode": { "$ref": "#/globalDef/LacpDefs/PC1_config_mode" },
+          "system-id-mac": { "$ref": "#/globalDef/LacpDefs/PC1_config_mac" },
+          "system-priority": { "$ref": "#/globalDef/LacpDefs/PC1_config_pri" },
+          "fallback": { "$ref": "#/globalDef/LacpDefs/PC1_config_fallback" },
+          "google-pins-lacp:lacp-key": { "$ref": "#/globalDef/LacpDefs/PC1_config_key" }
+        }
+      },
+      "PC1_mbr1_intf": { "type": "string", "const": "Ethernet1/7/3" },
+      "PC1_mbr1_state_activity": { "type": "string", "const": "ACTIVE" },
+      "PC1_mbr1_state_tmo": { "type": "string", "const": "LONG" },
+      "PC1_mbr1_state_sync": { "type": "string", "const": "IN_SYNC" },
+      "PC1_mbr1_state_agg": { "type": "boolean", "const": true },
+      "PC1_mbr1_state_col": { "type": "boolean", "const": true },
+      "PC1_mbr1_state_dis": { "type": "boolean", "const": true },
+      "PC1_mbr1_state_sysid": { "type": "string", "const": "fc:bd:67:2c:08:f4" },
+      "PC1_mbr1_state_okey": { "type": "integer", "const": 1 },
+      "PC1_mbr1_state_pid": { "type": "string", "const": "fc:bd:67:2c:08:f5" },
+      "PC1_mbr1_state_pkey": { "type": "integer", "const": 11 },
+      "PC1_mbr1_state_pnum": { "type": "integer", "const": 3 },
+      "PC1_mbr1_state_ppnum": { "type": "integer", "const": 105 },
+      "PC1_mbr1_state_cntrs_in":  { "type": "string", "const": "1234" },
+      "PC1_mbr1_state_cntrs_out": { "type": "string", "const": "4321" },
+      "PC1_mbr1_state_cntrs_err": { "type": "string", "const": "666" },
+      "PC1_mbr1_state_cntrs": {
+        "type": "object",
+        "required": ["lacp-in-pkts", "lacp-out-pkts", "lacp-rx-errors"],
+        "additionalProperties": false,
+        "properties": {
+          "lacp-in-pkts":  { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_cntrs_in" },
+          "lacp-out-pkts": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_cntrs_out" },
+          "lacp-rx-errors": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_cntrs_err" }
+        }
+      },
+      "PC1_mbr1_state": {
+        "type": "object",
+        "required": ["interface", "activity", "timeout", "synchronization", "aggregatable", "collecting", "distributing", "system-id", "oper-key", "partner-id", "partner-key", "port-num", "partner-port-num", "counters"],
+        "additionalProperties": false,
+        "properties": {
+          "interface":        { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_intf" },
+          "activity":         { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_activity" },
+          "timeout":          { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_tmo" },
+          "synchronization":  { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_sync" },
+          "aggregatable":     { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_agg" },
+          "collecting":       { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_col" },
+          "distributing":     { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_dis" },
+          "system-id":        { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_sysid" },
+          "oper-key":         { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_okey" },
+          "partner-id":       { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_pid" },
+          "partner-key":      { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_pkey" },
+          "port-num":         { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_pnum" },
+          "partner-port-num": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_ppnum" },
+          "counters":         { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_cntrs" }
+        }
+      },
+      "PC1_mbr1": {
+        "type": "object",
+        "required": ["interface", "state"],
+        "additionalProperties": false,
+        "properties": {
+          "interface": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_intf" },
+          "state": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state" }
+        }
+      },
+      "PC1_mbr2_intf": { "type": "string", "const": "Ethernet1/7/4" },
+      "PC1_mbr2_state_activity": { "type": "string", "const": "PASSIVE" },
+      "PC1_mbr2_state_tmo": { "type": "string", "const": "SHORT" },
+      "PC1_mbr2_state_sync": { "type": "string", "const": "OUT_SYNC" },
+      "PC1_mbr2_state_agg": { "type": "boolean", "const": false },
+      "PC1_mbr2_state_col": { "type": "boolean", "const": false },
+      "PC1_mbr2_state_dis": { "type": "boolean", "const": false },
+      "PC1_mbr2_state_sysid": { "type": "string", "const": "fc:bd:67:2c:08:f6" },
+      "PC1_mbr2_state_okey": { "type": "integer", "const": 1 },
+      "PC1_mbr2_state_pid": { "type": "string", "const": "fc:bd:67:2c:08:f7" },
+      "PC1_mbr2_state_pkey": { "type": "integer", "const": 22 },
+      "PC1_mbr2_state_cntrs_in":  { "type": "string", "const": "2234" },
+      "PC1_mbr2_state_cntrs_out": { "type": "string", "const": "2321" },
+      "PC1_mbr2_state_cntrs_err": { "type": "string", "const": "266" },
+      "PC1_mbr2_state_cntrs": {
+        "type": "object",
+        "required": ["lacp-in-pkts", "lacp-out-pkts", "lacp-rx-errors"],
+        "additionalProperties": false,
+        "properties": {
+          "lacp-in-pkts":  { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_cntrs_in" },
+          "lacp-out-pkts": { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_cntrs_out" },
+          "lacp-rx-errors": { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_cntrs_err" }
+        }
+      },
+      "PC1_mbr2_state": {
+        "type": "object",
+        "required": ["interface", "activity", "timeout", "synchronization", "aggregatable", "collecting", "distributing", "system-id", "oper-key", "partner-id", "partner-key", "counters"],
+        "additionalProperties": false,
+        "properties": {
+          "interface":        { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_intf" },
+          "activity":         { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_activity" },
+          "timeout":          { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_tmo" },
+          "synchronization":  { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_sync" },
+          "aggregatable":     { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_agg" },
+          "collecting":       { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_col" },
+          "distributing":     { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_dis" },
+          "system-id":        { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_sysid" },
+          "oper-key":         { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_okey" },
+          "partner-id":       { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_pid" },
+          "partner-key":      { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_pkey" },
+          "counters":         { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_cntrs" }
+        }
+      },
+      "PC1_mbr2": {
+        "type": "object",
+        "required": ["interface", "state"],
+        "additionalProperties": false,
+        "properties": {
+          "interface": { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_intf" },
+          "state": { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state" }
+        }
+      },
+      "PC1_member_all": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "uniqueItems": true,
+        "items": [ { "$ref": "#/globalDef/LacpDefs/PC1_mbr1" }, { "$ref": "#/globalDef/LacpDefs/PC1_mbr2" } ]
+      },
+      "PC1_member_a": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 1,
+        "uniqueItems": true,
+        "items": [ { "$ref": "#/globalDef/LacpDefs/PC1_mbr1" } ]
+      },
+      "PC1_member_b": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 1,
+        "uniqueItems": true,
+        "items": [ { "$ref": "#/globalDef/LacpDefs/PC1_mbr2" } ]
+      },
+      "PC1_members": {
+        "type": "object",
+        "required": ["member"],
+        "additionalProperties": false,
+        "properties": {
+          "member": { "$ref": "#/globalDef/LacpDefs/PC1_member_all" }
+        }
+      },
+      "PC1": {
+        "type": "object",
+        "required": ["name", "config", "state", "members"],
+        "additionalProperties": false,
+        "properties": {
+          "name":    { "$ref": "#/globalDef/LacpDefs/PC1_name" },
+          "config":  { "$ref": "#/globalDef/LacpDefs/PC1_config" },
+          "state":   { "$ref": "#/globalDef/LacpDefs/PC1_state" },
+          "members": { "$ref": "#/globalDef/LacpDefs/PC1_members" }
+        }
+      },
+      "PC2_name": { "type": "string", "const": "PortChannel2" },
+      "PC2_state_name": { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+      "PC2_state_interval": { "type": "string", "const": "SLOW" },
+      "PC2_state_mode": { "type": "string", "const": "ACTIVE" },
+      "PC2_state_mac": { "type": "string", "const": "fc:bd:67:2c:08:f4" },
+      "PC2_state_pri": { "type": "integer", "const": 256 },
+      "PC2_state_fallback": { "type": "boolean", "const": false },
+      "PC2_state_key": { "type": "integer", "const": 1 },
+      "PC2_state": {
+        "type": "object",
+        "required": ["name", "interval", "lacp-mode", "system-id-mac", "system-priority", "fallback", "google-pins-lacp:lacp-key"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "$ref": "#/globalDef/LacpDefs/PC2_state_name" },
+          "interval": { "$ref": "#/globalDef/LacpDefs/PC2_state_interval" },
+          "lacp-mode": { "$ref": "#/globalDef/LacpDefs/PC2_state_mode" },
+          "system-id-mac": { "$ref": "#/globalDef/LacpDefs/PC2_state_mac" },
+          "system-priority": { "$ref": "#/globalDef/LacpDefs/PC2_state_pri" },
+          "fallback": { "$ref": "#/globalDef/LacpDefs/PC2_state_fallback" },
+          "google-pins-lacp:lacp-key": { "$ref": "#/globalDef/LacpDefs/PC2_state_key" }
+        }
+      },
+      "PC2_config_name": { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+      "PC2_config_interval": { "type": "string", "const": "SLOW" },
+      "PC2_config_mode": { "type": "string", "const": "PASSIVE" },
+      "PC2_config_mac": { "type": "string", "const": "AA:BB:CC:DD:EE:FF" },
+      "PC2_config_fallback": { "type": "boolean", "const": false },
+      "PC2_config_key": { "type": "integer", "const": 2 },
+      "PC2_config": {
+        "type": "object",
+        "required": ["name", "interval", "lacp-mode", "system-id-mac", "fallback", "google-pins-lacp:lacp-key"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "$ref": "#/globalDef/LacpDefs/PC2_config_name" },
+          "interval": { "$ref": "#/globalDef/LacpDefs/PC2_config_interval" },
+          "lacp-mode": { "$ref": "#/globalDef/LacpDefs/PC2_config_mode" },
+          "system-id-mac": { "$ref": "#/globalDef/LacpDefs/PC2_config_mac" },
+          "fallback": { "$ref": "#/globalDef/LacpDefs/PC2_config_fallback" },
+          "google-pins-lacp:lacp-key": { "$ref": "#/globalDef/LacpDefs/PC2_config_key" }
+        }
+      },
+      "PC2_mbr1_intf": { "type": "string", "const": "Ethernet1/3/5" },
+      "PC2_mbr1_state_activity": { "type": "string", "const": "ACTIVE" },
+      "PC2_mbr1_state_tmo": { "type": "string", "const": "LONG" },
+      "PC2_mbr1_state_sync": { "type": "string", "const": "IN_SYNC" },
+      "PC2_mbr1_state_agg": { "type": "boolean", "const": true },
+      "PC2_mbr1_state_col": { "type": "boolean", "const": true },
+      "PC2_mbr1_state_dis": { "type": "boolean", "const": true },
+      "PC2_mbr1_state_sysid": { "type": "string", "const": "fc:bd:67:2c:08:f4" },
+      "PC2_mbr1_state_okey": { "type": "integer", "const": 1 },
+      "PC2_mbr1_state_pid": { "type": "string", "const": "fc:bd:67:2c:08:f5" },
+      "PC2_mbr1_state_pkey": { "type": "integer", "const": 11 },
+      "PC2_mbr1_state_cntrs_in":  { "type": "string", "const": "1234" },
+      "PC2_mbr1_state_cntrs_out": { "type": "string", "const": "4321" },
+      "PC2_mbr1_state_cntrs_err": { "type": "string", "const": "666" },
+      "PC2_mbr1_state_cntrs": {
+        "type": "object",
+        "required": ["lacp-in-pkts", "lacp-out-pkts", "lacp-rx-errors"],
+        "additionalProperties": false,
+        "properties": {
+          "lacp-in-pkts":  { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_cntrs_in" },
+          "lacp-out-pkts": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_cntrs_out" },
+          "lacp-rx-errors": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_cntrs_err" }
+        }
+      },
+      "PC2_mbr1_state": {
+        "type": "object",
+        "required": ["interface", "activity", "timeout", "synchronization", "aggregatable", "collecting", "distributing", "system-id", "oper-key", "partner-id", "partner-key", "counters"],
+        "additionalProperties": false,
+        "properties": {
+          "interface":        { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_intf" },
+          "activity":         { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_activity" },
+          "timeout":          { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_tmo" },
+          "synchronization":  { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_sync" },
+          "aggregatable":     { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_agg" },
+          "collecting":       { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_col" },
+          "distributing":     { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_dis" },
+          "system-id":        { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_sysid" },
+          "oper-key":         { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_okey" },
+          "partner-id":       { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_pid" },
+          "partner-key":      { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_pkey" },
+          "counters":         { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state_cntrs" }
+        }
+      },
+      "PC2_mbr1": {
+        "type": "object",
+        "required": ["interface", "state"],
+        "additionalProperties": false,
+        "properties": {
+          "interface": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_intf" },
+          "state": { "$ref": "#/globalDef/LacpDefs/PC2_mbr1_state" }
+        }
+      },
+      "PC2_member_all": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 1,
+        "uniqueItems": true,
+        "items": [ { "$ref": "#/globalDef/LacpDefs/PC2_mbr1" } ]
+      },
+      "PC2_member_a": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 1,
+        "uniqueItems": true,
+        "items": [ { "$ref": "#/globalDef/LacpDefs/PC2_mbr1" } ]
+      },
+      "PC2_members": {
+        "type": "object",
+        "required": ["member"],
+        "additionalProperties": false,
+        "properties": {
+          "member": { "$ref": "#/globalDef/LacpDefs/PC2_member_all" }
+        }
+      },
+      "PC2": {
+        "type": "object",
+        "required": ["name", "config", "state", "members"],
+        "additionalProperties": false,
+        "properties": {
+          "name":    { "$ref": "#/globalDef/LacpDefs/PC2_name" },
+          "config":  { "$ref": "#/globalDef/LacpDefs/PC2_config" },
+          "state":   { "$ref": "#/globalDef/LacpDefs/PC2_state" },
+          "members": { "$ref": "#/globalDef/LacpDefs/PC2_members" }
+        }
+      },
+      "Interface_a": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 1,
+        "uniqueItems": true,
+        "items": [ { "$ref": "#/globalDef/LacpDefs/PC1" } ]
+      },
+      "Interface_b": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 1,
+        "uniqueItems": true,
+        "items": [ { "$ref": "#/globalDef/LacpDefs/PC2" } ]
+      },
+      "Interface": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "uniqueItems": true,
+        "items": [ { "$ref": "#/globalDef/LacpDefs/PC1" }, { "$ref": "#/globalDef/LacpDefs/PC2" } ]
+      }
+    },
+    "IntfDefs": {
+      "PC1_config_lagtype": { "type": "string", "const": "LACP" },
+      "PC1_config_minlink": { "type": "integer", "const": 1 },
+      "PC1_config": {
+        "type": "object",
+        "required": ["lag-type", "min-links"],
+        "additionalProperties": false,
+        "properties": {
+            "lag-type": { "$ref": "#/globalDef/IntfDefs/PC1_config_lagtype" },
+            "min-links": { "$ref": "#/globalDef/IntfDefs/PC1_config_minlink" }
+        }
+      },
+      "PC1_state_lagspeed": { "type": "integer", "const": 2000000 },
+      "PC1_state_lagtype": { "type": "string", "const": "LACP" },
+      "PC1_state_member": { "type": "array" },
+      "PC1_state_minlink": { "type": "integer", "const": 1 },
+      "PC1_state": {
+        "type": "object",
+        "required": ["lag-speed", "lag-type", "member", "min-links"],
+        "additionalProperties": false,
+        "properties": {
+            "lag-speed": { "$ref": "#/globalDef/IntfDefs/PC1_state_lagspeed" },
+            "lag-type": { "$ref": "#/globalDef/IntfDefs/PC1_state_lagtype" },
+            "member": { "$ref": "#/globalDef/IntfDefs/PC1_state_member" },
+            "min-links": { "$ref": "#/globalDef/IntfDefs/PC1_state_minlink" }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:interfaces"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:interfaces": {
+          "type": "object",
+          "required": ["interface"],
+          "additionalProperties": false,
+          "properties": {
+            "interface": { "$ref": "#/globalDef/LacpDefs/Interface" }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:interface"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:interface": { "$ref": "#/globalDef/LacpDefs/Interface" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:interface"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:interface": { "$ref": "#/globalDef/LacpDefs/Interface_a" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel2]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:interface"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:interface": { "$ref": "#/globalDef/LacpDefs/Interface_b" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/name",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:name"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:name": { "$ref": "#/globalDef/LacpDefs/PC1_name" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel2]/name",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:name"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:name": { "$ref": "#/globalDef/LacpDefs/PC2_name" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:state"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:state": { "$ref": "#/globalDef/LacpDefs/PC1_state" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/state/name",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:name"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:name": { "$ref": "#/globalDef/LacpDefs/PC1_state_name" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/state/interval",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:interval"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:interval": { "$ref": "#/globalDef/LacpDefs/PC1_state_interval" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/state/lacp-mode",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:lacp-mode"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:lacp-mode": { "$ref": "#/globalDef/LacpDefs/PC1_state_mode" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/state/system-id-mac",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:system-id-mac"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:system-id-mac": { "$ref": "#/globalDef/LacpDefs/PC1_state_mac" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/state/system-priority",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:system-priority"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:system-priority": { "$ref": "#/globalDef/LacpDefs/PC1_state_pri" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/state/lacp-key",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-lacp:lacp-key"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-lacp:lacp-key": { "$ref": "#/globalDef/LacpDefs/PC1_state_key" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/config",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:config"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:config": { "$ref": "#/globalDef/LacpDefs/PC1_config" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/config/name",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:name"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:name": { "$ref": "#/globalDef/LacpDefs/PC1_config_name" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/config/interval",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:interval"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:interval": { "$ref": "#/globalDef/LacpDefs/PC1_config_interval" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/config/lacp-mode",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:lacp-mode"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:lacp-mode": { "$ref": "#/globalDef/LacpDefs/PC1_config_mode" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/config/system-id-mac",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:system-id-mac"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:system-id-mac": { "$ref": "#/globalDef/LacpDefs/PC1_config_mac" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/config/system-priority",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:system-priority"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:system-priority": { "$ref": "#/globalDef/LacpDefs/PC1_config_pri" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/config/lacp-key",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-lacp:lacp-key"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-lacp:lacp-key": { "$ref": "#/globalDef/LacpDefs/PC1_config_key" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:members"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:members": { "$ref": "#/globalDef/LacpDefs/PC1_members" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:member"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:member": { "$ref": "#/globalDef/LacpDefs/PC1_member_all" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:member"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:member": { "$ref": "#/globalDef/LacpDefs/PC1_member_a" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/4]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:member"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:member": { "$ref": "#/globalDef/LacpDefs/PC1_member_b" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:state"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:state": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:state"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:state": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/interface",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:interface"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:interface": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_intf" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/activity",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:activity"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:activity": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_activity" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/4]/state/activity",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:activity"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:activity": { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_activity" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/timeout",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:timeout"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:timeout": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_tmo" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/4]/state/timeout",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:timeout"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:timeout": { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_tmo" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/synchronization",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:synchronization"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:synchronization": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_sync" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/4]/state/synchronization",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:synchronization"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:synchronization": { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_sync" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/aggregatable",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:aggregatable"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:aggregatable": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_agg" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/4]/state/aggregatable",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:aggregatable"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:aggregatable": { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_agg" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/collecting",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:collecting"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:collecting": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_col" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/4]/state/collecting",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:collecting"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:collecting": { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_col" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/distributing",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:distributing"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:distributing": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_dis" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/4]/state/distributing",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:distributing"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:distributing": { "$ref": "#/globalDef/LacpDefs/PC1_mbr2_state_dis" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/system-id",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:system-id"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:system-id": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_sysid" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/oper-key",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:oper-key"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:oper-key": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_okey" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/partner-id",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:partner-id"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:partner-id": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_pid" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/partner-key",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:partner-key"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:partner-key": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_pkey" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/port-num",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:port-num"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:port-num": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_pnum" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/partner-port-num",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:partner-port-num"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:partner-port-num": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_ppnum" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/counters",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:counters"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:counters": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_cntrs" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/counters/lacp-in-pkts",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:lacp-in-pkts"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:lacp-in-pkts": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_cntrs_in" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/counters/lacp-out-pkts",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:lacp-out-pkts"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:lacp-out-pkts": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_cntrs_out" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel1]/members/member[interface=Ethernet1/7/3]/state/counters/lacp-rx-errors",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-lacp:lacp-rx-errors"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:lacp-rx-errors": { "$ref": "#/globalDef/LacpDefs/PC1_mbr1_state_cntrs_err" }
+      }
+    },
+    {
+      "title": "Get interface",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-interfaces:interface"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-interfaces:interface": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 1,
+            "items": [{
+                "type": "object",
+                "required": ["openconfig-if-aggregate:aggregation"],
+                "additionalProperties": true,
+                "properties": {
+                    "openconfig-if-aggregate:aggregation": {
+                        "type": "object",
+                        "required": ["config", "state"],
+                        "additionalProperties": false,
+                        "properties": {
+                            "config": { "$ref": "#/globalDef/IntfDefs/PC1_config" },
+                            "state": { "$ref": "#/globalDef/IntfDefs/PC1_state" }
+                        }
+                    }
+                }
+            }]
+        }
+      }
+    },
+    {
+      "title": "Get interface aggregation",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]/aggregation",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-if-aggregate:aggregation"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-if-aggregate:aggregation": {
+          "type": "object",
+          "required": ["config", "state"],
+          "additionalProperties": false,
+          "properties": {
+            "config": { "$ref": "#/globalDef/IntfDefs/PC1_config" },
+            "state": { "$ref": "#/globalDef/IntfDefs/PC1_state" }
+          }
+        }
+      }
+    },
+    {
+      "title": "Get interface aggregation config",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]/aggregation/config",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-if-aggregate:config"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-if-aggregate:config": { "$ref": "#/globalDef/IntfDefs/PC1_config" }
+      }
+    },
+    {
+      "title": "Get interface aggregation config min-links",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]/aggregation/config/min-links",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-if-aggregate:min-links"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-if-aggregate:min-links": { "$ref": "#/globalDef/IntfDefs/PC1_config_minlink" }
+      }
+    },
+    {
+      "title": "Get interface aggregation state",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]/aggregation/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-if-aggregate:state"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-if-aggregate:state": { "$ref": "#/globalDef/IntfDefs/PC1_state" }
+      }
+    },
+    {
+      "title": "Get interface aggregation state min-links",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]/aggregation/state/min-links",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-if-aggregate:min-links"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-if-aggregate:min-links": { "$ref": "#/globalDef/IntfDefs/PC1_state_minlink" }
+      }
+    }
+  ]
+}
+

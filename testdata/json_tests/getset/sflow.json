@@ -1,0 +1,595 @@
+{
+  "title": "Set_sflow",
+  "operations":[
+    {
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/sampling/sflow",
+      "target": "OC_YANG",
+      "attributeData": "{\"sflow\": { \"collectors\": {\"collector\": [{\"address\": \"127.0.0.1\", \"port\": 6343, \"config\":{\"address\": \"127.0.0.1\", \"port\": 6343}}, {\"address\": \"::1\", \"port\": 6343, \"config\":{\"address\": \"::1\", \"port\": 6343}}]}, \"config\":{\"sample-size\": 128, \"agent-id-ipv6\": \"2202:f001:ace::\", \"enabled\": true, \"polling-interval\": 0}, \"interfaces\": {\"interface\": [{\"name\": \"Ethernet1/1/1\", \"config\":{\"ingress-sampling-rate\": 256, \"enabled\": true}}]}}}",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "SFLOW_TABLE:global" : {
+              "admin_state": "up",
+              "agent_ip": "2202:f001:ace::",
+              "header_bytes": "128",
+              "polling_interval": "0"
+            },
+            "SFLOW_SESSION_TABLE:Ethernet1/1/1" : {
+              "admin_state": "up",
+              "sample_rate": "1090",
+              "backoff_ingress_sample_rate": "100"
+            },
+            "SFLOW_COLLECTOR:127.0.0.1_6343" : {
+              "collector_ip": "127.0.0.1",
+              "collector_port": "6343"
+            },
+            "SFLOW_COLLECTOR:::1_6343" : {
+              "collector_ip": "::1",
+              "collector_port": "6343"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/sampling/sflow",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-sampling-sflow:sflow"
+      ],
+      "properties": {
+        "openconfig-sampling-sflow:sflow": {
+          "type": "object",
+          "required": [
+            "collectors",
+            "config",
+            "interfaces",
+            "state"
+          ],
+          "properties": {
+            "collectors": {
+              "type": "object",
+              "required": [
+                "collector"
+              ],
+              "properties": {
+                "collector": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "address",
+                        "port",
+                        "config",
+                        "state"
+                      ],
+                      "properties": {
+                        "address": {
+                          "type": "string",
+                          "enum": ["127.0.0.1"]
+                        },
+                        "port": {
+                          "type": "integer",
+                          "enum": [6343]
+                        },
+                        "config": {
+                          "type": "object",
+                          "required": [
+                            "address",
+                            "port"
+                          ],
+                          "properties": {
+                            "address": {
+                              "type": "string",
+                              "enum": ["127.0.0.1"]
+                            },
+                            "port": {
+                              "type": "integer",
+                              "enum": [6343]
+                            }
+                          }
+                        }
+                        ,
+                        "state": {
+                          "type": "object",
+                          "required": [
+                            "address",
+                            "port"
+                          ],
+                          "properties": {
+                            "address": {
+                              "type": "string",
+                              "enum": ["127.0.0.1"]
+                            },
+                            "port": {
+                              "type": "integer",
+                              "enum": [6343]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "address",
+                        "port",
+                        "config",
+                        "state"
+                      ],
+                      "properties": {
+                        "address": {
+                          "type": "string",
+                          "enum": ["::1"]
+                        },
+                        "port": {
+                          "type": "integer",
+                          "enum": [6343]
+                        },
+                        "config": {
+                          "type": "object",
+                          "required": [
+                            "address",
+                            "port"
+                          ],
+                          "properties": {
+                            "address": {
+                              "type": "string",
+                              "enum": ["::1"]
+                            },
+                            "port": {
+                              "type": "integer",
+                              "enum": [6343]
+                            }
+                          }
+                        }
+                        ,
+                        "state": {
+                          "type": "object",
+                          "required": [
+                            "address",
+                            "port"
+                          ],
+                          "properties": {
+                            "address": {
+                              "type": "string",
+                              "enum": ["::1"]
+                            },
+                            "port": {
+                              "type": "integer",
+                              "enum": [6343]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "config": {
+              "type": "object",
+              "required": [
+                "agent-id-ipv6",
+                "enabled",
+                "sample-size",
+                "polling-interval"
+              ],
+              "properties": {
+                "sample-size": {
+                  "type": "integer",
+                  "enum": [128]
+                },
+                "agent-id-ipv6": {
+                  "type": "string",
+                  "enum": ["2202:f001:ace::"]
+                },
+                "enabled": {
+                  "type": "boolean",
+                  "enum": [true]
+                },
+                "polling-interval": {
+                  "type": "integer",
+                  "enum": [0]
+                }
+              }
+            },
+            "interfaces": {
+              "type": "object",
+              "required": [
+                "interface"
+              ],
+              "properties": {
+                "interface": {
+                  "type": "array",
+                  "required": [
+                    "name",
+                    "config",
+                    "state"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "enum": ["Ethernet1/1/1"]
+                    },
+                    "config": {
+                      "type": "object",
+                      "required": [
+                        "enabled",
+                        "ingress-sampling-rate",
+                        "actual-ingress-sampling-rate"
+                      ],
+                      "properties": {
+                        "enabled": {
+                          "type": "boolean",
+                          "enum": [true]
+                        },
+                        "ingress-sampling-rate": {
+                          "type": "integer",
+                          "enum": [10]
+                        },
+                        "actual-ingress-sampling-rate": {
+                          "type": "integer",
+                          "enum": [1090]
+                        }
+                      }
+                    },
+                    "state": {
+                      "type": "object",
+                      "required": [
+                        "enabled",
+                        "ingress-sampling-rate",
+                        "actual-ingress-sampling-rate"
+                      ],
+                      "properties": {
+                        "enabled": {
+                          "type": "boolean",
+                          "enum": [true]
+                        },
+                        "ingress-sampling-rate": {
+                          "type": "integer",
+                          "enum": [10]
+                        },
+                        "actual-ingress-sampling-rate": {
+                          "type": "integer",
+                          "enum": [1090]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "state": {
+              "type": "object",
+              "required": [
+                "sample-size",
+                "agent-id-ipv6",
+                "enabled"
+              ],
+              "properties": {
+                "sample-size": {
+                  "type": "integer",
+                  "enum": [128]
+                },
+                "agent-id-ipv6": {
+                  "type": "string",
+                  "enum": ["2202:f001:ace::"]
+                },
+                "enabled": {
+                  "type": "boolean",
+                  "enum": [true]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/sampling/sflow/interfaces/interface[name=Ethernet1/1/1]/state/actual-ingress-sampling-rate",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+          "google-pins-sampling-sflow:actual-ingress-sampling-rate"
+        ],
+      "properties": {
+          "google-pins-sampling-sflow:actual-ingress-sampling-rate": {
+          "type": "integer",
+          "enum": [1090]
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "SFLOW_SESSION_TABLE:Ethernet1/1/1" : {
+              "admin_state": "up",
+              "sample_rate": "1090",
+              "backoff_ingress_sample_rate": "10000"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/sampling/sflow/interfaces/interface[name=Ethernet1/1/1]/state/actual-ingress-sampling-rate",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+          "google-pins-sampling-sflow:actual-ingress-sampling-rate"
+        ],
+      "properties": {
+          "google-pins-sampling-sflow:actual-ingress-sampling-rate": {
+          "type": "integer",
+          "enum": [10000]
+        }
+      }
+    },
+    {
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/sampling/sflow",
+      "target": "OC_YANG",
+      "attributeData": "{\"sflow\":{\"collectors\":{\"collector\":[{\"address\":\"127.0.0.1\",\"port\":6341,\"config\":{\"address\":\"127.0.0.1\",\"port\":6341}},{\"address\":\"127.0.0.1\",\"port\":6340,\"config\":{\"address\":\"127.0.0.1\",\"port\":6340}}]},\"config\":{\"sample-size\":128,\"agent-id-ipv6\":\"2202:f001:ace::\",\"enabled\":true,\"polling-interval\":0},\"interfaces\":{\"interface\":[{\"name\":\"Ethernet1/1/1\",\"config\":{\"ingress-sampling-rate\":256,\"enabled\":true}}]}}}",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "SFLOW_TABLE:global" : {
+              "admin_state": "up",
+              "agent_ip": "2202:f001:ace::",
+              "header_bytes": "128",
+              "polling_interval": "0"
+            },
+            "SFLOW_SESSION_TABLE:Ethernet1/1/1" : {
+              "admin_state": "up",
+              "sample_rate": "1090",
+              "backoff_ingress_sample_rate": "100"
+            },
+            "SFLOW_COLLECTOR:127.0.0.1_6341" : {
+              "collector_ip": "127.0.0.1",
+              "collector_port": "6341"
+            },
+            "SFLOW_COLLECTOR:127.0.0.1_6340" : {
+              "collector_ip": "127.0.0.1",
+              "collector_port": "6340"
+            }
+          }
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Delete 127.0.0.1:6343 from APPL_STATE_DB",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "SFLOW_COLLECTOR:127.0.0.1_6343": []
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/sampling/sflow",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-sampling-sflow:sflow"
+      ],
+      "properties": {
+        "openconfig-sampling-sflow:sflow": {
+          "type": "object",
+          "required": [
+            "collectors"
+          ],
+          "properties": {
+            "collectors": {
+              "type": "object",
+              "required": [
+                "collector"
+              ],
+              "properties": {
+                "collector": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "address",
+                        "config",
+                        "port",
+                        "state"
+                      ],
+                      "properties": {
+                        "address": {
+                          "type": "string",
+                          "enum": [
+                            "127.0.0.1"
+                          ]
+                        },
+                        "config": {
+                          "type": "object",
+                          "required": [
+                            "address",
+                            "port"
+                          ],
+                          "properties": {
+                            "address": {
+                              "type": "string",
+                              "enum": [
+                                "127.0.0.1"
+                              ]
+                            },
+                            "port": {
+                              "type": "integer",
+                              "enum": [
+                                6340
+                              ]
+                            }
+                          }
+                        },
+                        "port": {
+                          "type": "integer",
+                          "enum": [
+                            6340
+                          ]
+                        },
+                        "state": {
+                          "type": "object",
+                          "required": [
+                            "address",
+                            "packets-sent",
+                            "port"
+                          ],
+                          "properties": {
+                            "address": {
+                              "type": "string",
+                              "enum": [
+                                "127.0.0.1"
+                              ]
+                            },
+                            "packets-sent": {
+                              "type": "string",
+                              "enum": [
+                                "0"
+                              ]
+                            },
+                            "port": {
+                              "type": "integer",
+                              "enum": [
+                                6340
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "config",
+                        "port",
+                        "state",
+                        "address"
+                      ],
+                      "properties": {
+                        "config": {
+                          "type": "object",
+                          "required": [
+                            "address",
+                            "port"
+                          ],
+                          "properties": {
+                            "address": {
+                              "type": "string",
+                              "enum": [
+                                "127.0.0.1"
+                              ]
+                            },
+                            "port": {
+                              "type": "integer",
+                              "enum": [
+                                6341
+                              ]
+                            }
+                          }
+                        },
+                        "port": {
+                          "type": "integer",
+                          "enum": [
+                            6341
+                          ]
+                        },
+                        "state": {
+                          "type": "object",
+                          "required": [
+                            "address",
+                            "packets-sent",
+                            "port"
+                          ],
+                          "properties": {
+                            "address": {
+                              "type": "string",
+                              "enum": [
+                                "127.0.0.1"
+                              ]
+                            },
+                            "packets-sent": {
+                              "type": "string",
+                              "enum": [
+                                "0"
+                              ]
+                            },
+                            "port": {
+                              "type": "integer",
+                              "enum": [
+                                6341
+                              ]
+                            }
+                          }
+                        },
+                        "address": {
+                          "type": "string",
+                          "enum": [
+                            "127.0.0.1"
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Check the 127.0.0.1_6343 is delete from config db",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "openconfig/sampling/sflow/collectors/collector[address=127.0.0.1][port=6343]/config",
+      "target": "OC_YANG",
+      "type": "object",
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "SFLOW_COLLECTOR|127.0.0.1_6341" : {
+              "collector_ip": "127.0.0.1",
+              "collector_port": "6341"
+            },
+            "SFLOW_COLLECTOR|127.0.0.1_6340" : {
+              "collector_ip": "127.0.0.1",
+              "collector_port": "6340"
+            },
+            "SFLOW_COLLECTOR|127.0.0.1_6343" : {}
+          }
+        }
+      ]
+    },
+    {
+      "title": "Check the 127.0.0.1_6343 is delete from state db",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "openconfig/sampling/sflow/collectors/collector[address=127.0.0.1][port=6343]/state",
+      "target": "OC_YANG",
+      "type": "object"
+    }
+  ]
+}

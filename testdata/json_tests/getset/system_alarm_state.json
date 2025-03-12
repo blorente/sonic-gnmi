@@ -1,0 +1,445 @@
+{
+  "title": "Get System Alarm State",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/alarms",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:alarms"
+      ],
+      "properties": {
+        "openconfig-system:alarms": {
+          "type": "object",
+          "required": [
+            "alarm"
+          ],
+          "properties": {
+            "alarm": {
+              "type": "array",
+              "items": [
+                {
+                  "title": "container_monitor",
+                  "type": "object",
+                  "required": [
+                    "id", "state"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "enum": [
+                        "container_monitor_1611693908000044444"
+                      ]
+                    },
+                    "state": {
+                      "type": "object",
+                      "required": [
+                        "id", "resource", "severity", "text", "time-created", "type-id"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "enum": [
+                            "container_monitor_1611693908000044444"
+                          ]
+                        },
+                        "resource": {
+                          "type": "string",
+                          "enum": [
+                            "container_monitor"
+                          ]
+                        },
+                        "severity": {
+                          "type": "string",
+                          "enum": [
+                            "openconfig-alarm-types:MINOR"
+                          ]
+                        },
+                        "text": {
+                          "type": "string",
+                          "enum": [
+                            "UP: Crash artifact detected: foo,bar"
+                          ]
+                        },
+                        "time-created": {
+                          "type": "string",
+                          "enum": [
+                            "1611693908000044444"
+                          ]
+                        },
+                        "type-id": {
+                          "type": "string",
+                          "enum": [
+                            "SOFTWARE"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "title": "linkqual",
+                  "type": "object",
+                  "required": [
+                    "state"
+                  ],
+                  "properties": {
+                    "state": {
+                      "type": "object",
+                      "required": [
+                        "id", "resource", "severity", "text", "time-created", "type-id"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "enum": [
+                            "linkqual:linkqual_1611693908000099999"
+                          ]
+                        },
+                        "resource": {
+                          "type": "string",
+                          "enum": [
+                            "linkqual:linkqual"
+                          ]
+                        },
+                        "severity": {
+                          "type": "string",
+                          "enum": [
+                            "openconfig-alarm-types:MAJOR"
+                          ]
+                        },
+                        "text": {
+                          "type": "string",
+                          "enum": [
+                            "INACTIVE: Unknown"
+                          ]
+                        },
+                        "time-created": {
+                          "type": "string",
+                          "enum": [
+                            "1611693908000099999"
+                          ]
+                        },
+                        "type-id": {
+                          "type": "string",
+                          "enum": [
+                            "openconfig-alarm-types:EQPT"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "title": "syncd",
+                  "type": "object",
+                  "required": [
+                    "state"
+                  ],
+                  "properties": {
+                    "state": {
+                      "type": "object",
+                      "required": [
+                        "id", "resource", "severity", "text", "time-created", "type-id"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "enum": [
+                            "syncd:syncd_1611693908000044444"
+                          ]
+                        },
+                        "resource": {
+                          "type": "string",
+                          "enum": [
+                            "syncd:syncd"
+                          ]
+                        },
+                        "severity": {
+                          "type": "string",
+                          "enum": [
+                            "openconfig-alarm-types:WARNING"
+                          ]
+                        },
+                        "text": {
+                          "type": "string",
+                          "enum": [
+                            "MINOR: Go Panic"
+                          ]
+                        },
+                        "time-created": {
+                          "type": "string",
+                          "enum": [
+                            "1611693908000044444"
+                          ]
+                        },
+                        "type-id": {
+                          "type": "string",
+                          "enum": [
+                            "SOFTWARE"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "title": "telemetry",
+                  "type": "object",
+                  "required": [
+                    "state"
+                  ],
+                  "properties": {
+                    "state": {
+                      "type": "object",
+                      "required": [
+                        "id", "resource", "severity", "text", "time-created", "type-id"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "enum": [
+                            "telemetry:telemetry_1611693908000044444"
+                          ]
+                        },
+                        "resource": {
+                          "type": "string",
+                          "enum": [
+                            "telemetry:telemetry"
+                          ]
+                        },
+                        "severity": {
+                          "type": "string",
+                          "enum": [
+                            "openconfig-alarm-types:MINOR"
+                          ]
+                        },
+                        "text": {
+                          "type": "string",
+                          "enum": [
+                            "UP: Crash artifact detected: file1,file2"
+                          ]
+                        },
+                        "time-created": {
+                          "type": "string",
+                          "enum": [
+                            "1611693908000044444"
+                          ]
+                        },
+                        "type-id": {
+                          "type": "string",
+                          "enum": [
+                            "SOFTWARE"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "STATE_DB",
+          "value": {
+            "COMPONENT_STATE_TABLE|telemetry:telemetry": {
+              "state": "ERROR"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/alarms/alarm[id=telemetry:telemetry_1611693908000044444]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:alarm"
+      ],
+      "properties": {
+        "openconfig-system:alarm": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "id", "resource", "severity", "text", "time-created", "type-id"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "enum": [
+                      "telemetry:telemetry_1611693908000044444"
+                    ]
+                  },
+                  "resource": {
+                    "type": "string",
+                    "enum": [
+                      "telemetry:telemetry"
+                    ]
+                  },
+                  "severity": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-alarm-types:CRITICAL"
+                    ]
+                  },
+                  "text": {
+                    "type": "string",
+                    "enum": [
+                      "ERROR: Go Panic"
+                    ]
+                  },
+                  "time-created": {
+                    "type": "string",
+                    "enum": [
+                      "1611693908000044444"
+                    ]
+                  },
+                  "type-id": {
+                    "type": "string",
+                    "enum": [
+                      "SOFTWARE"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "STATE_DB",
+          "value": {
+            "COMPONENT_STATE_TABLE|telemetry:telemetry": {
+              "state": "UP"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/alarms/alarm[id=linkqual:linkqual_1611693908000099999]/state/id",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:id"
+      ],
+      "properties": {
+        "openconfig-system:id": {
+          "type": "string",
+          "enum": [
+            "linkqual:linkqual_1611693908000099999"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/alarms/alarm[id=linkqual:linkqual_1611693908000099999]/state/resource",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:resource"
+      ],
+      "properties": {
+        "openconfig-system:resource": {
+          "type": "string",
+          "enum": [
+            "linkqual:linkqual"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/alarms/alarm[id=linkqual:linkqual_1611693908000099999]/state/severity",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:severity"
+      ],
+      "properties": {
+        "openconfig-system:severity": {
+          "type": "string",
+          "enum": [
+            "openconfig-alarm-types:MAJOR"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/alarms/alarm[id=linkqual:linkqual_1611693908000099999]/state/text",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:text"
+      ],
+      "properties": {
+        "openconfig-system:text": {
+          "type": "string",
+          "enum": [
+            "INACTIVE: Unknown"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/alarms/alarm[id=linkqual:linkqual_1611693908000099999]/state/time-created",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:time-created"
+      ],
+      "properties": {
+        "openconfig-system:time-created": {
+          "type": "string",
+          "enum": [
+            "1611693908000099999"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-system:system/alarms/alarm[id=linkqual:linkqual_1611693908000099999]/state/type-id",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:type-id"
+      ],
+      "properties": {
+        "openconfig-system:type-id": {
+          "type": "string",
+          "enum": [
+            "openconfig-alarm-types:EQPT"
+          ]
+        }
+      }
+    }
+  ]
+}

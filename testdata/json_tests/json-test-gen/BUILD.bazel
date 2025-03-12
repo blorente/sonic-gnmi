@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "json-test-gen_lib",
+    srcs = ["jtest-gen.go"],
+    embedsrcs = ["template.tmpl"],
+    importpath = "github.com/sonic-net/sonic-gnmi/testdata/json_tests/json-test-gen",
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "json-test-gen",
+    embed = [":json-test-gen_lib"],
+    visibility = ["//visibility:public"],
+)

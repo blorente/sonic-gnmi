@@ -1,0 +1,21 @@
+artifacts/
+build/
+debian/.debhelper/
+debian/files
+debian/sonic-gnmi.debhelper.log
+debian/sonic-gnmi.substvars
+debian/sonic-gnmi/
+vendor
+src
+cvl
+translib
+*.log
+
+# Bazel Directories
+bazel-bin
+bazel-out
+bazel-sonic-gnmi
+bazel-testlogs
+
+# Editor Temp Files
+*.swp

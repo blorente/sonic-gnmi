@@ -1,0 +1,91 @@
+{
+  "title": "Set Interface forwarding-viable",
+  "operations":[
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"google-pins-interfaces:forwarding-viable\":false}}"
+
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-if-ethernet:ethernet": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "forwarding-viable"
+                ],
+                "properties": {
+                  "forwarding-viable": {
+                    "type": "boolean",
+                    "enum": [false]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"google-pins-interfaces:forwarding-viable\":true}}"
+
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-if-ethernet:ethernet": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "forwarding-viable"
+                ],
+                "properties": {
+                  "forwarding-viable": {
+                    "type": "boolean",
+                    "enum": [true]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

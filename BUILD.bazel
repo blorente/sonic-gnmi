@@ -1,0 +1,64 @@
+load("@bazel_gazelle//:def.bzl", "gazelle")
+load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
+
+# gazelle:prefix github.com/sonic-net/sonic-gnmi
+# gazelle:exclude patches
+# gazelle:go_naming_convention import_alias
+
+### Help Gazelle resolve directories from Mgmt-Common
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/cvl/custom_validation @sonic-mgmt-common//cvl/custom_validation
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib @sonic-mgmt-common//translib
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/db @sonic-mgmt-common//translib/db
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/ocbinds @sonic-mgmt-common//translib/ocbinds
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/path @sonic-mgmt-common//translib/path
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/tlerr @sonic-mgmt-common//translib/tlerr
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/transformer @sonic-mgmt-common//translib/transformer
+
+### Help Gazelle resolve external proto files
+
+# gazelle:resolve go          google.golang.org/genproto/googleapis/rpc/status @org_golang_google_genproto_googleapis_rpc//status
+# gazelle:resolve proto go    google/rpc/status.proto                          @org_golang_google_genproto_googleapis_rpc//status
+# gazelle:resolve proto proto google/rpc/status.proto                          @googleapis//google/rpc:status_proto
+# gazelle:resolve proto go    github.com/openconfig/gnoi/types/types.proto     @com_github_openconfig_gnoi//types
+# gazelle:resolve proto proto github.com/openconfig/gnoi/types/types.proto     @com_github_openconfig_gnoi//types:types_proto
+# gazelle:resolve proto go    github.com/openconfig/ygot/proto/yext/yext.proto @com_github_openconfig_ygot//proto/yext:yext_go_proto
+# gazelle:resolve proto proto github.com/openconfig/ygot/proto/yext/yext.proto @com_github_openconfig_ygot//proto/yext:yext_proto
+# gazelle:resolve proto go    github.com/openconfig/gnmi/proto/gnmi/gnmi.proto @com_github_openconfig_gnmi//proto/gnmi
+# gazelle:resolve proto proto github.com/openconfig/gnmi/proto/gnmi/gnmi.proto @com_github_openconfig_gnmi//proto/gnmi:gnmi_proto
+# gazelle:resolve proto go    github.com/gogo/protobuf/gogoproto/gogo.proto    @com_github_gogo_protobuf//gogoproto
+
+gazelle(name = "gazelle")
+
+#bazel build :gazelle-update-repos
+gazelle(
+    name = "gazelle-update-repos",
+    args = [
+        "-from_file=go.mod",
+        "-to_macro=deps.bzl%go_dependencies",
+        "-prune",
+    ],
+    command = "update-repos",
+)
+
+buildifier(
+    name = "buildifier",
+)
+
+# Use this to generate a text file with a tree diagram of all YANG models
+# used by UMF.
+alias(
+    name = "whole-yang-tree-txt",
+    actual = "@sonic-mgmt-common//models/yang:whole-tree",
+)
+
+# A shortcut to build a Docker image that is used for component testing.
+alias(
+    name = "gnmi_server_test_image",
+    actual = "//gnmi_server:gnmi_server_test_image",
+)
+
+# A shortcut to build a Docker image that is used for debugging UMF.
+alias(
+    name = "gnmi_server_debug_image",
+    actual = "//gnmi_server:gnmi_server_debug_image",
+)

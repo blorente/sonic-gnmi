@@ -1,0 +1,15 @@
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
+
+filegroup(
+    name = "py_tests",
+    srcs = glob(["*.py"]),
+)
+
+pkg_tar(
+    name = "py_tests_tar",
+    srcs = [":py_tests"],
+    mode = "0644",
+    package_dir = "/test",
+    strip_prefix = "/test",
+    visibility = ["//visibility:public"],
+)

@@ -1,0 +1,174 @@
+{
+    "title": "Subscribe ONCE /openconfig/interfaces/interface[name=*]/subinterfaces",
+    "operations": [
+        {
+            "title": "Subscribe ONCE /openconfig/interfaces/interface[name=Ethernet1/6/1]/subinterfaces/subinterface[index=0]/state/index",
+            "operation": "subscribe",
+            "returnCode": 0,
+            "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'Ethernet1/6/1'}}elem:{name:'subinterfaces'}elem:{name:'subinterface'key:{key:'index'value:'0'}}elem:{name:'state'}elem:{name:'index'}} }mode:ONCE}",
+            "subOpers": [
+                {
+                    "oper": "validate",
+                    "title": "Validates initial updates",
+                    "timeout": 5000,
+                    "finalValidator": {
+                        "xpath": "/openconfig/interfaces/interface[name=Ethernet1/6/1]/subinterfaces/subinterface[index=0]/state/index",
+                        "syncResponse": true,
+                        "allowDuplicates": false,
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "openconfig-interfaces:index"
+                            ],
+                            "properties": {
+                                "openconfig-interfaces:index": {
+                                    "type": "integer",
+                                    "const": 0
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "title": "Subscribe ONCE /openconfig/interfaces/interface[name=Ethernet1/6/1]/subinterfaces",
+            "operation": "subscribe",
+            "returnCode": 0,
+            "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'Ethernet1/6/1'}}elem:{name:'subinterfaces'}} }mode:ONCE}",
+            "subOpers": [
+                {
+                    "oper": "validate",
+                    "title": "Validates initial updates",
+                    "timeout": 5000,
+                    "finalValidator": {
+                        "xpath": "/openconfig/interfaces/interface[name=Ethernet1/6/1]/subinterfaces",
+                        "syncResponse": true,
+                        "allowDuplicates": false,
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "openconfig-interfaces:subinterfaces"
+                            ],
+                            "properties": {
+                                "openconfig-interfaces:subinterfaces": {
+                                    "type": "object",
+                                    "required": [
+                                        "subinterface"
+                                    ],
+                                    "properties": {
+                                        "subinterface": {
+                                            "type": "array",
+                                            "items": [
+                                                {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "config", "state", "index", "openconfig-if-ip:ipv4", "openconfig-if-ip:ipv6"
+                                                    ],
+                                                    "properties": {
+                                                        "config": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "enabled", "index"
+                                                            ],
+                                                            "properties": {
+                                                                "index": {
+                                                                    "type": "integer",
+                                                                    "const": 0
+                                                                },
+                                                                "enabled": {
+                                                                    "type": "boolean",
+                                                                    "const": true
+                                                                }
+                                                            }
+                                                        },
+                                                        "state": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "index", "enabled"
+                                                            ],
+                                                            "properties": {
+                                                                "index": {
+                                                                    "type": "integer",
+                                                                    "const": 0
+                                                                },
+                                                                "enabled": {
+                                                                    "type": "boolean",
+                                                                    "const": true
+                                                                }
+                                                            }
+                                                        },
+                                                        "index": {
+                                                            "type": "integer",
+                                                            "const": 0
+                                                        },
+                                                        "openconfig-if-ip:ipv4": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "config", "state"
+                                                            ],
+                                                            "properties": {
+                                                                "config": {
+                                                                    "type": "object",
+                                                                    "required": ["enabled"],
+                                                                    "properties": {
+                                                                        "enabled": {
+                                                                            "type": "boolean",
+                                                                            "const": true
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "state": {
+                                                                    "type": "object",
+                                                                    "required": ["enabled"],
+                                                                    "properties": {
+                                                                        "enabled": {
+                                                                            "type": "boolean",
+                                                                            "const": true
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "openconfig-if-ip:ipv6": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "config", "state"
+                                                            ],
+                                                            "properties": {
+                                                                "config": {
+                                                                    "type": "object",
+                                                                    "required": ["enabled"],
+                                                                    "properties": {
+                                                                        "enabled": {
+                                                                            "type": "boolean",
+                                                                            "const": true
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "state": {
+                                                                    "type": "object",
+                                                                    "required": ["enabled"],
+                                                                    "properties": {
+                                                                        "enabled": {
+                                                                            "type": "boolean",
+                                                                            "const": true
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

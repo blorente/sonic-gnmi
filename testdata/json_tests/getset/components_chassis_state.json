@@ -1,0 +1,120 @@
+{
+  "title": "Get_Chassis_Component_State_paths",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=chassis]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state", "chassis"
+            ],
+            "properties": {
+              "chassis": {
+                "type": "object",
+                "required": [
+                  "state"
+                ],
+                "properties": {
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "openconfig-pins-platform-chassis:platform", "openconfig-pins-platform-chassis:base-mac-address", "openconfig-pins-platform-chassis:mac-address-pool-size", "openconfig-pins-platform-chassis:cpu-type"
+                    ],
+                    "properties": {
+                      "openconfig-pins-platform-chassis:platform": {
+                        "type": "string",
+                        "enum": ["google-pins-platform:SWITCH1"]
+                      },
+                      "openconfig-pins-platform-chassis:base-mac-address": {
+                        "type": "string",
+                        "enum": ["aa:bb:00:11:cc:22"]
+                      },
+                      "openconfig-pins-platform-chassis:mac-address-pool-size": {
+                        "type": "integer",
+                        "enum": [4]
+                      },
+                      "openconfig-pins-platform-chassis:cpu-type": {
+                        "type": "string",
+                        "enum": ["openconfig-pins-platform-chassis:CPU_TYPE_SEGUNDO"]
+                      }
+                    }
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "type", "firmware-version", "mfg-date", "oper-status", "part-no", "serial-no", "hardware-version", "openconfig-pins-platform:fully-qualified-name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": ["chassis"]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["openconfig-platform-types:CHASSIS"]
+                  },
+                  "firmware-version": {
+                    "type": "string",
+                    "enum": ["BIOS version"]
+                  },
+                  "mfg-date": {
+                    "type": "string",
+                    "enum": ["2019-07-29"]
+                  },
+                  "oper-status": {
+                    "type": "string",
+                    "enum": ["openconfig-platform-types:ACTIVE"]
+                  },
+                  "part-no": {
+                    "type": "string",
+                    "enum": ["1234"]
+                  },
+                  "serial-no": {
+                    "type": "string",
+                    "enum": ["FFF"]
+                  },
+                  "hardware-version": {
+                    "type": "string",
+                    "enum": ["10"]
+                  },
+                  "openconfig-pins-platform:fully-qualified-name": {
+                    "type": "string",
+                    "enum": ["chassisXYZ"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=chassis]/chassis/state/cpu-type",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-pins-platform-chassis:cpu-type"
+      ],
+      "properties": {
+        "openconfig-pins-platform-chassis:cpu-type": {
+          "type": "string",
+          "enum": ["openconfig-pins-platform-chassis:CPU_TYPE_SEGUNDO"]
+        }
+      }
+    }
+  ]
+}

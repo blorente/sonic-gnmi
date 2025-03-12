@@ -1,0 +1,180 @@
+{
+    "title": "Set and Get Enable Host Signaling",
+    "operations":[
+      {
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/lacp/config",
+        "target": "OC_YANG",
+        "attributeData": "{\"config\": {\"google-pins-lacp:enable-host-signaling\":true}}",
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "db": "STATE_DB",
+            "value": {
+              "CHASSIS_INFO|chassis" : {
+                "enable_host_signaling": "true"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/lacp",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-lacp:lacp"
+        ],
+        "properties": {
+          "openconfig-lacp:lacp": {
+            "type": "object",
+            "required": [
+                "config", "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "google-pins-lacp:enable-host-signaling"
+                ],
+                "properties": {
+                  "google-pins-lacp:enable-host-signaling": {
+                    "type": "boolean",
+                    "enum": [true]
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "google-pins-lacp:enable-host-signaling"
+                ],
+                "properties": {
+                  "google-pins-lacp:enable-host-signaling": {
+                    "type": "boolean",
+                    "enum": [true]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/",
+        "target": "OC_YANG",
+        "attributeData": "{\"openconfig-lacp:lacp\": {\"config\": {\"google-pins-lacp:enable-host-signaling\":true}}, \"openconfig-platform:components\": {\"component\": [{\"name\": \"chassis\",\"config\": {\"name\": \"chassis\", \"fully-qualified-name\" : \"chassis123\"}}]}}"
+      },
+      {
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/lacp",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-lacp:lacp"
+        ],
+        "properties": {
+          "openconfig-lacp:lacp": {
+            "type": "object",
+            "required": [
+                "config", "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "google-pins-lacp:enable-host-signaling"
+                ],
+                "properties": {
+                  "google-pins-lacp:enable-host-signaling": {
+                    "type": "boolean",
+                    "enum": [true]
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "google-pins-lacp:enable-host-signaling"
+                ],
+                "properties": {
+                  "google-pins-lacp:enable-host-signaling": {
+                    "type": "boolean",
+                    "enum": [true]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "operation": "update",
+        "returnCode": 0,
+        "xpath": "openconfig/lacp/config",
+        "target": "OC_YANG",
+        "attributeData": "{\"config\": {\"google-pins-lacp:enable-host-signaling\":false}}",
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "db": "STATE_DB",
+            "value": {
+              "CHASSIS_INFO|chassis" : {
+                "enable_host_signaling": "false"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/lacp",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-lacp:lacp"
+        ],
+        "properties": {
+          "openconfig-lacp:lacp": {
+            "type": "object",
+            "required": [
+                "config", "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "google-pins-lacp:enable-host-signaling"
+                ],
+                "properties": {
+                  "google-pins-lacp:enable-host-signaling": {
+                    "type": "boolean",
+                    "enum": [false]
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "google-pins-lacp:enable-host-signaling"
+                ],
+                "properties": {
+                  "google-pins-lacp:enable-host-signaling": {
+                    "type": "boolean",
+                    "enum": [false]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }

@@ -1,0 +1,91 @@
+{
+  "title": "Set Interface duplex-mode",
+  "operations":[
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"openconfig-if-ethernet:duplex-mode\":\"HALF\"}}"
+
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-if-ethernet:ethernet": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "duplex-mode"
+                ],
+                "properties": {
+                  "duplex-mode": {
+                    "type": "string",
+                    "enum": ["HALF"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"openconfig-if-ethernet:duplex-mode\":\"FULL\"}}"
+
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-if-ethernet:ethernet": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "duplex-mode"
+                ],
+                "properties": {
+                  "duplex-mode": {
+                    "type": "string",
+                    "enum": ["FULL"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

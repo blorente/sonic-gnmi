@@ -1,0 +1,376 @@
+{
+    "paths": [
+        {
+            "desc": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/mac-address",
+            "path": [
+                {"elem": "openconfig", "prefix": "openconfig-interfaces", "skip": true},
+                {"elem": "interfaces", "skip": true},
+                {"elem": "interface", "key": {"name": "name", "val": "Ethernet1/1/1"}},
+                {"elem": "ethernet", "prefix":"openconfig-if-ethernet"},
+                {"elem": "state"},
+                {"elem": "mac-address"}
+            ],
+            "expected": {"type": "string", "val": "01:02:03:04:05:06"},
+            "config": false
+        },
+        {
+            "desc": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/auto-negotiate",
+            "path": [
+                {"elem": "openconfig", "prefix": "openconfig-interfaces", "skip": true},
+                {"elem": "interfaces", "skip": true},
+                {"elem": "interface", "key": {"name": "name", "val": "Ethernet1/1/1"}},
+                {"elem": "ethernet", "prefix":"openconfig-if-ethernet"},
+                {"elem": "state"},
+                {"elem": "auto-negotiate"}
+            ],
+            "expected": {"type": "bool", "val": true},
+            "config": false
+        },
+        {
+            "desc": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/transceiver-qualified",
+            "path": [
+                {"elem": "openconfig", "prefix": "openconfig-interfaces", "skip": true},
+                {"elem": "interfaces", "skip": true},
+                {"elem": "interface", "key": {"name": "name", "val": "Ethernet1/1/1"}},
+                {"elem": "ethernet", "prefix":"openconfig-if-ethernet"},
+                {"elem": "state"},
+                {"elem": "transceiver-qualified", "prefix": "google-pins-interfaces"}
+            ],
+            "expected": {"type": "bool", "val": true},
+            "config": false
+        },
+        {
+            "desc": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/controllerc-oper-mode",
+            "path": [
+                {"elem": "openconfig", "prefix": "openconfig-interfaces", "skip": true},
+                {"elem": "interfaces", "skip": true},
+                {"elem": "interface", "key": {"name": "name", "val": "Ethernet1/1/1"}},
+                {"elem": "ethernet", "prefix":"openconfig-if-ethernet"},
+                {"elem": "state"},
+                {"elem": "controllerc-oper-mode", "prefix": "google-pins-interfaces"}
+            ],
+            "expected": {"type": "string", "val": "ENABLED"},
+            "config": false
+        },
+        {
+            "desc": "openconfig/qos/dot1p-maps/dot1p-map/dot1p-map-entries/dot1p-map-entry",
+            "path": [
+                {"elem": "openconfig", "prefix": "openconfig-qos", "skip": true},
+                {"elem": "qos", "skip": true},
+                {"elem": "dot1p-maps", "prefix": "openconfig-qos-maps-ext", "skip": true},
+                {"elem": "dot1p-map", "key": {"name": "name", "val": "map--"}, "result": 5},
+                {"elem": "dot1p-map-entries", "prefix": "openconfig-qos-maps-ext", "result": 5},
+                {"elem": "dot1p-map-entry", "key": {"name": "dot1p", "val": "0"}, "result": 5},
+                {"elem": "config", "result": 5},
+                {"elem": "dot1p", "result": 5}
+            ],
+            "expected": {"type": "integer", "val": 0},
+            "config": false
+        },
+        {
+            "desc": "openconfig/system/processes/process/state/memory-limit found",
+            "path": [
+                {"elem": "openconfig", "prefix": "openconfig-system", "skip": true},
+                {"elem": "system", "skip": true},
+                {"elem": "processes", "skip": true},
+                {"elem": "process", "key": {"name": "pid", "val": "31212"}},
+                {"elem": "state"},
+                {"elem": "memory-limit", "prefix": "openconfig-procmon-ext"}
+            ],
+            "expected": {"type": "string", "val": "2147483648"},
+            "config": false
+        },
+        {
+            "desc": "openconfig/system/aaa/authorization/state/grpc-authz-policy-created-on found",
+            "path": [
+                {"elem": "openconfig", "prefix": "openconfig-system", "skip": true},
+                {"elem": "system", "skip": true},
+                {"elem": "aaa", "skip": true},
+                {"elem": "authorization"},
+                {"elem": "state"},
+                {"elem": "grpc-authz-policy-created-on", "prefix": "gnsi-authz"}
+            ],
+            "expected": { "type": "string", "pattern": "^[A-Za-z0-9]+$" },
+            "config": false
+        },
+        {
+            "desc": "openconfig/system/aaa/authorization/state/grpc-authz-policy-version found",
+            "path": [
+            {"elem": "openconfig", "prefix": "openconfig-system", "skip": true},
+            { "elem": "system", "skip": true },
+            { "elem": "aaa", "skip": true },
+            { "elem": "authorization" },
+            { "elem": "state" },
+            {"elem": "grpc-authz-policy-version", "prefix": "gnsi-authz"}
+            ],
+            "expected": { "type": "string", "pattern": "^[A-Za-z0-9]+$" },
+            "config": false
+        },
+        {
+            "desc": "openconfig-platform:components/component[name=chassis]/state/model-name found",
+            "path": [
+            {"elem": "openconfig", "prefix": "openconfig-platform", "skip": true},
+            {"elem": "components", "skip": true },
+            {"elem": "component", "key": {"name": "name", "val": "chassis"}, "skip": true},
+            {"elem": "state"},
+            {"elem": "model-name"}
+            ],
+            "expected": { "type": "string", "val": "BX" },
+            "config": false
+        },
+        {
+            "desc": "openconfig/system/ssh-server/state/active-trusted-user-ca-keys-created-on",
+            "path": [
+            { "elem": "openconfig", "prefix": "openconfig-system", "skip": true },
+            { "elem": "system", "skip": true },
+            { "elem": "ssh-server", "skip": true },
+            { "elem": "state", "skip": true },
+            { "elem": "active-trusted-user-ca-keys-created-on", "prefix": "gnsi-credentialz" }
+            ],
+            "expected": { "type": "string", "val": "0" },
+            "config": false
+        },
+        {
+            "desc": "openconfig/system/ssh-server/state/active-trusted-user-ca-keys-version",
+            "path": [
+            { "elem": "openconfig", "prefix": "openconfig-system", "skip": true },
+            { "elem": "system" },
+            { "elem": "ssh-server" },
+            { "elem": "state" },
+            { "elem": "active-trusted-user-ca-keys-version", "prefix": "gnsi-credentialz" }
+            ],
+            "expected": { "type": "string", "val": "unknown" },
+            "config": false
+        },
+        {
+            "desc": "openconfig/system/ssh-server/state/counters/access-accepts",
+            "path": [
+            { "elem": "openconfig", "prefix": "openconfig-system", "skip": true },
+            { "elem": "system", "skip": true },
+            { "elem": "ssh-server", "skip": true },
+            { "elem": "state", "skip": true },
+            { "elem": "counters", "prefix": "gnsi-credentialz", "skip": true },
+            { "elem": "access-accepts", "prefix": "gnsi-credentialz" }
+            ],
+            "expected": { "type": "string", "val": "13" }, "config": false
+        },
+        {
+            "desc": "openconfig/system/ssh-server/state/counters/access-rejects",
+            "path": [
+            { "elem": "openconfig", "prefix": "openconfig-system", "skip": true },
+            { "elem": "system", "skip": true },
+            { "elem": "ssh-server", "skip": true },
+            { "elem": "state", "skip": true },
+            { "elem": "counters", "prefix": "gnsi-credentialz", "skip": true },
+            { "elem": "access-rejects", "prefix": "gnsi-credentialz" }
+            ],
+            "expected": { "type": "string", "val": "14" }, "config": false
+        },
+        {
+            "desc": "openconfig/system/ssh-server/state/counters/last-access-accept",
+            "path": [
+            { "elem": "openconfig", "prefix": "openconfig-system", "skip": true },
+            { "elem": "system", "skip": true },
+            { "elem": "ssh-server", "skip": true },
+            { "elem": "state", "skip": true },
+            { "elem": "counters", "prefix": "gnsi-credentialz", "skip": true },
+            { "elem": "last-access-accept", "prefix": "gnsi-credentialz" }
+            ],
+            "expected": { "type": "string", "val": "15" }, "config": false
+        },
+        {
+            "desc": "openconfig/system/ssh-server/state/counters/last-access-reject",
+            "path": [
+            { "elem": "openconfig", "prefix": "openconfig-system", "skip": true },
+            { "elem": "system", "skip": true },
+            { "elem": "ssh-server", "skip": true },
+            { "elem": "state", "skip": true },
+            { "elem": "counters", "prefix": "gnsi-credentialz", "skip": true },
+            { "elem": "last-access-reject", "prefix": "gnsi-credentialz" }
+            ],
+            "expected": { "type": "string", "val": "16" }, "config": false
+        },
+        {
+            "desc": "openconfig/system/console/state/counters/access-accepts",
+            "path": [
+            { "elem": "openconfig", "prefix": "openconfig-system", "skip": true },
+            { "elem": "system", "skip": true },
+            { "elem": "console", "skip": true },
+            { "elem": "state", "skip": true },
+            { "elem": "counters", "prefix": "gnsi-credentialz", "skip": true },
+            { "elem": "access-accepts", "prefix": "gnsi-credentialz" }
+            ],
+            "expected": { "type": "string", "val": "23" }, "config": false
+        },
+        {
+            "desc": "openconfig/system/console/state/counters/access-rejects",
+            "path": [
+            { "elem": "openconfig", "prefix": "openconfig-system", "skip": true },
+            { "elem": "system", "skip": true },
+            { "elem": "console", "skip": true },
+            { "elem": "state", "skip": true },
+            { "elem": "counters", "prefix": "gnsi-credentialz", "skip": true },
+            { "elem": "access-rejects", "prefix": "gnsi-credentialz" }
+            ],
+            "expected": { "type": "string", "val": "24" }, "config": false
+        },
+        {
+            "desc": "openconfig/system/console/state/counters/last-access-accept",
+            "path": [
+            { "elem": "openconfig", "prefix": "openconfig-system", "skip": true },
+            { "elem": "system", "skip": true },
+            { "elem": "console", "skip": true },
+            { "elem": "state", "skip": true },
+            { "elem": "counters", "prefix": "gnsi-credentialz", "skip": true },
+            { "elem": "last-access-accept", "prefix": "gnsi-credentialz" }
+            ],
+            "expected": { "type": "string", "val": "25" }, "config": false
+        },
+        {
+            "desc": "openconfig/system/console/state/counters/last-access-reject",
+            "path": [
+            { "elem": "openconfig", "prefix": "openconfig-system", "skip": true },
+            { "elem": "system", "skip": true },
+            { "elem": "console", "skip": true },
+            { "elem": "state", "skip": true },
+            { "elem": "counters", "prefix": "gnsi-credentialz", "skip": true },
+            { "elem": "last-access-reject", "prefix": "gnsi-credentialz" }
+            ],
+            "expected": { "type": "string", "val": "26" }, "config": false
+        },
+        {
+            "desc": "openconfig-system:system/aaa/authentication/users/user[username=tester]/state/password-version",
+            "path": [
+            { "elem": "openconfig", "prefix": "openconfig-system", "skip": true },
+            { "elem": "system", "skip": true },
+            { "elem": "aaa", "skip": true },
+            { "elem": "authentication", "skip": true },
+            { "elem": "users", "skip": true },
+            { "elem": "user", "key": { "name": "username", "val": "tester" }, "skip": true },
+            { "elem": "state" },
+            { "elem": "password-version", "prefix": "gnsi-credentialz" }
+            ],
+            "expected": { "type": "string", "val": "pwdVersionStateDB" }, "config": false
+        },
+        {
+            "desc": "openconfig-system:system/aaa/authentication/users/user[username=tester]/state/password-created-on",
+            "path": [
+            { "elem": "openconfig", "prefix": "openconfig-system", "skip": true },
+            { "elem": "system", "skip": true },
+            { "elem": "aaa", "skip": true },
+            { "elem": "authentication", "skip": true },
+            { "elem": "users", "skip": true },
+            { "elem": "user", "key": { "name": "username", "val": "tester" }, "skip": true },
+            { "elem": "state" },
+            { "elem": "password-created-on", "prefix": "gnsi-credentialz" }
+            ],
+            "expected": { "type": "string", "val": "552" }, "config": false
+        },
+        {
+            "desc": "openconfig-system:system/aaa/authentication/users/user[username=tester]/state/authorized-keys-list-version",
+            "path": [
+            { "elem": "openconfig", "prefix": "openconfig-system", "skip": true },
+            { "elem": "system", "skip": true },
+            { "elem": "aaa", "skip": true },
+            { "elem": "authentication", "skip": true },
+            { "elem": "users", "skip": true },
+            { "elem": "user", "key": { "name": "username", "val": "tester" }, "skip": true },
+            { "elem": "state" },
+            { "elem": "authorized-keys-list-version", "prefix": "gnsi-credentialz" }
+            ],
+            "expected": { "type": "string", "val": "keyVersionStateDB" }, "config": false
+        },
+        {
+            "desc": "openconfig-system:system/aaa/authentication/users/user[username=tester]/state/authorized-keys-list-created-on",
+            "path": [
+            { "elem": "openconfig", "prefix": "openconfig-system", "skip": true },
+            { "elem": "system", "skip": true },
+            { "elem": "aaa", "skip": true },
+            { "elem": "authentication", "skip": true },
+            { "elem": "users", "skip": true },
+            { "elem": "user", "key": { "name": "username", "val": "tester" }, "skip": true },
+            { "elem": "state" },
+            { "elem": "authorized-keys-list-created-on", "prefix": "gnsi-credentialz" }
+            ],
+            "expected": { "type": "string", "val": "444" }, "config": false
+        },
+        {
+            "desc": "openconfig-system:system/aaa/authentication/users/user[username=tester]/state/authorized-principals-list-version",
+            "path": [
+            { "elem": "openconfig", "prefix": "openconfig-system", "skip": true },
+            { "elem": "system", "skip": true },
+            { "elem": "aaa", "skip": true },
+            { "elem": "authentication", "skip": true },
+            { "elem": "users", "skip": true },
+            { "elem": "user", "key": { "name": "username", "val": "tester" }, "skip": true },
+            { "elem": "state" },
+            { "elem": "authorized-principals-list-version", "prefix": "gnsi-credentialz" }
+            ],
+            "expected": { "type": "string", "val": "ppVersionStateDB" }, "config": false
+        },
+        {
+            "desc": "openconfig-system:system/aaa/authentication/users/user[username=tester]/state/authorized-principals-list-created-on",
+            "path": [
+            { "elem": "openconfig", "prefix": "openconfig-system", "skip": true },
+            { "elem": "system", "skip": true },
+            { "elem": "aaa", "skip": true },
+            { "elem": "authentication", "skip": true },
+            { "elem": "users", "skip": true },
+            { "elem": "user", "key": { "name": "username", "val": "tester" }, "skip": true },
+            { "elem": "state" },
+            { "elem": "authorized-principals-list-created-on", "prefix": "gnsi-credentialz" }
+            ],
+            "expected": { "type": "string", "val": "446" }, "config": false
+        },
+        {
+            "desc": "openconfig-system:system/gnmi-pathz-policies/policies/policy[instance=SANDBOX]/state/version",
+            "path": [
+            { "elem": "openconfig", "prefix": "openconfig-system", "skip": true },
+            { "elem": "system", "skip": true },
+            { "elem": "gnmi-pathz-policies", "skip": true },
+            { "elem": "policies", "skip": true },
+            { "elem": "policy", "key": { "name": "instance", "val": "SANDBOX" }, "skip": true },
+            { "elem": "state", "prefix": "gnsi-pathz" },
+            { "elem": "version" }
+            ],
+            "expected": { "type": "string", "val": "pathzVersionStateDB" }, "config": false
+        },
+        {
+            "desc": "openconfig-system:system/gnmi-pathz-policies/policies/policy[instance=SANDBOX]/state/created-on",
+            "path": [
+            { "elem": "openconfig", "prefix": "openconfig-system", "skip": true },
+            { "elem": "system", "skip": true },
+            { "elem": "gnmi-pathz-policies", "skip": true },
+            { "elem": "policies", "skip": true },
+            { "elem": "policy", "key": { "name": "instance", "val": "SANDBOX" }, "skip": true },
+            { "elem": "state", "prefix": "gnsi-pathz", "skip": true },
+            { "elem": "created-on" }
+            ],
+            "expected": { "type": "string", "val": "767" }, "config": false
+        },
+        {
+            "desc": "openconfig-system:system/grpc-servers/grpc-server[name=gnxi]/state/gnmi-pathz-policy-version",
+            "path": [
+            { "elem": "openconfig", "prefix": "openconfig-system", "skip": true },
+            { "elem": "system", "skip": true },
+            { "elem": "grpc-servers", "skip": true },
+            { "elem": "grpc-server", "key": { "name": "name", "val": "gnxi" }, "skip": true },
+            { "elem": "state", "prefix": "openconfig-system-grpc" },
+            { "elem": "gnmi-pathz-policy-version", "prefix": "gnsi-pathz"  }
+            ],
+            "expected": { "type": "string", "val": "unknown" }, "config": false
+        },
+        {
+            "desc": "openconfig-system:system/grpc-servers/grpc-server[name=gnxi]/state/gnmi-pathz-policy-created-on",
+            "path": [
+            { "elem": "openconfig", "prefix": "openconfig-system", "skip": true },
+            { "elem": "system", "skip": true },
+            { "elem": "grpc-servers", "skip": true },
+            { "elem": "grpc-server", "key": { "name": "name", "val": "gnxi" }, "skip": true },
+            { "elem": "state", "skip": true },
+            { "elem": "gnmi-pathz-policy-created-on", "prefix": "gnsi-pathz"  }
+            ],
+            "expected": { "type": "string", "val": "0" }, "config": false
+        }
+    ]
+}

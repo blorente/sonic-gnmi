@@ -1,0 +1,287 @@
+{
+  "title": "Wildcard OnChange Subscription: /openconfig/interfaces/interface[name=*]/state/id",
+  "globalDef" : {
+    "validators": {
+      "state.id.10": {
+        "type": "object",
+        "required": [
+          "openconfig-p4rt:id"
+        ],
+        "properties": {
+          "openconfig-p4rt:id": {
+            "type": "integer",
+            "const": 10
+          }
+        }
+      },
+      "state.id.1000": {
+        "type": "object",
+        "required": [
+          "openconfig-p4rt:id"
+        ],
+        "properties": {
+          "openconfig-p4rt:id": {
+            "type": "integer",
+            "const": 1000
+          }
+        }
+      },
+      "state.id.2000": {
+        "type": "object",
+        "required": [
+          "openconfig-p4rt:id"
+        ],
+        "properties": {
+          "openconfig-p4rt:id": {
+            "type": "integer",
+            "const": 2000
+          }
+        }
+      },
+      "state.id.2049": {
+        "type": "object",
+        "required": [
+          "openconfig-p4rt:id"
+        ],
+        "properties": {
+          "openconfig-p4rt:id": {
+            "type": "integer",
+            "const": 2049
+          }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "Subscribes to /openconfig/interfaces/interface[name=*]/state/id",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'*'}}elem:{name:'state'}elem:{name:'id'}}mode:ON_CHANGE}mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/interfaces/interface",
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-interfaces:interface"],
+              "properties": {
+                "openconfig-interfaces:interface" : {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "required": ["name", "state"],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "enum": [
+                          "Ethernet1/1/1", "Ethernet1/2/1", "Ethernet1/3/1", "Ethernet1/6/1", "Ethernet1/7/3", "Ethernet1/7/4", "PortChannel1", "PortChannel2", "CPU"
+                        ]
+                      }
+                    }
+                  },
+                  "minItems" : 9,
+                  "maxItems" : 9,
+                  "additionalItems": false,
+                  "contains": {
+                    "type": "object",
+                    "properties": {
+                      "name" : { "type": "string", "const": "Ethernet1/1/1"},
+                      "state" : {
+                        "type": "object",
+                        "required": [ "openconfig-p4rt:id" ],
+                        "properties": {
+                          "openconfig-p4rt:id": {
+                            "type": "integer", "const": 10
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes Ethernet1/1/1.id to 1000",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "P4RT_PORT_ID_TABLE:Ethernet1/1/1" : {
+              "id": "1000"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates update with Ethernet1/1/1.id 1000",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/1/1]/state/id",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.id.1000"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes Ethernet1/1/1.id back to 10",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "P4RT_PORT_ID_TABLE:Ethernet1/1/1" : {
+              "id": "10"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates update with Ethernet1/1/1.id 10",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/1/1]/state/id",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.id.10"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Creates new interface Ethernet1/01234/1",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/01234/1" : {
+              "id": 1000
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes Ethernet1/01234/1.id to 1000",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "P4RT_PORT_ID_TABLE:Ethernet1/01234/1" : {
+              "id": 1000
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates update with Ethernet1/01234/1.id 1000",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/01234/1]/state/id",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.id.1000"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes Ethernet1/01234/1.id to 2000",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "P4RT_PORT_ID_TABLE:Ethernet1/01234/1" : {
+              "id": 2000
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates update with Ethernet1/01234/1.id 2000",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/01234/1]/state/id",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.id.2000"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Deletes Ethernet1/01234/1 state",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "P4RT_PORT_ID_TABLE:Ethernet1/01234/1" : [  ]
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates delete update for Ethernet1/01234/1.id",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=Ethernet1/01234/1]/state/id"
+            }
+          ]
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Deletes interface Ethernet1/01234/1",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/01234/1" : []
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes PortChannel1.id to 1000",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "P4RT_PORT_ID_TABLE:PortChannel1" : {
+              "id": "1000"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates update with PortChannel1.id 1000",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=PortChannel1]/state/id",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.id.1000"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes PortChannel1.id back to 2049",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "P4RT_PORT_ID_TABLE:PortChannel1" : {
+              "id": "2049"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates update with PortChannel1.id 2049",
+          "timeout": 2049,
+          "pathValidators" : [
+            {
+              "xpath": "/interfaces/interface[name=PortChannel1]/state/id",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.id.2049"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

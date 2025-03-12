@@ -1,0 +1,137 @@
+{
+  "title": "Get Fan and FanTray Component State paths",
+  "includeDefs": ["../defs/pfm_fan.json"],
+  "operations":[
+    {
+      "title": "Get an invalid fan",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "openconfig-platform:components/component[name=fan1000]",
+      "target": "OC_YANG"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=fan1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:component"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:component" : {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "$ref": "#/globalDef/pfm_fan/Fan1"
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=fan1]/state/removable",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:removable"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:removable": { "$ref": "#/globalDef/pfm_fan/Fan1_st_rm" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=fan1]/state/empty",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:empty"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:empty": { "$ref": "#/globalDef/pfm_fan/Fan1_st_empty" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=fan2]/state/empty",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:empty"],
+      "properties": {
+        "openconfig-platform:empty": {
+          "type": "boolean",
+          "enum": [true]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=fan3]/state/empty",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:empty"],
+      "properties": {
+        "openconfig-platform:empty": {
+          "type": "boolean",
+          "enum": [true]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=fan2]/state/removable",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:removable"
+      ],
+      "properties": {
+        "openconfig-platform:removable": {
+          "type": "boolean",
+          "enum": [false]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=fan2]/state/parent",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:parent"
+      ],
+      "properties": {
+        "openconfig-platform:parent": {
+          "type": "string",
+          "enum": ["FanTray1"]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=FanTray1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:component"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:component" : {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "$ref": "#/globalDef/pfm_fan/FanTray1"
+          }
+        }
+      }
+    }
+  ]
+}

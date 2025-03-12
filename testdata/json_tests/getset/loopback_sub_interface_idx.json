@@ -1,0 +1,41 @@
+{
+  "title": "Set loopback sub interface index",
+  "operations":[
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/config/index",
+      "target": "OC_YANG",
+      "attributeData":  "{\"openconfig-interfaces:index\":0}"
+
+    },
+   {
+     "operation": "get",
+     "returnCode": 0,
+     "xpath": "openconfig/interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/config/index",
+     "target": "OC_YANG",
+     "type": "object",
+     "required": ["openconfig-interfaces:index"],
+       "properties": {
+         "counters": {
+          "type": "integer",
+          "enum": [0]
+         }
+       }
+    },
+   {
+     "operation": "get",
+     "returnCode": 0,
+     "xpath": "openconfig/interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/state/index",
+     "target": "OC_YANG",
+     "type": "object",
+     "required": ["openconfig-interfaces:index"],
+       "properties": {
+         "counters": {
+          "type": "integer",
+          "enum": [0]
+         }
+       }
+    }
+  ]
+}

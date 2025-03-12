@@ -1,0 +1,114 @@
+{
+    "title": "target_defined_penalty_based_aied",
+    "operations":[
+      {
+        "title": "subscribe to /interfaces/interface[name=Ethernet1/1/1]/penalty-based-aied/state",
+        "operation": "subscribe",
+        "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'Ethernet1/1/1'}}elem:{name:'penalty-based-aied'}elem:{name:'state'}}mode:TARGET_DEFINED sample_interval:1000000000 suppress_redundant: true} mode:STREAM}",
+        "returnCode": 0,
+        "subOpers": [
+          {
+            "oper": "validate",
+            "timeout": 5000,
+            "finalValidator": {
+              "xpath": "/interfaces/interface[name=Ethernet1/1/1]/penalty-based-aied/state",
+              "syncResponse": true,
+              "schema": {
+                "type": "object",
+                "required": [
+                  "openconfig-interfaces:state"
+                ],
+                "properties":{
+                  "openconfig-interfaces:state": {
+                    "type": "object",
+                    "required": [
+                      "max-suppress-time", "decay-half-life", "suppress-threshold", "reuse-threshold", "flap-penalty"
+                    ],
+                    "properties": {
+                      "max-suppress-time": {
+                        "type": "integer",
+                        "const": 64000
+                      },
+                      "decay-half-life": {
+                        "type": "integer",
+                        "const": 1000
+                      },
+                      "suppress-threshold": {
+                        "type": "integer",
+                        "const": 1000
+                      },
+                      "reuse-threshold": {
+                        "type": "integer",
+                        "const": 1500
+                      },
+                      "flap-penalty": {
+                        "type": "integer",
+                        "const": 10
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Disable Ethernet1/1/1 penalty-based-aied",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_TABLE:Ethernet1/1/1": {
+                "max_suppress_time": 0,
+                "decay_half_life": 0,
+                "suppress_threshold": 0,
+                "reuse_threshold": 0,
+                "flap_penalty": 0
+              }
+            }
+          },
+          {
+            "oper": "validate",
+            "timeout": 5000,
+            "finalValidator": {
+              "xpath": "/interfaces/interface[name=Ethernet1/1/1]/penalty-based-aied/state",
+              "schema": {
+                "type": "object",
+                "required": [
+                  "openconfig-interfaces:state"
+                ],
+                "properties":{
+                  "openconfig-interfaces:state": {
+                    "type": "object",
+                    "required": [
+                      "max-suppress-time", "decay-half-life", "suppress-threshold", "reuse-threshold", "flap-penalty"
+                    ],
+                    "properties": {
+                      "max-suppress-time": {
+                        "type": "integer",
+                        "const": 0
+                      },
+                      "decay-half-life": {
+                        "type": "integer",
+                        "const": 0
+                      },
+                      "suppress-threshold": {
+                        "type": "integer",
+                        "const": 0
+                      },
+                      "reuse-threshold": {
+                        "type": "integer",
+                        "const": 0
+                      },
+                      "flap-penalty": {
+                        "type": "integer",
+                        "const": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }

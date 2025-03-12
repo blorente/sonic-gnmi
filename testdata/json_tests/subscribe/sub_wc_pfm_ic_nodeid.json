@@ -1,0 +1,266 @@
+{
+  "title": "Wildcard OnChange Subscription: /openconfig/components/component[name=*]/integrated-circuit/state/node-id",
+  "includeDefs": ["../defs/pfm_ic.json"],
+  "globalDef" : {
+    "validators": {
+      "state.nodeid.1234567": {
+        "type": "object",
+        "required": ["openconfig-p4rt:node-id"],
+        "additionalProperties": false,
+        "properties": {
+          "openconfig-p4rt:node-id": { "$ref": "#/globalDef/pfm_ic/IC0_ic_nodeid" }
+        }
+      },
+      "state.nodeid.7654321": {
+        "type": "object",
+        "required": ["openconfig-p4rt:node-id"],
+        "additionalProperties": false,
+        "properties": {
+          "openconfig-p4rt:node-id": {
+            "type": "string",
+            "const": "7654321"
+          }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "SubOnChange /components/component[name=integrated_circuit0]/integrated-circuit/state/node-id",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'SomeTarget'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'integrated_circuit0'}}elem:{name:'integrated-circuit'}elem:{name:'state'}elem:{name:'node-id'}}mode:ON_CHANGE}mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit/state",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:state"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:state": { "$ref": "#/globalDef/validators/state.nodeid.1234567" }
+              }
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes integrated_circuit0.node-id to 7654321",
+          "db": "CONFIG_DB",
+          "value": {
+            "NODE_CFG|integrated_circuit0" : {
+              "node-id": "7654321"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with integrated_circuit0.node-id 7654321",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit/state/node-id",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.nodeid.7654321"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes integrated_circuit0.node-id back to 1234567",
+          "db": "CONFIG_DB",
+          "value": {
+            "NODE_CFG|integrated_circuit0" : {
+              "node-id": "1234567"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with integrated_circuit0.node-id UP",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit/state/node-id",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.nodeid.1234567"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Subscribes to /openconfig/components/component[name=*]/integrated-circuit/state/node-id with ON_CHANGE",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'*'}}elem:{name:'integrated-circuit'}elem:{name:'state'}elem:{name:'node-id'}}mode:ON_CHANGE}mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:component"],
+              "properties": {
+                "openconfig-platform:component" : {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "required": ["name", "integrated-circuit"],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "enum": [
+                          "integrated_circuit0"
+                        ]
+                      },
+                      "intgrated-circuit": {
+                        "type": "object",
+                        "required": [ "state" ],
+                        "properties": {
+                          "state": {
+                            "type": "object",
+                            "properties": {
+                              "openconfig-p4rt:node-id": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "minItems" : 1,
+                  "maxItems" : 1,
+                  "additionalItems": false,
+                  "contains": {
+                    "type": "object",
+                    "properties": {
+                      "name" : { "type": "string", "const": "integrated_circuit0"},
+                      "intgrated-circuit": {
+                        "type": "object",
+                        "required": [ "state" ],
+                        "properties": {
+                          "state": {
+                            "type": "object",
+                            "properties": {
+                              "openconfig-p4rt:node-id": {
+                                "type": "string",
+                                "const": "1234567"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes integrated_circuit0.node-id to 7654321",
+          "db": "CONFIG_DB",
+          "value": {
+            "NODE_CFG|integrated_circuit0" : {
+              "node-id": "7654321"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with integrated_circuit0.node-id 7654321",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit/state/node-id",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.nodeid.7654321"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Changes integrated_circuit0.node-id back to 1234567",
+          "db": "CONFIG_DB",
+          "value": {
+            "NODE_CFG|integrated_circuit0" : {
+              "node-id": "1234567"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with integrated_circuit0.node-id UP",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/components/component[name=integrated_circuit0]/integrated-circuit/state/node-id",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.nodeid.1234567"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Creates new component integrated_circuit01234",
+          "db": "CONFIG_DB",
+          "value": {
+            "NODE_CFG|integrated_circuit01234" : {
+              "fully-qualified-name": "eth-2/1",
+              "node-id": "1234567",
+              "name": "integrated_circuit01234"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with integrated_circuit01234.node-id UP",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/components/component[name=integrated_circuit01234]/integrated-circuit/state/node-id",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.nodeid.1234567"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Deletes component integrated_circuit01234",
+          "db": "CONFIG_DB",
+          "value": {
+            "NODE_CFG|integrated_circuit01234" : []
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates delete update for integrated_circuit01234.node-id",
+          "timeout": 2000,
+          "pathValidators" : [
+            {
+              "xpath": "/components/component[name=integrated_circuit01234]/integrated-circuit/state/node-id"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

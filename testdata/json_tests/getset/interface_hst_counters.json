@@ -1,0 +1,144 @@
+{
+  "title": "get_interface_hst_counters",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/state/google-pins-interfaces:hst",
+      "target": "OC_YANG",
+      "type": "object",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "COUNTERS_DB",
+          "value": {
+            "HST_STATS_TABLE:oid:0x1000000000012" : {
+              "abwc_digest_0": "0",
+              "abwc_digest_cumulative_0": "0",
+              "abwc_digest_1": "0",
+              "abwc_digest_cumulative_1": "0",
+              "abwc_digest_2": "0",
+              "abwc_digest_cumulative_2": "0",
+              "abwc_digest_3": "0",
+              "abwc_digest_cumulative_3": "0",
+              "abwc_digest_4": "0",
+              "abwc_digest_cumulative_4": "0",
+              "abwc_digest_5": ".1",
+              "abwc_digest_cumulative_5": "100",
+              "abwc_digest_6": ".1",
+              "abwc_digest_cumulative_6": "90.1",
+              "abwc_digest_7": "100",
+              "timestamp": "123123123123"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["state"],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": ["google-pins-interfaces:hst"],
+                "properties": {
+                  "google-pins-interfaces:hst": {
+                    "type": "object",
+                    "required": ["abwc-digests-0", "abwc-digests-cumulative-0",
+                                 "abwc-digests-1", "abwc-digests-cumulative-1",
+                                 "abwc-digests-2", "abwc-digests-cumulative-2",
+                                 "abwc-digests-3", "abwc-digests-cumulative-3",
+                                 "abwc-digests-4", "abwc-digests-cumulative-4",
+                                 "abwc-digests-6", "abwc-digests-cumulative-6",
+                                 "abwc-digests-7"],
+                    "properties": {
+                      "abwc-digest-0": {
+                        "type": "string",
+                        "enum": ["AAAAAA=="]
+                      },
+                      "abwc-digest-cumulative-0": {
+                        "type": "string",
+                        "enum": ["AAAAAA=="]
+                      },
+                      "abwc-digest-1": {
+                        "type": "string",
+                        "enum": ["AAAAAA=="]
+                      },
+                      "abwc-digest-cumulative-1": {
+                        "type": "string",
+                        "enum": ["AAAAAA=="]
+                      },
+                      "abwc-digest-2": {
+                        "type": "string",
+                        "enum": ["AAAAAA=="]
+                      },
+                      "abwc-digest-cumulative-2": {
+                        "type": "string",
+                        "enum": ["AAAAAA=="]
+                      },
+                      "abwc-digest-3": {
+                        "type": "string",
+                        "enum": ["AAAAAA=="]
+                      },
+                      "abwc-digest-cumulative-3": {
+                        "type": "string",
+                        "enum": ["AAAAAA=="]
+                      },
+                      "abwc-digest-4": {
+                        "type": "string",
+                        "enum": ["AAAAAA=="]
+                      },
+                      "abwc-digest-cumulative-4": {
+                        "type": "string",
+                        "enum": ["AAAAAA=="]
+                      },
+                      "abwc-digest-5": {
+                        "type": "string",
+                        "enum": ["PczMzQ=="]
+                      },
+                      "abwc-digest-cumulative-5": {
+                        "type": "string",
+                        "enum": ["QrQzMw=="]
+                      },
+                      "abwc-digest-6": {
+                        "type": "string",
+                        "enum": ["PczMzQ=="]
+                      },
+                      "abwc-digest-cumulative-6": {
+                        "type": "string",
+                        "enum": ["QrQzMw=="]
+                      },
+                      "abwc-digest-7": {
+                        "type": "string",
+                        "enum": ["QsgAAA=="]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "openconfig/interfaces/interface[name=CPU]/state/google-pins-interfaces:hst",
+      "target": "OC_YANG",
+      "type": "object"
+    }
+  ]
+}

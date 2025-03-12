@@ -1,0 +1,1152 @@
+{
+  "title": "Get The Storage Component State paths",
+  "includeDefs": ["../defs/pfm_storage.json"],
+  "operations":[
+    {
+      "title": "Get /dev/sda",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=/dev/sda]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:component"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:component" : {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "$ref": "#/globalDef/pfm_storage/SDA"
+          }
+        }
+      }
+    },
+    {
+      "title": "Get /dev/sda storage subtree",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=/dev/sda]/storage",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:storage"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:storage": { "$ref": "#/globalDef/pfm_storage/SDA_storage" }
+      }
+    },
+    {
+      "title": "Get /dev/sda storage/state subtree",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=/dev/sda]/storage/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:state"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:state": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=/dev/sdb]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:component"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:component" : {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "$ref": "#/globalDef/pfm_storage/SDB"
+          }
+        }
+      }
+    },
+    {
+      "title": "Get /dev/sdb storage subtree",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=/dev/sdb]/storage",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:storage"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:storage": { "$ref": "#/globalDef/pfm_storage/SDB_storage" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb storage/state subtree",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=/dev/sdb]/storage/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:state"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:state": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=io-errors first time",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=/dev/sda]/storage/state/google-pins-platform:io-errors",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:io-errors"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:io-errors": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_ie" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=io-errors",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/io-errors",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:io-errors"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:io-errors": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_ie" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=write-amplification-factor",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/write-amplification-factor",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:write-amplification-factor"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:write-amplification-factor": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_waf" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=raw-read-error-rate",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/raw-read-error-rate",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:raw-read-error-rate"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:raw-read-error-rate": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_rrer" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=throughput-performance",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/throughput-performance",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:throughput-performance"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:throughput-performance": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_tp" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=reallocated-sector-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/reallocated-sector-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:reallocated-sector-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:reallocated-sector-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_rasc" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=power-on-seconds",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/power-on-seconds",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:power-on-seconds"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:power-on-seconds": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_pos" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=ssd-life-left",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/ssd-life-left",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:ssd-life-left"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:ssd-life-left": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_sll" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=avg-erase-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/avg-erase-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:avg-erase-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:avg-erase-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_aec" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=max-erase-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/max-erase-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:max-erase-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:max-erase-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_mec" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=power-cycle-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/power-cycle-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:power-cycle-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:power-cycle-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_pcc" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=uncorrectable-sector-count-on-line",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/uncorrectable-sector-count-on-line",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:uncorrectable-sector-count-on-line"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:uncorrectable-sector-count-on-line": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_uscol" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=num-pure-spare",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/num-pure-spare",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:num-pure-spare"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:num-pure-spare": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_nps" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=num-initial-invalid-block",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/num-initial-invalid-block",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:num-initial-invalid-block"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:num-initial-invalid-block": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_niib" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=slc-total-erase-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/slc-total-erase-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:slc-total-erase-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:slc-total-erase-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_stec" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=slc-max-erase-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/slc-max-erase-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:slc-max-erase-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:slc-max-erase-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_sMec" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=slc-min-erase-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/slc-min-erase-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:slc-min-erase-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:slc-min-erase-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_smec" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=slc-avg-erase-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/slc-avg-erase-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:slc-avg-erase-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:slc-avg-erase-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_saec" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=tlc-total-erase-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/tlc-total-erase-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:tlc-total-erase-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:tlc-total-erase-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_ttec" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=tlc-max-erase-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/tlc-max-erase-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:tlc-max-erase-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:tlc-max-erase-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_tMec" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=tlc-min-erase-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/tlc-min-erase-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:tlc-min-erase-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:tlc-min-erase-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_tmec" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=tlc-avg-erase-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/tlc-avg-erase-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:tlc-avg-erase-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:tlc-avg-erase-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_taec" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=wear-leveling-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/wear-leveling-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:wear-leveling-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:wear-leveling-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_wlc" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=program-fail-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/program-fail-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:program-fail-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:program-fail-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_pfc" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=erase-fail-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/erase-fail-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:erase-fail-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:erase-fail-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_efc" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=power-off-retract-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/power-off-retract-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:power-off-retract-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:power-off-retract-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_porc" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=hardware-ecc-recovered",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/hardware-ecc-recovered",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:hardware-ecc-recovered"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:hardware-ecc-recovered": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_her" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=reallocation-event-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/reallocation-event-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:reallocation-event-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:reallocation-event-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_rec" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=udma-crc-errors-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/udma-crc-errors-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:udma-crc-errors-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:udma-crc-errors-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_ucec" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=available-reserved-space",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/available-reserved-space",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:available-reserved-space"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:available-reserved-space": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_ars" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=write-sector-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/write-sector-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:write-sector-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:write-sector-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_wsc" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=read-sector-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/read-sector-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:read-sector-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:read-sector-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_rsc" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=flash-write-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/flash-write-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:flash-write-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:flash-write-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_fwc" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=io-errors",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/io-errors",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:io-errors"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:io-errors": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_ie" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=write-amplification-factor",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/write-amplification-factor",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:write-amplification-factor"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:write-amplification-factor": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_waf" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=raw-read-error-rate",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/raw-read-error-rate",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:raw-read-error-rate"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:raw-read-error-rate": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_rrer" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=throughput-performance",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/throughput-performance",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:throughput-performance"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:throughput-performance": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_tp" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=reallocated-sector-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/reallocated-sector-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:reallocated-sector-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:reallocated-sector-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_rasc" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=power-on-seconds",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/power-on-seconds",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:power-on-seconds"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:power-on-seconds": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_pos" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=ssd-life-left",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/ssd-life-left",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:ssd-life-left"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:ssd-life-left": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_sll" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=avg-erase-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/avg-erase-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:avg-erase-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:avg-erase-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_aec" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=max-erase-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/max-erase-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:max-erase-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:max-erase-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_mec" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=power-cycle-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/power-cycle-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:power-cycle-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:power-cycle-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_pcc" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=uncorrectable-sector-count-on-line",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/uncorrectable-sector-count-on-line",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:uncorrectable-sector-count-on-line"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:uncorrectable-sector-count-on-line": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_uscol" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=num-pure-spare",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/num-pure-spare",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:num-pure-spare"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:num-pure-spare": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_nps" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=num-initial-invalid-block",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/num-initial-invalid-block",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:num-initial-invalid-block"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:num-initial-invalid-block": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_niib" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=slc-total-erase-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/slc-total-erase-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:slc-total-erase-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:slc-total-erase-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_stec" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=slc-max-erase-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/slc-max-erase-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:slc-max-erase-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:slc-max-erase-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_sMec" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=slc-min-erase-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/slc-min-erase-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:slc-min-erase-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:slc-min-erase-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_smec" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=slc-avg-erase-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/slc-avg-erase-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:slc-avg-erase-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:slc-avg-erase-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_saec" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=tlc-total-erase-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/tlc-total-erase-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:tlc-total-erase-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:tlc-total-erase-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_ttec" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=tlc-max-erase-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/tlc-max-erase-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:tlc-max-erase-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:tlc-max-erase-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_tMec" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=tlc-min-erase-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/tlc-min-erase-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:tlc-min-erase-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:tlc-min-erase-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_tmec" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=tlc-avg-erase-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/tlc-avg-erase-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:tlc-avg-erase-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:tlc-avg-erase-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_taec" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=wear-leveling-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/wear-leveling-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:wear-leveling-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:wear-leveling-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_wlc" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=program-fail-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/program-fail-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:program-fail-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:program-fail-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_pfc" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=erase-fail-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/erase-fail-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:erase-fail-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:erase-fail-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_efc" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=power-off-retract-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/power-off-retract-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:power-off-retract-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:power-off-retract-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_porc" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=hardware-ecc-recovered",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/hardware-ecc-recovered",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:hardware-ecc-recovered"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:hardware-ecc-recovered": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_her" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=reallocation-event-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/reallocation-event-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:reallocation-event-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:reallocation-event-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_rec" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=udma-crc-errors-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/udma-crc-errors-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:udma-crc-errors-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:udma-crc-errors-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_ucec" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=available-reserved-space",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/available-reserved-space",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:available-reserved-space"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:available-reserved-space": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_ars" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=write-sector-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/write-sector-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:write-sector-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:write-sector-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_wsc" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=read-sector-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/read-sector-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:read-sector-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:read-sector-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_rsc" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb leaf=flash-write-count",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/storage/state/flash-write-count",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:flash-write-count"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:flash-write-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_fwc" }
+      }
+    },
+    {
+      "title": "Get /dev/sda component/state subtree",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:state"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:state": { "$ref": "#/globalDef/pfm_storage/SDA_st" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb component/state subtree",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:state"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:state": { "$ref": "#/globalDef/pfm_storage/SDB_st" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb component/state/name ",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/state/name",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:name"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:name": { "$ref": "#/globalDef/pfm_storage/SDB_name" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb component/state/parent",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/state/parent",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:parent"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:parent": { "$ref": "#/globalDef/pfm_storage/SDB_st_parent" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb component/state/type",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/state/type",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:type"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:type": { "$ref": "#/globalDef/pfm_storage/SDB_st_type" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb component/state/temperature",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/state/temperature",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:temperature"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:temperature": { "$ref": "#/globalDef/pfm_storage/SDB_st_temp" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb component/state/temperature/instant",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/state/temperature/instant",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:instant"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:instant": { "$ref": "#/globalDef/pfm_storage/SDB_st_temp_inst" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb component/state/part-no",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/state/part-no",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:part-no"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:part-no": { "$ref": "#/globalDef/pfm_storage/SDB_st_pn" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb component/state/serial-no",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/state/serial-no",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:serial-no"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:serial-no": { "$ref": "#/globalDef/pfm_storage/SDB_st_sn" }
+      }
+    },
+    {
+      "title": "Get /dev/sdb component/state/removable",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sdb]/state/removable",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:removable"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:removable": { "$ref": "#/globalDef/pfm_storage/SDB_st_rmv" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=io-errors before DB modify",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "components/component[name=/dev/sda]/storage/state/io-errors",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["google-pins-platform:io-errors"],
+      "additionalProperties": false,
+      "properties": {
+        "google-pins-platform:io-errors": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_ie" }
+      },
+      "subOpers": [
+				{
+          "oper": "dbHDel",
+          "title": "Delete io-errors for /dev/sda",
+          "db": "STATE_DB",
+          "value": {
+            "STORAGE_INFO|/dev/sda": ["io-errors"]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Get /dev/sda storage/state subtree without io-errors",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=/dev/sda]/storage/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:state"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:state": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_no_io_errors" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=io-errors when missing",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "components/component[name=/dev/sda]/storage/state/io-errors",
+      "target": "OC_YANG",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "title": "Restore io-errors as non-int value",
+          "db": "STATE_DB",
+          "value": {
+            "STORAGE_INFO|/dev/sda": {
+              "io-errors": "NotAnInt"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "Get /dev/sda storage/state subtree with bad io-errors",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=/dev/sda]/storage/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:state"],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-platform:state": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_no_io_errors" }
+      }
+    },
+    {
+      "title": "Get /dev/sda leaf=io-errors when non-int",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "components/component[name=/dev/sda]/storage/state/io-errors",
+      "target": "OC_YANG"
+    }
+
+
+  ]
+}

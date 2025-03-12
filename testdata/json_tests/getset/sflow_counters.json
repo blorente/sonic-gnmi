@@ -1,0 +1,511 @@
+{
+  "title": "Sflow_Counter",
+  "operations":[
+    {
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/sampling/sflow",
+      "target": "OC_YANG",
+      "attributeData": "{\"sflow\":{\"collectors\":{\"collector\":[{\"address\":\"127.0.0.1\",\"port\":6343,\"config\":{\"address\":\"127.0.0.1\",\"port\":6343}},{\"address\":\"2001:0db8:0000:ff00:0042:7879::1\",\"port\":6344,\"config\":{\"address\":\"2001:0db8:0000:ff00:0042:7879::1\",\"port\":6344}}]},\"config\":{\"sample-size\":128,\"agent-id-ipv6\":\"2607:f001:aa9::\",\"enabled\":true,\"polling-interval\":0},\"interfaces\":{\"interface\":[{\"name\":\"Ethernet1\/1\/1\",\"config\":{\"ingress-sampling-rate\":256,\"enabled\":true}},{\"name\":\"Ethernet1\/2\/1\",\"config\":{\"ingress-sampling-rate\":266,\"enabled\":true}}]}}}",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "SFLOW_TABLE:global" : {
+              "admin_state": "up",
+              "agent_ip": "2202:f001:ace::",
+              "header_bytes": "128",
+              "polling_interval": "0"
+            },
+            "SFLOW_SESSION_TABLE:Ethernet1/1/1" : {
+              "admin_state": "up",
+              "sample_rate": "10"
+            },
+            "SFLOW_COLLECTOR:127.0.0.1_6343" : {
+              "collector_ip": "127.0.0.1",
+              "collector_port": "6343"
+            },
+            "SFLOW_COLLECTOR:2001:0db8:0000:ff00:0042:7879::1_6344" : {
+              "collector_ip": "2001:0db8:0000:ff00:0042:7879::1",
+              "collector_port": "6344"
+            },
+            "SFLOW_SESSION_TABLE:Ethernet1/2/1" : {
+              "admin_state": "up",
+              "sample_rate": "10"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/sampling/sflow/collectors/collector[address=2001:0db8:0000:ff00:0042:7879::1][port=6344]/state/packets-sent",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-sampling-sflow:packets-sent"
+      ],
+      "properties": {
+        "openconfig-sampling-sflow:packets-sent": {
+          "type": "string",
+          "enum": ["0"]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/sampling/sflow/collectors/collector[address=127.0.0.1][port=6343]/state/packets-sent",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-sampling-sflow:packets-sent"
+      ],
+      "properties": {
+        "openconfig-sampling-sflow:packets-sent": {
+          "type": "string",
+          "enum": ["97"]
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHDel",
+          "title": "Delete 127.0.0.1/6343 from COUNTERS_DB",
+          "db": "COUNTERS_DB",
+          "value": {
+            "COUNTERS:SFLOW_COLLECTOR:127.0.0.1/6343": []
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/sampling/sflow/collectors/collector[address=127.0.0.1][port=6343]/state/packets-sent",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-sampling-sflow:packets-sent"
+      ],
+      "properties": {
+        "openconfig-sampling-sflow:packets-sent": {
+          "type": "string",
+          "enum": ["0"]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/sampling/sflow/interfaces/interface[name=Ethernet1/2/1]/state/packets-sampled",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-sampling-sflow:packets-sampled"
+      ],
+      "properties": {
+        "openconfig-sampling-sflow:packets-sampled": {
+          "type": "string",
+          "enum": ["0"]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/sampling/sflow/interfaces/interface[name=Ethernet1/1/1]/state/packets-sampled",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-sampling-sflow:packets-sampled"
+      ],
+      "properties": {
+        "openconfig-sampling-sflow:packets-sampled": {
+          "type": "string",
+          "enum": ["999"]
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHDel",
+          "title": "Delete Ethernet1/1/1 from COUNTERS_DB",
+          "db": "COUNTERS_DB",
+          "value": {
+            "COUNTERS:SFLOW_SESSION:Ethernet1/1/1": []
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/sampling/sflow/interfaces/interface[name=Ethernet1/1/1]/state/packets-sampled",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-sampling-sflow:packets-sampled"
+      ],
+      "properties": {
+        "openconfig-sampling-sflow:packets-sampled": {
+          "type": "string",
+          "enum": ["0"]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/sampling/sflow",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-sampling-sflow:sflow"
+      ],
+      "properties": {
+        "openconfig-sampling-sflow:sflow": {
+          "type": "object",
+          "required": [
+            "collectors",
+            "interfaces"
+          ],
+          "properties": {
+            "collectors": {
+              "type": "object",
+              "required": [
+                "collector"
+              ],
+              "properties": {
+                "collector": {
+                  "collector": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "type": "object",
+                        "required": [
+                          "config",
+                          "port",
+                          "state",
+                          "address"
+                        ],
+                        "properties": {
+                          "config": {
+                            "type": "object",
+                            "required": [
+                              "port",
+                              "address"
+                            ],
+                            "properties": {
+                              "port": {
+                                "type": "integer",
+                                "enum": [
+                                  6343
+                                ]
+                              },
+                              "address": {
+                                "type": "string",
+                                "enum": [
+                                  "2001:0db8:0000:ff00:0042:7879::1"
+                                ]
+                              }
+                            }
+                          },
+                          "port": {
+                            "type": "integer",
+                            "enum": [
+                              6343
+                            ]
+                          },
+                          "state": {
+                            "type": "object",
+                            "required": [
+                              "packets-sent",
+                              "port",
+                              "address"
+                            ],
+                            "properties": {
+                              "packets-sent": {
+                                "type": "string",
+                                "enum": [
+                                  "567"
+                                ]
+                              },
+                              "port": {
+                                "type": "integer",
+                                "enum": [
+                                  6343
+                                ]
+                              },
+                              "address": {
+                                "type": "string",
+                                "enum": [
+                                  "2001:0db8:0000:ff00:0042:7879::1"
+                                ]
+                              }
+                            }
+                          },
+                          "address": {
+                            "type": "string",
+                            "enum": [
+                              "2001:0db8:0000:ff00:0042:7879::1"
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "required": [
+                          "address",
+                          "config",
+                          "port",
+                          "state"
+                        ],
+                        "properties": {
+                          "address": {
+                            "type": "string",
+                            "enum": [
+                              "2001:0db8:0000:ff00:0042:7879::1"
+                            ]
+                          },
+                          "config": {
+                            "type": "object",
+                            "required": [
+                              "address",
+                              "port"
+                            ],
+                            "properties": {
+                              "address": {
+                                "type": "string",
+                                "enum": [
+                                  "2001:0db8:0000:ff00:0042:7879::1"
+                                ]
+                              },
+                              "port": {
+                                "type": "integer",
+                                "enum": [
+                                  6344
+                                ]
+                              }
+                            }
+                          },
+                          "port": {
+                            "type": "integer",
+                            "enum": [
+                              6344
+                            ]
+                          },
+                          "state": {
+                            "type": "object",
+                            "required": [
+                              "address",
+                              "packets-sent",
+                              "port"
+                            ],
+                            "properties": {
+                              "address": {
+                                "type": "string",
+                                "enum": [
+                                  "2001:0db8:0000:ff00:0042:7879::1"
+                                ]
+                              },
+                              "packets-sent": {
+                                "type": "string",
+                                "enum": [
+                                  "0"
+                                ]
+                              },
+                              "port": {
+                                "type": "integer",
+                                "enum": [
+                                  6344
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "interfaces": {
+              "type": "object",
+              "required": [
+                "interface"
+              ],
+              "properties": {
+                "interface": {
+                  "interface": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "type": "object",
+                        "required": [
+                          "state",
+                          "config",
+                          "name"
+                        ],
+                        "properties": {
+                          "state": {
+                            "type": "object",
+                            "required": [
+                              "enabled",
+                              "ingress-sampling-rate",
+                              "name",
+                              "packets-sampled"
+                            ],
+                            "properties": {
+                              "enabled": {
+                                "type": "boolean",
+                                "enum": [
+                                  true
+                                ]
+                              },
+                              "ingress-sampling-rate": {
+                                "type": "integer",
+                                "enum": [
+                                  20
+                                ]
+                              },
+                              "name": {
+                                "type": "string",
+                                "enum": [
+                                  "Ethernet1/1/1"
+                                ]
+                              },
+                              "packets-sampled": {
+                                "type": "string",
+                                "enum": [
+                                  "0"
+                                ]
+                              }
+                            }
+                          },
+                          "config": {
+                            "type": "object",
+                            "required": [
+                              "enabled",
+                              "ingress-sampling-rate",
+                              "name"
+                            ],
+                            "properties": {
+                              "enabled": {
+                                "type": "boolean",
+                                "enum": [
+                                  true
+                                ]
+                              },
+                              "ingress-sampling-rate": {
+                                "type": "integer",
+                                "enum": [
+                                  256
+                                ]
+                              },
+                              "name": {
+                                "type": "string",
+                                "enum": [
+                                  "Ethernet1/1/1"
+                                ]
+                              }
+                            }
+                          },
+                          "name": {
+                            "type": "string",
+                            "enum": [
+                              "Ethernet1/1/1"
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "required": [
+                          "config",
+                          "name",
+                          "state"
+                        ],
+                        "properties": {
+                          "config": {
+                            "type": "object",
+                            "required": [
+                              "name",
+                              "enabled",
+                              "ingress-sampling-rate"
+                            ],
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "enum": [
+                                  "Ethernet1/2/1"
+                                ]
+                              },
+                              "enabled": {
+                                "type": "boolean",
+                                "enum": [
+                                  true
+                                ]
+                              },
+                              "ingress-sampling-rate": {
+                                "type": "integer",
+                                "enum": [
+                                  266
+                                ]
+                              }
+                            }
+                          },
+                          "name": {
+                            "type": "string",
+                            "enum": [
+                              "Ethernet1/2/1"
+                            ]
+                          },
+                          "state": {
+                            "type": "object",
+                            "required": [
+                              "enabled",
+                              "ingress-sampling-rate",
+                              "name",
+                              "packets-sampled"
+                            ],
+                            "properties": {
+                              "enabled": {
+                                "type": "boolean",
+                                "enum": [
+                                  true
+                                ]
+                              },
+                              "ingress-sampling-rate": {
+                                "type": "integer",
+                                "enum": [
+                                  10
+                                ]
+                              },
+                              "name": {
+                                "type": "string",
+                                "enum": [
+                                  "Ethernet1/1/1"
+                                ]
+                              },
+                              "packets-sampled": {
+                                "type": "string",
+                                "enum": [
+                                  "999"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

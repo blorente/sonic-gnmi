@@ -1,0 +1,25 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+#gazelle:ignore
+
+go_library(
+    name = "jwt",
+    srcs = [
+        "sonic_gnoi_jwt.pb.go",
+    ],
+    importpath = "github.com/sonic-net/sonic-gnmi/proto/sonic_gnoi/jwt",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_gogo_protobuf//gogoproto",
+        "@com_github_golang_protobuf//proto",
+        "@org_golang_google_grpc//:grpc",
+        "@org_golang_google_grpc//codes",
+        "@org_golang_google_grpc//status",
+    ]
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":jwt",
+    visibility = ["//visibility:public"],
+)

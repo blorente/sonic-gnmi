@@ -1,0 +1,888 @@
+{
+  "title": "Set lacp interface",
+  "globalDef": {
+    "LacpDefs": {
+      "PC99_name": { "type": "string", "const": "PortChannel99" },
+      "PC99_state_name": { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+      "PC99_state_interval": { "type": "string", "const": "SLOW" },
+      "PC99_state_mode": { "type": "string", "const": "ACTIVE" },
+      "PC99_state_mac": { "type": "string", "const": "fc:bd:67:2c:08:f4" },
+      "PC99_state_fallback": { "type": "boolean", "const": false},
+      "PC99_state_pri": { "type": "integer", "const": 128 },
+      "PC99_state": {
+        "type": "object",
+        "required": ["name", "interval", "lacp-mode", "system-id-mac", "fallback", "system-priority"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "$ref": "#/globalDef/LacpDefs/PC99_state_name" },
+          "fallback": { "$ref": "#/globalDef/LacpDefs/PC99_state_fallback" },
+          "interval": { "$ref": "#/globalDef/LacpDefs/PC99_state_interval" },
+          "lacp-mode": { "$ref": "#/globalDef/LacpDefs/PC99_state_mode" },
+          "system-id-mac": { "$ref": "#/globalDef/LacpDefs/PC99_state_mac" },
+          "system-priority": { "$ref": "#/globalDef/LacpDefs/PC99_state_pri" }
+        }
+      },
+      "PC99_config_interval": { "type": "string", "const": "FAST" },
+      "PC99_config_mode": { "type": "string", "const": "ACTIVE" },
+      "PC99_config_mac": { "type": "string", "const": "fc:bd:67:2c:08:e5" },
+      "PC99_config_pri": { "type": "integer", "const": 128 },
+      "PC99_config_key": { "type": "integer", "const": 2 },
+      "PC99_config_fallback": { "type": "boolean", "const": false },
+      "PC99_cfg_state_default": {
+        "type": "object",
+        "required": ["name", "interval", "lacp-mode", "fallback"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "$ref": "#/globalDef/LacpDefs/PC99_state_name" },
+          "fallback": { "type": "boolean", "const": false},
+          "interval": { "type": "string", "const": "SLOW" },
+          "lacp-mode": { "type": "string", "const": "ACTIVE" }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "Create interface PortChannel99",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG",
+      "attributeData": "{\"interface\": [{\"name\":\"PortChannel99\", \"config\":{\"name\":\"PortChannel99\", \"enabled\": true, \"google-pins-if:fully-qualified-interface-name\":\"trk-test-PortChannel99\", \"type\": \"iana-if-type:ieee8023adLag\", \"mtu\":1514, \"oc-p4rt:id\":2001}, \"oc-lag:aggregation\":{\"oc-lag:config\":{\"oc-lag:lag-type\":\"LACP\", \"oc-lag:min-links\":1}}, \"subinterfaces\":{\"subinterface\":[{\"index\":0, \"config\":{\"index\":0,\"enabled\":true}, \"oc-ip:ipv6\":{\"oc-ip:unnumbered\":{\"oc-ip:config\":{\"oc-ip:enabled\":true}}}}]} }]}"
+    },
+    {
+      "title": "Add member to PortChannel99",
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"config\": {\"enabled\" : false, \"loopback-mode\" : \"NONE\", \"mtu\" : 9126, \"name\": \"Ethernet1/1/5\", \"openconfig-p4rt:id\" : 1, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"name\": \"Ethernet1/1/5\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"openconfig-if-aggregate:aggregate-id\": \"PortChannel99\", \"port-speed\" : \"openconfig-if-ethernet:SPEED_100GB\"}}}]}}"
+    },
+    {
+      "title": "Verify initial interface config",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [ "openconfig-interfaces:interface" ],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [ "config", "name", "state", "subinterfaces", "openconfig-if-aggregate:aggregation" ],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string", "const": "PortChannel99" },
+              "openconfig-if-aggregate:aggregation": {
+                "type": "object",
+                "required": [ "config" ],
+                "additionalProperties": false,
+                "properties": {
+                  "config": {
+                    "type": "object",
+                    "required": [ "lag-type", "min-links" ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "lag-type": { "type": "string", "const": "LACP" },
+                      "min-links": { "type": "integer", "const": 1 }
+                    }
+                  }
+                }
+              },
+              "state": { "type": "object" },
+              "subinterfaces": { "type": "object" },
+              "config": {
+                "type": "object",
+                "required": ["enabled", "google-pins-interfaces:fully-qualified-interface-name", "openconfig-p4rt:id", "mtu", "name", "type"],
+                "additionalProperties": false,
+                "properties": {
+                  "enabled": { "type": "boolean", "const": true },
+                  "google-pins-interfaces:fully-qualified-interface-name": { "type": "string", "const": "trk-test-PortChannel99" },
+                  "openconfig-p4rt:id": { "type": "integer", "const": 2001 },
+                  "mtu": { "type": "integer", "const": 1514 },
+                  "name": { "type": "string", "const": "PortChannel99" },
+                  "type": { "type": "string", "const": "iana-if-type:ieee8023adLag" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Create lacp config for PortChannel99",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG",
+      "attributeData": "{\"interface\": [{\"name\":\"PortChannel99\", \"config\":{\"name\":\"PortChannel99\", \"interval\":\"FAST\", \"google-pins-lacp:lacp-key\": 2, \"lacp-mode\":\"ACTIVE\", \"system-id-mac\":\"fc:bd:67:2c:08:e5\", \"system-priority\": 128}}]}",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "LAG_TABLE:PortChannel99" : {
+              "admin_status": "down"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "db": "STATE_DB",
+          "value": {
+            "LAG_TABLE|PortChannel99" : {
+              "runner.fast_rate": "false",
+              "runner.active": "true",
+              "setup.runner_name": "lacp",
+              "runner.min_ports": "1",
+              "runner.sys_prio": "128",
+              "team_device.ifinfo.dev_addr": "fc:bd:67:2c:08:f4"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "Verify initial config",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [ "openconfig-lacp:interface" ],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [ "config", "name", "state" ],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+              "state": { "$ref": "#/globalDef/LacpDefs/PC99_state" },
+              "config": {
+                "type": "object",
+                "required": ["name", "interval", "fallback", "google-pins-lacp:lacp-key", "lacp-mode", "system-id-mac", "system-priority"],
+                "additionalProperties": false,
+                "properties": {
+                  "name":            { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+                  "interval":        { "$ref": "#/globalDef/LacpDefs/PC99_config_interval" },
+                  "fallback":        { "$ref": "#/globalDef/LacpDefs/PC99_config_fallback" },
+                  "lacp-mode":       { "$ref": "#/globalDef/LacpDefs/PC99_config_mode" },
+                  "system-id-mac":   { "$ref": "#/globalDef/LacpDefs/PC99_config_mac" },
+                  "system-priority": { "$ref": "#/globalDef/LacpDefs/PC99_config_pri" },
+                  "google-pins-lacp:lacp-key": { "$ref": "#/globalDef/LacpDefs/PC99_config_key" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Update from root level",
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig",
+      "target": "OC_YANG",
+      "attributeData": "{\"lacp\": {\"interfaces\": {\"interface\": [{\"name\":\"PortChannel99\", \"config\":{\"name\":\"PortChannel99\", \"interval\":\"SLOW\", \"lacp-mode\": \"PASSIVE\"}}]}}}"
+    },
+    {
+      "title": "Verify: Update from root level",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [ "openconfig-lacp:interface" ],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [ "config", "name", "state" ],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+              "state": { "$ref": "#/globalDef/LacpDefs/PC99_state" },
+              "config": {
+                "type": "object",
+                "required": ["name", "interval", "fallback", "google-pins-lacp:lacp-key", "lacp-mode", "system-id-mac", "system-priority"],
+                "additionalProperties": false,
+                "properties": {
+                  "name":            { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+                  "fallback":        { "$ref": "#/globalDef/LacpDefs/PC99_config_fallback" },
+                  "interval":        { "type": "string", "const": "SLOW" },
+                  "lacp-mode":       { "type": "string", "const": "PASSIVE" },
+                  "system-id-mac":   { "$ref": "#/globalDef/LacpDefs/PC99_config_mac" },
+                  "system-priority": { "$ref": "#/globalDef/LacpDefs/PC99_config_pri" },
+                  "google-pins-lacp:lacp-key": { "$ref": "#/globalDef/LacpDefs/PC99_config_key" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Reset modified config from root level",
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig",
+      "target": "OC_YANG",
+      "attributeData": "{\"lacp\": {\"interfaces\": {\"interface\": [{\"name\":\"PortChannel99\", \"config\":{\"name\":\"PortChannel99\", \"interval\":\"FAST\", \"lacp-mode\": \"ACTIVE\"}}]}}}"
+    },
+    {
+      "title": "Update interval from leaf level",
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]/config/interval",
+      "target": "OC_YANG",
+      "attributeData": "{\"interval\":\"SLOW\"}"
+    },
+    {
+      "title": "Verify: Update interval from leaf level",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [ "openconfig-lacp:interface" ],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [ "config", "name", "state" ],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+              "state": { "$ref": "#/globalDef/LacpDefs/PC99_state" },
+              "config": {
+                "type": "object",
+                "required": ["name", "fallback", "interval", "google-pins-lacp:lacp-key", "lacp-mode", "system-id-mac", "system-priority"],
+                "additionalProperties": false,
+                "properties": {
+                  "name":            { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+                  "fallback":        { "$ref": "#/globalDef/LacpDefs/PC99_config_fallback" },
+                  "interval":        { "type": "string", "const": "SLOW" },
+                  "lacp-mode":       { "$ref": "#/globalDef/LacpDefs/PC99_config_mode" },
+                  "system-id-mac":   { "$ref": "#/globalDef/LacpDefs/PC99_config_mac" },
+                  "system-priority": { "$ref": "#/globalDef/LacpDefs/PC99_config_pri" },
+                  "google-pins-lacp:lacp-key": { "$ref": "#/globalDef/LacpDefs/PC99_config_key" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]/config/interval",
+      "target": "OC_YANG",
+      "attributeData": "{\"interval\":\"FAST\"}"
+    },
+    {
+      "title": "Update lacp-mode from leaf level",
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]/config/lacp-mode",
+      "target": "OC_YANG",
+      "attributeData": "{\"lacp-mode\":\"PASSIVE\"}"
+    },
+    {
+      "title": "Verify: Update lacp-mode from leaf level",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [ "openconfig-lacp:interface" ],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [ "config", "name", "state" ],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+              "state": { "$ref": "#/globalDef/LacpDefs/PC99_state" },
+              "config": {
+                "type": "object",
+                "required": ["name", "fallback", "interval", "google-pins-lacp:lacp-key", "lacp-mode", "system-id-mac", "system-priority"],
+                "additionalProperties": false,
+                "properties": {
+                  "name":            { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+                  "fallback":        { "$ref": "#/globalDef/LacpDefs/PC99_config_fallback" },
+                  "interval":        { "$ref": "#/globalDef/LacpDefs/PC99_config_interval" },
+                  "lacp-mode":       { "type": "string", "const": "PASSIVE" },
+                  "system-id-mac":   { "$ref": "#/globalDef/LacpDefs/PC99_config_mac" },
+                  "system-priority": { "$ref": "#/globalDef/LacpDefs/PC99_config_pri" },
+                  "google-pins-lacp:lacp-key": { "$ref": "#/globalDef/LacpDefs/PC99_config_key" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]/config/lacp-mode",
+      "target": "OC_YANG",
+      "attributeData": "{\"lacp-mode\":\"ACTIVE\"}"
+    },
+    {
+      "title": "Update system-id-mac from leaf level",
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]/config/system-id-mac",
+      "target": "OC_YANG",
+      "attributeData": "{\"system-id-mac\":\"00:11:22:33:44:55\"}"
+    },
+    {
+      "title": "Verify: Update system-id-mac from leaf level",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [ "openconfig-lacp:interface" ],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [ "config", "name", "state" ],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+              "state": { "$ref": "#/globalDef/LacpDefs/PC99_state" },
+              "config": {
+                "type": "object",
+                "required": ["name", "fallback", "interval", "google-pins-lacp:lacp-key", "lacp-mode", "system-id-mac", "system-priority"],
+                "additionalProperties": false,
+                "properties": {
+                  "name":            { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+                  "fallback":        { "$ref": "#/globalDef/LacpDefs/PC99_config_fallback" },
+                  "interval":        { "$ref": "#/globalDef/LacpDefs/PC99_config_interval" },
+                  "lacp-mode":       { "$ref": "#/globalDef/LacpDefs/PC99_config_mode" },
+                  "system-id-mac":   { "type": "string", "const": "00:11:22:33:44:55" },
+                  "system-priority": { "$ref": "#/globalDef/LacpDefs/PC99_config_pri" },
+                  "google-pins-lacp:lacp-key": { "$ref": "#/globalDef/LacpDefs/PC99_config_key" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]/config/system-id-mac",
+      "target": "OC_YANG",
+      "attributeData": "{\"system-id-mac\":\"fc:bd:67:2c:08:e5\"}"
+    },
+    {
+      "title": "Update system-priority from leaf level",
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]/config/system-priority",
+      "target": "OC_YANG",
+      "attributeData": "{\"system-priority\":7}"
+    },
+    {
+      "title": "Verify: Update system-priority from leaf level",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [ "openconfig-lacp:interface" ],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [ "config", "name", "state" ],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+              "state": { "$ref": "#/globalDef/LacpDefs/PC99_state" },
+              "config": {
+                "type": "object",
+                "required": ["name", "fallback", "interval", "google-pins-lacp:lacp-key", "lacp-mode", "system-id-mac", "system-priority"],
+                "additionalProperties": false,
+                "properties": {
+                  "name":            { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+                  "fallback":        { "$ref": "#/globalDef/LacpDefs/PC99_config_fallback" },
+                  "interval":        { "$ref": "#/globalDef/LacpDefs/PC99_config_interval" },
+                  "lacp-mode":       { "$ref": "#/globalDef/LacpDefs/PC99_config_mode" },
+                  "system-id-mac":   { "$ref": "#/globalDef/LacpDefs/PC99_config_mac" },
+                  "system-priority": { "type": "integer", "const": 7 },
+                  "google-pins-lacp:lacp-key": { "$ref": "#/globalDef/LacpDefs/PC99_config_key" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]/config/system-priority",
+      "target": "OC_YANG",
+      "attributeData": "{\"system-priority\":128}"
+    },
+    {
+      "title": "Update lacp-key from leaf level",
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]/config/lacp-key",
+      "target": "OC_YANG",
+      "attributeData": "{\"google-pins-lacp:lacp-key\":7}"
+    },
+    {
+      "title": "Verify: Update lacp-key from leaf level",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [ "openconfig-lacp:interface" ],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [ "config", "name", "state" ],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+              "state": { "$ref": "#/globalDef/LacpDefs/PC99_state" },
+              "config": {
+                "type": "object",
+                "required": ["name", "fallback", "interval", "google-pins-lacp:lacp-key", "lacp-mode", "system-id-mac", "system-priority"],
+                "additionalProperties": false,
+                "properties": {
+                  "name":            { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+                  "fallback":        { "$ref": "#/globalDef/LacpDefs/PC99_config_fallback" },
+                  "interval":        { "$ref": "#/globalDef/LacpDefs/PC99_config_interval" },
+                  "lacp-mode":       { "$ref": "#/globalDef/LacpDefs/PC99_config_mode" },
+                  "system-id-mac":   { "$ref": "#/globalDef/LacpDefs/PC99_config_mac" },
+                  "system-priority": { "$ref": "#/globalDef/LacpDefs/PC99_config_pri" },
+                  "google-pins-lacp:lacp-key": { "type": "integer", "const": 7 }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]/config/lacp-key",
+      "target": "OC_YANG",
+      "attributeData": "{\"google-pins-lacp:lacp-key\":2}"
+    },
+    {
+      "title": "Set interval to non-yang-default value of fast",
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]/config/interval",
+      "target": "OC_YANG",
+      "attributeData": "{\"interval\":\"FAST\"}"
+    },
+    {
+      "title": "Set lacp-mode to non-yang-default value of passive",
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]/config/lacp-mode",
+      "target": "OC_YANG",
+      "attributeData": "{\"lacp-mode\":\"PASSIVE\"}"
+    },
+    {
+      "title": "Verify after setting interval and mode to non-default values",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [ "openconfig-lacp:interface" ],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [ "config", "name", "state" ],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+              "state": { "$ref": "#/globalDef/LacpDefs/PC99_state" },
+              "config": {
+                "type": "object",
+                "required": ["name", "fallback", "interval", "google-pins-lacp:lacp-key", "lacp-mode", "system-id-mac", "system-priority"],
+                "additionalProperties": false,
+                "properties": {
+                  "name":            { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+                  "fallback":        { "$ref": "#/globalDef/LacpDefs/PC99_config_fallback" },
+                  "interval":        { "type": "string", "const": "FAST" },
+                  "lacp-mode":       { "type": "string", "const": "PASSIVE" },
+                  "system-id-mac":   { "$ref": "#/globalDef/LacpDefs/PC99_config_mac" },
+                  "system-priority": { "$ref": "#/globalDef/LacpDefs/PC99_config_pri" },
+                  "google-pins-lacp:lacp-key": { "$ref": "#/globalDef/LacpDefs/PC99_config_key" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Replace without specifying fields with default values",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG",
+      "attributeData": "{\"interface\": [{\"name\":\"PortChannel99\", \"config\":{\"name\":\"PortChannel99\", \"google-pins-lacp:lacp-key\": 10, \"system-id-mac\":\"12:34:56:78:9a:bc\", \"system-priority\": 27}}]}"
+    },
+    {
+      "title": "Verify replace set interval and mode to default values",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [ "openconfig-lacp:interface" ],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [ "config", "name", "state" ],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+              "state": { "$ref": "#/globalDef/LacpDefs/PC99_state" },
+              "config": {
+                "type": "object",
+                "required": ["name", "fallback", "interval", "google-pins-lacp:lacp-key", "lacp-mode", "system-id-mac", "system-priority"],
+                "additionalProperties": false,
+                "properties": {
+                  "name":            { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+                  "fallback":        { "$ref": "#/globalDef/LacpDefs/PC99_config_fallback" },
+                  "interval":        { "type": "string", "const": "SLOW" },
+                  "lacp-mode":       { "type": "string", "const": "ACTIVE" },
+                  "system-id-mac":   { "type": "string", "const": "12:34:56:78:9a:bc" },
+                  "system-priority": { "type": "integer", "const": 27 },
+                  "google-pins-lacp:lacp-key": { "type": "integer", "const": 10 }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "CONFIG_DB",
+          "value": {
+            "UMF_TRUNK_QUEUE|PortChannel99|0" : {
+              "NULL": "NULL"
+            },
+            "UMF_TRUNK_QUEUE|PortChannel99|1" : {
+              "NULL": "NULL"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "Delete lacp interface",
+      "operation": "delete",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG",
+      "subOpers": [
+        {
+          "oper": "dbHDel",
+          "title": "Delete PortChannel99 from APPL_STATE_DB",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "LAG_TABLE:PortChannel99": []
+          }
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Delete PortChannel99 from STATE_DB",
+          "db": "STATE_DB",
+          "value": {
+            "LAG_TABLE|PortChannel99": []
+          }
+        }
+      ]
+    },
+    {
+      "title": "Verify lacp delete does not remove key while openconfig-interface config is present",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [ "openconfig-lacp:interface" ],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [ "config", "name", "state" ],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+              "state": { "$ref": "#/globalDef/LacpDefs/PC99_cfg_state_default" },
+              "config": { "$ref": "#/globalDef/LacpDefs/PC99_cfg_state_default" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Delete lacp interface again, should succeed but do nothing",
+      "operation": "delete",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG"
+    },
+    {
+      "title": "Verify lacp delete does not remove key while openconfig-interface config is present, again",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [ "openconfig-lacp:interface" ],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [ "config", "name", "state" ],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+              "state": { "$ref": "#/globalDef/LacpDefs/PC99_cfg_state_default" },
+              "config": { "$ref": "#/globalDef/LacpDefs/PC99_cfg_state_default" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Delete member interface",
+      "operation": "delete",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/ethernet/config",
+      "target": "OC_YANG"
+    },
+    {
+      "title": "Delete interface",
+      "operation": "delete",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG"
+    },
+    {
+      "title": "Verify interface delete",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG"
+    },
+    {
+      "title": "Verify interface delete removed lacp",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG"
+    },
+    {
+      "title": "Add back interface with a member and lacp config",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"name\": \"PortChannel99\",\"config\": {\"name\": \"PortChannel99\", \"mtu\": 9126}, \"oc-lag:aggregation\":{\"oc-lag:config\":{\"oc-lag:lag-type\":\"LACP\", \"oc-lag:min-links\":1}}}, {\"config\": {\"enabled\" : true, \"loopback-mode\" : \"NONE\", \"mtu\" : 9126, \"name\": \"Ethernet1/1/5\", \"openconfig-p4rt:id\" : 1, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"name\": \"Ethernet1/1/5\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"openconfig-if-aggregate:aggregate-id\": \"PortChannel99\", \"port-speed\" : \"openconfig-if-ethernet:SPEED_100GB\"}}}]},\"openconfig-lacp:lacp\": {\"interfaces\":  {\"interface\": [{\"name\": \"PortChannel99\", \"config\": {\"openconfig-lacp:interval\" : \"lacp-period-type:FAST\", \"google-pins-lacp:lacp-key\" : 1, \"openconfig-lacp:lacp-mode\" : \"lacp-activity-type:ACTIVE\", \"openconfig-lacp:system-id-mac\" : \"fc:bd:67:2c:08:f4\", \"openconfig-lacp:system-priority\" : 256}}]}}}"
+    },
+    {
+      "title": "Delete interface again, it should clear both interface and lacp config",
+      "operation": "delete",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG"
+    },
+    {
+      "title": "Verify second interface delete",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG"
+    },
+    {
+      "title": "Verify second interface delete removed lacp",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG"
+    },
+    {
+      "title": "Remove member from deleted portchannel",
+      "operation": "delete",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/ethernet/config/aggregate-id",
+      "target": "OC_YANG"
+    },
+    {
+      "title": "Add back lacp config only",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG",
+      "attributeData": "{\"interface\": [{\"name\":\"PortChannel99\", \"config\":{\"name\":\"PortChannel99\", \"interval\":\"FAST\", \"google-pins-lacp:lacp-key\": 2, \"lacp-mode\":\"ACTIVE\", \"system-id-mac\":\"fc:bd:67:2c:08:e5\", \"system-priority\": 128}}]}"
+    },
+    {
+      "title": "Verify lacp config is present",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [ "openconfig-lacp:interface" ],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-lacp:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [ "config", "name", "state" ],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+              "state": { "$ref": "#/globalDef/LacpDefs/PC99_cfg_state_default" },
+              "config": {
+                "type": "object",
+                "required": ["name", "interval", "fallback", "google-pins-lacp:lacp-key", "lacp-mode", "system-id-mac", "system-priority"],
+                "additionalProperties": false,
+                "properties": {
+                  "name":            { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+                  "interval":        { "$ref": "#/globalDef/LacpDefs/PC99_config_interval" },
+                  "fallback":        { "$ref": "#/globalDef/LacpDefs/PC99_config_fallback" },
+                  "lacp-mode":       { "$ref": "#/globalDef/LacpDefs/PC99_config_mode" },
+                  "system-id-mac":   { "$ref": "#/globalDef/LacpDefs/PC99_config_mac" },
+                  "system-priority": { "$ref": "#/globalDef/LacpDefs/PC99_config_pri" },
+                  "google-pins-lacp:lacp-key": { "$ref": "#/globalDef/LacpDefs/PC99_config_key" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Verify interface is now present with default values",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [ "openconfig-interfaces:interface" ],
+      "additionalProperties": false,
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [ "config", "name", "openconfig-if-aggregate:aggregation" ],
+            "additionalProperties": true,
+            "properties": {
+              "name": { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+              "config": {
+                "type": "object",
+                "required": ["name", "type"],
+                "additionalProperties": false,
+                "properties": {
+                  "name": { "$ref": "#/globalDef/LacpDefs/PC99_name" },
+                  "type": { "type": "string", "const": "iana-if-type:ieee8023adLag" }
+                }
+              },
+              "openconfig-if-aggregate:aggregation": {
+                "type": "object",
+                "required": ["config"],
+                "additionalProperties": false,
+                "properties": {
+                  "config": {
+                    "type": "object",
+                    "required": ["lag-type", "min-links"],
+                    "additionalProperties": false,
+                    "properties": {
+                      "lag-type": { "type": "string", "const": "LACP" },
+                      "min-links": { "type": "integer", "const": 0 }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Delete lacp",
+      "operation": "delete",
+      "returnCode": 0,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG"
+    },
+    {
+      "title": "Verify interface is also cleaned up",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG"
+    },
+    {
+      "title": "Verify lacp is cleaned up",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "openconfig/lacp/interfaces/interface[name=PortChannel99]",
+      "target": "OC_YANG"
+    },
+    {
+      "title": "Delete nonexistant portchannel",
+      "operation": "delete",
+      "returnCode": 10,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel9999]",
+      "target": "OC_YANG"
+    }
+  ]
+}

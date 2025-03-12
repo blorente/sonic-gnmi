@@ -1,0 +1,65 @@
+{
+  "title": "Get interface lag-type",
+  "operations":[
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]/openconfig-if-aggregate:aggregation/config",
+      "target": "OC_YANG",
+      "attributeData": "{\"config\": {\"lag-type\":\"openconfig-if-aggregate:LACP\"}}"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-if-aggregate:aggregation": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config",
+              "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "lag-type"
+                ],
+                "properties": {
+                  "lag-type": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-if-aggregate:LACP"
+                    ]
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "lag-type"
+                ],
+                "properties": {
+                  "lag-type": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-if-aggregate:LACP"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+

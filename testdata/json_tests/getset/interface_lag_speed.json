@@ -1,0 +1,70 @@
+{
+  "title": "Get interface lag-speed",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]/openconfig-if-aggregate:aggregation",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-if-aggregate:aggregation"
+      ],
+      "properties": {
+        "openconfig-if-aggregate:aggregation": {
+          "type": "object",
+          "required": [
+            "state"
+          ],
+          "properties": {
+            "state": {
+              "type": "object",
+              "required": [
+                "lag-speed"
+              ],
+              "properties": {
+                "lag-speed": {
+                  "type": "integer",
+                  "enum": [2000000]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]/aggregation",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-if-aggregate:aggregation"
+      ],
+      "properties": {
+        "openconfig-if-aggregate:aggregation": {
+          "type": "object",
+          "required": [
+            "state"
+          ],
+          "properties": {
+            "state": {
+              "type": "object",
+              "required": [
+                "lag-speed"
+              ],
+              "properties": {
+                "lag-speed": {
+                  "type": "integer",
+                  "enum": [2000000]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+

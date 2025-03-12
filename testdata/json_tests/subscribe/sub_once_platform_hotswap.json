@@ -1,0 +1,288 @@
+{
+  "title": "ONCE Subscribe to openconfig platforms hotswap controller",
+  "globalDef": {
+    "PowerDefs": {
+      "ADM1272 State Loc":    { "type": "string", "const": "501-0010" },
+      "ADM1272 State Name":   { "type": "string", "const": "hotswap_adm1272-i2c-501-10" },
+      "ADM1272 State Parent": { "type": "string", "const": "chassis" },
+      "ADM1272 State Type":   { "type": "string", "const": "openconfig-platform-types:POWER_SUPPLY" },
+      "ADM1272 State": {
+        "type": "object",
+        "required": ["location", "name", "parent", "type"],
+        "additionalProperties": false,
+        "properties": {
+          "location": { "$ref": "#/globalDef/PowerDefs/ADM1272 State Loc" },
+          "name":     { "$ref": "#/globalDef/PowerDefs/ADM1272 State Name" },
+          "parent":   { "$ref": "#/globalDef/PowerDefs/ADM1272 State Parent" },
+          "type":     { "$ref": "#/globalDef/PowerDefs/ADM1272 State Type" }
+        }
+      },
+      "ADM1272 PS State status": {"type": "string", "const": "AAAAAA=="},
+      "ADM1272 PS State type":   {"type": "string", "const": "google-pins-platform:POWER_HOTSWAP"},
+      "ADM1272 PS State": {
+        "type": "object",
+        "required": ["google-pins-platform:manufacturer-status", "google-pins-platform:type"],
+        "additionalProperties": false,
+        "properties": {
+          "google-pins-platform:manufacturer-status": { "$ref": "#/globalDef/PowerDefs/ADM1272 PS State status" },
+          "google-pins-platform:type":                { "$ref": "#/globalDef/PowerDefs/ADM1272 PS State type" }
+        }
+      },
+      "Rail XP48R0V_IN Name":  { "type": "string", "const": "XP48R0V_IN" },
+      "Rail XP48R0V_IN Dir":   { "type": "string", "const": "INPUT" },
+      "Rail XP48R0V_IN V":     { "type": "string", "const": "Qlmfvg==" },
+      "Rail XP48R0V_IN Vpeak": { "type": "string", "const": "QlytDg==" },
+      "Rail XP48R0V_IN State": {
+        "type": "object",
+        "required": ["direction", "name", "voltage", "peak-voltage"],
+        "additionalProperties": false,
+        "properties": {
+          "direction":    { "$ref": "#/globalDef/PowerDefs/Rail XP48R0V_IN Dir" },
+          "name":         { "$ref": "#/globalDef/PowerDefs/Rail XP48R0V_IN Name" },
+          "voltage":      { "$ref": "#/globalDef/PowerDefs/Rail XP48R0V_IN V" },
+          "peak-voltage": { "$ref": "#/globalDef/PowerDefs/Rail XP48R0V_IN Vpeak" }
+        }
+      },
+      "Rail XP48R0V_IN": {
+        "type": "object",
+        "required": ["name", "state" ],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "$ref": "#/globalDef/PowerDefs/Rail XP48R0V_IN Name" },
+          "state": { "$ref": "#/globalDef/PowerDefs/Rail XP48R0V_IN State" }
+        }
+      },
+      "Rail XP48R0V_SWAP Name":  { "type": "string", "const": "XP48R0V_SWAP" },
+      "Rail XP48R0V_SWAP C":     { "type": "string", "const": "QF752w==" },
+      "Rail XP48R0V_SWAP Dir":   { "type": "string", "const": "INPUT" },
+      "Rail XP48R0V_SWAP Cpeak": { "type": "string", "const": "QJl41Q==" },
+      "Rail XP48R0V_SWAP Ppeak": { "type": "string", "const": "RB28cw==" },
+      "Rail XP48R0V_SWAP Pint":  { "type": "string", "const": "60000000123" },
+      "Rail XP48R0V_SWAP Vpeak": { "type": "string", "const": "Qlqbpg==" },
+      "Rail XP48R0V_SWAP P":     { "type": "string", "const": "Qz5RaA==" },
+      "Rail XP48R0V_SWAP Temp":  { "type": "string", "const": "30.928" },
+      "Rail XP48R0V_SWAP V":     { "type": "string", "const": "QlmHKw==" },
+      "Rail XP48R0V_SWAP State": {
+        "type": "object",
+        "required": ["current", "direction", "name", "peak-current", "peak-power", "peak-power-interval", "peak-voltage", "power", "temperature", "voltage"],
+        "additionalProperties": false,
+        "properties": {
+          "current":             { "$ref": "#/globalDef/PowerDefs/Rail XP48R0V_SWAP C" },
+          "direction":           { "$ref": "#/globalDef/PowerDefs/Rail XP48R0V_SWAP Dir" },
+          "name":                { "$ref": "#/globalDef/PowerDefs/Rail XP48R0V_SWAP Name" },
+          "peak-current":        { "$ref": "#/globalDef/PowerDefs/Rail XP48R0V_SWAP Cpeak" },
+          "peak-power":          { "$ref": "#/globalDef/PowerDefs/Rail XP48R0V_SWAP Ppeak" },
+          "peak-power-interval": { "$ref": "#/globalDef/PowerDefs/Rail XP48R0V_SWAP Pint" },
+          "peak-voltage":        { "$ref": "#/globalDef/PowerDefs/Rail XP48R0V_SWAP Vpeak" },
+          "power":               { "$ref": "#/globalDef/PowerDefs/Rail XP48R0V_SWAP P" },
+          "temperature":         { "$ref": "#/globalDef/PowerDefs/Rail XP48R0V_SWAP Temp" },
+          "voltage":             { "$ref": "#/globalDef/PowerDefs/Rail XP48R0V_SWAP V" }
+        }
+      },
+      "Rail XP48R0V_SWAP": {
+        "type": "object",
+        "required": ["name", "state" ],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "$ref": "#/globalDef/PowerDefs/Rail XP48R0V_SWAP Name" },
+          "state": { "$ref": "#/globalDef/PowerDefs/Rail XP48R0V_SWAP State" }
+        }
+      },
+      "ADM1272 PS Rail": {
+        "type": "array", "minItems" : 2, "maxItems" : 2,
+        "items": [ { "$ref": "#/globalDef/PowerDefs/Rail XP48R0V_IN" }, { "$ref": "#/globalDef/PowerDefs/Rail XP48R0V_SWAP" } ]
+      },
+      "ADM1272 PS Rails": {
+        "type": "object",
+        "required": ["rail"],
+        "additionalProperties": false,
+        "properties": {
+          "rail": { "$ref": "#/globalDef/PowerDefs/ADM1272 PS Rail" }
+        }
+      },
+      "ADM1272 PS": {
+        "type": "object",
+        "required": ["state", "google-pins-platform:rails"],
+        "additionalProperties": false,
+        "properties": {
+          "state": { "$ref": "#/globalDef/PowerDefs/ADM1272 PS State" },
+          "google-pins-platform:rails": { "$ref": "#/globalDef/PowerDefs/ADM1272 PS Rails" }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "subscribe (ONCE) to /components/component[name=hotswap_adm1272-i2c-501-10]",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'hotswap_adm1272-i2c-501-10'}}}}mode:ONCE}",
+      "returnCode": 0,
+
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:component"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:component": {
+                  "type": "array", "minItems" : 1, "maxItems" : 1,
+                  "items": [
+                    {
+                      "type": "object",
+                      "required": ["name", "config", "power-supply", "state"],
+                      "additionalProperties": false,
+                      "properties": {
+                        "name": { "type": "string", "const": "hotswap_adm1272-i2c-501-10" },
+                        "config": {
+                          "type": "object",
+                          "required": ["name"],
+                          "additionalProperties": false,
+                          "properties": {
+                            "name": { "type": "string", "const": "hotswap_adm1272-i2c-501-10" }
+                          }
+                        },
+                        "state": { "$ref": "#/globalDef/PowerDefs/ADM1272 State" },
+                        "power-supply": { "$ref": "#/globalDef/PowerDefs/ADM1272 PS" }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe (ONCE) to /components/component[name=hotswap_adm1272-i2c-501-10]/config",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'hotswap_adm1272-i2c-501-10'}}elem:{name:'config'}}}mode:ONCE}",
+      "returnCode": 0,
+
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/components/component[name=hotswap_adm1272-i2c-501-10]",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:component"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:component": {
+                  "type": "array", "minItems" : 1, "maxItems" : 1,
+                  "items": [
+                    {
+                      "type": "object",
+                      "required": ["config", "name"],
+                      "additionalProperties": false,
+                      "properties": {
+                        "name": { "type": "string", "const": "hotswap_adm1272-i2c-501-10" },
+                        "config": {
+                          "type": "object",
+                          "required": ["name"],
+                          "additionalProperties": false,
+                          "properties": {
+                            "name": { "type": "string", "const": "hotswap_adm1272-i2c-501-10" }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe (ONCE) to /components/component[name=hotswap_adm1272-i2c-501-10]/state",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'hotswap_adm1272-i2c-501-10'}}elem:{name:'state'}}}mode:ONCE}",
+      "returnCode": 0,
+
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/components/component[name=hotswap_adm1272-i2c-501-10]",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:component"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:component": {
+                  "type": "array", "minItems" : 1, "maxItems" : 1,
+                  "items": [
+                    {
+                      "type": "object",
+                      "required": ["name", "state"],
+                      "additionalProperties": false,
+                      "properties": {
+                        "name": { "type": "string", "const": "hotswap_adm1272-i2c-501-10" },
+                        "state": { "$ref": "#/globalDef/PowerDefs/ADM1272 State" }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe (ONCE) to /components/component[name=hotswap_adm1272-i2c-501-10]/power-supply",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'hotswap_adm1272-i2c-501-10'}}elem:{name:'power-supply'}}}mode:ONCE}",
+      "returnCode": 0,
+
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/components/component[name=hotswap_adm1272-i2c-501-10]",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:component"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:component": {
+                  "type": "array", "minItems" : 1, "maxItems" : 1,
+                  "items": [
+                    {
+                      "type": "object",
+                      "required": ["name", "power-supply"],
+                      "additionalProperties": false,
+                      "properties": {
+                        "name": { "type": "string", "const": "hotswap_adm1272-i2c-501-10" },
+                        "power-supply": { "$ref": "#/globalDef/PowerDefs/ADM1272 PS" }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

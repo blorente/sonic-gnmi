@@ -1,0 +1,198 @@
+{
+  "Description": "Definations of /components/component[name=integrated_circout0]",
+  "globalDef" : {
+    "pfm_ic": {
+      "IC0_name":    { "type": "string", "const": "integrated_circuit0" },
+switch" },
+      "IC0_cfg": {
+        "type": "object",
+        "required": ["name", "openconfig-pins-platform:fully-qualified-name"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "$ref": "#/globalDef/pfm_ic/IC0_name" },
+          "openconfig-pins-platform:fully-qualified-name": { "$ref": "#/globalDef/pfm_ic/IC0_fq_name" }
+        }
+      },
+      "IC0_parent":  { "type": "string", "const": "chassis" },
+      "IC0_type":    { "type": "string", "const": "openconfig-platform-types:INTEGRATED_CIRCUIT" },
+      "IC0_st": {
+        "type": "object",
+        "required": ["name", "openconfig-pins-platform:fully-qualified-name", "parent", "type"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "$ref": "#/globalDef/pfm_ic/IC0_name" },
+          "openconfig-pins-platform:fully-qualified-name": { "$ref": "#/globalDef/pfm_ic/IC0_fq_name" },
+          "parent": { "$ref": "#/globalDef/pfm_ic/IC0_parent" },
+          "type": { "$ref": "#/globalDef/pfm_ic/IC0_type" }
+        }
+      },
+      "IC0_ic_nodeid": { "type": "string", "const": "1234567" },
+      "IC0_ic_cfg": {
+        "type": "object",
+        "required": ["openconfig-p4rt:node-id"],
+        "additionalProperties": false,
+        "properties": {
+          "openconfig-p4rt:node-id": { "$ref": "#/globalDef/pfm_ic/IC0_ic_nodeid" }
+        }
+      },
+      "IC0_ic_nodeid": { "type": "string", "const": "1234567" },
+      "IC0_ic_bh_ide": { "type": "string", "const": "1" },
+      "IC0_ic_bh_ode": { "type": "string", "const": "2" },
+      "IC0_ic_bh_iee": { "type": "string", "const": "3" },
+      "IC0_ic_bh_fce": { "type": "string", "const": "5" },
+      "IC0_ic_bh_lme": { "type": "string", "const": "4" },
+      "IC0_ic_bh_mee": { "type": "string", "const": "6" },
+      "IC0_ic_bh_bhe": { "type": "string", "const": "7" },
+      "IC0_ic_st_bh": {
+        "type": "object",
+        "required": ["in-discard-events", "out-discard-events", "in-error-events", "fec-not-correctable-events", "lpm-miss-events", "memory-error-events", "blackhole-events"],
+        "additionalProperties": false,
+        "properties": {
+          "in-discard-events":          { "$ref": "#/globalDef/pfm_ic/IC0_ic_bh_ide" },
+          "out-discard-events":         { "$ref": "#/globalDef/pfm_ic/IC0_ic_bh_ode" },
+          "in-error-events":            { "$ref": "#/globalDef/pfm_ic/IC0_ic_bh_iee" },
+          "fec-not-correctable-events": { "$ref": "#/globalDef/pfm_ic/IC0_ic_bh_fce" },
+          "lpm-miss-events":            { "$ref": "#/globalDef/pfm_ic/IC0_ic_bh_lme" },
+          "memory-error-events":        { "$ref": "#/globalDef/pfm_ic/IC0_ic_bh_mee" },
+          "blackhole-events":           { "$ref": "#/globalDef/pfm_ic/IC0_ic_bh_bhe" }
+        }
+      },
+      "IC0_ic_cg_cge": { "type": "string", "const": "8" },
+      "IC0_ic_st_cg": {
+        "type": "object",
+        "required": ["congestion-events"],
+        "additionalProperties": false,
+        "properties": {
+          "congestion-events": { "$ref": "#/globalDef/pfm_ic/IC0_ic_cg_cge" }
+        }
+      },
+      "IC0_ic_st":  {
+        "type": "object",
+        "required": ["openconfig-p4rt:node-id", "google-pins-platform:blackhole", "google-pins-platform:congestion"],
+        "additionalProperties": false,
+        "properties": {
+          "openconfig-p4rt:node-id": { "$ref": "#/globalDef/pfm_ic/IC0_ic_nodeid" },
+          "google-pins-platform:blackhole": { "$ref": "#/globalDef/pfm_ic/IC0_ic_st_bh" },
+          "google-pins-platform:congestion": { "$ref": "#/globalDef/pfm_ic/IC0_ic_st_cg" }
+        }
+      },
+      "IC0_ic_mem_st_cpe": { "type": "string", "const": "111111" },
+      "IC0_ic_mem_st_tpe": { "type": "string", "const": "444444" },
+      "IC0_ic_mem_st": {
+        "type": "object",
+        "required": ["corrected-parity-errors", "total-parity-errors"],
+        "additionalProperties": false,
+        "properties": {
+          "corrected-parity-errors": { "$ref": "#/globalDef/pfm_ic/IC0_ic_mem_st_cpe" },
+          "total-parity-errors": { "$ref": "#/globalDef/pfm_ic/IC0_ic_mem_st_tpe" }
+        }
+      },
+      "IC0_ic_mem": {
+        "type": "object",
+        "required": ["state"],
+        "additionalProperties": false,
+        "properties": {
+          "state": { "$ref": "#/globalDef/pfm_ic/IC0_ic_mem_st" }
+        }
+      },
+      "IC0_ic_plc_drop_st_no_rte": { "type": "string", "const": "1228" },
+      "IC0_ic_plc_drop_lb_st": {
+        "type": "object",
+        "required": ["no-route"],
+        "additionalProperties": false,
+        "properties": {
+          "no-route": { "$ref": "#/globalDef/pfm_ic/IC0_ic_plc_drop_st_no_rte" }
+        }
+      },
+      "IC0_ic_plc_drop_lb": {
+        "type": "object",
+        "required": ["state"],
+        "additionalProperties": false,
+        "properties": {
+          "state": { "$ref": "#/globalDef/pfm_ic/IC0_ic_plc_drop_lb_st" }
+        }
+      },
+      "IC0_ic_plc_drop": {
+        "type": "object",
+        "required": ["lookup-block"],
+        "additionalProperties": false,
+        "properties": {
+          "lookup-block": { "$ref": "#/globalDef/pfm_ic/IC0_ic_plc_drop_lb" }
+        }
+      },
+      "IC0_ic_plc": {
+        "type": "object",
+        "required": ["drop"],
+        "additionalProperties": false,
+        "properties": {
+          "drop": { "$ref": "#/globalDef/pfm_ic/IC0_ic_plc_drop" }
+        }
+      },
+      "IC0_ic": {
+        "type": "object",
+        "required": ["config", "state", "openconfig-platform-integrated-circuit:memory", "openconfig-platform-pipeline-counters:pipeline-counters"],
+        "additionalProperties": false,
+        "properties": {
+          "config": { "$ref": "#/globalDef/pfm_ic/IC0_ic_cfg" },
+          "state": { "$ref": "#/globalDef/pfm_ic/IC0_ic_st" },
+          "openconfig-platform-integrated-circuit:memory": { "$ref": "#/globalDef/pfm_ic/IC0_ic_mem" },
+          "openconfig-platform-pipeline-counters:pipeline-counters": { "$ref": "#/globalDef/pfm_ic/IC0_ic_plc" }
+        }
+      },
+      "IC0": {
+        "type": "object",
+        "required": ["config", "name", "state", "integrated-circuit"],
+        "additionalProperties": false,
+        "properties": {
+          "config": { "$ref": "#/globalDef/pfm_ic/IC0_cfg" },
+          "name": { "$ref": "#/globalDef/pfm_ic/IC0_name" },
+          "state": { "$ref": "#/globalDef/pfm_ic/IC0_st" },
+          "integrated-circuit": { "$ref": "#/globalDef/pfm_ic/IC0_ic" }
+        }
+      },
+      "IC0ConfigOnly": {
+        "type": "object",
+        "required": ["openconfig-platform:config", "openconfig-platform:name"],
+        "additionalProperties": false,
+        "properties": {
+          "openconfig-platform:config": { "$ref": "#/globalDef/pfm_ic/IC0_cfg" },
+          "openconfig-platform:name": { "$ref": "#/globalDef/pfm_ic/IC0_name" }
+        }
+      },
+      "IC0StateOnly": {
+        "type": "object",
+        "required": ["openconfig-platform:name", "openconfig-platform:state"],
+        "additionalProperties": false,
+        "properties": {
+          "openconfig-platform:name": { "$ref": "#/globalDef/pfm_ic/IC0_name" },
+          "openconfig-platform:state": { "$ref": "#/globalDef/pfm_ic/IC0_st" }
+        }
+      },
+      "IC0ICOnly": {
+        "type": "object",
+        "required": ["openconfig-platform:name", "openconfig-platform:integrated-circuit"],
+        "additionalProperties": false,
+        "properties": {
+          "openconfig-platform:name": { "$ref": "#/globalDef/pfm_ic/IC0_name" },
+          "openconfig-platform:integrated-circuit": { "$ref": "#/globalDef/pfm_ic/IC0_ic" }
+        }
+      },
+      "arrayIC0": {
+        "type": "object",
+        "required": ["openconfig-platform:component"],
+        "additionalProperties": false,
+        "properties": {
+          "openconfig-platform:component" : {
+            "type": "array",
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 1,
+            "items": {
+              "$ref": "#/globalDef/pfm_ic/IC0"
+            }
+          }
+        }
+      }
+    }
+  }
+}

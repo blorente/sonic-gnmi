@@ -1,0 +1,76 @@
+{
+  "title": "Get Port Component State paths",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/components/component[name=1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "port", "state"
+            ],
+            "properties": {
+              "port": {
+                "type": "object",
+                "required": [
+                  "state"
+                ],
+                "properties": {
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "openconfig-pins-platform-port:port-id"
+                    ],
+                    "properties": {
+                      "openconfig-pins-platform-port:port-id": {
+                        "type": "integer",
+                        "enum": [
+                          654
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "type", "parent"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "1/1"
+                    ]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-platform-types:PORT"
+                    ]
+                  },
+                  "parent": {
+                    "type": "string",
+                    "enum": [
+                      "integrated_circuit0"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

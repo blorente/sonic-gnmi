@@ -1,0 +1,3122 @@
+{
+  "title": "Port Breakout Tests Var Modes",
+  "operations":[
+    {
+      "title": "[TC3] Push same speed breakout config multiple times for 1/1: 2x400G -> 2x400G -> 2x400G",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"config\": {\"description\" : \"testSwitch:eth-1/1/1 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/1/1\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/1/1\", \"openconfig-p4rt:id\" : 1, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/1/1\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}, {\"config\": {\"description\" : \"testSwitch:eth-1/1/5 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/1/5\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/1/5\", \"openconfig-p4rt:id\" : 513, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/1/5\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}]}, \"openconfig-platform:components\": {\"component\": [{\"config\": {\"name\": \"1/1\"}, \"name\": \"1/1\", \"port\" : {\"config\": {\"port-id\": 1}, \"breakout-mode\": {\"groups\": { \"group\" : [{ \"index\": 0, \"config\": { \"index\": 0, \"num-breakouts\": 2, \"breakout-speed\": \"SPEED_400GB\", \"num-physical-channels\" : 4 }}]}}}}]}}"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config", "port", "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "1/1"
+                    ]
+                  }
+                }
+              },
+              "port": {
+                "type": "object",
+                "required": [
+                  "config", "openconfig-platform-port:breakout-mode", "state"
+                ],
+                "properties": {
+                  "config": {
+                    "type": "object",
+                    "required": [
+                      "openconfig-pins-platform-port:port-id"
+                    ],
+                    "properties": {
+                      "openconfig-pins-platform-port:port-id": {
+                        "type": "integer",
+                        "enum": [
+                          1
+                        ]
+                      }
+                    }
+                  },
+                  "openconfig-platform-port:breakout-mode": {
+                    "type": "object",
+                    "required": [
+                      "groups"
+                    ],
+                    "properties": {
+                      "groups": {
+                        "type": "object",
+                          "required": [
+                            "group"
+                          ],
+                          "properties": {
+                            "group": {
+                              "type": "array",
+                                "items": [
+                                  {
+                                    "title": "0",
+                                    "type": "object",
+                                    "required": [
+                                      "index", "config", "state"
+                                    ],
+                                    "properties": {
+                                      "index": {
+                                        "type": "integer",
+                                        "enum": [
+                                          0
+                                        ]
+                                      },
+                                      "config": {
+                                        "type": "object",
+                                        "required": [
+                                          "index", "num-breakouts", "breakout-speed", "num-physical-channels"
+                                        ],
+                                        "properties": {
+                                          "index": {
+                                            "type": "integer",
+                                            "enum": [
+                                              0
+                                            ]
+                                          },
+                                          "num-breakouts": {
+                                            "type": "integer",
+                                            "enum": [
+                                              2
+                                            ]
+                                          },
+                                          "breakout-speed": {
+                                            "type": "string",
+                                            "enum": [
+                                              "openconfig-if-ethernet:SPEED_400GB"
+                                            ]
+                                          },
+                                          "num-physical-channels": {
+                                            "type": "integer",
+                                            "enum": [
+                                              4
+                                            ]
+                                          }
+                                        }
+                                      },
+                                      "state": {
+                                        "type": "object",
+                                        "required": [
+                                          "index", "num-breakouts", "breakout-speed", "num-physical-channels"
+                                        ],
+                                        "properties": {
+                                          "index": {
+                                            "type": "integer",
+                                            "enum": [
+                                              0
+                                            ]
+                                          },
+                                          "num-breakouts": {
+                                            "type": "integer",
+                                            "enum": [
+                                              2
+                                            ]
+                                          },
+                                          "breakout-speed": {
+                                            "type": "string",
+                                            "enum": [
+                                              "openconfig-if-ethernet:SPEED_400GB"
+                                            ]
+                                          },
+                                          "num-physical-channels": {
+                                            "type": "integer",
+                                            "enum": [
+                                              4
+                                            ]
+                                         }
+                                      }
+                                   }
+                                 }
+                               }
+                             ]
+                           }
+                         }
+                       }
+                    }
+                  },
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "openconfig-pins-platform-port:port-id"
+                    ],
+                    "properties": {
+                      "openconfig-pins-platform-port:port-id": {
+                        "type": "integer",
+                        "enum": [
+                          654
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "1/1"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config", "hold-time", "state", "subinterfaces"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "description", "enabled", "google-pins-interfaces:fully-qualified-interface-name", "loopback-mode", "mtu", "name", "openconfig-p4rt:id", "type"
+                ],
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "enum": ["testSwitch:eth-1/1/1 [(not a trunk member)]"]
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "enum": [true]
+                  },
+                  "google-pins-interfaces:fully-qualified-interface-name": {
+                    "type": "string",
+                    "enum": ["testSwitch:eth-1/1/1"]
+                  },
+                  "loopback-mode": {
+                    "type": "string",
+                    "enum": ["NONE"]
+                  },
+                  "mtu": {
+                    "type": "integer",
+                    "enum": [9216]
+                  },
+                  "name": {
+                    "type": "string",
+                    "enum": ["Ethernet1/1/1"]
+                  },
+                  "openconfig-p4rt:id": {
+                    "type": "integer",
+                    "enum": [1]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["iana-if-type:ethernetCsmacd"]
+                  }
+                }
+              },
+              "hold-time": {
+                "type": "object",
+                "required": [
+                  "config"
+                ],
+                "properties": {
+                  "config": {
+                    "type": "object",
+                    "required": [
+                      "down", "up"
+                    ],
+                    "properties": {
+                      "down": {
+                        "type": "integer",
+                        "enum": [0]
+                      },
+                      "up": {
+                        "type": "integer",
+                        "enum": [8000]
+                      }
+                    }
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "admin-status", "enabled", "name", "openconfig-platform-port:hardware-port", "type"
+                ],
+                "properties": {
+                  "admin-status": {
+                    "type": "string",
+                    "enum": ["UP"]
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "enum": [true]
+                  },
+                  "name": {
+                    "type": "string",
+                    "enum": ["Ethernet1/1/1"]
+                  },
+                  "openconfig-platform-port:hardware-port": {
+                    "type": "string",
+                    "enum": ["1/1"]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["iana-if-type:ethernetCsmacd"]
+                  }
+                }
+              },
+              "subinterfaces": {
+                "type": "object",
+                "required": [
+                  "subinterface"
+                ],
+                "properties": {
+                  "subinterface": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "title": "0",
+                        "type": "object",
+                        "required": [
+                          "index", "openconfig-if-ip:ipv6"
+                        ],
+                        "properties": {
+                          "index": {
+                            "type": "integer",
+                            "enum": [0]
+                          },
+                          "openconfig-if-ip:ipv6": {
+                            "type": "object",
+                            "required": [
+                              "unnumbered"
+                            ],
+                            "properties": {
+                              "unnumbered": {
+                                "type": "object",
+                                "required": [
+                                  "config", "state"
+                                ],
+                                "properties": {
+                                  "config": {
+                                    "type": "object",
+                                    "required": [
+                                      "enabled"
+                                    ],
+                                    "properties": {
+                                      "enabled": {
+                                        "type": "boolean",
+                                        "enum": [true]
+                                      }
+                                    }
+                                  },
+                                  "state": {
+                                    "type": "object",
+                                    "required": [
+                                      "enabled"
+                                    ],
+                                    "properties": {
+                                      "enabled": {
+                                        "type": "boolean",
+                                        "enum": [true]
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/1/1" : {
+              "lanes" : "9,10,11,12"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config", "hold-time", "state", "subinterfaces"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "description", "enabled", "google-pins-interfaces:fully-qualified-interface-name", "loopback-mode", "mtu", "name", "openconfig-p4rt:id", "type"
+                ],
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "enum": ["testSwitch:eth-1/1/5 [(not a trunk member)]"]
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "enum": [true]
+                  },
+                  "google-pins-interfaces:fully-qualified-interface-name": {
+                    "type": "string",
+                    "enum": ["testSwitch:eth-1/1/5"]
+                  },
+                  "loopback-mode": {
+                    "type": "string",
+                    "enum": ["NONE"]
+                  },
+                  "mtu": {
+                    "type": "integer",
+                    "enum": [9216]
+                  },
+                  "name": {
+                    "type": "string",
+                    "enum": ["Ethernet1/1/5"]
+                  },
+                  "openconfig-p4rt:id": {
+                    "type": "integer",
+                    "enum": [513]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["iana-if-type:ethernetCsmacd"]
+                  }
+                }
+              },
+              "hold-time": {
+                "type": "object",
+                "required": [
+                  "config"
+                ],
+                "properties": {
+                  "config": {
+                    "type": "object",
+                    "required": [
+                      "down", "up"
+                    ],
+                    "properties": {
+                      "down": {
+                        "type": "integer",
+                        "enum": [0]
+                      },
+                      "up": {
+                        "type": "integer",
+                        "enum": [8000]
+                      }
+                    }
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "admin-status", "enabled", "name", "openconfig-platform-port:hardware-port", "type"
+                ],
+                "properties": {
+                  "admin-status": {
+                    "type": "string",
+                    "enum": ["UP"]
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "enum": [true]
+                  },
+                  "name": {
+                    "type": "string",
+                    "enum": ["Ethernet1/1/5"]
+                  },
+                  "openconfig-platform-port:hardware-port": {
+                    "type": "string",
+                    "enum": ["1/1"]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["iana-if-type:ethernetCsmacd"]
+                  }
+                }
+              },
+              "subinterfaces": {
+                "type": "object",
+                "required": [
+                  "subinterface"
+                ],
+                "properties": {
+                  "subinterface": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "title": "0",
+                        "type": "object",
+                        "required": [
+                          "index", "openconfig-if-ip:ipv6"
+                        ],
+                        "properties": {
+                          "index": {
+                            "type": "integer",
+                            "enum": [0]
+                          },
+                          "openconfig-if-ip:ipv6": {
+                            "type": "object",
+                            "required": [
+                              "unnumbered"
+                            ],
+                            "properties": {
+                              "unnumbered": {
+                                "type": "object",
+                                "required": [
+                                  "config", "state"
+                                ],
+                                "properties": {
+                                  "config": {
+                                    "type": "object",
+                                    "required": [
+                                      "enabled"
+                                    ],
+                                    "properties": {
+                                      "enabled": {
+                                        "type": "boolean",
+                                        "enum": [true]
+                                      }
+                                    }
+                                  },
+                                  "state": {
+                                    "type": "object",
+                                    "required": [
+                                      "enabled"
+                                    ],
+                                    "properties": {
+                                      "enabled": {
+                                        "type": "boolean",
+                                        "enum": [true]
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/1/5" : {
+              "lanes" : "13,14,15,16"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-if-ethernet:ethernet"
+      ],
+      "properties": {
+        "openconfig-if-ethernet:ethernet": {
+          "type": "object",
+          "required": [
+            "config"
+          ],
+          "properties": {
+            "config": {
+              "type": "object",
+              "required": [
+                "port-speed"
+              ],
+              "properties": {
+                "port-speed": {
+                  "type": "string",
+                  "enum": ["openconfig-if-ethernet:SPEED_400GB"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/ethernet/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-if-ethernet:ethernet"
+      ],
+      "properties": {
+        "openconfig-if-ethernet:ethernet": {
+          "type": "object",
+          "required": [
+            "config"
+          ],
+          "properties": {
+            "config": {
+              "type": "object",
+              "required": [
+                "port-speed"
+              ],
+              "properties": {
+                "port-speed": {
+                  "type": "string",
+                  "enum": ["openconfig-if-ethernet:SPEED_400GB"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_STATE:Ethernet1/9/1" : {
+              "phase" : "pending_delete"
+            },
+            "PORT_STATE:Ethernet1/9/5" : {
+              "phase" : "pending_delete"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "[TC6]: Change in breakout for port 1/9: 2x400G -> 2x200G(4)+1x400G(4)",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"config\": {\"description\" : \"testSwitch:eth-1/9/1 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/9/1\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/9/1\", \"openconfig-p4rt:id\" : 9, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/9/1\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_200GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}, {\"config\": {\"description\" : \"testSwitch:eth-1/9/3 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/9/3\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/9/3\", \"openconfig-p4rt:id\" : 260, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/9/3\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_200GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}, {\"config\": {\"description\" : \"testSwitch:eth-1/9/5 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/9/5\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/9/5\", \"openconfig-p4rt:id\" : 521, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/9/5\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}]}, \"openconfig-platform:components\": {\"component\": [{\"config\": {\"name\": \"1/9\"}, \"name\": \"1/9\", \"port\" : {\"config\": {\"port-id\": 9}, \"breakout-mode\": {\"groups\": { \"group\" : [{ \"index\": 0, \"config\": { \"index\": 0, \"num-breakouts\": 2, \"breakout-speed\": \"SPEED_200GB\", \"num-physical-channels\" : 2 }}, { \"index\": 1, \"config\": { \"index\": 1, \"num-breakouts\": 1, \"breakout-speed\": \"SPEED_400GB\", \"num-physical-channels\" : 4 }}]}}}}]}}",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/9/3" : {
+              "index": "9",
+              "admin_status": "up"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "db": "STATE_DB",
+          "value": {
+            "PORT_TABLE|Ethernet1/9/3" : {
+              "ref_count": "1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=1/9]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config", "port", "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "1/9"
+                    ]
+                  }
+                }
+              },
+              "port": {
+                "type": "object",
+                "required": [
+                  "config", "openconfig-platform-port:breakout-mode", "state"
+                ],
+                "properties": {
+                  "config": {
+                    "type": "object",
+                    "required": [
+                      "openconfig-pins-platform-port:port-id"
+                    ],
+                    "properties": {
+                      "openconfig-pins-platform-port:port-id": {
+                        "type": "integer",
+                        "enum": [
+                          9
+                        ]
+                      }
+                    }
+                  },
+                  "openconfig-platform-port:breakout-mode": {
+                    "type": "object",
+                    "required": [
+                      "groups"
+                    ],
+                    "properties": {
+                      "groups": {
+                        "type": "object",
+                        "required": [
+                          "group"
+                        ],
+                        "properties": {
+                          "group": {
+                            "type": "array",
+                            "items": [
+                              {
+                                "title": "0",
+                                "type": "object",
+                                "required": [
+                                  "index", "config", "state"
+                                ],
+                                "properties": {
+                                  "index": {
+                                    "type": "integer",
+                                    "enum": [
+                                      0
+                                    ]
+                                  },
+                                  "config": {
+                                    "type": "object",
+                                    "required": [
+                                      "index", "num-breakouts", "breakout-speed", "num-physical-channels"
+                                    ],
+                                    "properties": {
+                                      "index": {
+                                        "type": "integer",
+                                        "enum": [
+                                          0
+                                        ]
+                                      },
+                                      "num-breakouts": {
+                                        "type": "integer",
+                                        "enum": [
+                                          2
+                                        ]
+                                      },
+                                      "breakout-speed": {
+                                        "type": "string",
+                                        "enum": [
+                                          "openconfig-if-ethernet:SPEED_200GB"
+                                        ]
+                                      },
+                                      "num-physical-channels": {
+                                        "type": "integer",
+                                        "enum": [
+                                          2
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  "state": {
+                                    "type": "object",
+                                    "required": [
+                                      "index", "num-breakouts", "breakout-speed", "num-physical-channels"
+                                    ],
+                                    "properties": {
+                                      "index": {
+                                        "type": "integer",
+                                        "enum": [
+                                          0
+                                        ]
+                                      },
+                                      "num-breakouts": {
+                                        "type": "integer",
+                                        "enum": [
+                                          2
+                                        ]
+                                      },
+                                      "breakout-speed": {
+                                        "type": "string",
+                                          "enum": [
+                                            "openconfig-if-ethernet:SPEED_200GB"
+                                          ]
+                                        },
+                                        "num-physical-channels": {
+                                          "type": "integer",
+                                          "enum": [
+                                            2
+                                          ]
+                                       }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "title": "1",
+                                "type": "object",
+                                "required": [
+                                  "index", "config", "state"
+                                ],
+                                "properties": {
+                                  "index": {
+                                    "type": "integer",
+                                    "enum": [
+                                      1
+                                    ]
+                                  },
+                                  "config": {
+                                    "type": "object",
+                                    "required": [
+                                      "index", "num-breakouts", "breakout-speed", "num-physical-channels"
+                                    ],
+                                    "properties": {
+                                      "index": {
+                                        "type": "integer",
+                                        "enum": [
+                                          1
+                                        ]
+                                      },
+                                      "num-breakouts": {
+                                        "type": "integer",
+                                        "enum": [
+                                          1
+                                        ]
+                                      },
+                                      "breakout-speed": {
+                                       "type": "string",
+                                        "enum": [
+                                          "openconfig-if-ethernet:SPEED_400GB"
+                                        ]
+                                      },
+                                      "num-physical-channels": {
+                                        "type": "integer",
+                                        "enum": [
+                                          4
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  "state": {
+                                    "type": "object",
+                                    "required": [
+                                      "index", "num-breakouts", "breakout-speed", "num-physical-channels"
+                                    ],
+                                    "properties": {
+                                      "index": {
+                                        "type": "integer",
+                                        "enum": [
+                                          1
+                                        ]
+                                      },
+                                      "num-breakouts": {
+                                        "type": "integer",
+                                        "enum": [
+                                          1
+                                        ]
+                                      },
+                                      "breakout-speed": {
+                                        "type": "string",
+                                        "enum": [
+                                          "openconfig-if-ethernet:SPEED_400GB"
+                                        ]
+                                      },
+                                      "num-physical-channels": {
+                                        "type": "integer",
+                                        "enum": [
+                                          4
+                                        ]
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "openconfig-pins-platform-port:port-id"
+                    ],
+                    "properties": {
+                      "openconfig-pins-platform-port:port-id": {
+                        "type": "integer",
+                        "enum": [
+                          9
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "1/9"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/9/3]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config", "hold-time", "state", "subinterfaces"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "description", "enabled", "google-pins-interfaces:fully-qualified-interface-name", "loopback-mode", "mtu", "name", "openconfig-p4rt:id", "type"
+                ],
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "enum": ["testSwitch:eth-1/9/3 [(not a trunk member)]"]
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "enum": [true]
+                  },
+                  "google-pins-interfaces:fully-qualified-interface-name": {
+                    "type": "string",
+                    "enum": ["testSwitch:eth-1/9/3"]
+                  },
+                  "loopback-mode": {
+                    "type": "string",
+                    "enum": ["NONE"]
+                  },
+                  "mtu": {
+                    "type": "integer",
+                    "enum": [9216]
+                  },
+                  "name": {
+                    "type": "string",
+                    "enum": ["Ethernet1/9/3"]
+                  },
+                  "openconfig-p4rt:id": {
+                    "type": "integer",
+                    "enum": [260]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["iana-if-type:ethernetCsmacd"]
+                  }
+                }
+              },
+              "hold-time": {
+                "type": "object",
+                "required": [
+                  "config"
+                ],
+                "properties": {
+                  "config": {
+                    "type": "object",
+                    "required": [
+                      "down", "up"
+                    ],
+                    "properties": {
+                      "down": {
+                        "type": "integer",
+                        "enum": [0]
+                      },
+                      "up": {
+                        "type": "integer",
+                        "enum": [8000]
+                      }
+                    }
+                  }
+                }
+             },
+              "state": {
+                "type": "object",
+                "required": [
+                  "admin-status", "enabled", "name", "openconfig-platform-port:hardware-port", "type"
+                ],
+                "properties": {
+                  "admin-status": {
+                    "type": "string",
+                    "enum": ["UP"]
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "enum": [true]
+                  },
+                  "name": {
+                    "type": "string",
+                    "enum": ["Ethernet1/9/3"]
+                  },
+                  "openconfig-platform-port:hardware-port": {
+                    "type": "string",
+                    "enum": ["1/9"]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["iana-if-type:ethernetCsmacd"]
+                  }
+                }
+              },
+              "subinterfaces": {
+                "type": "object",
+                "required": [
+                  "subinterface"
+                ],
+                "properties": {
+                  "subinterface": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "title": "0",
+                        "type": "object",
+                        "required": [
+                          "index", "openconfig-if-ip:ipv6"
+                        ],
+                        "properties": {
+                          "index": {
+                            "type": "integer",
+                            "enum": [0]
+                          },
+                          "openconfig-if-ip:ipv6": {
+                            "type": "object",
+                            "required": [
+                              "unnumbered"
+                            ],
+                            "properties": {
+                              "unnumbered": {
+                                "type": "object",
+                                "required": [
+                                  "config", "state"
+                                ],
+                                "properties": {
+                                  "config": {
+                                    "type": "object",
+                                    "required": [
+                                      "enabled"
+                                    ],
+                                    "properties": {
+                                      "enabled": {
+                                        "type": "boolean",
+                                        "enum": [true]
+                                      }
+                                    }
+                                  },
+                                  "state": {
+                                    "type": "object",
+                                    "required": [
+                                      "enabled"
+                                    ],
+                                    "properties": {
+                                      "enabled": {
+                                        "type": "boolean",
+                                        "enum": [true]
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/9/1" : {
+              "lanes" : "73,74",
+              "speed" : "200000"
+            },
+            "PORT|Ethernet1/9/3" : {
+              "lanes" : "75,76",
+              "speed" : "200000"
+            },
+            "PORT_STATE|Ethernet1/9/1" : {
+              "phase" : "pending_delete"
+            },
+            "PORT_STATE|Ethernet1/9/5" : {
+              "phase" : "pending_delete"
+            },
+            "PORT_UNLOCK|Ethernet1/9/1" : {
+              "NULL" : "NULL"
+            },
+            "PORT_UNLOCK|Ethernet1/9/5" : {
+              "NULL" : "NULL"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/9/5]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config", "hold-time", "state", "subinterfaces"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "description", "enabled", "google-pins-interfaces:fully-qualified-interface-name", "loopback-mode", "mtu", "name", "openconfig-p4rt:id", "type"
+                ],
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "enum": ["testSwitch:eth-1/9/5 [(not a trunk member)]"]
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "enum": [true]
+                  },
+                  "google-pins-interfaces:fully-qualified-interface-name": {
+                    "type": "string",
+                    "enum": ["testSwitch:eth-1/9/5"]
+                  },
+                  "loopback-mode": {
+                    "type": "string",
+                    "enum": ["NONE"]
+                  },
+                  "mtu": {
+                    "type": "integer",
+                    "enum": [9216]
+                  },
+                  "name": {
+                    "type": "string",
+                    "enum": ["Ethernet1/9/5"]
+                  },
+                  "openconfig-p4rt:id": {
+                    "type": "integer",
+                    "enum": [521]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["iana-if-type:ethernetCsmacd"]
+                  }
+                }
+              },
+              "hold-time": {
+                "type": "object",
+                "required": [
+                  "config"
+                ],
+                "properties": {
+                  "config": {
+                    "type": "object",
+                    "required": [
+                      "down", "up"
+                    ],
+                    "properties": {
+                      "down": {
+                        "type": "integer",
+                        "enum": [0]
+                      },
+                      "up": {
+                        "type": "integer",
+                        "enum": [8000]
+                      }
+                    }
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "type"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": ["Ethernet1/9/5"]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["iana-if-type:ethernetCsmacd"]
+                  }
+                }
+              },
+              "subinterfaces": {
+                "type": "object",
+                "required": [
+                  "subinterface"
+                ],
+                "properties": {
+                  "subinterface": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "title": "0",
+                        "type": "object",
+                        "required": [
+                          "index", "openconfig-if-ip:ipv6"
+                        ],
+                        "properties": {
+                          "index": {
+                            "type": "integer",
+                            "enum": [0]
+                          },
+                          "openconfig-if-ip:ipv6": {
+                            "type": "object",
+                            "required": [
+                              "unnumbered"
+                            ],
+                            "properties": {
+                              "unnumbered": {
+                                "type": "object",
+                                "required": [
+                                  "config", "state"
+                                ],
+                                "properties": {
+                                  "config": {
+                                    "type": "object",
+                                    "required": [
+                                      "enabled"
+                                    ],
+                                    "properties": {
+                                      "enabled": {
+                                        "type": "boolean",
+                                        "enum": [true]
+                                      }
+                                    }
+                                  },
+                                  "state": {
+                                    "type": "object",
+                                    "required": [
+                                      "enabled"
+                                    ],
+                                    "properties": {
+                                      "enabled": {
+                                        "type": "boolean",
+                                        "enum": [true]
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/9/5" : {
+              "lanes" : "77,78,79,80",
+              "speed" : "400000"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/9/1]/ethernet/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-if-ethernet:ethernet"
+      ],
+      "properties": {
+        "openconfig-if-ethernet:ethernet": {
+          "type": "object",
+          "required": [
+            "config"
+          ],
+          "properties": {
+            "config": {
+              "type": "object",
+              "required": [
+                "port-speed"
+              ],
+              "properties": {
+                "port-speed": {
+                  "type": "string",
+                  "enum": ["openconfig-if-ethernet:SPEED_200GB"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/9/3]/ethernet/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-if-ethernet:ethernet"
+      ],
+      "properties": {
+        "openconfig-if-ethernet:ethernet": {
+          "type": "object",
+          "required": [
+            "config"
+          ],
+          "properties": {
+            "config": {
+              "type": "object",
+              "required": [
+                "port-speed"
+              ],
+              "properties": {
+                "port-speed": {
+                  "type": "string",
+                  "enum": ["openconfig-if-ethernet:SPEED_200GB"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/9/5]/ethernet/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-if-ethernet:ethernet"
+      ],
+      "properties": {
+        "openconfig-if-ethernet:ethernet": {
+          "type": "object",
+          "required": [
+            "config"
+          ],
+          "properties": {
+            "config": {
+              "type": "object",
+              "required": [
+                "port-speed"
+              ],
+              "properties": {
+                "port-speed": {
+                "type": "string",
+                  "enum": ["openconfig-if-ethernet:SPEED_400GB"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHDel",
+          "title": "Delete PORT_TABLE:Ethernet1/9/3 from APPL_STATE_DB",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/9/3": []
+          }
+        },
+        {
+          "oper": "dbHDel",
+          "title": "DeletePORT_TABLE|Ethernet1/9/3 from STATE_DB",
+          "db": "STATE_DB",
+          "value": {
+            "PORT_TABLE|Ethernet1/9/3": []
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_STATE:Ethernet1/9/3" : {
+              "phase": "pending_delete"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "[TC19]: Breakout transitions for port 1/9: 2x400G -> 2x200G(4)+1x400G(4) -> 1x400G(4)+2x200G(4)",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"config\": {\"description\" : \"testSwitch:eth-1/9/1 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/9/1\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/9/1\", \"openconfig-p4rt:id\" : 9, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/9/1\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}, {\"config\": {\"description\" : \"testSwitch:eth-1/9/5 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/9/5\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/9/5\", \"openconfig-p4rt:id\" : 521, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/9/5\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_200GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}, {\"config\": {\"description\" : \"testSwitch:eth-1/9/7 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/9/7\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/9/7\", \"openconfig-p4rt:id\" : 1042, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/9/7\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_200GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}]}, \"openconfig-platform:components\": {\"component\": [{\"config\": {\"name\": \"1/9\"}, \"name\": \"1/9\", \"port\" : {\"config\": {\"port-id\": 9}, \"breakout-mode\": {\"groups\": { \"group\" : [{ \"index\": 0, \"config\": { \"index\": 0, \"num-breakouts\": 1, \"breakout-speed\": \"SPEED_400GB\", \"num-physical-channels\" : 4 }}, { \"index\": 1, \"config\": { \"index\": 1, \"num-breakouts\": 2, \"breakout-speed\": \"SPEED_200GB\", \"num-physical-channels\" : 2 }}]}}}}]}}",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_TABLE:Ethernet1/9/7" : {
+              "index": "9",
+              "admin_status": "up"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "db": "STATE_DB",
+          "value": {
+            "PORT_TABLE|Ethernet1/9/7" : {
+              "ref_count": "1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=1/9]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config", "port", "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "1/9"
+                    ]
+                  }
+                }
+              },
+              "port": {
+                "type": "object",
+                "required": [
+                  "config", "openconfig-platform-port:breakout-mode", "state"
+                ],
+                "properties": {
+                  "config": {
+                    "type": "object",
+                    "required": [
+                      "openconfig-pins-platform-port:port-id"
+                    ],
+                    "properties": {
+                      "openconfig-pins-platform-port:port-id": {
+                        "type": "integer",
+                        "enum": [
+                          9
+                        ]
+                      }
+                    }
+                  },
+                  "openconfig-platform-port:breakout-mode": {
+                    "type": "object",
+                    "required": [
+                      "groups"
+                    ],
+                    "properties": {
+                      "groups": {
+                        "type": "object",
+                        "required": [
+                          "group"
+                        ],
+                        "properties": {
+                          "group": {
+                            "type": "array",
+                              "items": [
+                                {
+                                  "title": "0",
+                                  "type": "object",
+                                  "required": [
+                                    "index", "config", "state"
+                                  ],
+                                  "properties": {
+                                    "index": {
+                                      "type": "integer",
+                                      "enum": [
+                                        0
+                                      ]
+                                    },
+                                    "config": {
+                                      "type": "object",
+                                      "required": [
+                                        "index", "num-breakouts", "breakout-speed", "num-physical-channels"
+                                      ],
+                                      "properties": {
+                                        "index": {
+                                          "type": "integer",
+                                          "enum": [
+                                            0
+                                          ]
+                                        },
+                                        "num-breakouts": {
+                                          "type": "integer",
+                                          "enum": [
+                                            1
+                                          ]
+                                        },
+                                        "breakout-speed": {
+                                          "type": "string",
+                                          "enum": [
+                                            "openconfig-if-ethernet:SPEED_400GB"
+                                          ]
+                                        },
+                                        "num-physical-channels": {
+                                          "type": "integer",
+                                          "enum": [
+                                            4
+                                          ]
+                                        }
+                                      }
+                                    },
+                                    "state": {
+                                      "type": "object",
+                                      "required": [
+                                        "index", "num-breakouts", "breakout-speed", "num-physical-channels"
+                                      ],
+                                      "properties": {
+                                        "index": {
+                                          "type": "integer",
+                                          "enum": [
+                                            0
+                                          ]
+                                        },
+                                        "num-breakouts": {
+                                          "type": "integer",
+                                          "enum": [
+                                            1
+                                          ]
+                                        },
+                                        "breakout-speed": {
+                                          "type": "string",
+                                            "enum": [
+                                              "openconfig-if-ethernet:SPEED_400GB"
+                                            ]
+                                          },
+                                          "num-physical-channels": {
+                                            "type": "integer",
+                                            "enum": [
+                                              4
+                                            ]
+                                         }
+                                      }
+                                    }
+                                  }
+                                },
+                                {
+                                  "title": "1",
+                                  "type": "object",
+                                    "required": [
+                                      "index", "config", "state"
+                                    ],
+                                    "properties": {
+                                      "index": {
+                                        "type": "integer",
+                                        "enum": [
+                                          1
+                                        ]
+                                      },
+                                      "config": {
+                                        "type": "object",
+                                        "required": [
+                                          "index", "num-breakouts", "breakout-speed", "num-physical-channels"
+                                        ],
+                                        "properties": {
+                                          "index": {
+                                            "type": "integer",
+                                            "enum": [
+                                              1
+                                            ]
+                                          },
+                                          "num-breakouts": {
+                                            "type": "integer",
+                                            "enum": [
+                                              2
+                                            ]
+                                          },
+                                          "breakout-speed": {
+                                            "type": "string",
+                                            "enum": [
+                                              "openconfig-if-ethernet:SPEED_200GB"
+                                            ]
+                                          },
+                                          "num-physical-channels": {
+                                            "type": "integer",
+                                            "enum": [
+                                              2
+                                            ]
+                                          }
+                                        }
+                                      },
+                                      "state": {
+                                        "type": "object",
+                                        "required": [
+                                          "index", "num-breakouts", "breakout-speed", "num-physical-channels"
+                                        ],
+                                        "properties": {
+                                          "index": {
+                                            "type": "integer",
+                                            "enum": [
+                                              1
+                                            ]
+                                          },
+                                          "num-breakouts": {
+                                            "type": "integer",
+                                            "enum": [
+                                              2
+                                            ]
+                                          },
+                                          "breakout-speed": {
+                                            "type": "string",
+                                            "enum": [
+                                              "openconfig-if-ethernet:SPEED_200GB"
+                                            ]
+                                          },
+                                          "num-physical-channels": {
+                                            "type": "integer",
+                                            "enum": [
+                                              2
+                                            ]
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "state": {
+                        "type": "object",
+                        "required": [
+                          "openconfig-pins-platform-port:port-id"
+                        ],
+                        "properties": {
+                          "openconfig-pins-platform-port:port-id": {
+                            "type": "integer",
+                            "enum": [
+                              9
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "name"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "enum": [
+                          "1/9"
+                        ]
+                      }
+                    }
+                  }
+                }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/9/1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config", "hold-time", "state", "subinterfaces"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "description", "enabled", "google-pins-interfaces:fully-qualified-interface-name", "loopback-mode", "mtu", "name", "openconfig-p4rt:id", "type"
+                ],
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "enum": ["testSwitch:eth-1/9/1 [(not a trunk member)]"]
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "enum": [true]
+                  },
+                  "google-pins-interfaces:fully-qualified-interface-name": {
+                    "type": "string",
+                    "enum": ["testSwitch:eth-1/9/1"]
+                  },
+                  "loopback-mode": {
+                    "type": "string",
+                    "enum": ["NONE"]
+                  },
+                  "mtu": {
+                    "type": "integer",
+                    "enum": [9216]
+                  },
+                  "name": {
+                    "type": "string",
+                    "enum": ["Ethernet1/9/1"]
+                  },
+                  "openconfig-p4rt:id": {
+                    "type": "integer",
+                    "enum": [9]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["iana-if-type:ethernetCsmacd"]
+                  }
+                }
+              },
+              "hold-time": {
+                "type": "object",
+                "required": [
+                  "config"
+                ],
+                "properties": {
+                  "config": {
+                    "type": "object",
+                    "required": [
+                      "down", "up"
+                    ],
+                    "properties": {
+                      "down": {
+                        "type": "integer",
+                        "enum": [0]
+                      },
+                      "up": {
+                        "type": "integer",
+                        "enum": [8000]
+                      }
+                    }
+                  }
+                }
+             },
+              "state": {
+                "type": "object",
+                "required": [
+                  "admin-status", "enabled", "name", "openconfig-platform-port:hardware-port", "type"
+                ],
+                "properties": {
+                  "admin-status": {
+                    "type": "string",
+                    "enum": ["UP"]
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "enum": [true]
+                  },
+                  "name": {
+                    "type": "string",
+                    "enum": ["Ethernet1/9/1"]
+                  },
+                  "openconfig-platform-port:hardware-port": {
+                    "type": "string",
+                    "enum": ["1/9"]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["iana-if-type:ethernetCsmacd"]
+                  }
+                }
+              },
+              "subinterfaces": {
+                "type": "object",
+                "required": [
+                  "subinterface"
+                ],
+                "properties": {
+                  "subinterface": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "title": "0",
+                        "type": "object",
+                        "required": [
+                          "index", "openconfig-if-ip:ipv6"
+                        ],
+                        "properties": {
+                          "index": {
+                            "type": "integer",
+                            "enum": [0]
+                          },
+                          "openconfig-if-ip:ipv6": {
+                            "type": "object",
+                            "required": [
+                              "unnumbered"
+                            ],
+                            "properties": {
+                              "unnumbered": {
+                                "type": "object",
+                                "required": [
+                                  "config", "state"
+                                ],
+                                "properties": {
+                                  "config": {
+                                    "type": "object",
+                                    "required": [
+                                      "enabled"
+                                    ],
+                                    "properties": {
+                                      "enabled": {
+                                        "type": "boolean",
+                                        "enum": [true]
+                                      }
+                                    }
+                                  },
+                                  "state": {
+                                    "type": "object",
+                                    "required": [
+                                      "enabled"
+                                    ],
+                                    "properties": {
+                                      "enabled": {
+                                        "type": "boolean",
+                                        "enum": [true]
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/9/1" : {
+              "lanes" : "73,74,75,76",
+              "speed" : "400000"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/9/5]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config", "hold-time", "state", "subinterfaces"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "description", "enabled", "google-pins-interfaces:fully-qualified-interface-name", "loopback-mode", "mtu", "name", "openconfig-p4rt:id", "type"
+                ],
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "enum": ["testSwitch:eth-1/9/5 [(not a trunk member)]"]
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "enum": [true]
+                  },
+                  "google-pins-interfaces:fully-qualified-interface-name": {
+                    "type": "string",
+                    "enum": ["testSwitch:eth-1/9/5"]
+                  },
+                  "loopback-mode": {
+                    "type": "string",
+                    "enum": ["NONE"]
+                  },
+                  "mtu": {
+                    "type": "integer",
+                    "enum": [9216]
+                  },
+                  "name": {
+                    "type": "string",
+                    "enum": ["Ethernet1/9/5"]
+                  },
+                  "openconfig-p4rt:id": {
+                    "type": "integer",
+                    "enum": [521]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["iana-if-type:ethernetCsmacd"]
+                  }
+                }
+              },
+              "hold-time": {
+                "type": "object",
+                "required": [
+                  "config"
+                ],
+                "properties": {
+                  "config": {
+                    "type": "object",
+                    "required": [
+                      "down", "up"
+                    ],
+                    "properties": {
+                      "down": {
+                        "type": "integer",
+                        "enum": [0]
+                      },
+                      "up": {
+                        "type": "integer",
+                        "enum": [8000]
+                      }
+                    }
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "type"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": ["Ethernet1/9/5"]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["iana-if-type:ethernetCsmacd"]
+                  }
+                }
+              },
+              "subinterfaces": {
+                "type": "object",
+                "required": [
+                  "subinterface"
+                ],
+                "properties": {
+                  "subinterface": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "title": "0",
+                        "type": "object",
+                        "required": [
+                          "index", "openconfig-if-ip:ipv6"
+                        ],
+                        "properties": {
+                          "index": {
+                            "type": "integer",
+                            "enum": [0]
+                          },
+                          "openconfig-if-ip:ipv6": {
+                            "type": "object",
+                            "required": [
+                              "unnumbered"
+                            ],
+                            "properties": {
+                              "unnumbered": {
+                                "type": "object",
+                                "required": [
+                                  "config", "state"
+                                ],
+                                "properties": {
+                                  "config": {
+                                    "type": "object",
+                                    "required": [
+                                      "enabled"
+                                    ],
+                                    "properties": {
+                                      "enabled": {
+                                        "type": "boolean",
+                                        "enum": [true]
+                                      }
+                                    }
+                                  },
+                                  "state": {
+                                    "type": "object",
+                                    "required": [
+                                      "enabled"
+                                    ],
+                                    "properties": {
+                                      "enabled": {
+                                        "type": "boolean",
+                                        "enum": [true]
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/9/7]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config", "hold-time", "state", "subinterfaces"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "description", "enabled", "google-pins-interfaces:fully-qualified-interface-name", "loopback-mode", "mtu", "name", "openconfig-p4rt:id", "type"
+                ],
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "enum": ["testSwitch:eth-1/9/7 [(not a trunk member)]"]
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "enum": [true]
+                  },
+                  "google-pins-interfaces:fully-qualified-interface-name": {
+                    "type": "string",
+                    "enum": ["testSwitch:eth-1/9/7"]
+                  },
+                  "loopback-mode": {
+                    "type": "string",
+                    "enum": ["NONE"]
+                  },
+                  "mtu": {
+                    "type": "integer",
+                    "enum": [9216]
+                  },
+                  "name": {
+                    "type": "string",
+                    "enum": ["Ethernet1/9/7"]
+                  },
+                  "openconfig-p4rt:id": {
+                    "type": "integer",
+                    "enum": [1042]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["iana-if-type:ethernetCsmacd"]
+                  }
+                }
+              },
+              "hold-time": {
+                "type": "object",
+                "required": [
+                  "config"
+                ],
+                "properties": {
+                  "config": {
+                    "type": "object",
+                    "required": [
+                      "down", "up"
+                    ],
+                    "properties": {
+                      "down": {
+                        "type": "integer",
+                        "enum": [0]
+                      },
+                      "up": {
+                        "type": "integer",
+                        "enum": [8000]
+                      }
+                    }
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "type"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": ["Ethernet1/9/7"]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["iana-if-type:ethernetCsmacd"]
+                  }
+                }
+              },
+              "subinterfaces": {
+                "type": "object",
+                "required": [
+                  "subinterface"
+                ],
+                "properties": {
+                  "subinterface": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "title": "0",
+                        "type": "object",
+                        "required": [
+                          "index", "openconfig-if-ip:ipv6"
+                        ],
+                        "properties": {
+                          "index": {
+                            "type": "integer",
+                            "enum": [0]
+                          },
+                          "openconfig-if-ip:ipv6": {
+                            "type": "object",
+                            "required": [
+                              "unnumbered"
+                            ],
+                            "properties": {
+                              "unnumbered": {
+                                "type": "object",
+                                "required": [
+                                  "config", "state"
+                                ],
+                                "properties": {
+                                  "config": {
+                                    "type": "object",
+                                    "required": [
+                                      "enabled"
+                                    ],
+                                    "properties": {
+                                      "enabled": {
+                                        "type": "boolean",
+                                        "enum": [true]
+                                      }
+                                    }
+                                  },
+                                  "state": {
+                                    "type": "object",
+                                    "required": [
+                                      "enabled"
+                                    ],
+                                    "properties": {
+                                      "enabled": {
+                                        "type": "boolean",
+                                        "enum": [true]
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/9/5" : {
+              "lanes" : "77,78",
+              "speed" : "200000"
+            },
+            "PORT|Ethernet1/9/7" : {
+              "lanes" : "79,80",
+              "speed" : "200000"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/9/1]/ethernet/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-if-ethernet:ethernet"
+      ],
+      "properties": {
+        "openconfig-if-ethernet:ethernet": {
+          "type": "object",
+          "required": [
+            "config"
+          ],
+          "properties": {
+            "config": {
+              "type": "object",
+              "required": [
+                "port-speed"
+              ],
+              "properties": {
+                "port-speed": {
+                  "type": "string",
+                  "enum": ["openconfig-if-ethernet:SPEED_400GB"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/9/5]/ethernet/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-if-ethernet:ethernet"
+      ],
+      "properties": {
+        "openconfig-if-ethernet:ethernet": {
+          "type": "object",
+          "required": [
+            "config"
+          ],
+          "properties": {
+            "config": {
+              "type": "object",
+              "required": [
+                "port-speed"
+              ],
+              "properties": {
+                "port-speed": {
+                  "type": "string",
+                  "enum": ["openconfig-if-ethernet:SPEED_200GB"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/9/7]/ethernet/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-if-ethernet:ethernet"
+      ],
+      "properties": {
+        "openconfig-if-ethernet:ethernet": {
+          "type": "object",
+          "required": [
+            "config"
+          ],
+          "properties": {
+            "config": {
+              "type": "object",
+              "required": [
+                "port-speed"
+              ],
+              "properties": {
+                "port-speed": {
+                "type": "string",
+                  "enum": ["openconfig-if-ethernet:SPEED_200GB"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "BREAKOUT_CFG|Ethernet1/10/1" : {
+              "brkout_mode": "2x400G"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/10/1" : {
+              "index": "10",
+              "admin_status": "up",
+              "mtu": "9104",
+              "lanes" : "65,66,67,68",
+              "speed" : "400000"
+            },
+            "PORT|Ethernet1/10/5" : {
+              "index": "10",
+              "admin_status": "up",
+              "mtu": "9104",
+              "lanes" : "69,70,71,72",
+              "speed" : "400000"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "[TC9]: Port speed override: no change in breakout for port 1/10: 2x400G -> 1x200G(4)+1x400G(4)",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"config\": {\"description\" : \"testSwitch:eth-1/10/1 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/10/1\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/10/1\", \"openconfig-p4rt:id\" : 10, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/10/1\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_200GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}, {\"config\": {\"description\" : \"testSwitch:eth-1/10/5 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/10/5\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/10/5\", \"openconfig-p4rt:id\" : 522, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/10/5\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}]}, \"openconfig-platform:components\": {\"component\": [{\"config\": {\"name\": \"1/10\"}, \"name\": \"1/10\", \"port\" : {\"config\": {\"port-id\": 10}, \"breakout-mode\": {\"groups\": { \"group\" : [{ \"index\": 0, \"config\": { \"index\": 0, \"num-breakouts\": 1, \"breakout-speed\": \"SPEED_200GB\", \"num-physical-channels\" : 4 }}, { \"index\": 1, \"config\": { \"index\": 1, \"num-breakouts\": 1, \"breakout-speed\": \"SPEED_400GB\", \"num-physical-channels\" : 4 }}]}}}}]}}",
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "BREAKOUT_CFG|Ethernet1/10/1" : {
+              "brkout_mode": "1x200G4_1x400G4"
+            },
+            "PORT|Ethernet1/10/1" : {
+              "lanes" : "65,66,67,68",
+              "speed" : "200000"
+            },
+            "PORT|Ethernet1/10/5" : {
+              "lanes" : "69,70,71,72",
+              "speed" : "400000"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "[TC9b]: Speed change reset for port 1/10: 1x200G(4)+1x400G(4) -> 2x400G",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"config\": {\"description\" : \"testSwitch:eth-1/10/1 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/10/1\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/10/1\", \"openconfig-p4rt:id\" : 10, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/10/1\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}, {\"config\": {\"description\" : \"testSwitch:eth-1/10/5 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/10/5\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/10/5\", \"openconfig-p4rt:id\" : 522, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/10/5\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}]}, \"openconfig-platform:components\": {\"component\": [{\"config\": {\"name\": \"1/10\"}, \"name\": \"1/10\", \"port\" : {\"config\": {\"port-id\": 10}, \"breakout-mode\": {\"groups\": { \"group\" : [{ \"index\": 0, \"config\": { \"index\": 0, \"num-breakouts\": 2, \"breakout-speed\": \"SPEED_400GB\", \"num-physical-channels\" : 4 }}]}}}}]}}",
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "BREAKOUT_CFG|Ethernet1/10/1" : {
+              "brkout_mode": "2x400G"
+            },
+            "PORT|Ethernet1/10/1" : {
+              "lanes" : "65,66,67,68",
+              "speed" : "400000"
+            },
+            "PORT|Ethernet1/10/5" : {
+              "lanes" : "69,70,71,72",
+              "speed" : "400000"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "[TC11]: Port speed override: no change in breakout for port 1/10: 2x400G -> 1x400G(4)+1x100G(4)",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"config\": {\"description\" : \"testSwitch:eth-1/10/1 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/10/1\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/10/1\", \"openconfig-p4rt:id\" : 10, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/10/1\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}, {\"config\": {\"description\" : \"testSwitch:eth-1/10/5 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/10/5\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/10/5\", \"openconfig-p4rt:id\" : 522, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/10/5\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_100GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}]}, \"openconfig-platform:components\": {\"component\": [{\"config\": {\"name\": \"1/10\"}, \"name\": \"1/10\", \"port\" : {\"config\": {\"port-id\": 10}, \"breakout-mode\": {\"groups\": { \"group\" : [{ \"index\": 0, \"config\": { \"index\": 0, \"num-breakouts\": 1, \"breakout-speed\": \"SPEED_400GB\", \"num-physical-channels\" : 4 }}, { \"index\": 1, \"config\": { \"index\": 1, \"num-breakouts\": 1, \"breakout-speed\": \"SPEED_100GB\", \"num-physical-channels\" : 4 }}]}}}}]}}",
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "BREAKOUT_CFG|Ethernet1/10/1" : {
+              "brkout_mode": "1x400G4_1x100G4"
+            },
+            "PORT|Ethernet1/10/1" : {
+              "lanes" : "65,66,67,68",
+              "speed" : "400000"
+            },
+            "PORT|Ethernet1/10/5" : {
+              "lanes" : "69,70,71,72",
+              "speed" : "100000"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "[TC11b]: Speed change reset for port 1/10: 1x400G(4)+1x100G(4) -> 2x400G",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"config\": {\"description\" : \"testSwitch:eth-1/10/1 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/10/1\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/10/1\", \"openconfig-p4rt:id\" : 10, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/10/1\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}, {\"config\": {\"description\" : \"testSwitch:eth-1/10/5 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/10/5\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/10/5\", \"openconfig-p4rt:id\" : 522, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/10/5\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}]}, \"openconfig-platform:components\": {\"component\": [{\"config\": {\"name\": \"1/10\"}, \"name\": \"1/10\", \"port\" : {\"config\": {\"port-id\": 10}, \"breakout-mode\": {\"groups\": { \"group\" : [{ \"index\": 0, \"config\": { \"index\": 0, \"num-breakouts\": 2, \"breakout-speed\": \"SPEED_400GB\", \"num-physical-channels\" : 4 }}]}}}}]}}",
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "BREAKOUT_CFG|Ethernet1/10/1" : {
+              "brkout_mode": "2x400G"
+            },
+            "PORT|Ethernet1/10/1" : {
+              "lanes" : "65,66,67,68",
+              "speed" : "400000"
+            },
+            "PORT|Ethernet1/10/5" : {
+              "lanes" : "69,70,71,72",
+              "speed" : "400000"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "[TC12]: Port speed override: no change in breakout for port 1/10: 2x400G -> 1x100G(4)+1x400G(4)",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"config\": {\"description\" : \"testSwitch:eth-1/10/1 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/10/1\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/10/1\", \"openconfig-p4rt:id\" : 10, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/10/1\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_100GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}, {\"config\": {\"description\" : \"testSwitch:eth-1/10/5 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/10/5\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/10/5\", \"openconfig-p4rt:id\" : 522, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/10/5\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}]}, \"openconfig-platform:components\": {\"component\": [{\"config\": {\"name\": \"1/10\"}, \"name\": \"1/10\", \"port\" : {\"config\": {\"port-id\": 10}, \"breakout-mode\": {\"groups\": { \"group\" : [{ \"index\": 0, \"config\": { \"index\": 0, \"num-breakouts\": 1, \"breakout-speed\": \"SPEED_100GB\", \"num-physical-channels\" : 4 }}, { \"index\": 1, \"config\": { \"index\": 1, \"num-breakouts\": 1, \"breakout-speed\": \"SPEED_400GB\", \"num-physical-channels\" : 4 }}]}}}}]}}",
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "BREAKOUT_CFG|Ethernet1/10/1" : {
+              "brkout_mode": "1x100G4_1x400G4"
+            },
+            "PORT|Ethernet1/10/1" : {
+              "lanes" : "65,66,67,68",
+              "speed" : "100000"
+            },
+            "PORT|Ethernet1/10/5" : {
+              "lanes" : "69,70,71,72",
+              "speed" : "400000"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "[TC12b]: Speed change reset for port 1/10: 1x100G(4)+1x400G(4) -> 2x400G",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"config\": {\"description\" : \"testSwitch:eth-1/10/1 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/10/1\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/10/1\", \"openconfig-p4rt:id\" : 10, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/10/1\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}, {\"config\": {\"description\" : \"testSwitch:eth-1/10/5 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/10/5\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/10/5\", \"openconfig-p4rt:id\" : 522, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/10/5\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}]}, \"openconfig-platform:components\": {\"component\": [{\"config\": {\"name\": \"1/10\"}, \"name\": \"1/10\", \"port\" : {\"config\": {\"port-id\": 10}, \"breakout-mode\": {\"groups\": { \"group\" : [{ \"index\": 0, \"config\": { \"index\": 0, \"num-breakouts\": 2, \"breakout-speed\": \"SPEED_400GB\", \"num-physical-channels\" : 4 }}]}}}}]}}",
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "BREAKOUT_CFG|Ethernet1/10/1" : {
+              "brkout_mode": "2x400G"
+            },
+            "PORT|Ethernet1/10/1" : {
+              "lanes" : "65,66,67,68",
+              "speed" : "400000"
+            },
+            "PORT|Ethernet1/10/5" : {
+              "lanes" : "69,70,71,72",
+              "speed" : "400000"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "[TC13]: Port speed override: no change in breakout for port 1/10: 2x400G -> 1x200G(4)+1x100G(4)",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"config\": {\"description\" : \"testSwitch:eth-1/10/1 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/10/1\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/10/1\", \"openconfig-p4rt:id\" : 10, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/10/1\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_200GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}, {\"config\": {\"description\" : \"testSwitch:eth-1/10/5 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/10/5\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/10/5\", \"openconfig-p4rt:id\" : 522, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/10/5\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_100GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}]}, \"openconfig-platform:components\": {\"component\": [{\"config\": {\"name\": \"1/10\"}, \"name\": \"1/10\", \"port\" : {\"config\": {\"port-id\": 10}, \"breakout-mode\": {\"groups\": { \"group\" : [{ \"index\": 0, \"config\": { \"index\": 0, \"num-breakouts\": 1, \"breakout-speed\": \"SPEED_200GB\", \"num-physical-channels\" : 4 }}, { \"index\": 1, \"config\": { \"index\": 1, \"num-breakouts\": 1, \"breakout-speed\": \"SPEED_100GB\", \"num-physical-channels\" : 4 }}]}}}}]}}",
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "BREAKOUT_CFG|Ethernet1/10/1" : {
+              "brkout_mode": "1x200G4_1x100G4"
+            },
+            "PORT|Ethernet1/10/1" : {
+              "lanes" : "65,66,67,68",
+              "speed" : "200000"
+            },
+            "PORT|Ethernet1/10/5" : {
+              "lanes" : "69,70,71,72",
+              "speed" : "100000"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "[TC13b]: Speed change reset for port 1/10: 1x200G(4)+1x100G(4) -> 2x400G",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"config\": {\"description\" : \"testSwitch:eth-1/10/1 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/10/1\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/10/1\", \"openconfig-p4rt:id\" : 10, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/10/1\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}, {\"config\": {\"description\" : \"testSwitch:eth-1/10/5 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/10/5\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/10/5\", \"openconfig-p4rt:id\" : 522, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/10/5\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_400GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}]}, \"openconfig-platform:components\": {\"component\": [{\"config\": {\"name\": \"1/10\"}, \"name\": \"1/10\", \"port\" : {\"config\": {\"port-id\": 10}, \"breakout-mode\": {\"groups\": { \"group\" : [{ \"index\": 0, \"config\": { \"index\": 0, \"num-breakouts\": 2, \"breakout-speed\": \"SPEED_400GB\", \"num-physical-channels\" : 4 }}]}}}}]}}",
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "BREAKOUT_CFG|Ethernet1/10/1" : {
+              "brkout_mode": "2x400G"
+            },
+            "PORT|Ethernet1/10/1" : {
+              "lanes" : "65,66,67,68",
+              "speed" : "400000"
+            },
+            "PORT|Ethernet1/10/5" : {
+              "lanes" : "69,70,71,72",
+              "speed" : "400000"
+            }
+          }
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Delete Ethernet1/10/1 from CONFIG_DB",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/10/1": []
+          }
+        },
+        {
+          "oper": "dbHDel",
+          "title": "Delete Ethernet1/10/5 from CONFIG_DB",
+          "db": "CONFIG_DB",
+          "value": {
+            "PORT|Ethernet1/10/5": []
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "PORT_STATE:Ethernet1/11/1" : {
+              "phase": "pending_delete"
+            },
+            "PORT_STATE:Ethernet1/11/5" : {
+              "phase": "pending_delete"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": "[TC20]: Port breakout for 1/11: 2x400G -> 8x100G",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"config\": {\"description\" : \"testSwitch:eth-1/11/1 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/11/1\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/11/1\", \"openconfig-p4rt:id\" : 11, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/11/1\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_100GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}, {\"config\": {\"description\" : \"testSwitch:eth-1/11/2 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/11/2\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/11/2\", \"openconfig-p4rt:id\" : 520, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/11/2\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_100GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}, {\"config\": {\"description\" : \"testSwitch:eth-1/11/3 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/11/3\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/11/3\", \"openconfig-p4rt:id\" : 523, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/11/3\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_100GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}, {\"config\": {\"description\" : \"testSwitch:eth-1/11/4 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/11/4\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/11/4\", \"openconfig-p4rt:id\" : 524, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/11/4\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_100GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }} , {\"config\": {\"description\" : \"testSwitch:eth-1/11/5 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/11/5\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/11/5\", \"openconfig-p4rt:id\" : 525, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/11/5\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_100GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}, {\"config\": {\"description\" : \"testSwitch:eth-1/11/6 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/11/6\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/11/6\", \"openconfig-p4rt:id\" : 526, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/11/6\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_100GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}, {\"config\": {\"description\" : \"testSwitch:eth-1/11/7 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/11/7\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/11/7\", \"openconfig-p4rt:id\" : 527, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/11/7\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_100GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}, {\"config\": {\"description\" : \"testSwitch:eth-1/11/8 [(not a trunk member)]\", \"enabled\" : true, \"google-pins-interfaces:fully-qualified-interface-name\" : \"testSwitch:eth-1/11/8\", \"loopback-mode\" : \"NONE\", \"mtu\" : 9216, \"name\": \"Ethernet1/11/8\", \"openconfig-p4rt:id\" : 528, \"type\" : \"iana-if-type:ethernetCsmacd\"}, \"hold-time\": { \"config\": { \"down\": 0, \"up\": 8000}}, \"name\": \"Ethernet1/11/8\", \"openconfig-if-ethernet:ethernet\" : {\"config\" : {\"port-speed\" : \"openconfig-if-ethernet:SPEED_100GB\"}}, \"subinterfaces\" : { \"subinterface\" : [{\"config\" : {\"index\" : 0}, \"index\" : 0, \"openconfig-if-ip:ipv6\" : {\"unnumbered\" : {\"config\" : {\"enabled\" : true}}}}] }}]}, \"openconfig-platform:components\": {\"component\": [{\"config\": {\"name\": \"1/11\"}, \"name\": \"1/11\", \"port\" : {\"config\": {\"port-id\": 11}, \"breakout-mode\": {\"groups\": { \"group\" : [{ \"index\": 0, \"config\": { \"index\": 0, \"num-breakouts\": 8, \"breakout-speed\": \"SPEED_100GB\", \"num-physical-channels\" : 1 }}]}}}}]}}"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=1/11]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config", "port", "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "1/11"
+                    ]
+                  }
+                }
+              },
+              "port": {
+                "type": "object",
+                "required": [
+                  "config", "openconfig-platform-port:breakout-mode", "state"
+                ],
+                "properties": {
+                  "config": {
+                    "type": "object",
+                    "required": [
+                      "openconfig-pins-platform-port:port-id"
+                    ],
+                    "properties": {
+                      "openconfig-pins-platform-port:port-id": {
+                        "type": "integer",
+                        "enum": [
+                          11
+                        ]
+                      }
+                    }
+                  },
+                  "openconfig-platform-port:breakout-mode": {
+                    "type": "object",
+                    "required": [
+                      "groups"
+                    ],
+                    "properties": {
+                      "groups": {
+                        "type": "object",
+                          "required": [
+                            "group"
+                          ],
+                          "properties": {
+                            "group": {
+                              "type": "array",
+                                "items": [
+                                  {
+                                    "title": "0",
+                                    "type": "object",
+                                    "required": [
+                                      "index", "config", "state"
+                                    ],
+                                    "properties": {
+                                      "index": {
+                                        "type": "integer",
+                                        "enum": [
+                                          0
+                                        ]
+                                      },
+                                      "config": {
+                                        "type": "object",
+                                        "required": [
+                                          "index", "num-breakouts", "breakout-speed", "num-physical-channels"
+                                        ],
+                                        "properties": {
+                                          "index": {
+                                            "type": "integer",
+                                            "enum": [
+                                              0
+                                            ]
+                                          },
+                                          "num-breakouts": {
+                                            "type": "integer",
+                                            "enum": [
+                                              8
+                                            ]
+                                          },
+                                          "breakout-speed": {
+                                            "type": "string",
+                                            "enum": [
+                                              "openconfig-if-ethernet:SPEED_100GB"
+                                            ]
+                                          },
+                                          "num-physical-channels": {
+                                            "type": "integer",
+                                            "enum": [
+                                              1
+                                            ]
+                                          }
+                                        }
+                                      },
+                                      "state": {
+                                        "type": "object",
+                                        "required": [
+                                          "index", "num-breakouts", "breakout-speed", "num-physical-channels"
+                                        ],
+                                        "properties": {
+                                          "index": {
+                                            "type": "integer",
+                                            "enum": [
+                                              0
+                                            ]
+                                          },
+                                          "num-breakouts": {
+                                            "type": "integer",
+                                            "enum": [
+                                              8
+                                            ]
+                                          },
+                                          "breakout-speed": {
+                                            "type": "string",
+                                            "enum": [
+                                              "openconfig-if-ethernet:SPEED_100GB"
+                                            ]
+                                          },
+                                          "num-physical-channels": {
+                                            "type": "integer",
+                                            "enum": [
+                                              1
+                                            ]
+                                         }
+                                      }
+                                   }
+                                 }
+                               }
+                             ]
+                           }
+                         }
+                       }
+                    }
+                  },
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "openconfig-pins-platform-port:port-id"
+                    ],
+                    "properties": {
+                      "openconfig-pins-platform-port:port-id": {
+                        "type": "integer",
+                        "enum": [
+                          11
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "1/11"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "BREAKOUT_CFG|Ethernet1/11/1" : {
+              "brkout_mode": "8x100G"
+            },
+            "PORT|Ethernet1/11/1" : {
+              "lanes" : "89",
+              "speed" : "100000"
+            },
+            "PORT|Ethernet1/11/2" : {
+              "lanes" : "90",
+              "speed" : "100000"
+            },
+            "PORT|Ethernet1/11/3" : {
+              "lanes" : "91",
+              "speed" : "100000"
+            },
+            "PORT|Ethernet1/11/4" : {
+              "lanes" : "92",
+              "speed" : "100000"
+            },
+            "PORT|Ethernet1/11/5" : {
+              "lanes" : "93",
+              "speed" : "100000"
+            },
+            "PORT|Ethernet1/11/6" : {
+              "lanes" : "94",
+              "speed" : "100000"
+            },
+            "PORT|Ethernet1/11/7" : {
+              "lanes" : "95",
+              "speed" : "100000"
+            },
+            "PORT|Ethernet1/11/8" : {
+              "lanes" : "96",
+              "speed" : "100000"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/11/4]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config", "hold-time", "state", "subinterfaces"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "description", "enabled", "google-pins-interfaces:fully-qualified-interface-name", "loopback-mode", "mtu", "name", "openconfig-p4rt:id", "type"
+                ],
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "enum": ["testSwitch:eth-1/11/4 [(not a trunk member)]"]
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "enum": [true]
+                  },
+                  "google-pins-interfaces:fully-qualified-interface-name": {
+                    "type": "string",
+                    "enum": ["testSwitch:eth-1/11/4"]
+                  },
+                  "loopback-mode": {
+                    "type": "string",
+                    "enum": ["NONE"]
+                  },
+                  "mtu": {
+                    "type": "integer",
+                    "enum": [9216]
+                  },
+                  "name": {
+                    "type": "string",
+                    "enum": ["Ethernet1/11/4"]
+                  },
+                  "openconfig-p4rt:id": {
+                    "type": "integer",
+                    "enum": [524]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["iana-if-type:ethernetCsmacd"]
+                  }
+                }
+              },
+              "hold-time": {
+                "type": "object",
+                "required": [
+                  "config"
+                ],
+                "properties": {
+                  "config": {
+                    "type": "object",
+                    "required": [
+                      "down", "up"
+                    ],
+                    "properties": {
+                      "down": {
+                        "type": "integer",
+                        "enum": [0]
+                      },
+                      "up": {
+                        "type": "integer",
+                        "enum": [8000]
+                      }
+                    }
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "type"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": ["Ethernet1/11/4"]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["iana-if-type:ethernetCsmacd"]
+                  }
+                }
+              },
+              "subinterfaces": {
+                "type": "object",
+                "required": [
+                  "subinterface"
+                ],
+                "properties": {
+                  "subinterface": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "title": "0",
+                        "type": "object",
+                        "required": [
+                          "index", "openconfig-if-ip:ipv6"
+                        ],
+                        "properties": {
+                          "index": {
+                            "type": "integer",
+                            "enum": [0]
+                          },
+                          "openconfig-if-ip:ipv6": {
+                            "type": "object",
+                            "required": [
+                              "unnumbered"
+                            ],
+                            "properties": {
+                              "unnumbered": {
+                                "type": "object",
+                                "required": [
+                                  "config", "state"
+                                ],
+                                "properties": {
+                                  "config": {
+                                    "type": "object",
+                                    "required": [
+                                      "enabled"
+                                    ],
+                                    "properties": {
+                                      "enabled": {
+                                        "type": "boolean",
+                                        "enum": [true]
+                                      }
+                                    }
+                                  },
+                                  "state": {
+                                    "type": "object",
+                                    "required": [
+                                      "enabled"
+                                    ],
+                                    "properties": {
+                                      "enabled": {
+                                        "type": "boolean",
+                                        "enum": [true]
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/11/8]/ethernet/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-if-ethernet:ethernet"
+      ],
+      "properties": {
+        "openconfig-if-ethernet:ethernet": {
+          "type": "object",
+          "required": [
+            "config"
+          ],
+          "properties": {
+            "config": {
+              "type": "object",
+              "required": [
+                "port-speed"
+              ],
+              "properties": {
+                "port-speed": {
+                  "type": "string",
+                  "enum": ["openconfig-if-ethernet:SPEED_100GB"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

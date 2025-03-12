@@ -1,0 +1,61 @@
+{
+  "title": "Get Sub Interface enabled",
+  "operations":[
+   {
+     "operation": "get",
+     "returnCode": 0,
+     "xpath": "openconfig/interfaces/interface[name=bond0]/subinterfaces/subinterface[index=0]/ipv4/state/enabled",
+     "target": "OC_YANG",
+     "type": "object",
+     "required": ["openconfig-if-ip:enabled"],
+       "properties": {
+         "counters": {
+          "type": "boolean",
+          "enum": [true]
+         }
+       }
+   },
+   {
+     "operation": "get",
+     "returnCode": 0,
+     "xpath": "openconfig/interfaces/interface[name=bond0]/subinterfaces/subinterface[index=0]/ipv6/state/enabled",
+     "target": "OC_YANG",
+     "type": "object",
+     "required": ["openconfig-if-ip:enabled"],
+       "properties": {
+         "counters": {
+          "type": "boolean",
+          "enum": [true]
+         }
+       }
+   },
+   {   
+     "operation": "get",
+     "returnCode": 0,
+     "xpath": "openconfig/interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv4/state/enabled",
+     "target": "OC_YANG",
+     "type": "object",
+     "required": ["openconfig-if-ip:enabled"],
+       "properties": {
+         "counters": {
+          "type": "boolean",
+          "enum": [true] 
+         }
+       }
+   },
+   {
+     "operation": "get",
+     "returnCode": 0,
+     "xpath": "openconfig/interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv6/state/enabled",
+     "target": "OC_YANG",
+     "type": "object",
+     "required": ["openconfig-if-ip:enabled"],
+       "properties": {
+         "counters": {
+          "type": "boolean",
+          "enum": [true]
+         }
+       }
+   }
+  ]
+}

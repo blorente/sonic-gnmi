@@ -1,0 +1,174 @@
+{{- /* ================================================================== */ -}}
+{{- /* The entry point for this template */ -}}
+{
+"title": "[Gen] Subscribe SAMPLE {{ template "xpath" . }}",
+"operations":[
+  {{- template "subscribe" . -}}
+]
+}
+
+{{- /* ================================================================== */ -}}
+{{- /* This template generates get test for a single path. */ -}}
+{{- define "subscribe" -}}
+  {
+    "operation": "subscribe",
+    "returnCode": {{- .Result -}},
+    "operProto": "{{- template "subscribe-proto" . -}}",
+    "subOpers": [
+    {{- if eq .Result 0 -}}
+      {{- template "validator" . -}}
+    {{- end -}}
+    ]
+  }
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /* Generates the Subscribe(ONCE) PROTO message. */ -}}
+{{- define "subscribe-proto" -}}
+ subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{ {{- template "proto-path-elem" . -}} }mode:SAMPLE sample_interval:5000000000}mode:STREAM}
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /* Generates PROTO for every element of the path. */ -}}
+{{- define "proto-path-elem" -}}
+  {{- /* First recursively climb to the root and then ... */ -}}
+  {{- if (and .Parent .Parent.Parent) -}}
+    {{- template "proto-path-elem" .Parent -}}
+  {{- end -}}
+  {{- /* ... create the proto content from there */ -}}
+  elem:{name:'{{- .Name -}}'{{- if eq .Type "array" -}}key:{key:'{{- .Key.Name -}}'value:'{{- .Key.Val -}}'}{{- end -}}}
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /* Provides prefix. If not specified explicitly finds one in its parent. */ -}}
+{{- define "prefix" -}}
+  {{- if .Prefix -}}
+    {{- .Prefix -}}
+  {{- else if .Parent -}}
+    {{- template "prefix" .Parent -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /* Generates initial response validator. */ -}}
+{{- define "validator" -}}
+  {
+    "oper": "validate",
+    "title": "Validates initial updates",
+    "timeout": 5000,
+    "finalValidator": {
+      "xpath": "{{- template "xpath" . -}}",
+      "syncResponse": true,
+      "schema": {
+        {{- template "validator-object-impl-with-prefix" .Parent -}}
+      }
+    }
+  }
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /* Generates XPATH. */ -}}
+{{- define "xpath" -}}
+  {{- if .Parent -}}
+    {{- template "xpath" .Parent -}}
+  {{- end -}}
+  /{{- .Name -}}{{- if eq .Type "array" -}}[{{- .Key.Name -}}={{- .Key.Val -}}]{{- end -}}
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /* A body of a element. */ -}}
+{{- define "validator-object-impl-with-prefix" -}}
+  "type": "object",
+  "required": [
+    {{- range $index, $element := .Children -}}
+      {{- if ne $index 0 -}}, {{- end -}}
+      "{{- template "prefix" $element -}}:{{- $element.Name -}}"
+    {{- end -}}
+  ],
+  "properties": {
+    {{- range $index, $element := .Children -}}
+      {{- if ne $index 0 -}},{{- end -}}
+        {{- template "validator-with-prefix-element" $element -}}
+    {{- end -}}
+  }
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /* Generates a complete definition of an element with its prefix. */ -}}
+{{- define "validator-with-prefix-element" -}}
+"{{- template "prefix" . -}}:{{- .Name -}}": {
+  {{- template "validator-element" . -}}
+}
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /* A 'switch/case' selecting a handler based on element's type. */ -}}
+{{- define "validator-element" -}}
+{{- if eq .Type "object" -}}
+  {{- template "validator-object-impl" . -}}
+{{- else if eq .Type "array" -}}
+  {{- template "validator-array" . -}}
+{{- else if eq .Type "integer" -}}
+  "type": "integer",
+  "enum": [{{- .Val -}}]
+{{- else if eq .Type "float" -}}
+  "type": "float",
+  "enum": [{{- .Val -}}]
+{{- else if and .Pattern (eq .Type "string") -}}
+  "type": "string",
+  "pattern": "{{- .Pattern -}}"
+{{- else if and .Val (eq .Type "string") -}}
+  "type": "string",
+  "enum": ["{{- .Val -}}"]
+{{- else if eq .Type "bool" -}}
+  "type": "boolean",
+  "enum": [{{- .Val -}}]
+{{- end -}}
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /*  */ -}}
+{{- define "validator-object-impl" -}}
+  "type": "object",
+  "required": [
+    {{- range $index, $element := .Children -}}
+      {{- if ne $index 0 -}}, {{- end -}}
+      "{{- if $element.Prefix -}}{{- $element.Prefix -}}:{{- end -}}{{- $element.Name -}}"
+    {{- end -}}
+  ],
+  "properties": {
+    {{- range $index, $element := .Children -}}
+      {{- if ne $index 0 -}},{{- end -}}
+        {{- template "validator-no-prefix-element" $element -}}
+    {{- end -}}
+  }
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /* This template handles `array` elements */ -}}
+{{- define "validator-array" -}}
+  "type": "array",
+  "items": {
+      "type": "object",
+      "required": [
+        {{- range $index, $element := .Children -}}
+          {{- if ne $index 0 -}}, {{- end -}}
+          "{{- if $element.Prefix -}}{{- $element.Prefix -}}:{{- end -}}{{- $element.Name -}}"
+        {{- end -}}
+      ],
+      "properties": {
+    {{- range $index, $element := .Children -}}
+      {{- if ne $index 0 -}},{{- end -}}
+        {{- template "validator-no-prefix-element" $element -}}
+      }
+    }
+    {{- end -}}
+{{- end -}}
+
+{{- /* ================================================================== */ -}}
+{{- /*  */ -}}
+{{- define "validator-no-prefix-element" -}}
+  "{{- if .Prefix -}}{{- .Prefix -}}:{{- end -}}{{- .Name -}}": {
+    {{- template "validator-element" . -}}
+  }
+{{- end -}}

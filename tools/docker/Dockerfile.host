@@ -1,0 +1,38 @@
+ARG DEBIAN_VERSION=bullseye
+FROM debian:${DEBIAN_VERSION}
+
+# Make apt-get non-interactive
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
+  iproute2 \
+  redis-server \
+  rsyslog \
+  iputils-ping \
+  ntp \
+  ca-certificates \
+  curl \
+  gnupg \
+  lsb-release \
+  wget \
+  cgroup-tools
+
+RUN mkdir -p /etc/apt/keyrings
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+RUN echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
+  docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+ENV DB_DIR=/var/run/redis/sonic-db/
+RUN mkdir -p /var/run/redis/sonic-db/
+
+RUN sed -ri 's/^# unixsocket/unixsocket/' /etc/redis/redis.conf \
+  && sed -ri 's/^unixsocketperm .../unixsocketperm 777/' /etc/redis/redis.conf \
+  && sed -ri 's/redis-server.sock/redis.sock/' /etc/redis/redis.conf \
+  && sed -ri 's/^databases [0-9]+/databases 64/g' /etc/redis/redis.conf \
+  && sed -ri 's/notify-keyspace-events ""/notify-keyspace-events AKE/' /etc/redis/redis.conf \
+  && echo "bind 0.0.0.0" >> /etc/redis/redis.conf
+
+WORKDIR /

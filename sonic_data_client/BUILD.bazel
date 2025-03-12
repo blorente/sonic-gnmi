@@ -1,0 +1,72 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "sonic_data_client",
+    srcs = [
+        "db_client.go",
+        "events_client.go",
+        "json_client.go",
+        "mixed_db_client.go",
+        "non_db_client.go",
+        "super_subscription.go",
+        "transl_data_client.go",
+        "transl_subscriber.go",
+        "trie.go",
+        "virtual_db.go",
+    ],
+    cdeps = [
+        "@com_github_cesnet_libyang//:libyang",
+        "@sonic-swss-common//:swsscommon_base",
+    ],
+    cgo = True,
+    # This rule needs some work. gazelle forces copts but I don't know why.
+    clinkopts = ["-L/usr/lib -lpthread -lboost_thread -lboost_system -lzmq -lboost_serialization -luuid -lpython3.9 -ldl -lutil"],  #keep
+    copts = ["-g -Wall -Iexternal/sonic-swss-common/common -I/usr/local/include/python3.9 -I/usr/include/python3.9 -Wformat -Werror=format-security -fPIE"],  #keep
+    cppopts = ["-g -Wall -Iexternal/sonic-swss-common/common -I/usr/local/include/python3.9 -I/usr/include/python3.9 -Wformat -Werror=format-security -fPIE"],  #keep
+    importpath = "github.com/sonic-net/sonic-gnmi/sonic_data_client",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//common_utils",
+        "//gnmi_server/log",
+        "//proto/gnmi_sonic",
+        "//sonic_db_config",
+        "//sonic_service_client",
+        "//swsscommon",
+        "//transl_utils",
+        "@com_github_c9s_goprocinfo//linux",
+        "@com_github_golang_glog//:glog",
+        "@com_github_golang_protobuf//proto",
+        "@com_github_openconfig_gnmi//proto/gnmi",
+        "@com_github_openconfig_gnmi//proto/gnmi_ext",
+        "@com_github_openconfig_ygot//ygot",
+        "@com_github_redis_go_redis_v9//:go-redis",
+        "@com_github_workiva_go_datastructures//queue",
+        "@in_gopkg_yaml_v2//:yaml_v2",
+        "@org_golang_google_grpc//codes",
+        "@org_golang_google_grpc//status",
+        "@sonic-mgmt-common//translib",
+        "@sonic-mgmt-common//translib/db",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":sonic_data_client",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "sonic_data_client_test",
+    srcs = [
+        "client_test.go",
+        "super_subscription_test.go"
+    ],
+    embed = [":sonic_data_client"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//swsscommon",
+        "//test_utils",
+        "@com_github_google_gnxi//utils/xpath",
+        "@com_github_openconfig_gnmi//proto/gnmi",
+    ],
+)

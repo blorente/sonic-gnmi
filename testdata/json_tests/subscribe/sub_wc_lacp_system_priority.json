@@ -1,0 +1,132 @@
+{
+  "title": "Wildcard OnChange Subscription: /openconfig/lacp/interfaces/interface[name=*]/state/system-priority",
+  "globalDef" : {
+    "validators": {
+      "priority.128": {
+        "type": "object",
+        "required": ["openconfig-lacp:system-priority"],
+        "properties": {
+          "openconfig-lacp:system-priority": {
+            "type": "integer",
+            "const": 128
+          }
+        }
+      },
+      "priority.256": {
+          "type": "object",
+          "required": ["openconfig-lacp:system-priority"],
+          "properties": {
+            "openconfig-lacp:system-priority": {
+              "type": "integer",
+              "const": 256
+          }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "Subscribes to /lacp/interfaces/interface[name=<trunk>]/state/system-priority",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'lacp'}elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'*'}}elem:{name:'state'}elem:{name:'system-priority'}}mode:ON_CHANGE}mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "lacp/interfaces/interface",
+            "syncresponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-lacp:interface"],
+              "properties": {
+                "openconfig-lacp:interface" : {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "required": ["name", "state"],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "enum": [
+                          "PortChannel1", "PortChannel2"
+                        ]
+                      },
+                      "state": {
+                        "type": "object",
+                        "required": ["system-priority"]
+                      }
+                    }
+                  },
+                  "minItems" : 2,
+                  "maxItems" : 2,
+                  "additionalItems": false,
+                  "contains": {
+                    "type": "object",
+                    "properties": {
+                      "name" : { "type": "string", "const": "PortChannel1"},
+                      "state" : {
+                        "type": "object",
+                        "properties": {
+                          "system-priority": {
+                            "type": "integer",
+                            "const": 256
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Set PortChannel1 system-priority to 128",
+          "db": "STATE_DB",
+          "value": {
+            "LAG_TABLE|PortChannel1": {
+              "runner.sys_prio": "128"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with PortChannel1 system-priority",
+          "timeout": 2000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces/interface[name=PortChannel1]/state/system-priority",
+            "schema": {
+              "$ref": "#/globalDef/validators/priority.128"
+            }
+          }
+        },
+        {
+          "oper": "dbHSet",
+          "title": "Set PortChannel system-priority back to 256",
+          "db": "STATE_DB",
+          "value": {
+            "LAG_TABLE|PortChannel1": {
+              "runner.sys_prio": "256"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates onchange update with PortChannel1 system-priority",
+          "timeout": 2000,
+          "finalValidator": {
+            "xpath": "/lacp/interfaces/interface[name=PortChannel1]/state/system-priority",
+            "schema": {
+              "$ref": "#/globalDef/validators/priority.256"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

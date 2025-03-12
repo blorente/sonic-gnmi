@@ -1,0 +1,385 @@
+{
+  "title": "openconfig-platforms transceiver subscription",
+  "operations":[
+    {
+      "title": "Single Transceiver",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'Ethernet4'}}elem:{name:'transceiver'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-platform:component"],
+              "additionalProperties": false,
+              "properties": {
+                "openconfig-platform:component": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "additionalItems": false,
+                  "items": {
+                    "type": "object",
+                    "required": ["name", "openconfig-platform-transceiver:transceiver"],
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "enum": ["Ethernet4"]
+                      },
+                      "openconfig-platform-transceiver:transceiver": {
+                        "type": "object",
+                        "required": ["physical-channels", "state"],
+                        "additionalProperties": false,
+                        "properties": {
+                          "physical-channels": {
+                            "type": "object",
+                            "required": ["channel"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "channel": {
+                                "type": "array",
+                                "minItems": 8,
+                                "maxItems": 8,
+                                "additionalItems": false,
+                                "items": [
+                                  {
+                                    "type": "object",
+                                    "required": ["config", "index", "state"],
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "config": {
+                                        "type": "object",
+                                        "required": ["index"],
+                                        "additionalProperties": false,
+                                        "properties": {
+                                        "index": { "type": "integer", "const": 0 }
+                                        }
+                                      },
+                                      "index": { "type": "integer", "const": 0 },
+                                      "state": {
+                                        "type": "object",
+                                        "required": ["google-pins-transceivers:associated-interface", "index", "input-power", "laser-bias-current", "output-power", "tx-laser"],
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "google-pins-transceivers:associated-interface": { "type": "string", "const": "Ethernet1/4/1" },
+                                          "index": { "type": "integer", "const": 0 },
+                                          "input-power": {
+                                            "type": "object",
+                                            "required": [ "instant" ],
+                                            "additionalProperties": false,
+                                            "properties": {
+                                              "instant": { "type": "string", "const": "12" }
+                                            }
+                                          },
+                                          "laser-bias-current": {
+                                            "type": "object",
+                                            "required": [ "instant" ],
+                                            "additionalProperties": false,
+                                            "properties": {
+                                              "instant": { "type": "string", "const": "20" }
+                                            }
+                                          },
+                                          "output-power": {
+                                            "type": "object",
+                                            "required": [ "instant" ],
+                                            "additionalProperties": false,
+                                            "properties": {
+                                              "instant": { "type": "string", "const": "16" }
+                                            }
+                                          },
+                                          "tx-laser": { "type": "boolean", "const": false }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": ["config", "index", "state"],
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "config": {
+                                        "type": "object",
+                                        "required": ["index"],
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "index": { "type": "integer", "const": 1 }
+                                        }
+                                      },
+                                      "index": { "type": "integer", "const": 1 },
+                                      "state": {
+                                        "type": "object",
+                                        "required": ["google-pins-transceivers:associated-interface", "index", "input-power", "output-power", "tx-laser"],
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "google-pins-transceivers:associated-interface": {
+                                            "type": "string",
+                                            "enum": ["Ethernet1/4/1"]
+                                          },
+                                          "index": { "type": "integer", "const": 1 },
+                                          "input-power": {
+                                            "type": "object",
+                                            "required": [ "instant" ],
+                                            "additionalProperties": false,
+                                            "properties": {
+                                              "instant": { "type": "string", "const": "13" }
+                                            }
+                                          },
+                                          "output-power": {
+                                            "type": "object",
+                                            "required": [ "instant" ],
+                                            "additionalProperties": false,
+                                            "properties": {
+                                              "instant": { "type": "string", "const": "17" }
+                                            }
+                                          },
+                                          "tx-laser": { "type": "boolean", "const": false }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": ["config", "index", "state"],
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "config": {
+                                        "type": "object",
+                                        "required": ["index"],
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "index": { "type": "integer", "const": 2 }
+                                        }
+                                      },
+                                      "index": { "type": "integer", "const": 2 },
+                                      "state": {
+                                        "type": "object",
+                                        "required": ["google-pins-transceivers:associated-interface", "index", "tx-laser"],
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "google-pins-transceivers:associated-interface": {
+                                            "type": "string",
+                                            "enum": ["Ethernet1/4/1"]
+                                          },
+                                          "index": { "type": "integer", "const": 2 },
+                                          "tx-laser": { "type": "boolean", "const": false }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": ["config", "index", "state"],
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "config": {
+                                        "type": "object",
+                                        "required": ["index"],
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "index": { "type": "integer", "const": 3 }
+                                        }
+                                      },
+                                      "index": { "type": "integer", "const": 3 },
+                                      "state": {
+                                        "type": "object",
+                                        "required": ["google-pins-transceivers:associated-interface", "index", "tx-laser"],
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "google-pins-transceivers:associated-interface": {
+                                            "type": "string",
+                                            "enum": ["Ethernet1/4/1"]
+                                          },
+                                          "index": { "type": "integer", "const": 3 },
+                                          "tx-laser": { "type": "boolean", "const": false }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": ["config", "index", "state"],
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "config": {
+                                        "type": "object",
+                                        "required": ["index"],
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "index": { "type": "integer", "const": 4 }
+                                        }
+                                      },
+                                      "index": { "type": "integer", "const": 4 },
+                                      "state": {
+                                        "type": "object",
+                                        "required": ["google-pins-transceivers:associated-interface", "index", "tx-laser"],
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "google-pins-transceivers:associated-interface": {
+                                            "type": "string",
+                                            "enum": ["Ethernet1/4/5"]
+                                          },
+                                          "index": { "type": "integer", "const": 4 },
+                                          "tx-laser": { "type": "boolean", "const": false }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": ["config", "index", "state"],
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "config": {
+                                        "type": "object",
+                                        "required": ["index"],
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "index": { "type": "integer", "const": 5 }
+                                        }
+                                      },
+                                      "index": { "type": "integer", "const": 5 },
+                                      "state": {
+                                        "type": "object",
+                                        "required": ["google-pins-transceivers:associated-interface", "index", "tx-laser"],
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "google-pins-transceivers:associated-interface": {
+                                            "type": "string",
+                                            "enum": ["Ethernet1/4/5"]
+                                          },
+                                          "index": { "type": "integer", "const": 5 },
+                                          "tx-laser": { "type": "boolean", "const": false }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": ["config", "index", "state"],
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "config": {
+                                        "type": "object",
+                                        "required": ["index"],
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "index": { "type": "integer", "const": 6 }
+                                        }
+                                      },
+                                      "index": { "type": "integer", "const": 6 },
+                                      "state": {
+                                        "type": "object",
+                                        "required": ["google-pins-transceivers:associated-interface", "index", "tx-laser"],
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "google-pins-transceivers:associated-interface": {
+                                            "type": "string",
+                                            "enum": ["Ethernet1/4/5"]
+                                          },
+                                          "index": { "type": "integer", "const": 6 },
+                                          "tx-laser": { "type": "boolean", "const": false }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": ["config", "index", "state"],
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "config": {
+                                        "type": "object",
+                                        "required": ["index"],
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "index": { "type": "integer", "const": 7 }
+                                        }
+                                      },
+                                      "index": { "type": "integer", "const": 7 },
+                                      "state": {
+                                        "type": "object",
+                                        "required": ["google-pins-transceivers:associated-interface", "index", "tx-laser"],
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "google-pins-transceivers:associated-interface": {
+                                            "type": "string",
+                                            "enum": ["Ethernet1/4/5"]
+                                          },
+                                          "index": { "type": "integer", "const": 7 },
+                                          "tx-laser": { "type": "boolean", "const": false }
+                                        }
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "state": {
+                            "type": "object",
+                            "retuired": ["date-code", "ethernet-pmd", "fec-mode", "form-factor", "google-pins-platform:latest-available-firmware-version", "present", "serial-no", "vendor-part", "vendor-rev"],
+                            "additionalProperties": false,
+                            "properties": {
+                              "date-code":{
+                                "type": "string",
+                                "enum": ["2021-12-12"]
+                              },
+                              "ethernet-pmd":{
+                                "type": "string",
+                                "enum": ["openconfig-transport-types:ETH_100GBASE_CLR4"]
+                              },
+                              "fec-mode":{
+                                "type": "string",
+                                "enum": ["openconfig-platform-ext:FEC_RS"]
+                              },
+                              "form-factor":{
+                                "type": "string",
+                                "enum": ["openconfig-transport-types:OSFP"]
+                              },
+                              "google-pins-platform:latest-available-firmware-version":{
+                                "type": "string",
+                                "enum": ["1002"]
+                              },
+                              "present":{
+                                "type": "string",
+                                "enum": ["PRESENT"]
+                              },
+                              "serial-no":{
+                                "type": "string",
+                                "enum": ["RX987"]
+                              },
+                              "vendor":{
+                                "type": "string",
+                                "enum": ["XYZ987"]
+                              },
+                              "vendor-part":{
+                                "type": "string",
+                                "enum": ["9876"]
+                              },
+                              "vendor-rev":{
+                                "type": "string",
+                                "enum": ["1000"]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

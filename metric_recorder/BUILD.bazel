@@ -1,0 +1,31 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "metric_recorder",
+    srcs = ["metric_recorder.go"],
+    importpath = "github.com/sonic-net/sonic-gnmi/metric_recorder",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//gnmi_server/log",
+        "//sonic_db_config",
+        "@com_github_golang_glog//:glog",
+        "@com_github_hashicorp_golang_lru//:golang-lru",
+        "@com_github_nxadm_tail//:tail",
+        "@com_github_redis_go_redis_v9//:go-redis",
+        "@sonic-mgmt-common//translib/db",
+    ],
+)
+
+go_test(
+    name = "metric_recorder_test",
+    srcs = ["metric_recorder_test.go"],
+    embed = [":metric_recorder"],
+    visibility = ["//visibility:public"],
+    deps = ["@com_github_redis_go_redis_v9//:go-redis"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":metric_recorder",
+    visibility = ["//visibility:public"],
+)

@@ -1,0 +1,243 @@
+{
+    "title": "Interface_Insert_Timestamp_Test",
+    "operations": [
+      {
+        "title": "Get config insert-ingress-timestamp, expect no default value",
+        "operation": "get",
+        "returnCode": 5,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/20/1]/ethernet/config/insert-ingress-timestamp",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Get config insert-egress-timestamp, expect no default value",
+        "operation": "get",
+        "returnCode": 5,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/20/1]/ethernet/config/insert-egress-timestamp",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Get state insert-ingress-timestamp, expect no default value",
+        "operation": "get",
+        "returnCode": 5,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/20/1]/ethernet/state/insert-ingress-timestamp",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Get state insert-egress-timestamp, expect no default value",
+        "operation": "get",
+        "returnCode": 5,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/20/1]/ethernet/state/insert-egress-timestamp",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Set insert-ingress-timestamp as true",
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/config",
+        "target": "OC_YANG",
+        "attributeData": "{\"config\": {\"google-pins-interfaces:insert-ingress-timestamp\": true}}",
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_TABLE:Ethernet1/1/1": {
+                "ingress_timestamp_enable": "true"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "Get config/state insert-ingress-timestamp",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-if-ethernet:ethernet"
+        ],
+        "properties": {
+          "openconfig-if-ethernet:ethernet": {
+            "type": "object",
+            "required": [
+              "config",
+              "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "google-pins-interfaces:insert-ingress-timestamp"
+                ],
+                "properties": {
+                  "google-pins-interfaces:insert-ingress-timestamp": {
+                    "type": "boolean",
+                    "enum": [true]
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "google-pins-interfaces:insert-ingress-timestamp"
+                ],
+                "properties": {
+                  "google-pins-interfaces:insert-ingress-timestamp": {
+                    "type": "boolean",
+                    "enum": [true]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "title": "Set insert-egress-timestamp as true",
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/config",
+        "target": "OC_YANG",
+        "attributeData": "{\"config\": {\"google-pins-interfaces:insert-egress-timestamp\": true}}",
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_TABLE:Ethernet1/1/1": {
+                "egress_timestamp_enable": "true"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "Get config/state insert-egress-timestamp",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-if-ethernet:ethernet"
+        ],
+        "properties": {
+          "openconfig-if-ethernet:ethernet": {
+            "type": "object",
+            "required": [
+              "config",
+              "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "google-pins-interfaces:insert-egress-timestamp"
+                ],
+                "properties": {
+                  "google-pins-interfaces:insert-egress-timestamp": {
+                    "type": "boolean",
+                    "enum": [true]
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "google-pins-interfaces:insert-egress-timestamp"
+                ],
+                "properties": {
+                  "google-pins-interfaces:insert-egress-timestamp": {
+                    "type": "boolean",
+                    "enum": [true]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "title": "Set insert-ingress-timestamp and insert-egress-timestamp as false",
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/config",
+        "target": "OC_YANG",
+        "attributeData": "{\"config\": {\"google-pins-interfaces:insert-ingress-timestamp\": false, \"google-pins-interfaces:insert-egress-timestamp\": false}}",
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_TABLE:Ethernet1/1/1": {
+                "ingress_timestamp_enable": "false",
+                "egress_timestamp_enable": "false"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "Get config/state insert-ingress-timestamp and insert-egress-timestamp",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-if-ethernet:ethernet"
+        ],
+        "properties": {
+          "openconfig-if-ethernet:ethernet": {
+            "type": "object",
+            "required": [
+              "config",
+              "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "google-pins-interfaces:insert-ingress-timestamp",
+                  "google-pins-interfaces:insert-egress-timestamp"
+                ],
+                "properties": {
+                  "google-pins-interfaces:insert-ingress-timestamp": {
+                    "type": "boolean",
+                    "enum": [false]
+                  },
+                  "google-pins-interfaces:insert-egress-timestamp": {
+                    "type": "boolean",
+                    "enum": [false]
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "google-pins-interfaces:insert-ingress-timestamp",
+                  "google-pins-interfaces:insert-egress-timestamp"
+                ],
+                "properties": {
+                  "google-pins-interfaces:insert-ingress-timestamp": {
+                    "type": "boolean",
+                    "enum": [false]
+                  },
+                  "google-pins-interfaces:insert-egress-timestamp": {
+                    "type": "boolean",
+                    "enum": [false]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }

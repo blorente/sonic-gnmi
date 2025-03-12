@@ -1,0 +1,278 @@
+{
+  "title": "Subscribe_to_system_diag_subtree",
+  "operations": [
+    {
+      "title": "subscribe to /system/diag",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'diag'}}mode:TARGET_DEFINED sample_interval:1000000000}mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 5000,
+          "finalValidator": {
+            "xpath": "/system/diag",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "google-pins-diag:diag"
+              ],
+              "properties": {
+                "google-pins-diag:diag": {
+                  "type": "object",
+                  "required": [
+                    "config",
+                    "port-profiles",
+                    "state"
+                  ],
+                  "properties": {
+                    "config": {
+                      "type": "object",
+                      "required": [
+                        "recovered-parity-errors-threshold",
+                        "blackhole-monitoring-enable",
+                        "congestion-monitoring-enable",
+                        "ecc-single-bit-errors-threshold",
+                        "lpm-misses-threshold"
+                      ],
+                      "properties": {
+                        "recovered-parity-errors-threshold": {
+                          "type": "integer",
+                          "enum": [
+                            3001
+                          ]
+                        },
+                        "blackhole-monitoring-enable": {
+                          "type": "boolean",
+                          "enum": [
+                            true
+                          ]
+                        },
+                        "congestion-monitoring-enable": {
+                          "type": "boolean",
+                          "enum": [
+                            true
+                          ]
+                        },
+                        "ecc-single-bit-errors-threshold": {
+                          "type": "integer",
+                          "enum": [
+                            3002
+                          ]
+                        },
+                        "lpm-misses-threshold": {
+                          "type": "integer",
+                          "enum": [
+                            3000
+                          ]
+                        }
+                      }
+                    },
+                    "port-profiles": {
+                      "type": "object",
+                      "required": [
+                        "port-profile"
+                      ],
+                      "properties": {
+                        "port-profile": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "required": [
+                                "config",
+                                "name",
+                                "state"
+                              ],
+                              "properties": {
+                                "config": {
+                                  "type": "object",
+                                  "required": [
+                                    "in-discards-rate-threshold",
+                                    "in-errors-threshold",
+                                    "min-incoming-pkt-threshold",
+                                    "min-outgoing-pkt-threshold",
+                                    "name",
+                                    "out-discards-rate-threshold",
+                                    "queue-min-outgoing-pkt-threshold",
+                                    "fec-not-correctable-threshold"
+                                  ],
+                                  "properties": {
+                                    "in-discards-rate-threshold": {
+                                      "type": "integer",
+                                      "enum": [
+                                        100000
+                                      ]
+                                    },
+                                    "in-errors-threshold": {
+                                      "type": "integer",
+                                      "enum": [
+                                        1003
+                                      ]
+                                    },
+                                    "min-incoming-pkt-threshold": {
+                                      "type": "integer",
+                                      "enum": [
+                                        1000
+                                      ]
+                                    },
+                                    "min-outgoing-pkt-threshold": {
+                                      "type": "integer",
+                                      "enum": [
+                                        1001
+                                      ]
+                                    },
+                                    "name": {
+                                      "type": "string",
+                                      "enum": [
+                                        "blue"
+                                      ]
+                                    },
+                                    "out-discards-rate-threshold": {
+                                      "type": "integer",
+                                      "enum": [
+                                        20100
+                                      ]
+                                    },
+                                    "queue-min-outgoing-pkt-threshold": {
+                                      "type": "integer",
+                                      "enum": [
+                                        1004
+                                      ]
+                                    },
+                                    "fec-not-correctable-threshold": {
+                                      "type": "integer",
+                                      "enum": [
+                                        1002
+                                      ]
+                                    }
+                                  }
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "enum": [
+                                    "blue"
+                                  ]
+                                },
+                                "state": {
+                                  "type": "object",
+                                  "required": [
+                                    "out-discards-rate-threshold",
+                                    "queue-min-outgoing-pkt-threshold",
+                                    "fec-not-correctable-threshold",
+                                    "in-discards-rate-threshold",
+                                    "in-errors-threshold",
+                                    "min-incoming-pkt-threshold",
+                                    "min-outgoing-pkt-threshold",
+                                    "name"
+                                  ],
+                                  "properties": {
+                                    "out-discards-rate-threshold": {
+                                      "type": "integer",
+                                      "enum": [
+                                        20100
+                                      ]
+                                    },
+                                    "queue-min-outgoing-pkt-threshold": {
+                                      "type": "integer",
+                                      "enum": [
+                                        1004
+                                      ]
+                                    },
+                                    "fec-not-correctable-threshold": {
+                                      "type": "integer",
+                                      "enum": [
+                                        1002
+                                      ]
+                                    },
+                                    "in-discards-rate-threshold": {
+                                      "type": "integer",
+                                      "enum": [
+                                        100000
+                                      ]
+                                    },
+                                    "in-errors-threshold": {
+                                      "type": "integer",
+                                      "enum": [
+                                        1003
+                                      ]
+                                    },
+                                    "min-incoming-pkt-threshold": {
+                                      "type": "integer",
+                                      "enum": [
+                                        1000
+                                      ]
+                                    },
+                                    "min-outgoing-pkt-threshold": {
+                                      "type": "integer",
+                                      "enum": [
+                                        1001
+                                      ]
+                                    },
+                                    "name": {
+                                      "type": "string",
+                                      "enum": [
+                                        "blue"
+                                      ]
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "state": {
+                      "type": "object",
+                      "required": [
+                        "blackhole-monitoring-enable",
+                        "congestion-monitoring-enable",
+                        "ecc-single-bit-errors-threshold",
+                        "lpm-misses-threshold",
+                        "recovered-parity-errors-threshold"
+                      ],
+                      "properties": {
+                        "blackhole-monitoring-enable": {
+                          "type": "boolean",
+                          "enum": [
+                            true
+                          ]
+                        },
+                        "congestion-monitoring-enable": {
+                          "type": "boolean",
+                          "enum": [
+                            true
+                          ]
+                        },
+                        "ecc-single-bit-errors-threshold": {
+                          "type": "integer",
+                          "enum": [
+                            3002
+                          ]
+                        },
+                        "lpm-misses-threshold": {
+                          "type": "integer",
+                          "enum": [
+                            3000
+                          ]
+                        },
+                        "recovered-parity-errors-threshold": {
+                          "type": "integer",
+                          "enum": [
+                            3001
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

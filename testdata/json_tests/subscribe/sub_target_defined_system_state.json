@@ -1,0 +1,158 @@
+{
+  "title": "Subscribe with TARGET_DEFINED System State",
+  "globalDef" : {
+    "validators": {
+      "state.boot-time": {
+        "type": "object",
+        "required": ["openconfig-system:boot-time"],
+        "properties": {
+          "openconfig-system:boot-time": {
+            "type": "string",
+            "default": "",
+            "examples": ["1615263741"],
+            "pattern": "^[1-9][0-9]*$"
+          }
+        }
+      },
+      "state.config-meta-data": {
+        "type": "object",
+        "required": ["google-pins-system:config-meta-data"],
+        "properties": {
+          "google-pins-system:config-meta-data": {
+            "type": "string",
+            "enum": [""]
+          }
+        }
+      },
+      "state.config-meta-data2": {
+        "type": "object",
+        "required": ["google-pins-system:config-meta-data"],
+        "properties": {
+          "google-pins-system:config-meta-data": {
+            "type": "string",
+            "enum": ["v2"]
+          }
+        }
+      },
+      "state.hostname": {
+        "type": "object",
+        "required": ["openconfig-system:hostname"],
+        "properties": {
+          "openconfig-system:hostname": {
+            "type": "string",
+            "enum": ["sonicv4"]
+          }
+        }
+      },
+      "state.last-configuration-timestamp": {
+        "type": "object",
+        "required": ["openconfig-system:last-configuration-timestamp"],
+        "properties": {
+          "openconfig-system:last-configuration-timestamp": {
+            "type": "string",
+            "enum": ["1611693908"]
+          }
+        }
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "subscribe to /system/state",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'state'}}mode:TARGET_DEFINED sample_interval:1000000000} mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/system/state/hostname",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.hostname"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "validate",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/system/state/config-meta-data",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.config-meta-data"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "validate",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/system/state/boot-time",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.boot-time"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "validate",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/system/state/last-configuration-timestamp",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.last-configuration-timestamp"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "subscribe to /system/state/config-meta-data",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'system'}elem:{name:'state'}elem:{name:'config-meta-data'}}mode:ON_CHANGE sample_interval:1000000000} mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/system/state/config-meta-data",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.config-meta-data"
+              }
+            }
+          ]
+        },
+        {
+          "oper": "dbHSet",
+          "db": "CONFIG_DB",
+          "value": {
+            "DEVICE_METADATA|localhost": {
+              "config-meta-data": "v2"
+            }
+          }
+        },
+        {
+          "oper": "validate",
+          "timeout": 2000,
+          "pathValidators": [
+            {
+              "xpath": "/system/state/config-meta-data",
+              "schema": {
+                "$ref": "#/globalDef/validators/state.config-meta-data2"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

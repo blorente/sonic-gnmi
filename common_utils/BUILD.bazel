@@ -1,0 +1,50 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "common_utils",
+    srcs = [
+        "component_state_helper.go",
+        "component_state_helper_lua.go",
+        "constants.go",
+        "context.go",
+        "notification_consumer.go",
+        "notification_producer.go",
+        "shareMem.go",
+        "warm_restart.go",
+    ],
+    importpath = "github.com/sonic-net/sonic-gnmi/common_utils",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//gnmi_server/log",
+        "//sonic_db_config",
+        "@com_github_golang_glog//:glog",
+        "@com_github_redis_go_redis_v9//:go-redis",
+        "@sonic-mgmt-common//translib/db",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":common_utils",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "common_utils_test",
+    srcs = [
+        "common_utils_test.go",
+        "component_state_helper_test.go",
+        "notification_consumer_test.go",
+        "notification_producer_test.go",
+        "warm_restart_test.go",
+    ],
+    embed = [":common_utils"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//gnmi_server/log",
+        "//sonic_db_config",
+        "@com_github_golang_glog//:glog",
+        "@com_github_redis_go_redis_v9//:go-redis",
+        "@sonic-mgmt-common//translib/db",
+    ],
+)

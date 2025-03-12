@@ -1,0 +1,210 @@
+{
+  "title": "Get Qos SharedBufferPools",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/qos/google-pins-qos:shared-buffer-pools",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-qos:shared-buffer-pools"
+      ],
+      "properties": {
+        "google-pins-qos:shared-buffer-pools": {
+          "type": "object",
+          "required": [
+            "shared-buffer-pool"
+          ],
+          "properties": {
+            "google-pins-qos:shared-buffer-pool": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "name", "config", "state"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": ["egress_shared_pool"]
+                  },
+                  "config": {
+                    "type": "object",
+                    "required": [ "size" ],
+                    "properties": {
+                      "size": {
+                        "type": "string",
+                        "enum": ["113620296"]
+                      }
+                    }
+                  },
+                  "state": {
+                    "type": "object",
+                    "required": [ "size" ],
+                    "properties": {
+                      "size": {
+                        "type": "string",
+                        "enum": ["113620296"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "/openconfig/qos/google-pins-qos:shared-buffer-pools/shared-buffer-pool[name=egress_shared_pool]/",
+      "target": "OC_YANG",
+      "attributeData": "{\"google-pins-qos:shared-buffer-pool\":[{\"config\":{\"size\":\"123456789\"},\"name\":\"egress_shared_pool\"}]}",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "BUFFER_POOL_TABLE:egress_shared_pool" : {
+              "mode": "dynamic",
+              "size": "123456789",
+              "type": "egress"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/qos/google-pins-qos:shared-buffer-pools",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-qos:shared-buffer-pools"
+      ],
+      "properties": {
+        "google-pins-qos:shared-buffer-pools": {
+          "type": "object",
+          "required": [
+            "shared-buffer-pool"
+          ],
+          "properties": {
+            "shared-buffer-pool": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "name", "config", "state"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": ["egress_shared_pool"]
+                  },
+                  "config": {
+                    "type": "object",
+                    "required": [ "size" ],
+                    "properties": {
+                      "size": {
+                        "type": "string",
+                        "enum": ["123456789"]
+                      }
+                    }
+                  },
+                  "state": {
+                    "type": "object",
+                    "required": [ "size" ],
+                    "properties": {
+                      "size": {
+                        "type": "string",
+                        "enum": ["123456789"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "/openconfig/qos",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-qos:qos\": {\"google-pins-qos:shared-buffer-pools\": {\"shared-buffer-pool\":[{\"config\":{\"size\":\"455545554\"},\"name\":\"egress_shared_pool\"}]}}}",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "APPL_STATE_DB",
+          "value": {
+            "BUFFER_POOL_TABLE:egress_shared_pool" : {
+              "mode": "dynamic",
+              "size": "455545554",
+              "type": "egress"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/qos/google-pins-qos:shared-buffer-pools",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-qos:shared-buffer-pools"
+      ],
+      "properties": {
+        "google-pins-qos:shared-buffer-pools": {
+          "type": "object",
+          "required": [
+            "shared-buffer-pool"
+          ],
+          "properties": {
+            "shared-buffer-pool": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "name", "config", "state"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": ["egress_shared_pool"]
+                  },
+                  "config": {
+                    "type": "object",
+                    "required": [ "size" ],
+                    "properties": {
+                      "size": {
+                        "type": "string",
+                        "enum": ["455545554"]
+                      }
+                    }
+                  },
+                  "state": {
+                    "type": "object",
+                    "required": [ "size" ],
+                    "properties": {
+                      "size": {
+                        "type": "string",
+                        "enum": ["455545554"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

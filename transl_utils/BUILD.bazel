@@ -1,0 +1,45 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "transl_utils",
+    srcs = [
+        "transl_utils.go",
+        "ygot_diff.go",
+    ],
+    importpath = "github.com/sonic-net/sonic-gnmi/transl_utils",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//common_utils",
+        "//gnmi_server/log",
+        "@com_github_golang_glog//:glog",
+        "@com_github_openconfig_gnmi//errlist",
+        "@com_github_openconfig_gnmi//proto/gnmi",
+        "@com_github_openconfig_ygot//ygot",
+        "@sonic-mgmt-common//translib",
+        "@sonic-mgmt-common//translib/ocbinds",
+        "@sonic-mgmt-common//translib/path",
+        "@sonic-mgmt-common//translib/tlerr",
+    ],
+)
+
+go_test(
+    name = "transl_utils_test",
+    srcs = [
+        "ygot_diff_bench_test.go",
+        "ygot_diff_test.go",
+    ],
+    embed = [":transl_utils"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_openconfig_gnmi//proto/gnmi",
+        "@com_github_openconfig_ygot//ygot",
+        "@com_github_openconfig_ygot//ytypes",
+        "@sonic-mgmt-common//translib/ocbinds",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":transl_utils",
+    visibility = ["//visibility:public"],
+)

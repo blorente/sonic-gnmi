@@ -1,0 +1,13 @@
+diff --git a/ytypes/BUILD.bazel b/ytypes/BUILD.bazel
+index b28e8e5..b83577f 100644
+--- a/ytypes/BUILD.bazel
++++ b/ytypes/BUILD.bazel
+@@ -34,6 +34,8 @@
+         "@com_github_golang_glog//:glog",
+         "@com_github_kylelemons_godebug//pretty",
+         "@com_github_openconfig_gnmi//proto/gnmi",
++        "@com_github_openconfig_gnmi//value",
++        "@com_github_google_go_cmp//cmp",
+         "@com_github_openconfig_goyang//pkg/yang",
+         "@org_golang_google_grpc//codes",
+         "@org_golang_google_grpc//status",

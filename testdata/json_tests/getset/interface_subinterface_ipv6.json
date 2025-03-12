@@ -1,0 +1,800 @@
+{
+  "title": "Set_Sub_Interface ipv6 Address",
+  "operations": [
+    {
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:subinterface\":[{\"index\":0,\"config\":{\"index\":0},\"openconfig-if-ip:ipv6\":{\"addresses\":{\"address\":[{\"ip\":\"2620:1080:2000:100::\",\"config\":{\"ip\":\"2620:1080:2000:100::\",\"prefix-length\":64}}]}}}]}",
+      "title": "Set Interface ipv6 address"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]",
+      "target": "OC_YANG",
+
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "$id": "http://example.com/root.json",
+      "type": "object",
+      "title": "Check Interface ipv6 address",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "$id": "#/properties/openconfig-interfaces:interface",
+          "type": "array",
+          "title": "The Openconfig-interfaces:interface Schema",
+          "items": {
+            "$id": "#/properties/openconfig-interfaces:interface/items",
+            "type": "object",
+            "title": "The Items Schema",
+            "required": [
+              "config",
+              "name",
+              "subinterfaces"
+            ],
+            "properties": {
+              "config": {
+                "$id": "#/properties/openconfig-interfaces:interface/items/properties/config",
+                "type": "object",
+                "title": "The Config Schema",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "$id": "#/properties/openconfig-interfaces:interface/items/properties/config/properties/name",
+                    "type": "string",
+                    "title": "The Name Schema",
+                    "default": "",
+                    "enum": [
+                      "Loopback4"
+                    ],
+                    "pattern": "^(.*)$"
+                  }
+                }
+              },
+              "name": {
+                "$id": "#/properties/openconfig-interfaces:interface/items/properties/name",
+                "type": "string",
+                "title": "The Name Schema",
+                "default": "",
+                "enum": [
+                  "Loopback4"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "subinterfaces": {
+                "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces",
+                "type": "object",
+                "title": "The Subinterfaces Schema",
+                "required": [
+                  "subinterface"
+                ],
+                "properties": {
+                  "subinterface": {
+                    "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface",
+                    "type": "array",
+                    "title": "The Subinterface Schema",
+                    "items": {
+                      "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface/items",
+                      "type": "object",
+                      "title": "The Items Schema",
+                      "required": [
+                        "index",
+                        "openconfig-if-ip:ipv6"
+                      ],
+                      "properties": {
+                        "index": {
+                          "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface/items/properties/index",
+                          "type": "integer",
+                          "minItems": 1,
+                          "maxItems": 1,
+                          "uniqueItems": true,
+                          "title": "The Index Schema",
+                          "default": 0,
+                          "enum": [
+                            0
+                          ]
+                        },
+                        "openconfig-if-ip:ipv6": {
+                          "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface/items/properties/openconfig-if-ip:ipv6",
+                          "type": "object",
+                          "title": "The Openconfig-if-ip:ipv6 Schema",
+                          "required": [
+                            "addresses"
+                          ],
+                          "properties": {
+                            "addresses": {
+                              "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface/items/properties/openconfig-if-ip:ipv6/properties/addresses",
+                              "type": "object",
+                              "title": "The Addresses Schema",
+                              "required": [
+                                "address"
+                              ],
+                              "properties": {
+                                "address": {
+                                  "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface/items/properties/openconfig-if-ip:ipv6/properties/addresses/properties/address",
+                                  "type": "array",
+                                  "minItems": 1,
+                                  "maxItems": 3,
+                                  "uniqueItems": true,
+                                  "contains":
+                                    {
+                                      "type": "object",
+                                      "required": [
+                                        "ip",
+                                        "config"
+                                      ],
+                                      "properties": {
+                                        "ip": {
+                                          "$id": "#/properties/ip",
+                                          "type": "string",
+                                          "title": "The Ip Schema",
+                                          "pattern": "^2620:1080:2000:100::$"
+                                        },
+                                        "config": {
+                                          "$id": "#/properties/config",
+                                          "type": "object",
+                                          "title": "The Config Schema",
+                                          "required": [
+                                            "ip",
+                                            "prefix-length"
+                                          ],
+                                          "properties": {
+                                            "ip": {
+                                              "$id": "#/properties/config/properties/ip",
+                                              "type": "string",
+                                              "title": "The Ip Schema",
+                                              "pattern": "^2620:1080:2000:100::$"
+                                            },
+                                            "prefix-length": {
+                                              "$id": "#/properties/config/properties/prefix-length",
+                                              "type": "integer",
+                                              "title": "The Prefix-length Schema",
+                                              "default": 64,
+                                              "minimum": 64.0,
+                                              "maximum": 64.0
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]",
+      "target": "OC_YANG",
+
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "$id": "http://example.com/root.json",
+      "type": "object",
+      "title": "Check Interface ipv6 address",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "$id": "#/properties/openconfig-interfaces:interface",
+          "type": "array",
+          "title": "The Openconfig-interfaces:interface Schema",
+          "items": {
+            "$id": "#/properties/openconfig-interfaces:interface/items",
+            "type": "object",
+            "title": "The Items Schema",
+            "required": [
+              "state",
+              "name",
+              "subinterfaces"
+            ],
+            "properties": {
+              "state": {
+                "$id": "#/properties/openconfig-interfaces:interface/items/properties/state",
+                "type": "object",
+                "title": "The State Schema",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "$id": "#/properties/openconfig-interfaces:interface/items/properties/state/properties/name",
+                    "type": "string",
+                    "title": "The Name Schema",
+                    "default": "",
+                    "enum": [
+                      "Loopback4"
+                    ],
+                    "pattern": "^(.*)$"
+                  }
+                }
+              },
+              "name": {
+                "$id": "#/properties/openconfig-interfaces:interface/items/properties/name",
+                "type": "string",
+                "title": "The Name Schema",
+                "default": "",
+                "enum": [
+                  "Loopback4"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "subinterfaces": {
+                "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces",
+                "type": "object",
+                "title": "The Subinterfaces Schema",
+                "required": [
+                  "subinterface"
+                ],
+                "properties": {
+                  "subinterface": {
+                    "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface",
+                    "type": "array",
+                    "title": "The Subinterface Schema",
+                    "items": {
+                      "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface/items",
+                      "type": "object",
+                      "title": "The Items Schema",
+                      "required": [
+                        "index",
+                        "openconfig-if-ip:ipv6"
+                      ],
+                      "properties": {
+                        "index": {
+                          "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface/items/properties/index",
+                          "type": "integer",
+                          "minItems": 1,
+                          "maxItems": 1,
+                          "uniqueItems": true,
+                          "title": "The Index Schema",
+                          "default": 0,
+                          "enum": [
+                            0
+                          ]
+                        },
+                        "openconfig-if-ip:ipv6": {
+                          "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface/items/properties/openconfig-if-ip:ipv6",
+                          "type": "object",
+                          "title": "The Openconfig-if-ip:ipv6 Schema",
+                          "required": [
+                            "addresses"
+                          ],
+                          "properties": {
+                            "addresses": {
+                              "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface/items/properties/openconfig-if-ip:ipv6/properties/addresses",
+                              "type": "object",
+                              "title": "The Addresses Schema",
+                              "required": [
+                                "address"
+                              ],
+                              "properties": {
+                                "address": {
+                                  "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface/items/properties/openconfig-if-ip:ipv6/properties/addresses/properties/address",
+                                  "type": "array",
+                                  "minItems": 1,
+                                  "maxItems": 3,
+                                  "uniqueItems": true,
+                                  "contains":
+                                    {
+                                      "type": "object",
+                                      "required": [
+                                        "ip",
+                                        "state"
+                                      ],
+                                      "properties": {
+                                        "ip": {
+                                          "$id": "#/properties/ip",
+                                          "type": "string",
+                                          "title": "The Ip Schema",
+                                          "pattern": "^2620:1080:2000:100::$"
+                                        },
+                                        "state": {
+                                          "$id": "#/properties/state",
+                                          "type": "object",
+                                          "title": "The State Schema",
+                                          "required": [
+                                            "ip",
+                                            "prefix-length"
+                                          ],
+                                          "properties": {
+                                            "ip": {
+                                              "$id": "#/properties/state/properties/ip",
+                                              "type": "string",
+                                              "title": "The Ip Schema",
+                                              "pattern": "^2620:1080:2000:100::$"
+                                            },
+                                            "prefix-length": {
+                                              "$id": "#/properties/state/properties/prefix-length",
+                                              "type": "integer",
+                                              "title": "The Prefix-length Schema",
+                                              "default": 64,
+                                              "minimum": 64.0,
+                                              "maximum": 64.0
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "delete",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv6/addresses/address[ip=2620:1080:2000:100::]",
+      "target": "OC_YANG",
+      "title": "Delete Interface ipv6 address"
+    },
+    {
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=bond0]/subinterfaces/subinterface[index=0]",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:subinterface\":[{\"index\":0,\"config\":{\"index\":0},\"openconfig-if-ip:ipv6\":{\"addresses\":{\"address\":[{\"ip\":\"2620:1081:1c20::1\",\"config\":{\"ip\":\"2620:1081:1c20::1\",\"prefix-length\":64}}]}}}]}",
+      "title": "Set Interface ipv6 address"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=bond0]",
+      "target": "OC_YANG",
+
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "$id": "http://example.com/root.json",
+      "type": "object",
+      "title": "Check Interface ipv6 address",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "$id": "#/properties/openconfig-interfaces:interface",
+          "type": "array",
+          "title": "The Openconfig-interfaces:interface Schema",
+          "items": {
+            "$id": "#/properties/openconfig-interfaces:interface/items",
+            "type": "object",
+            "title": "The Items Schema",
+            "required": [
+              "config",
+              "name",
+              "subinterfaces"
+            ],
+            "properties": {
+              "config": {
+                "$id": "#/properties/openconfig-interfaces:interface/items/properties/config",
+                "type": "object",
+                "title": "The Config Schema",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "$id": "#/properties/openconfig-interfaces:interface/items/properties/config/properties/name",
+                    "type": "string",
+                    "title": "The Name Schema",
+                    "default": "",
+                    "enum": [
+                      "bond0"
+                    ],
+                    "pattern": "^(.*)$"
+                  }
+                }
+              },
+              "name": {
+                "$id": "#/properties/openconfig-interfaces:interface/items/properties/name",
+                "type": "string",
+                "title": "The Name Schema",
+                "default": "",
+                "enum": [
+                  "bond0"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "subinterfaces": {
+                "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces",
+                "type": "object",
+                "title": "The Subinterfaces Schema",
+                "required": [
+                  "subinterface"
+                ],
+                "properties": {
+                  "subinterface": {
+                    "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface",
+                    "type": "array",
+                    "title": "The Subinterface Schema",
+                    "items": {
+                      "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface/items",
+                      "type": "object",
+                      "title": "The Items Schema",
+                      "required": [
+                        "index",
+                        "openconfig-if-ip:ipv6"
+                      ],
+                      "properties": {
+                        "index": {
+                          "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface/items/properties/index",
+                          "type": "integer",
+                          "minItems": 1,
+                          "maxItems": 1,
+                          "uniqueItems": true,
+                          "title": "The Index Schema",
+                          "default": 0,
+                          "enum": [
+                            0
+                          ]
+                        },
+                        "openconfig-if-ip:ipv6": {
+                          "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface/items/properties/openconfig-if-ip:ipv6",
+                          "type": "object",
+                          "title": "The Openconfig-if-ip:ipv6 Schema",
+                          "required": [
+                            "addresses"
+                          ],
+                          "properties": {
+                            "addresses": {
+                              "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface/items/properties/openconfig-if-ip:ipv6/properties/addresses",
+                              "type": "object",
+                              "title": "The Addresses Schema",
+                              "required": [
+                                "address"
+                              ],
+                              "properties": {
+                                "address": {
+                                  "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface/items/properties/openconfig-if-ip:ipv6/properties/addresses/properties/address",
+                                  "type": "array",
+                                  "minItems": 1,
+                                  "maxItems": 3,
+                                  "uniqueItems": true,
+                                  "contains":
+                                    {
+                                      "type": "object",
+                                      "required": [
+                                        "ip",
+                                        "config"
+                                      ],
+                                      "properties": {
+                                        "ip": {
+                                          "$id": "#/properties/ip",
+                                          "type": "string",
+                                          "title": "The Ip Schema",
+                                          "pattern": "^2620:1081:1c20::1$"
+                                        },
+                                        "config": {
+                                          "$id": "#/properties/config",
+                                          "type": "object",
+                                          "title": "The Config Schema",
+                                          "required": [
+                                            "ip",
+                                            "prefix-length"
+                                          ],
+                                          "properties": {
+                                            "ip": {
+                                              "$id": "#/properties/config/properties/ip",
+                                              "type": "string",
+                                              "title": "The Ip Schema",
+                                              "pattern": "^2620:1081:1c20::1$"
+                                            },
+                                            "prefix-length": {
+                                              "$id": "#/properties/config/properties/prefix-length",
+                                              "type": "integer",
+                                              "title": "The Prefix-length Schema",
+                                              "default": 64,
+                                              "minimum": 64.0,
+                                              "maximum": 64.0
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=bond0]",
+      "target": "OC_YANG",
+
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "$id": "http://example.com/root.json",
+      "type": "object",
+      "title": "Check Interface ipv6 address",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "$id": "#/properties/openconfig-interfaces:interface",
+          "type": "array",
+          "title": "The Openconfig-interfaces:interface Schema",
+          "items": {
+            "$id": "#/properties/openconfig-interfaces:interface/items",
+            "type": "object",
+            "title": "The Items Schema",
+            "required": [
+              "state",
+              "name",
+              "subinterfaces"
+            ],
+            "properties": {
+              "state": {
+                "$id": "#/properties/openconfig-interfaces:interface/items/properties/state",
+                "type": "object",
+                "title": "The State Schema",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "$id": "#/properties/openconfig-interfaces:interface/items/properties/state/properties/name",
+                    "type": "string",
+                    "title": "The Name Schema",
+                    "default": "",
+                    "enum": [
+                      "bond0"
+                    ],
+                    "pattern": "^(.*)$"
+                  }
+                }
+              },
+              "name": {
+                "$id": "#/properties/openconfig-interfaces:interface/items/properties/name",
+                "type": "string",
+                "title": "The Name Schema",
+                "default": "",
+                "enum": [
+                  "bond0"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "subinterfaces": {
+                "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces",
+                "type": "object",
+                "title": "The Subinterfaces Schema",
+                "required": [
+                  "subinterface"
+                ],
+                "properties": {
+                  "subinterface": {
+                    "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface",
+                    "type": "array",
+                    "title": "The Subinterface Schema",
+                    "items": {
+                      "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface/items",
+                      "type": "object",
+                      "title": "The Items Schema",
+                      "required": [
+                        "index",
+                        "openconfig-if-ip:ipv6"
+                      ],
+                      "properties": {
+                        "index": {
+                          "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface/items/properties/index",
+                          "type": "integer",
+                          "minItems": 1,
+                          "maxItems": 1,
+                          "uniqueItems": true,
+                          "title": "The Index Schema",
+                          "default": 0,
+                          "enum": [
+                            0
+                          ]
+                        },
+                        "openconfig-if-ip:ipv6": {
+                          "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface/items/properties/openconfig-if-ip:ipv6",
+                          "type": "object",
+                          "title": "The Openconfig-if-ip:ipv6 Schema",
+                          "required": [
+                            "addresses"
+                          ],
+                          "properties": {
+                            "addresses": {
+                              "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface/items/properties/openconfig-if-ip:ipv6/properties/addresses",
+                              "type": "object",
+                              "title": "The Addresses Schema",
+                              "required": [
+                                "address"
+                              ],
+                              "properties": {
+                                "address": {
+                                  "$id": "#/properties/openconfig-interfaces:interface/items/properties/subinterfaces/properties/subinterface/items/properties/openconfig-if-ip:ipv6/properties/addresses/properties/address",
+                                  "type": "array",
+                                  "minItems": 1,
+                                  "maxItems": 3,
+                                  "uniqueItems": true,
+                                  "contains":
+                                    {
+                                      "type": "object",
+                                      "required": [
+                                        "ip",
+                                        "state"
+                                      ],
+                                      "properties": {
+                                        "ip": {
+                                          "$id": "#/properties/ip",
+                                          "type": "string",
+                                          "title": "The Ip Schema",
+                                          "pattern": "^2620:1081:1c20::1$"
+                                        },
+                                        "state": {
+                                          "$id": "#/properties/state",
+                                          "type": "object",
+                                          "title": "The State Schema",
+                                          "required": [
+                                            "ip",
+                                            "prefix-length"
+                                          ],
+                                          "properties": {
+                                            "ip": {
+                                              "$id": "#/properties/state/properties/ip",
+                                              "type": "string",
+                                              "title": "The Ip Schema",
+                                              "pattern": "^2620:1081:1c20::1$"
+                                            },
+                                            "prefix-length": {
+                                              "$id": "#/properties/state/properties/prefix-length",
+                                              "type": "integer",
+                                              "title": "The Prefix-length Schema",
+                                              "default": 64,
+                                              "minimum": 64.0,
+                                              "maximum": 64.0
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "delete",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=bond0]/subinterfaces/subinterface[index=0]/ipv6/addresses/address[ip=2620:1081:1c20::1]",
+      "target": "OC_YANG",
+      "title": "Delete Interface ipv6 address"
+    },
+    {
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:subinterface\":[{\"index\":0,\"config\":{\"index\":0},\"openconfig-if-ip:ipv6\":{\"addresses\":{\"address\":[{\"ip\":\"2202:f001:ace::\",\"config\":{\"ip\":\"2202:f001:ace::\",\"prefix-length\":64}}]}}}]}",
+      "title": "Set Interface ipv6 address",
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "LOOPBACK_INTERFACE|Loopback4|2202:f001:ace::/64" : {
+              "NULL": "NULL"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv6/addresses/address[ip=2202:f001:ace::]",
+      "target": "OC_YANG",
+      "type": "object",
+      "title": "Check Interface ipv6 address",
+      "required": [
+        "openconfig-if-ip:address"
+      ],
+      "properties": {
+        "openconfig-if-ip:address": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "required": [
+                "config",
+                "ip"
+              ],
+              "properties": {
+                "config": {
+                  "type": "object",
+                  "required": [
+                    "ip",
+                    "prefix-length"
+                  ],
+                  "properties": {
+                    "ip": {
+                      "type": "string",
+                      "enum": [
+                        "2202:f001:ace::"
+                      ]
+                    },
+                    "prefix-length": {
+                      "type": "integer",
+                      "enum": [
+                        64
+                      ]
+                    }
+                  }
+                },
+                "ip": {
+                  "type": "string",
+                  "enum": [
+                    "2202:f001:ace::"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "operation": "delete",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv6/addresses/address[ip=2202:f001:ace::]",
+      "target": "OC_YANG",
+      "title": "Delete interface Loopback4",
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "LOOPBACK_INTERFACE|Loopback4|2202:f001:ace::/64" : {}
+          }
+        }
+      ]
+    }
+  ]
+}

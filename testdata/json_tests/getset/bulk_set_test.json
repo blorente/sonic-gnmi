@@ -1,0 +1,361 @@
+{
+    "title": "Bulk_Set_Test",
+    "operations":[
+        {
+            "title": "Set mtu, description for one interface and system subtree",
+            "operation": "replace",
+            "returnCode": 0,
+            "xpath": "openconfig",
+            "target": "OC_YANG",
+            "attributeData":  "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"config\":{\"mtu\":2000,\"description\":\"Set on one interface\"},\"name\":\"Ethernet1/1/1\"}]},\"openconfig-system:system\":{\"feature-labels\":{\"feature-label\":[{\"label\":45,\"config\":{\"label\":45}},{\"label\":30,\"config\":{\"label\":30}}]}}}"
+      },
+      {
+          "operation": "get",
+          "returnCode": 0,
+          "xpath": "/openconfig/interfaces/interface[name=Ethernet1/1/1]",
+          "target": "OC_YANG",
+          "type": "object",
+          "required": [
+            "openconfig-interfaces:interface"
+          ],
+          "properties": {
+              "openconfig-interfaces:interface": {
+                "type": "array",
+                "items": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "config"
+                    ],
+                    "properties": {
+                      "config": {
+                        "type": "object",
+                        "required": [
+                          "description",
+                          "mtu"
+                        ],
+                        "properties": {
+                          "description": {
+                            "type": "string",
+                            "enum": [
+                              "Set on one interface"
+                            ]
+                          },
+                          "mtu": {
+                            "type": "integer",
+                            "enum": [
+                              2000
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+      },
+      {
+          "operation": "get",
+          "returnCode": 0,
+          "xpath": "/openconfig/system/feature-labels",
+          "target": "OC_YANG",
+          "type": "object",
+          "required": [
+            "google-pins-system:feature-labels"
+          ],
+          "properties": {
+            "google-pins-system:feature-labels": {
+              "type": "object",
+              "required": [
+                "feature-label"
+              ],
+              "properties": {
+                "feature-label": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "state",
+                        "config",
+                        "label"
+                      ],
+                      "properties": {
+                        "state": {
+                          "type": "object",
+                          "required": [
+                            "label"
+                          ],
+                          "properties": {
+                            "label": {
+                              "type": "integer",
+                              "enum": [
+                                30
+                              ]
+                            }
+                          }
+                        },
+                        "config": {
+                          "type": "object",
+                          "required": [
+                            "label"
+                          ],
+                          "properties": {
+                            "label": {
+                              "type": "integer",
+                              "enum": [
+                                30
+                              ]
+                            }
+                          }
+                        },
+                        "label": {
+                          "type": "integer",
+                          "enum": [
+                            30
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "label",
+                        "state",
+                        "config"
+                      ],
+                      "properties": {
+                        "label": {
+                          "type": "integer",
+                          "enum": [
+                            45
+                          ]
+                        },
+                        "state": {
+                          "type": "object",
+                          "required": [
+                            "label"
+                          ],
+                          "properties": {
+                            "label": {
+                              "type": "integer",
+                              "enum": [
+                                45
+                              ]
+                            }
+                          }
+                        },
+                        "config": {
+                          "type": "object",
+                          "required": [
+                            "label"
+                          ],
+                          "properties": {
+                            "label": {
+                              "type": "integer",
+                              "enum": [
+                                45
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+      },
+      {
+        "title": "Set mtu, description for two interfaces and system subtree",
+        "operation": "update",
+        "returnCode": 0,
+        "xpath": "openconfig",
+        "target": "OC_YANG",
+        "attributeData":  "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"config\":{\"mtu\":2001,\"description\":\"Set on two interfaces\"},\"name\":\"Ethernet1/1/1\"},{\"config\":{\"mtu\":2010,\"description\":\"Set on two interfaces\"},\"name\":\"Ethernet1/1/5\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"port-speed\":\"openconfig-if-ethernet:SPEED_400GB\"}}}]},\"openconfig-system:system\":{\"feature-labels\":{\"feature-label\":[{\"label\":24,\"config\":{\"label\":24}}]}}}"
+      },
+      {
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "/openconfig/interfaces/interface[name=Ethernet1/1/1]",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:interface"
+        ],
+        "properties": {
+            "openconfig-interfaces:interface": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "required": [
+                    "config"
+                  ],
+                  "properties": {
+                    "config": {
+                      "type": "object",
+                      "required": [
+                        "description",
+                        "mtu"
+                      ],
+                      "properties": {
+                        "description": {
+                          "type": "string",
+                          "enum": [
+                            "Set on two interfaces"
+                          ]
+                        },
+                        "mtu": {
+                          "type": "integer",
+                          "enum": [
+                            2001
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+      },
+      {
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "/openconfig/interfaces/interface[name=Ethernet1/1/5]",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:interface"
+        ],
+        "properties": {
+            "openconfig-interfaces:interface": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "required": [
+                    "config", "openconfig-if-ethernet:ethernet"
+                  ],
+                  "properties": {
+                    "config": {
+                      "type": "object",
+                      "required": [
+                        "description",
+                        "mtu"
+                      ],
+                      "properties": {
+                        "description": {
+                          "type": "string",
+                          "enum": [
+                            "Set on two interfaces"
+                          ]
+                        },
+                        "mtu": {
+                          "type": "integer",
+                          "enum": [
+                            2010
+                          ]
+                        }
+                      }
+                    },
+                    "openconfig-if-ethernet:ethernet": {
+                      "type": "object",
+                      "required": [
+                        "config"
+                      ],
+                      "properties": {
+                        "config": {
+                          "type": "object",
+                          "required": [
+                            "port-speed"
+                          ],
+                          "port-speed": {
+                            "type": "string",
+                            "enum": [
+                              "openconfig-if-ethernet:SPEED_400GB"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+      },
+      {
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "/openconfig/system/feature-labels",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "google-pins-system:feature-labels"
+        ],
+        "properties": {
+          "google-pins-system:feature-labels": {
+            "type": "object",
+            "required": [
+              "feature-label"
+            ],
+            "properties": {
+              "feature-label": {
+                "type": "array",
+                "items": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "state",
+                      "config",
+                      "label"
+                    ],
+                    "properties": {
+                      "state": {
+                        "type": "object",
+                        "required": [
+                          "label"
+                        ],
+                        "properties": {
+                          "label": {
+                            "type": "integer",
+                            "enum": [
+                              24
+                            ]
+                          }
+                        }
+                      },
+                      "config": {
+                        "type": "object",
+                        "required": [
+                          "label"
+                        ],
+                        "properties": {
+                          "label": {
+                            "type": "integer",
+                            "enum": [
+                              24
+                            ]
+                          }
+                        }
+                      },
+                      "label": {
+                        "type": "integer",
+                        "enum": [
+                          24
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    ]
+}

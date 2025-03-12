@@ -1,0 +1,4 @@
+{
+    "cpu_port_scheduler_node": "queue",
+    "front_panel_port_scheduler_node": "scheduler_group"
+}

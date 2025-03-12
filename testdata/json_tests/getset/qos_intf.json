@@ -1,0 +1,40 @@
+{
+  "title": "Get Qos Interface",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/qos/interfaces/",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-qos:interfaces"
+      ],
+      "properties": {
+        "openconfig-qos:interfaces": {
+          "type": "object",
+          "required": [
+            "interface"
+            ],
+          "properties": {
+            "interface": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["interface-id"],
+                "minItems": 32,
+                "maxItems": 32,
+                "properties": {
+                  "interface-id": {
+                    "type": "string",
+                    "enum": ["CPU", "Ethernet1/1/1", "Ethernet1/1/5", "Ethernet1/1/7", "Ethernet1/2/1", "Ethernet1/2/5", "Ethernet1/3/1", "Ethernet1/3/5", "Ethernet1/4/1", "Ethernet1/4/3", "Ethernet1/4/5", "Ethernet1/4/7", "Ethernet1/5/1", "Ethernet1/5/3", "Ethernet1/5/5", "Ethernet1/5/7", "Ethernet1/6/1", "Ethernet1/7/3", "Ethernet1/7/4", "Ethernet1/8/1", "Ethernet1/8/5", "Ethernet1/11/1", "Ethernet1/11/2", "Ethernet1/11/3", "Ethernet1/11/4", "Ethernet1/11/5", "Ethernet1/11/6", "Ethernet1/11/7", "Ethernet1/11/8", "Ethernet1/9/1", "Ethernet1/9/5", "Ethernet1/9/7", "Ethernet-BP1/35",  "Ethernet1/12/1", "Ethernet1/12/5", "PortChannel1", "PortChannel2"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

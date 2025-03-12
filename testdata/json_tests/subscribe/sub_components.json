@@ -1,0 +1,177 @@
+{
+  "title": "Subscribe to all of openconfig platform with once and sample",
+  "globalDef" : {
+    "validators": {
+      "full_component_list": {
+        "type": "object",
+        "required": ["openconfig-platform:component"],
+        "properties": {
+          "openconfig-platform:component" : {
+            "type": "array",
+            "uniqueItems": true,
+            "minItems" : 75,
+            "maxItems" : 75,
+            "additionalItems": false,
+            "items":{
+              "type": "object",
+              "required": ["name"],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "enum": ["/dev/sda","/dev/sdb",
+                           "01:00.0",
+                           "1/1","1/2","1/3","1/4","1/5","1/6","1/7","1/8","1/9",
+                           "1/10","1/11","1/12","1/13","1/14","1/15","1/16","1/17","1/18","1/19",
+                           "1/20","1/21","1/22","1/23","1/24","1/25","1/26","1/27","1/28","1/29",
+                           "1/30","1/31","1/32","1/33","1/34","1/35","1/36","1/1234",
+                           "Ethernet1","Ethernet4","Ethernet5","Ethernet6","Ethernet7","Ethernet8",
+                           "FanTray1",
+                           "PSU 1","PSU 2",
+                           "boot_loader",
+                           "chassis",
+                           "cpu_sensor_1","cpu_sensor_2","dimm_sensor_1","exhaust_sensor_1",
+                           "fan1","fan2","fan3",
+                           "fpga_0","haven",
+                           "heatsink_sensor_1","heatsink_sensor_15",
+                           "hotswap_1",
+                           "hotswap_1_1",
+                           "hotswap_adm1272-i2c-501-10",
+                           "inlet_sensor",
+                           "integrated_circuit0",
+                           "network_stack0","network_stack1",
+                           "os0","os1",
+                           "power_brick_1",
+                           "power_sequencer_adm1266-i2c-10001-44",
+                           "voltage_regulator_1","voltage_regulator_2"]
+                }
+              }
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "operations":[
+    {
+      "title": "subscribe (ONCE) to /components/component[name=*]",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'*'}}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": true,
+            "schema": { "$ref": "#/globalDef/validators/full_component_list" }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe (ONCE) to /components",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}}}mode:ONCE}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": true,
+            "schema": { "$ref": "#/globalDef/validators/full_component_list" }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe (sample) to /components",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}}mode:SAMPLE sample_interval:4000000000}mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": true,
+            "schema": { "$ref": "#/globalDef/validators/full_component_list" }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates second updates",
+          "timeout": 5000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": false,
+            "schema": { "$ref": "#/globalDef/validators/full_component_list" }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates third updates",
+          "timeout": 5000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": false,
+            "schema": { "$ref": "#/globalDef/validators/full_component_list" }
+          }
+        }
+      ]
+    },
+    {
+      "title": "subscribe (sample) to /components/component[name=*]",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'components'}elem:{name:'component'key:{key:'name'value:'*'}}}mode:SAMPLE sample_interval:4000000000}mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 3000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": true,
+            "schema": { "$ref": "#/globalDef/validators/full_component_list" }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates second updates",
+          "timeout": 5000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": false,
+            "schema": { "$ref": "#/globalDef/validators/full_component_list" }
+          }
+        },
+        {
+          "oper": "validate",
+          "title": "Validates third updates",
+          "timeout": 5000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/components/component",
+            "syncResponse": false,
+            "schema": { "$ref": "#/globalDef/validators/full_component_list" }
+          }
+        }
+      ]
+    }
+  ]
+}

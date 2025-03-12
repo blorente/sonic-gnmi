@@ -1,0 +1,85 @@
+{
+  "title": "Get System memory state",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:system"
+      ],
+      "properties": {
+        "openconfig-system:system": {
+          "type": "object",
+          "required": [
+            "memory"
+          ],
+          "properties": {
+            "memory": {
+              "type": "object",
+              "required": [
+                "state"
+              ],
+              "properties": {
+                "state": {
+                  "type": "object",
+                  "required": [
+                    "counters", "physical", "free", "used"
+                  ],
+                  "properties": {
+                    "counters": {
+                      "type": "object",
+                      "required": [
+                        "total-ecc-errors", "correctable-ecc-errors", "uncorrectable-ecc-errors"
+                      ],
+                      "properties": {
+                        "total-ecc-errors": {
+                          "type": "string",
+                          "enum": [
+                            "333333"
+                          ]
+                        },
+                        "correctable-ecc-errors": {
+                          "type": "string",
+                          "enum": [
+                            "111111"
+                          ]
+                        },
+                        "uncorrectable-ecc-errors": {
+                          "type": "string",
+                          "enum": [
+                            "222222"
+                          ]
+                        }
+                      }
+                    },
+                    "physical": {
+                      "type": "string",
+                      "enum": [
+                        "8219400"
+                      ]
+                    },
+                    "free": {
+                      "type": "string",
+                      "enum": [
+                        "2075290"
+                      ]
+                    },
+                    "used": {
+                      "type": "string",
+                      "enum": [
+                        "3542160"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

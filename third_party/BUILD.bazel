@@ -1,0 +1,21 @@
+alias(
+    name = "gnmi_get",
+    actual = "@com_github_google_gnxi//gnmi_get",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "gnmi_set",
+    actual = "@com_github_google_gnxi//gnmi_set",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "gnmi_cli",
+    actual = "@com_github_openconfig_gnmi//cmd/gnmi_cli",
+)
+
+alias(
+    name = "grpc_cli",
+    actual = "@com_github_grpc_grpc//test/cpp/util:grpc_cli",
+)
