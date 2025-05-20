@@ -163,8 +163,8 @@ type AuthTypes map[string]bool
 // OSConfig is a collection of values for OSServer.
 type OSConfig struct {
 	ImgDir          string                       // Path to the directory where image is stored.
-	ProcessTrfReady func(string) (string, error) // Function that handles TrancontrollerrReady request.
-	ProcessTrfEnd   func(string) (string, error) // Function that handles TrancontrollerrEnd request.
+	ProcessTrfReady func(string) (string, error) // Function that handles TransferReady request.
+	ProcessTrfEnd   func(string) (string, error) // Function that handles TransferEnd request.
 }
 
 // Config is a collection of values for Server

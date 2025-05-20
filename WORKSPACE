@@ -360,6 +360,7 @@ new_git_repository(
     name = "sonic-buildimage",
     branch = "master",
     build_file_content = buildimageBUILD,
+    remote = "https://github.com/sonic-net/sonic-buildimage.git",
 )
 
 swsscommonBUILD = """

@@ -1,17 +1,17 @@
 {
-  "title": "Set interface controllerc-mode",
+  "title": "Set interface sfec-mode",
   "operations":[
     {
       "operation": "get",
       "returnCode": 0,
-      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/ethernet/state/controllerc-mode",
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/ethernet/state/sfec-mode",
       "target": "OC_YANG",
       "type": "object",
       "required": [
-        "google-pins-interfaces:controllerc-mode"
+        "google-pins-interfaces:sfec-mode"
       ],
       "properties": {
-        "google-pins-interfaces:controllerc-mode": {
+        "google-pins-interfaces:sfec-mode": {
           "type": "string",
           "enum": ["AUTO"]
         }
@@ -22,7 +22,7 @@
       "returnCode": 0,
       "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/ethernet/config",
       "target": "OC_YANG",
-      "attributeData": "{\"config\": {\"google-pins-interfaces:controllerc-mode\":\"google-pins-interfaces:DISABLE\"}}"
+      "attributeData": "{\"config\": {\"google-pins-interfaces:sfec-mode\":\"google-pins-interfaces:DISABLE\"}}"
     },
     {
       "operation": "get",
@@ -52,10 +52,10 @@
                     "config": {
                       "type": "object",
                       "required": [
-                        "google-pins-interfaces:controllerc-mode"
+                        "google-pins-interfaces:sfec-mode"
                       ],
                       "properties": {
-                        "google-pins-interfaces:controllerc-mode": {
+                        "google-pins-interfaces:sfec-mode": {
                           "type": "string",
                           "enum": [
                             "DISABLE"
@@ -76,7 +76,7 @@
       "returnCode": 0,
       "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/ethernet/config",
       "target": "OC_YANG",
-      "attributeData": "{\"config\": {\"google-pins-interfaces:controllerc-mode\":\"google-pins-interfaces:AUTO\"}}"
+      "attributeData": "{\"config\": {\"google-pins-interfaces:sfec-mode\":\"google-pins-interfaces:AUTO\"}}"
     },
     {
       "operation": "get",
@@ -107,10 +107,10 @@
                     "config": {
                       "type": "object",
                       "required": [
-                        "google-pins-interfaces:controllerc-mode"
+                        "google-pins-interfaces:sfec-mode"
                       ],
                       "properties": {
-                        "google-pins-interfaces:controllerc-mode": {
+                        "google-pins-interfaces:sfec-mode": {
                           "type": "string",
                           "enum": [
                             "AUTO"
@@ -121,17 +121,17 @@
                     "state": {
                       "type": "object",
                       "required": [
-                        "google-pins-interfaces:controllerc-mode",
-                        "google-pins-interfaces:controllerc-oper-mode"
+                        "google-pins-interfaces:sfec-mode",
+                        "google-pins-interfaces:sfec-oper-mode"
                       ],
                       "properties": {
-                        "google-pins-interfaces:controllerc-mode": {
+                        "google-pins-interfaces:sfec-mode": {
                           "type": "string",
                           "enum": [
                             "AUTO"
                           ]
                         },
-                        "google-pins-interfaces:controllerc-oper-mode": {
+                        "google-pins-interfaces:sfec-oper-mode": {
                           "type": "string",
                           "enum": [
                             "UNKNOWN"
@@ -150,14 +150,14 @@
     {
       "operation": "get",
       "returnCode": 0,
-      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/ethernet/state/controllerc-oper-mode",
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/5]/ethernet/state/sfec-oper-mode",
       "target": "OC_YANG",
       "type": "object",
       "required": [
-        "google-pins-interfaces:controllerc-oper-mode"
+        "google-pins-interfaces:sfec-oper-mode"
       ],
       "properties": {
-        "google-pins-interfaces:controllerc-mode": {
+        "google-pins-interfaces:sfec-mode": {
           "type": "string",
           "enum": ["UNKNOWN"]
         }
@@ -166,14 +166,14 @@
     {
       "operation": "get",
       "returnCode": 0,
-      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/controllerc-oper-mode",
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/sfec-oper-mode",
       "target": "OC_YANG",
       "type": "object",
       "required": [
-        "google-pins-interfaces:controllerc-oper-mode"
+        "google-pins-interfaces:sfec-oper-mode"
       ],
       "properties": {
-        "google-pins-interfaces:controllerc-mode": {
+        "google-pins-interfaces:sfec-mode": {
           "type": "string",
           "enum": ["ENABLED"]
         }

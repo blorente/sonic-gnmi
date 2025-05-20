@@ -35,14 +35,14 @@ func (srv *GNOIFileServer) Get(req *file.GetRequest, stream file.File_GetServer)
 	return status.Errorf(codes.Unimplemented, "Method file.Get is unimplemented.")
 }
 
-// TrancontrollerrToRemote RPC is unimplemented.
-func (srv *GNOIFileServer) TrancontrollerrToRemote(ctx context.Context, req *file.TrancontrollerrToRemoteRequest) (*file.TrancontrollerrToRemoteResponse, error) {
+// TransferToRemote RPC is unimplemented.
+func (srv *GNOIFileServer) TransferToRemote(ctx context.Context, req *file.TransferToRemoteRequest) (*file.TransferToRemoteResponse, error) {
 	// Reject while NSF Freeze is ongoing
 	if srv.Server.WarmRestartHelper.FetchFreezeStatus() {
-		log.V(lvl.ERROR).Info("gNOI file TrancontrollerrToRemote RPC disabled since NSF is ongoing!")
-		return nil, status.Errorf(codes.Unavailable, "gNOI file TrancontrollerrToRemote RPC disabled since NSF is ongoing!")
+		log.V(lvl.ERROR).Info("gNOI file TransferToRemote RPC disabled since NSF is ongoing!")
+		return nil, status.Errorf(codes.Unavailable, "gNOI file TransferToRemote RPC disabled since NSF is ongoing!")
 	}
-	return nil, status.Errorf(codes.Unimplemented, "Method file.TrancontrollerrToRemote is unimplemented.")
+	return nil, status.Errorf(codes.Unimplemented, "Method file.TransferToRemote is unimplemented.")
 }
 
 // Put RPC is unimplemented.

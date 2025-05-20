@@ -39,9 +39,9 @@ func TestFileServer(t *testing.T) {
 		_, err = stream.Recv()
 		testErr(err, codes.Unimplemented, "Method file.Get is unimplemented.", t)
 	})
-	t.Run("TrancontrollerrToRemoteFailsAsUnimplemented", func(t *testing.T) {
-		_, err := sc.TrancontrollerrToRemote(ctx, &file.TrancontrollerrToRemoteRequest{})
-		testErr(err, codes.Unimplemented, "Method file.TrancontrollerrToRemote is unimplemented.", t)
+	t.Run("TransferToRemoteFailsAsUnimplemented", func(t *testing.T) {
+		_, err := sc.TransferToRemote(ctx, &file.TransferToRemoteRequest{})
+		testErr(err, codes.Unimplemented, "Method file.TransferToRemote is unimplemented.", t)
 	})
 	t.Run("PutFailsAsUnimplemented", func(t *testing.T) {
 		stream, err := sc.Put(ctx)
@@ -72,8 +72,8 @@ func TestFileServer(t *testing.T) {
 		_, err = stream.Recv()
 		testErr(err, codes.Unavailable, "RPC disabled since NSF is ongoing!", t)
 	})
-	t.Run("TestTrancontrollerrToRemoteDuringFreeze", func(t *testing.T) {
-		_, err := sc.TrancontrollerrToRemote(ctx, &file.TrancontrollerrToRemoteRequest{})
+	t.Run("TestTransferToRemoteDuringFreeze", func(t *testing.T) {
+		_, err := sc.TransferToRemote(ctx, &file.TransferToRemoteRequest{})
 		testErr(err, codes.Unavailable, "RPC disabled since NSF is ongoing!", t)
 	})
 	t.Run("TestPutDuringFreeze", func(t *testing.T) {

@@ -427,7 +427,7 @@ switch"
     "PORT_TABLE|Ethernet1/1/1": {
         "ref_count": "2",
         "xcvr_qualified": "True",
-        "controllerc_oper_mode": "enable"
+        "sfec_oper_mode": "enable"
     },
     "PORT_TABLE|Ethernet1/1/5": {
         "ref_count": "1"

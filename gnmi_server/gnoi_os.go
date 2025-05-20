@@ -49,15 +49,15 @@ func handleErrorResponse(f string, a ...any) *ospb.InstallResponse {
 	}
 }
 
-func (srv *OSServer) processTrancontrollerrReq(req *ospb.InstallRequest) *ospb.InstallResponse {
-	trfReq := req.GetTrancontrollerrRequest()
+func (srv *OSServer) processTransferReq(req *ospb.InstallRequest) *ospb.InstallResponse {
+	trfReq := req.GetTransferRequest()
 	if trfReq.GetVersion() == "" {
-		log.V(lvl.ERROR).Infoln("TrancontrollerrRequest must contain a valid OS version.")
+		log.V(lvl.ERROR).Infoln("TransferRequest must contain a valid OS version.")
 		return &ospb.InstallResponse{
 			Response: &ospb.InstallResponse_InstallError{
 				InstallError: &ospb.InstallError{
 					Type:   ospb.InstallError_PARSE_FAIL,
-					Detail: "TrancontrollerrRequest must contain a valid OS version.",
+					Detail: "TransferRequest must contain a valid OS version.",
 				},
 			},
 		}
@@ -67,45 +67,45 @@ func (srv *OSServer) processTrancontrollerrReq(req *ospb.InstallRequest) *ospb.I
 	// Back end is expected to return the response in JSON format.
 	reqStr, err := json.Marshal(req)
 	if err != nil {
-		return handleErrorResponse("Failed to marshal TrancontrollerrReady JSON: err: %v, req: %v, reqStr: %v", err, req, reqStr)
+		return handleErrorResponse("Failed to marshal TransferReady JSON: err: %v, req: %v, reqStr: %v", err, req, reqStr)
 	}
 
 	respStr, err := srv.ProcessTrfReady(string(reqStr))
 	if err != nil {
-		return handleErrorResponse("Received error from OSServer.TrancontrollerrReady: err: %v, reqStr: %v, respStr: %v", err, reqStr, respStr)
+		return handleErrorResponse("Received error from OSServer.TransferReady: err: %v, reqStr: %v, respStr: %v", err, reqStr, respStr)
 	}
 
 	resp := &ospb.InstallResponse{}
 	if err := json.Unmarshal([]byte(respStr), resp); err != nil {
-		return handleErrorResponse("Failed to unmarshal TrancontrollerrReady JSON: err: %v, respStr: %v", err, respStr)
+		return handleErrorResponse("Failed to unmarshal TransferReady JSON: err: %v, respStr: %v", err, respStr)
 	}
 
 	return resp
 }
 
-func (srv *OSServer) processTrancontrollerrEnd(req *ospb.InstallRequest) *ospb.InstallResponse {
+func (srv *OSServer) processTransferEnd(req *ospb.InstallRequest) *ospb.InstallResponse {
 
 	// Front end marshals the request, and sends to the sonic-host-service.
 	// Back end is expected to return the response in JSON format.
 	reqStr, err := json.Marshal(req)
 	if err != nil {
-		return handleErrorResponse("Failed to marshal TrancontrollerrEnd JSON: err: %v, req: %v, reqStr: %v", err, req, reqStr)
+		return handleErrorResponse("Failed to marshal TransferEnd JSON: err: %v, req: %v, reqStr: %v", err, req, reqStr)
 	}
 
 	respStr, err := srv.ProcessTrfEnd(string(reqStr))
 	if err != nil {
-		return handleErrorResponse("Received error from OSServer.TrancontrollerrEnd: err: %v, reqStr: %v, respStr: %v", err, reqStr, respStr)
+		return handleErrorResponse("Received error from OSServer.TransferEnd: err: %v, reqStr: %v, respStr: %v", err, reqStr, respStr)
 	}
 
 	resp := &ospb.InstallResponse{}
 	if err := json.Unmarshal([]byte(respStr), resp); err != nil {
-		return handleErrorResponse("Failed to unmarshal TrancontrollerrEnd JSON: err: %v, respStr: %v", err, respStr)
+		return handleErrorResponse("Failed to unmarshal TransferEnd JSON: err: %v, respStr: %v", err, respStr)
 	}
 
 	return resp
 }
 
-func (srv *OSServer) processTrancontrollerrContent(trfCnt []byte, imgPath string) *ospb.InstallResponse {
+func (srv *OSServer) processTransferContent(trfCnt []byte, imgPath string) *ospb.InstallResponse {
 	errResp := &ospb.InstallResponse{
 		Response: &ospb.InstallResponse_InstallError{
 			InstallError: &ospb.InstallError{
@@ -131,8 +131,8 @@ func (srv *OSServer) processTrancontrollerrContent(trfCnt []byte, imgPath string
 	}
 
 	return &ospb.InstallResponse{
-		Response: &ospb.InstallResponse_TrancontrollerrProgress{
-			TrancontrollerrProgress: &ospb.TrancontrollerrProgress{
+		Response: &ospb.InstallResponse_TransferProgress{
+			TransferProgress: &ospb.TransferProgress{
 				BytesReceived: uint64(len(trfCnt)),
 			},
 		},
@@ -211,10 +211,10 @@ func (srv *OSServer) Install(stream ospb.OS_InstallServer) error {
 	}
 	defer sem.Unlock()
 
-	// Receive TrancontrollerrReq message.
+	// Receive TransferReq message.
 	req, err := stream.Recv()
 	if err == io.EOF {
-		log.V(lvl.ERROR).Infoln("Received EOF instead of TrancontrollerrRequest!")
+		log.V(lvl.ERROR).Infoln("Received EOF instead of TransferRequest!")
 		return nil
 	}
 	if err != nil {
@@ -224,16 +224,16 @@ func (srv *OSServer) Install(stream ospb.OS_InstallServer) error {
 		return status.Errorf(codes.Aborted, err.Error())
 	}
 
-	trfReq := req.GetTrancontrollerrRequest()
+	trfReq := req.GetTransferRequest()
 	if trfReq == nil {
-		log.V(lvl.ERROR).Infoln("Did not receive a TrancontrollerrRequest.")
-		err = status.Errorf(codes.InvalidArgument, "Expected TrancontrollerrRequest.")
+		log.V(lvl.ERROR).Infoln("Did not receive a TransferRequest.")
+		err = status.Errorf(codes.InvalidArgument, "Expected TransferRequest.")
 		// TODO(b/328077908) Alarms to be implemented later
 		// raiseAlarm(err)
 		return err
 	}
 
-	resp := srv.processTrancontrollerrReq(req)
+	resp := srv.processTransferReq(req)
 	if resp != nil {
 		if err := stream.Send(resp); err != nil {
 			log.V(lvl.ERROR).Infoln("Error while sending response: ", err)
@@ -243,7 +243,7 @@ func (srv *OSServer) Install(stream ospb.OS_InstallServer) error {
 		}
 	}
 	if resp == nil || resp.GetInstallError() != nil {
-		err = status.Errorf(codes.Aborted, "Failed to process TrancontrollerrRequest.")
+		err = status.Errorf(codes.Aborted, "Failed to process TransferRequest.")
 		// TODO(b/328077908) Alarms to be implemented later
 		// raiseAlarm(err)
 		return err
@@ -254,7 +254,7 @@ func (srv *OSServer) Install(stream ospb.OS_InstallServer) error {
 	for {
 		req, err = stream.Recv()
 		if err == io.EOF {
-			log.V(lvl.INFO).Infoln("Received EOF instead of TrancontrollerrContent request!")
+			log.V(lvl.INFO).Infoln("Received EOF instead of TransferContent request!")
 			if imgTrfInitiated {
 				srv.removeIncompleteTrf(imgPath)
 			}
@@ -270,24 +270,24 @@ func (srv *OSServer) Install(stream ospb.OS_InstallServer) error {
 			return status.Errorf(codes.Aborted, err.Error())
 		}
 
-		if trfReq := req.GetTrancontrollerrRequest(); trfReq != nil {
-			log.V(lvl.ERROR).Infoln("Received a TrancontrollerrReq out-of-sequence.")
+		if trfReq := req.GetTransferRequest(); trfReq != nil {
+			log.V(lvl.ERROR).Infoln("Received a TransferReq out-of-sequence.")
 			if imgTrfInitiated {
 				srv.removeIncompleteTrf(imgPath)
 			}
-			err = status.Errorf(codes.InvalidArgument, "Expected TrancontrollerrContent, or TrancontrollerrEnd.")
+			err = status.Errorf(codes.InvalidArgument, "Expected TransferContent, or TransferEnd.")
 			// TODO(b/328077908) Alarms to be implemented later
 			// raiseAlarm(err)
 			return err
 		}
 
-		// Trancontrollerrring content is complete.
-		if trfEnd := req.GetTrancontrollerrEnd(); trfEnd != nil {
+		// Transferring content is complete.
+		if trfEnd := req.GetTransferEnd(); trfEnd != nil {
 			break
 		}
 
-		// Process content trancontrollerr.
-		// If image exists, target should have sent Validated | InstallError on TrancontrollerrRequest.
+		// Process content transfer.
+		// If image exists, target should have sent Validated | InstallError on TransferRequest.
 		if !imgTrfInitiated && srv.imageExists(imgPath) {
 			resp := &ospb.InstallResponse{
 				Response: &ospb.InstallResponse_InstallError{
@@ -306,7 +306,7 @@ func (srv *OSServer) Install(stream ospb.OS_InstallServer) error {
 		}
 
 		imgTrfInitiated = true
-		resp := srv.processTrancontrollerrContent(req.GetTrancontrollerrContent(), imgPath)
+		resp := srv.processTransferContent(req.GetTransferContent(), imgPath)
 		if resp != nil {
 			if err := stream.Send(resp); err != nil {
 				log.V(lvl.ERROR).Infoln("Error while sending response: ", err)
@@ -318,25 +318,25 @@ func (srv *OSServer) Install(stream ospb.OS_InstallServer) error {
 		}
 		if resp == nil || resp.GetInstallError() != nil {
 			srv.removeIncompleteTrf(imgPath)
-			err = status.Errorf(codes.Aborted, "Failed to process TrancontrollerrContent.")
+			err = status.Errorf(codes.Aborted, "Failed to process TransferContent.")
 			// TODO(b/328077908) Alarms to be implemented later
 			// raiseAlarm(err)
 			return err
 		}
 	}
 
-	// Receive TrancontrollerrEnd message.
-	trfEnd := req.GetTrancontrollerrEnd()
+	// Receive TransferEnd message.
+	trfEnd := req.GetTransferEnd()
 	if trfEnd == nil {
-		log.V(lvl.ERROR).Infoln("Did not receive a TrancontrollerrEnd")
+		log.V(lvl.ERROR).Infoln("Did not receive a TransferEnd")
 		srv.removeIncompleteTrf(imgPath)
-		err = status.Errorf(codes.InvalidArgument, "Expected TrancontrollerrEnd")
+		err = status.Errorf(codes.InvalidArgument, "Expected TransferEnd")
 		// TODO(b/328077908) Alarms to be implemented later
 		// raiseAlarm(err)
 		return err
 	}
 
-	resp = srv.processTrancontrollerrEnd(req)
+	resp = srv.processTransferEnd(req)
 	if resp != nil {
 		if err := stream.Send(resp); err != nil {
 			log.V(lvl.ERROR).Infoln("Error while sending response: ", err)
@@ -348,7 +348,7 @@ func (srv *OSServer) Install(stream ospb.OS_InstallServer) error {
 	}
 	if resp == nil || resp.GetInstallError() != nil {
 		srv.removeIncompleteTrf(imgPath)
-		err = status.Errorf(codes.Aborted, "Failed to process TrancontrollerrEnd.")
+		err = status.Errorf(codes.Aborted, "Failed to process TransferEnd.")
 		// TODO(b/328077908) Alarms to be implemented later
 		// raiseAlarm(err)
 		return err

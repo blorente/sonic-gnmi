@@ -40,14 +40,14 @@
             "config": false
         },
         {
-            "desc": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/controllerc-oper-mode",
+            "desc": "openconfig/interfaces/interface[name=Ethernet1/1/1]/ethernet/state/sfec-oper-mode",
             "path": [
                 {"elem": "openconfig", "prefix": "openconfig-interfaces", "skip": true},
                 {"elem": "interfaces", "skip": true},
                 {"elem": "interface", "key": {"name": "name", "val": "Ethernet1/1/1"}},
                 {"elem": "ethernet", "prefix":"openconfig-if-ethernet"},
                 {"elem": "state"},
-                {"elem": "controllerc-oper-mode", "prefix": "google-pins-interfaces"}
+                {"elem": "sfec-oper-mode", "prefix": "google-pins-interfaces"}
             ],
             "expected": {"type": "string", "val": "ENABLED"},
             "config": false

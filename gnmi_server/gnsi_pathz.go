@@ -8,7 +8,6 @@ import (
 	"io"
 	"os"
 	"strconv"
-	"strings"
 	"sync"
 
 	lvl "github.com/sonic-net/sonic-gnmi/gnmi_server/log"

@@ -220,7 +220,7 @@ func setupFlags(fs *flag.FlagSet) (*TelemetryConfig, *gnmi.Config, error) {
 		WithMasterArbitration: fs.Bool("with-master-arbitration", false, "Enables master arbitration policy."),
 		WithSaveOnSet:         fs.Bool("with-save-on-set", false, "Enables save-on-set."),
 		IdleConnDuration:      fs.Int("idle_conn_duration", 5, "Seconds before server closes idle connections"),
-		ImgDirPath:            fs.String("img_dir", "/tmp/host_tmp", "Directory path where image will be trancontrollerrred."),
+		ImgDirPath:            fs.String("img_dir", "/tmp/host_tmp", "Directory path where image will be transferred."),
 		CacheResponses:        fs.Bool("cache_responses", true, "Cache gNMI responses when possible"),
 		CertCRLConfig:         fs.String("cert_crl_dir", "", "CRL directory. Disable if empty."),
 		IntManFile:            fs.String("integrity_manifest_file", "", "Full path name of integrity manifest file."),

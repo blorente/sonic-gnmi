@@ -70,7 +70,7 @@
         "loopback-mode": "none",
         "health_indicator": "bad",
         "lanes": "69,70,71,72",
-        "controllerc_mode": "auto",
+        "sfec_mode": "auto",
         "hardware_vendor_id": "1",
         "presence": "1"
     },

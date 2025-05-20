@@ -6,7 +6,7 @@
 # Items that need to be modified for each specific cluster are:
 #   destination d_sc_network
 #
-# rsyslog declares this a micontrollerature, so it's not implemented in "new" syntax
+# rsyslog declares this a misfeature, so it's not implemented in "new" syntax
 
 $RepeatedMsgReduction on
 module(load="imudp")

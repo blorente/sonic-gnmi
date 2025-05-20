@@ -19,17 +19,17 @@ import (
 	json "google.golang.org/protobuf/encoding/protojson"
 )
 
-// ProcessFakeTrfReady responds with the TrancontrollerrReady response.
+// ProcessFakeTrfReady responds with the TransferReady response.
 func ProcessFakeTrfReady(req string) (string, error) {
 	// Fake response.
 	resp := &ospb.InstallResponse{
-		Response: &ospb.InstallResponse_TrancontrollerrReady{},
+		Response: &ospb.InstallResponse_TransferReady{},
 	}
 
 	respStr, err := json.Marshal(resp)
 	if err != nil {
-		log.Errorln("Cannot marshal TrancontrollerrReady response!")
-		return "", fmt.Errorf("Cannot marshal TrancontrollerrReady response!")
+		log.Errorln("Cannot marshal TransferReady response!")
+		return "", fmt.Errorf("Cannot marshal TransferReady response!")
 	}
 
 	return string(respStr), nil
@@ -44,8 +44,8 @@ func ProcessFakeTrfEnd(req string) (string, error) {
 
 	respStr, err := json.Marshal(resp)
 	if err != nil {
-		log.Errorln("Cannot marshal TrancontrollerrEnd response!")
-		return "", fmt.Errorf("Cannot marshal TrancontrollerrEnd response!")
+		log.Errorln("Cannot marshal TransferEnd response!")
+		return "", fmt.Errorf("Cannot marshal TransferEnd response!")
 	}
 
 	return string(respStr), nil
@@ -99,16 +99,16 @@ var testOSCases = []struct {
 	// 	},
 	// },
 	{
-		desc: "OSInstallFailsIfTrancontrollerrRequestIsMissingVersion",
+		desc: "OSInstallFailsIfTransferRequestIsMissingVersion",
 		f: func(ctx context.Context, t *testing.T, sc ospb.OSClient, s *OSServer) {
 			stream, err := sc.Install(ctx, grpc.EmptyCallOption{})
 			if err != nil {
 				t.Fatal(err.Error())
 			}
 
-			// Send TrancontrollerrRequest.
+			// Send TransferRequest.
 			err = stream.Send(&ospb.InstallRequest{
-				Request: &ospb.InstallRequest_TrancontrollerrRequest{},
+				Request: &ospb.InstallRequest_TransferRequest{},
 			})
 			if err != nil {
 				t.Fatal(err.Error())
@@ -133,7 +133,7 @@ var testOSCases = []struct {
 			}
 			// TODO(b/328077908) Alarms to be implemented later
 			// expectAlarm(err)
-			testErr(err, codes.Aborted, "Failed to process TrancontrollerrRequest.", t)
+			testErr(err, codes.Aborted, "Failed to process TransferRequest.", t)
 		},
 	},
 	{
@@ -144,10 +144,10 @@ var testOSCases = []struct {
 				t.Fatal(err.Error())
 			}
 
-			// Send TrancontrollerrRequest.
+			// Send TransferRequest.
 			err = stream.Send(&ospb.InstallRequest{
-				Request: &ospb.InstallRequest_TrancontrollerrRequest{
-					TrancontrollerrRequest: &ospb.TrancontrollerrRequest{
+				Request: &ospb.InstallRequest_TransferRequest{
+					TransferRequest: &ospb.TransferRequest{
 						Version: "os1.1",
 					},
 				},
@@ -156,13 +156,13 @@ var testOSCases = []struct {
 				t.Fatal(err.Error())
 			}
 
-			// Receive TrancontrollerrReady response.
+			// Receive TransferReady response.
 			resp, err := stream.Recv()
 			if err != nil {
 				t.Fatal(err.Error())
 			}
-			if resp.GetTrancontrollerrReady() == nil {
-				t.Fatal("Did not receive expected TrancontrollerrReady response")
+			if resp.GetTransferReady() == nil {
+				t.Fatal("Did not receive expected TransferReady response")
 			}
 
 			targetAddr := fmt.Sprintf("127.0.0.1:%d", s.config.Port)
@@ -207,7 +207,7 @@ var testOSCases = []struct {
 
 			// Continue with the existing stream.
 			err = stream.Send(&ospb.InstallRequest{
-				Request: &ospb.InstallRequest_TrancontrollerrEnd{},
+				Request: &ospb.InstallRequest_TransferEnd{},
 			})
 			if err != nil {
 				t.Fatal(err.Error())
@@ -230,9 +230,9 @@ var testOSCases = []struct {
 				t.Fatal(err.Error())
 			}
 
-			// Send TrancontrollerrEnd; server expects TrancontrollerrRequest.
+			// Send TransferEnd; server expects TransferRequest.
 			err = stream.Send(&ospb.InstallRequest{
-				Request: &ospb.InstallRequest_TrancontrollerrEnd{},
+				Request: &ospb.InstallRequest_TransferEnd{},
 			})
 			if err != nil {
 				t.Fatal(err.Error())
@@ -245,7 +245,7 @@ var testOSCases = []struct {
 			}
 			// TODO(b/328077908) Alarms to be implemented later
 			// expectAlarm(err)
-			testErr(err, codes.InvalidArgument, "Expected TrancontrollerrRequest", t)
+			testErr(err, codes.InvalidArgument, "Expected TransferRequest", t)
 		},
 	},
 	{
@@ -269,18 +269,18 @@ var testOSCases = []struct {
 		},
 	},
 	{
-		desc: "OSInstallFailsIfImageExistsWhenTrancontrollerrBegins",
+		desc: "OSInstallFailsIfImageExistsWhenTransferBegins",
 		f: func(ctx context.Context, t *testing.T, sc ospb.OSClient, s *OSServer) {
 			stream, err := sc.Install(ctx, grpc.EmptyCallOption{})
 			if err != nil {
 				t.Fatal(err.Error())
 			}
 
-			// Send TrancontrollerrRequest.
+			// Send TransferRequest.
 			version := "os1.1"
 			err = stream.Send(&ospb.InstallRequest{
-				Request: &ospb.InstallRequest_TrancontrollerrRequest{
-					TrancontrollerrRequest: &ospb.TrancontrollerrRequest{
+				Request: &ospb.InstallRequest_TransferRequest{
+					TransferRequest: &ospb.TransferRequest{
 						Version: version,
 					},
 				},
@@ -289,16 +289,16 @@ var testOSCases = []struct {
 				t.Fatal(err.Error())
 			}
 
-			// Receive TrancontrollerrReady response.
+			// Receive TransferReady response.
 			resp, err := stream.Recv()
 			if err != nil {
 				t.Fatal(err.Error())
 			}
-			if resp.GetTrancontrollerrReady() == nil {
-				t.Fatal("Did not receive expected TrancontrollerrReady response")
+			if resp.GetTransferReady() == nil {
+				t.Fatal("Did not receive expected TransferReady response")
 			}
 
-			// TrancontrollerrReady initiates trancontrollerrring content. Image must not exist at this point!
+			// TransferReady initiates transferring content. Image must not exist at this point!
 			imgPath := s.getVersionPath(version)
 			f, err := os.OpenFile(imgPath, os.O_CREATE|os.O_WRONLY, 0644)
 			if err != nil {
@@ -314,10 +314,10 @@ var testOSCases = []struct {
 				}
 			}()
 
-			// Send TrancontrollerrContent.
+			// Send TransferContent.
 			err = stream.Send(&ospb.InstallRequest{
-				Request: &ospb.InstallRequest_TrancontrollerrContent{
-					TrancontrollerrContent: []byte("unimportant string"),
+				Request: &ospb.InstallRequest_TransferContent{
+					TransferContent: []byte("unimportant string"),
 				},
 			})
 			if err != nil {
@@ -344,7 +344,7 @@ var testOSCases = []struct {
 		},
 	},
 	{
-		desc: "OSInstallFailsIfStreamClosesInTheMiddleOfTrancontrollerr",
+		desc: "OSInstallFailsIfStreamClosesInTheMiddleOfTransfer",
 		f: func(ctx context.Context, t *testing.T, sc ospb.OSClient, s *OSServer) {
 			stream, err := sc.Install(ctx, grpc.EmptyCallOption{})
 			if err != nil {
@@ -352,10 +352,10 @@ var testOSCases = []struct {
 			}
 
 			version := "os1.1"
-			// Send TrancontrollerrRequest.
+			// Send TransferRequest.
 			err = stream.Send(&ospb.InstallRequest{
-				Request: &ospb.InstallRequest_TrancontrollerrRequest{
-					TrancontrollerrRequest: &ospb.TrancontrollerrRequest{
+				Request: &ospb.InstallRequest_TransferRequest{
+					TransferRequest: &ospb.TransferRequest{
 						Version: version,
 					},
 				},
@@ -364,32 +364,32 @@ var testOSCases = []struct {
 				t.Fatal(err.Error())
 			}
 
-			// Receive TrancontrollerrReady response.
+			// Receive TransferReady response.
 			resp, err := stream.Recv()
 			if err != nil {
 				t.Fatal(err.Error())
 			}
-			if trfReady := resp.GetTrancontrollerrReady(); trfReady == nil {
-				t.Fatal("Did not receive expected TrancontrollerrReady response")
+			if trfReady := resp.GetTransferReady(); trfReady == nil {
+				t.Fatal("Did not receive expected TransferReady response")
 			}
 
-			// Send TrancontrollerrContent.
+			// Send TransferContent.
 			err = stream.Send(&ospb.InstallRequest{
-				Request: &ospb.InstallRequest_TrancontrollerrContent{
-					TrancontrollerrContent: []byte("unimportant string"),
+				Request: &ospb.InstallRequest_TransferContent{
+					TransferContent: []byte("unimportant string"),
 				},
 			})
 			if err != nil {
 				t.Fatal(err.Error())
 			}
 
-			// Receive TrancontrollerrProgress response.
+			// Receive TransferProgress response.
 			resp, err = stream.Recv()
 			if err != nil {
 				t.Fatal(err.Error())
 			}
-			if trfProg := resp.GetTrancontrollerrProgress(); trfProg == nil {
-				t.Fatal("Did not receive expected TrancontrollerrProgress response")
+			if trfProg := resp.GetTransferProgress(); trfProg == nil {
+				t.Fatal("Did not receive expected TransferProgress response")
 			}
 
 			// Close the stream immediately.
@@ -401,7 +401,7 @@ var testOSCases = []struct {
 				t.Fatal("Expected an error reporting on premature closure of the stream.")
 			}
 
-			// Check incomplete trancontrollerr is removed!
+			// Check incomplete transfer is removed!
 			if s.imageExists(s.getVersionPath(version)) {
 				t.Fatal("Incomplete image should have been deleted!")
 			}
@@ -410,7 +410,7 @@ var testOSCases = []struct {
 		},
 	},
 	{
-		desc: "OSInstallFailsIfWrongMsgIsSentInTheMiddleOfTrancontrollerr",
+		desc: "OSInstallFailsIfWrongMsgIsSentInTheMiddleOfTransfer",
 		f: func(ctx context.Context, t *testing.T, sc ospb.OSClient, s *OSServer) {
 			stream, err := sc.Install(ctx, grpc.EmptyCallOption{})
 			if err != nil {
@@ -418,10 +418,10 @@ var testOSCases = []struct {
 			}
 
 			version := "os1.1"
-			// Send TrancontrollerrRequest.
+			// Send TransferRequest.
 			err = stream.Send(&ospb.InstallRequest{
-				Request: &ospb.InstallRequest_TrancontrollerrRequest{
-					TrancontrollerrRequest: &ospb.TrancontrollerrRequest{
+				Request: &ospb.InstallRequest_TransferRequest{
+					TransferRequest: &ospb.TransferRequest{
 						Version: version,
 					},
 				},
@@ -430,39 +430,39 @@ var testOSCases = []struct {
 				t.Fatal(err.Error())
 			}
 
-			// Receive TrancontrollerrReady response.
+			// Receive TransferReady response.
 			resp, err := stream.Recv()
 			if err != nil {
 				t.Fatal(err.Error())
 			}
-			if trfReady := resp.GetTrancontrollerrReady(); trfReady == nil {
-				t.Fatal("Did not receive expected TrancontrollerrReady response")
+			if trfReady := resp.GetTransferReady(); trfReady == nil {
+				t.Fatal("Did not receive expected TransferReady response")
 			}
 
-			// Send TrancontrollerrContent.
+			// Send TransferContent.
 			err = stream.Send(&ospb.InstallRequest{
-				Request: &ospb.InstallRequest_TrancontrollerrContent{
-					TrancontrollerrContent: []byte("unimportant string"),
+				Request: &ospb.InstallRequest_TransferContent{
+					TransferContent: []byte("unimportant string"),
 				},
 			})
 			if err != nil {
 				t.Fatal(err.Error())
 			}
 
-			// Receive TrancontrollerrProgress response.
+			// Receive TransferProgress response.
 			resp, err = stream.Recv()
 			if err != nil {
 				t.Fatal(err.Error())
 			}
-			if trfProg := resp.GetTrancontrollerrProgress(); trfProg == nil {
-				t.Fatal("Did not receive expected TrancontrollerrProgress response")
+			if trfProg := resp.GetTransferProgress(); trfProg == nil {
+				t.Fatal("Did not receive expected TransferProgress response")
 			}
 
-			// Send TrancontrollerrRequest again. This is unexpected!
-			// Server should send error message, clean up incomplete trancontrollerr.
+			// Send TransferRequest again. This is unexpected!
+			// Server should send error message, clean up incomplete transfer.
 			err = stream.Send(&ospb.InstallRequest{
-				Request: &ospb.InstallRequest_TrancontrollerrRequest{
-					TrancontrollerrRequest: &ospb.TrancontrollerrRequest{
+				Request: &ospb.InstallRequest_TransferRequest{
+					TransferRequest: &ospb.TransferRequest{
 						Version: version,
 					},
 				},
@@ -477,7 +477,7 @@ var testOSCases = []struct {
 				t.Fatal("Expected an error reporting on premature closure of the stream.")
 			}
 
-			// Check incomplete trancontrollerr is removed!
+			// Check incomplete transfer is removed!
 			if s.imageExists(s.getVersionPath(version)) {
 				t.Fatal("Incomplete image should have been deleted!")
 			}
@@ -492,10 +492,10 @@ var testOSCases = []struct {
 			}
 
 			version := "os1.1"
-			// Send TrancontrollerrRequest.
+			// Send TransferRequest.
 			err = stream.Send(&ospb.InstallRequest{
-				Request: &ospb.InstallRequest_TrancontrollerrRequest{
-					TrancontrollerrRequest: &ospb.TrancontrollerrRequest{
+				Request: &ospb.InstallRequest_TransferRequest{
+					TransferRequest: &ospb.TransferRequest{
 						Version: version,
 					},
 				},
@@ -504,38 +504,38 @@ var testOSCases = []struct {
 				t.Fatal(err.Error())
 			}
 
-			// Receive TrancontrollerrReady response.
+			// Receive TransferReady response.
 			resp, err := stream.Recv()
 			if err != nil {
 				t.Fatal(err.Error())
 			}
-			if trfReady := resp.GetTrancontrollerrReady(); trfReady == nil {
-				t.Fatal("Did not receive expected TrancontrollerrReady response")
+			if trfReady := resp.GetTransferReady(); trfReady == nil {
+				t.Fatal("Did not receive expected TransferReady response")
 			}
 
 			data := []byte("unimportant string")
-			// Send TrancontrollerrContent.
+			// Send TransferContent.
 			err = stream.Send(&ospb.InstallRequest{
-				Request: &ospb.InstallRequest_TrancontrollerrContent{
-					TrancontrollerrContent: data,
+				Request: &ospb.InstallRequest_TransferContent{
+					TransferContent: data,
 				},
 			})
 			if err != nil {
 				t.Fatal(err.Error())
 			}
 
-			// Receive TrancontrollerrProgress response.
+			// Receive TransferProgress response.
 			resp, err = stream.Recv()
 			if err != nil {
 				t.Fatal(err.Error())
 			}
-			if trfProg := resp.GetTrancontrollerrProgress(); trfProg == nil {
-				t.Fatal("Did not receive expected TrancontrollerrProgress response")
+			if trfProg := resp.GetTransferProgress(); trfProg == nil {
+				t.Fatal("Did not receive expected TransferProgress response")
 			}
 
-			// Send TrancontrollerrEnd.
+			// Send TransferEnd.
 			err = stream.Send(&ospb.InstallRequest{
-				Request: &ospb.InstallRequest_TrancontrollerrEnd{},
+				Request: &ospb.InstallRequest_TransferEnd{},
 			})
 			if err != nil {
 				t.Fatal(err.Error())
