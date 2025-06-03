@@ -28,7 +28,7 @@
     {
       "title": "subscribe to /interfaces/interface/subinterfaces/subinterface/ipv6/addresses/address/state/ip",
       "operation": "subscribe",
-      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'Loopback4'}}elem:{name:'subinterfaces'}elem:{name:'subinterface'key:{key:'index'value:'0'}}elem:{name:'ipv6'}elem:{name:'addresses'}elem:{name:'address'key:{key:'ip'value:'2620:1080:2000:100::'}}elem:{name:'state'}elem:{name:'ip'}}mode:TARGET_DEFINED} mode:STREAM}",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'Loopback4'}}elem:{name:'subinterfaces'}elem:{name:'subinterface'key:{key:'index'value:'0'}}elem:{name:'ipv6'}elem:{name:'addresses'}elem:{name:'address'key:{key:'ip'value:'2620:1080:2000:100::'}}elem:{name:'state'}elem:{name:'ip'}}mode:SAMPLE sample_interval:5000000000} mode:STREAM}",
       "returnCode": 0,
       "subOpers": [
         {

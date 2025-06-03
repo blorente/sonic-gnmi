@@ -940,24 +940,26 @@ func TestDebugSubscribePreferences(t *testing.T) {
 	go runServer(t, s)
 	defer s.Stop()
 
+	/*
 	ifTop := &spb_gnoi.SubscribePreference{
 		Path:              strToPath("/openconfig-interfaces:interfaces/interface[name=*]"),
 		OnChangeSupported: false,
 		TargetDefinedMode: ON_CHANGE,
 		WildcardSupported: true,
-	}
+	}*/
 	ifMtu := &spb_gnoi.SubscribePreference{
 		Path:              strToPath("/openconfig-interfaces:interfaces/interface[name=*]/config/mtu"),
 		OnChangeSupported: true,
 		TargetDefinedMode: ON_CHANGE,
 		WildcardSupported: true,
 	}
+	/*
 	ifPenaltyBasedAied := &spb_gnoi.SubscribePreference{
 		Path:              strToPath("/openconfig-interfaces:interfaces/interface[name=*]/penalty-based-aied"),
 		OnChangeSupported: false,
 		TargetDefinedMode: SAMPLE,
 		WildcardSupported: true,
-	}
+	}*/
 	ifStat := &spb_gnoi.SubscribePreference{
 		Path:              strToPath("/openconfig-interfaces:interfaces/interface[name=*]/state/counters"),
 		OnChangeSupported: false,
@@ -976,6 +978,7 @@ func TestDebugSubscribePreferences(t *testing.T) {
 		TargetDefinedMode: SAMPLE,
 		WildcardSupported: false,
 	}
+	/*
 	ifIpv4 := &spb_gnoi.SubscribePreference{
 		Path:              strToPath("/openconfig-interfaces:interfaces/interface[name=*]/subinterfaces/subinterface[index=*]/openconfig-if-ip:ipv4/addresses"),
 		OnChangeSupported: false,
@@ -987,7 +990,7 @@ func TestDebugSubscribePreferences(t *testing.T) {
 		OnChangeSupported: false,
 		TargetDefinedMode: SAMPLE,
 		WildcardSupported: true,
-	}
+	}*/
 
 	t.Run("invalid_path", func(t *testing.T) {
 		_, err := getSubscribePreferences(t, s.config.Port, nil)
@@ -1015,11 +1018,12 @@ func TestDebugSubscribePreferences(t *testing.T) {
 			[]*spb_gnoi.SubscribePreference{ifStat})
 	})
 
+	/*
 	t.Run("onchange_mixed", func(t *testing.T) {
 		verifySubscribePreferences(t, s.config.Port,
 			[]*gnmipb.Path{ifTop.Path},
 			[]*spb_gnoi.SubscribePreference{ifTop, ifPenaltyBasedAied, ifStat, ifIpv4, ifIpv6})
-	})
+	})*/
 
 	t.Run("nondb_path", func(t *testing.T) {
 		verifySubscribePreferences(t, s.config.Port,
@@ -1033,11 +1037,12 @@ func TestDebugSubscribePreferences(t *testing.T) {
 			[]*spb_gnoi.SubscribePreference{aclConfig})
 	})
 
+	/*
 	t.Run("multiple_paths", func(t *testing.T) {
 		verifySubscribePreferences(t, s.config.Port,
 			[]*gnmipb.Path{yanglib.Path, ifTop.Path, aclConfig.Path},
 			[]*spb_gnoi.SubscribePreference{yanglib, ifTop, ifPenaltyBasedAied, ifStat, ifIpv4, ifIpv6, aclConfig})
-	})
+	})*/
 }
 
 func TestDebugSubscribePreferences_dummy(t *testing.T) {

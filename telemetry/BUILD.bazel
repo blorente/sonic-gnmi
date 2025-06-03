@@ -67,6 +67,7 @@ go_library(
     deps = [
         "//gnmi_server",
         "//gnmi_server/log",
+        "//swsscommon",
         "@com_github_golang_glog//:glog",
         "@sonic-mgmt-common//translib/db",
     ],

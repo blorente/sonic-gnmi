@@ -80,12 +80,12 @@ func TestMetricSSH(t *testing.T) {
 	defer r.Close()
 
 	tests := []struct {
-		desc      string
-		lines     []string
-		a         uint64
-		acceptts  uint64
-		r         uint64
-		rejectsts uint64
+		desc     string
+		lines    []string
+		a        uint64
+		acceptTs uint64
+		r        uint64
+		rejectTs uint64
 	}{
 		{"oneAccepted",
 			oneAccepted,
@@ -121,12 +121,12 @@ func TestMetricSSH(t *testing.T) {
 			}
 			tmpFile.Sync()
 			expected.AccessAccepts += tt.a
-			if tt.acceptts != 0 {
-				expected.LastAccessAccept = tt.acceptts
+			if tt.acceptTs != 0 {
+				expected.LastAccessAccept = tt.acceptTs
 			}
 			expected.AccessRejects += tt.r
-			if tt.rejectsts != 0 {
-				expected.LastAccessReject = tt.rejectsts
+			if tt.rejectTs != 0 {
+				expected.LastAccessReject = tt.rejectTs
 			}
 			found := collectCounters(t, sshTable)
 			if !reflect.DeepEqual(expected, found) {
@@ -150,30 +150,48 @@ func TestMetricConsole(t *testing.T) {
 
 	defer r.Close()
 
+	tests := []struct {
+		desc     string
+		lines    []string
+		a        uint64
+		acceptTs uint64
+		r        uint64
+		rejectTs uint64
+	}{
+		{"oneAccepted",
+			oneAccepted,
+			1,
+			512460306000006000, // 1986-03-28T23:05:06.000006-07:00
+			0,
+			0},
+		{"twoRejected",
+			twoRejected,
+			0,
+			0,
+			2,
+			512460314000014000}, // 1986-03-28T23:05:14.000014-07:00
+	}
+
 	expected := collectCounters(t, consoleTable)
-
-	for _, line := range oneAccepted {
-		tmpFile.WriteString(line + "\n")
-	}
-	tmpFile.Sync()
-
-	expected.AccessAccepts += 1
-	expected.LastAccessAccept = 512460306000006000 // UnixNano time of 1986-03-28T23:05:06.000006-07:00
-	found := collectCounters(t, consoleTable)
-	if !reflect.DeepEqual(expected, found) {
-		t.Errorf("Console counters failed accept check:\nCounter mismatch:\nWanted:%+v\nGot:%+v", expected, found)
-	}
-
-	for _, line := range twoRejected {
-		tmpFile.WriteString(line + "\n")
-	}
-	tmpFile.Sync()
-
-	expected.AccessRejects += 2
-	expected.LastAccessReject = 512460314000014000 // UnixNano time of 1986-03-28T23:05:14.000014-07:00
-	found = collectCounters(t, consoleTable)
-	if !reflect.DeepEqual(expected, found) {
-		t.Errorf("Console counters failed reject check:\nCounter mismatch:\nWanted:%+v\nGot:%+v", expected, found)
+	for _, tt := range tests {
+		t.Run(tt.desc, func(t *testing.T) {
+			for _, line := range tt.lines {
+				tmpFile.WriteString(line + "\n")
+			}
+			tmpFile.Sync()
+			expected.AccessAccepts += tt.a
+			if tt.acceptTs != 0 {
+				expected.LastAccessAccept = tt.acceptTs
+			}
+			expected.AccessRejects += tt.r
+			if tt.rejectTs != 0 {
+				expected.LastAccessReject = tt.rejectTs
+			}
+			found := collectCounters(t, consoleTable)
+			if !reflect.DeepEqual(expected, found) {
+				t.Errorf("Console counters failed accept check:\nCounter mismatch:\nWanted:%+v\nGot:%+v", expected, found)
+			}
+		})
 	}
 }
 

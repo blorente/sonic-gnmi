@@ -396,6 +396,9 @@
     "HOST_STATS|HOSTNAME": {
         "hostname": "sonicv4"
     },
+    "DEVICE_METADATA|localhost": {
+        "hostname": "sonicv2_from_device_metadata"
+    },
     "HOST_STATS|CONFIG": {
         "last-configuration-timestamp": "1611693908"
     },

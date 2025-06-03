@@ -2,6 +2,7 @@
   "title": "Set interface min-links",
   "operations":[
     {
+      "title": "Get min-links",
       "operation": "get",
       "returnCode": 0,
       "xpath": "openconfig/interfaces/interface[name=PortChannel1]",
@@ -11,36 +12,28 @@
         "openconfig-interfaces:interface"
       ],
       "properties": {
-        "openconfig-if-aggregation:aggregation": {
+        "openconfig-interfaces:interface": {
           "type": "array",
           "items": {
-            "type": "object",
-            "required": [
-              "config",
-              "state"
-            ],
+            "required": ["openconfig-if-aggregate:aggregation"],
             "properties": {
-              "config": {
+              "openconfig-if-aggregate:aggregation": {
                 "type": "object",
-                "required": [
-                  "min-links"
-                ],
+                "required": [ "config", "state" ],
                 "properties": {
-                  "min-links": {
-                    "type": "integer",
-                    "enum": [1]
-                  }
-                }
-              },
-              "state": {
-                "type": "object",
-                "required": [
-                  "min-links"
-                ],
-                "properties": {
-                  "min-links": {
-                    "type": "integer",
-                    "enum": [1]
+                  "config": {
+                    "type": "object",
+                    "required": [ "min-links" ],
+                    "properties": {
+                      "min-links": { "type": "integer", "const": 1 }
+                    }
+                  },
+                  "state": {
+                    "type": "object",
+                    "required": [ "min-links" ],
+                    "properties": {
+                      "min-links": { "type": "integer", "const": 1 }
+                    }
                   }
                 }
               }
@@ -48,7 +41,37 @@
           }
         }
       }
+    },
+    {
+      "title": "Bad set on min-links",
+      "operation": "update",
+      "returnCode": 10,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]/aggregation/config/min-links",
+      "target": "OC_YANG",
+      "attributeData": "{\"min-links\": 54321}"
+    },
+    {
+      "title": "Set on min-links",
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]/aggregation/config/min-links",
+      "target": "OC_YANG",
+      "attributeData": "{\"min-links\": 32}"
+    },
+    {
+      "title": "Get modified min-links",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]/aggregation/config/min-links",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [ "openconfig-if-aggregate:min-links" ],
+      "properties": {
+        "openconfig-if-aggregate:min-links": {
+          "type": "integer",
+          "const": 32
+        }
+      }
     }
   ]
 }
-

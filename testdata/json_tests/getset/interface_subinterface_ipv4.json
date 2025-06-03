@@ -348,6 +348,59 @@
       }
     },
     {
+      "title": "Set Invalid Loopback Interface ipv4 address 0.x.y.z",
+      "operation": "replace",
+      "returnCode": 10,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv4/addresses/address[ip=0.1.1.1]",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-if-ip:address\":[{\"ip\":\"0.1.1.1\",\"config\":{\"ip\":\"0.1.1.1\",\"prefix-length\":32}}]}"
+    },
+    {
+      "title": "Set Invalid Loopback Interface ipv4 address 255.x.y.z",
+      "operation": "replace",
+      "returnCode": 10,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv4/addresses/address[ip=255.1.1.1]",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-if-ip:address\":[{\"ip\":\"255.1.1.1\",\"config\":{\"ip\":\"255.1.1.1\",\"prefix-length\":32}}]}"
+    },
+    {
+      "title": "Set Valid Interface ipv4 address 1.x.y.z",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv4/addresses/address[ip=1.1.1.1]",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-if-ip:address\":[{\"ip\":\"1.1.1.1\",\"config\":{\"ip\":\"1.1.1.1\",\"prefix-length\":32}}]}"
+    },
+    {
+      "title": "Get Valid Interface ipv4 address 1.x.y.z",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv4/addresses/address[ip=1.1.1.1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-if-ip:address"],
+      "properties": {
+        "openconfig-if-ip:address": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["ip", "config"],
+            "properties": {
+              "ip": { "type": "string", "const": "1.1.1.1" },
+              "config": {
+                "type": "object",
+                "required": ["ip", "prefix-length"],
+                "properties": {
+                  "ip": { "type": "string", "const": "1.1.1.1" },
+                  "prefix-length": { "type": "integer", "const": 32 }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "operation": "delete",
       "returnCode": 0,
       "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv4/addresses/address[ip=172.34.1.0]",
@@ -701,6 +754,67 @@
       }
     },
     {
+      "title": "Set Invalid bond0 Interface ipv4 address 0.x.y.z",
+      "operation": "replace",
+      "returnCode": 10,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=bond0]/subinterfaces/subinterface[index=0]/ipv4/addresses/address[ip=0.1.1.1]",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-if-ip:address\":[{\"ip\":\"0.1.1.1\",\"config\":{\"ip\":\"0.1.1.1\",\"prefix-length\":32}}]}"
+    },
+    {
+      "title": "Set Invalid bond0 Interface ipv4 address 255.x.y.z",
+      "operation": "replace",
+      "returnCode": 10,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=bond0]/subinterfaces/subinterface[index=0]/ipv4/addresses/address[ip=255.1.1.1]",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-if-ip:address\":[{\"ip\":\"255.1.1.1\",\"config\":{\"ip\":\"255.1.1.1\",\"prefix-length\":32}}]}"
+    },
+    {
+      "title": "Set Invalid bond0 Interface ipv4 address (not an ip)",
+      "operation": "replace",
+      "returnCode": 10,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=bond0]/subinterfaces/subinterface[index=0]/ipv4/addresses/address[ip=one.two.1.1]",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-if-ip:address\":[{\"ip\":\"one.two.1.1\",\"config\":{\"ip\":\"one.two.1.1\",\"prefix-length\":32}}]}"
+    },
+    {
+      "title": "Set Valid bond0 Interface ipv4 address 1.x.y.z",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=bond0]/subinterfaces/subinterface[index=0]/ipv4/addresses/address[ip=1.2.2.2]",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-if-ip:address\":[{\"ip\":\"1.2.2.2\",\"config\":{\"ip\":\"1.2.2.2\",\"prefix-length\":32}}]}"
+    },
+    {
+      "title": "Get Valid bond0 Interface ipv4 address 1.x.y.z",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=bond0]/subinterfaces/subinterface[index=0]/ipv4/addresses/address[ip=1.2.2.2]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-if-ip:address"],
+      "properties": {
+        "openconfig-if-ip:address": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["ip", "config"],
+            "properties": {
+              "ip": { "type": "string", "const": "1.2.2.2" },
+              "config": {
+                "type": "object",
+                "required": ["ip", "prefix-length"],
+                "properties": {
+                  "ip": { "type": "string", "const": "1.2.2.2" },
+                  "prefix-length": { "type": "integer", "const": 32 }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "operation": "delete",
       "returnCode": 0,
       "xpath": "openconfig-interfaces:interfaces/interface[name=bond0]/subinterfaces/subinterface[index=0]/ipv4/addresses/address[ip=192.168.0.1]",
@@ -720,7 +834,7 @@
           "db": "CONFIG_DB",
           "value": {
             "LOOPBACK_INTERFACE|Loopback4|10.17.64.21/32" : {
-              "NULL": "NULL"
+              "family": "IPv4"
             }
           }
         }

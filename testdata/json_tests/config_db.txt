@@ -17,7 +17,13 @@
     "DEVICE_METADATA|localhost": {
         "hostname": "sonic",
         "platform": "test",
-        "mac": "00:01:02:03:04:05"
+        "hwsku": "test-sku",
+        "mac": "00:01:02:03:04:05",
+        "synchronous_mode": "enable",
+        "type": "LeafRouter",
+        "zmq_mode": "enable",
+        "default_bgp_status": "up",
+        "default_pfcwd_status": "disable"
     },
     "PORTCHANNEL|PortChannel1": {
        "admin_status": "up",

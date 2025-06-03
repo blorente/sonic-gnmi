@@ -6,7 +6,7 @@
       "returnCode": 0,
       "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]",
       "target": "OC_YANG",
-      "attributeData": "{\"openconfig-interfaces:subinterface\":[{\"index\":0,\"config\":{\"index\":0},\"openconfig-if-ip:ipv6\":{\"addresses\":{\"address\":[{\"ip\":\"2620:1080:2000:100::\",\"config\":{\"ip\":\"2620:1080:2000:100::\",\"prefix-length\":64}}]}}}]}",
+      "attributeData": "{\"openconfig-interfaces:subinterface\":[{\"index\":0,\"config\":{\"index\":0},\"openconfig-if-ip:ipv6\":{\"addresses\":{\"address\":[{\"ip\":\"2620:1080:2000:100::\",\"config\":{\"ip\":\"2620:1080:2000:100::\",\"prefix-length\":64}}]}, \"config\":{\"enabled\":true}}}]}",
       "title": "Set Interface ipv6 address"
     },
     {
@@ -340,6 +340,117 @@
                       }
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv6/config/enabled",
+      "target": "OC_YANG",
+      "attributeData": "{\"enabled\":true}",
+      "title": "Set Interface ipv6 enable"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv6/config",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [ "openconfig-if-ip:config" ],
+      "properties": {
+        "openconfig-if-ip:config": {
+          "type": "object",
+          "required": ["enabled"],
+          "properties": {
+            "enabled": { "type": "boolean", "const": true }
+          }
+        }
+      }
+    },
+    {
+      "operation": "update",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv6/config/enabled",
+      "target": "OC_YANG",
+      "attributeData": "{\"enabled\":false}",
+      "title": "Set Interface ipv6 disable"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv6/config",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [ "openconfig-if-ip:config" ],
+      "properties": {
+        "openconfig-if-ip:config": {
+          "type": "object",
+          "required": ["enabled"],
+          "properties": {
+            "enabled": { "type": "boolean", "const": false }
+          }
+        }
+      }
+    },
+    {
+      "title": "Set Invalid Loopback Interface ipv6 address double colons",
+      "operation": "replace",
+      "returnCode": 10,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv6/addresses/address[ip=1234::5678:100::]",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-if-ip:address\":[{\"ip\":\"1234::5678:100::\",\"config\":{\"ip\":\"1234::5678:100::\",\"prefix-length\":128}}]}"
+    },
+    {
+      "title": "Set Invalid Loopback Interface ipv6 address too long",
+      "operation": "replace",
+      "returnCode": 10,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv6/addresses/address[ip=1:2:3:4:5:6:7:8:9]",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-if-ip:address\":[{\"ip\":\"1:2:3:4:5:6:7:8:9\",\"config\":{\"ip\":\"1:2:3:4:5:6:7:8:9\",\"prefix-length\":128}}]}"
+    },
+    {
+      "title": "Set Invalid Loopback Interface ipv6 address illegal character",
+      "operation": "replace",
+      "returnCode": 10,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv6/addresses/address[ip=B:A:D:I:P:A:D:R]",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-if-ip:address\":[{\"ip\":\"B:A:D:I:P:A:D:R\",\"config\":{\"ip\":\"B:A:D:I:P:A:D:R\",\"prefix-length\":128}}]}"
+    },
+    {
+      "title": "Set Valid Loopback Interface ipv6 address 1000::101",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv6/addresses/address[ip=1000::101]",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-if-ip:address\":[{\"ip\":\"1000::101\",\"config\":{\"ip\":\"1000::101\",\"prefix-length\":128}}]}"
+    },
+    {
+      "title": "Get Valid Interface ipv6 address 1000::101",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv6/addresses/address[ip=1000::101]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-if-ip:address"],
+      "properties": {
+        "openconfig-if-ip:address": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["ip", "config"],
+            "properties": {
+              "ip": { "type": "string", "const": "1000::101" },
+              "config": {
+                "type": "object",
+                "required": ["ip", "prefix-length"],
+                "properties": {
+                  "ip": { "type": "string", "const": "1000::101" },
+                  "prefix-length": { "type": "integer", "const": 128 }
                 }
               }
             }
@@ -701,6 +812,51 @@
       }
     },
     {
+      "title": "Set Invalid bond0 Interface ipv6 address double colons",
+      "operation": "replace",
+      "returnCode": 10,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=bond0]/subinterfaces/subinterface[index=0]/ipv6/addresses/address[ip=1234::5678:100::]",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-if-ip:address\":[{\"ip\":\"1234::5678:100::\",\"config\":{\"ip\":\"1234::5678:100::\",\"prefix-length\":128}}]}"
+    },
+    {
+      "title": "Set Valid bond0 Interface ipv6 address 3000::303",
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=bond0]/subinterfaces/subinterface[index=0]/ipv6/addresses/address[ip=3000::303]",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-if-ip:address\":[{\"ip\":\"3000::303\",\"config\":{\"ip\":\"3000::303\",\"prefix-length\":128}}]}"
+    },
+    {
+      "title": "Get Valid Interface ipv6 address 3000::303",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=bond0]/subinterfaces/subinterface[index=0]/ipv6/addresses/address[ip=3000::303]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-if-ip:address"],
+      "properties": {
+        "openconfig-if-ip:address": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["ip", "config"],
+            "properties": {
+              "ip": { "type": "string", "const": "3000::303" },
+              "config": {
+                "type": "object",
+                "required": ["ip", "prefix-length"],
+                "properties": {
+                  "ip": { "type": "string", "const": "3000::303" },
+                  "prefix-length": { "type": "integer", "const": 128 }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "operation": "delete",
       "returnCode": 0,
       "xpath": "openconfig-interfaces:interfaces/interface[name=bond0]/subinterfaces/subinterface[index=0]/ipv6/addresses/address[ip=2620:1081:1c20::1]",
@@ -720,7 +876,7 @@
           "db": "CONFIG_DB",
           "value": {
             "LOOPBACK_INTERFACE|Loopback4|2202:f001:ace::/64" : {
-              "NULL": "NULL"
+              "family": "IPv6"
             }
           }
         }

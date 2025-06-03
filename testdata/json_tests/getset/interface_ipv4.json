@@ -299,6 +299,36 @@
       "xpath": "openconfig-interfaces:interfaces/interface[name=Ethernet1/2/1]/subinterfaces/subinterface[index=0]/ipv4/addresses/address[ip=9.9.9.9]",
       "target": "OC_YANG",
       "title": "Delete Interface ipv4 address"
+    },
+    {
+      "operation": "delete",
+      "returnCode": 10,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Ethernet1/2/1]/subinterfaces/subinterface[index=10]/ipv4/addresses/address[ip=9.9.9.9]",
+      "target": "OC_YANG",
+      "title": "Delete sub-interface which does not exist"
+    },
+    {
+      "operation": "delete",
+      "title": "Delete an interface which does not exist",
+      "returnCode": 10,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Ethernet1/29/1]",
+      "target": "OC_YANG"
+    },
+    {
+      "operation": "update",
+      "returnCode": 10,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Ethernet1/200/1]",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interface\":[{\"name\":\"Ethernet1/200/1\",\"config\":{\"name\":\"Ethernet1/200/1\"}}]}",
+      "title": "Set Interface ipv4 address"
+    },
+    {
+      "operation": "replace",
+      "returnCode": 10,
+      "xpath": "openconfig-interfaces:interfaces/interface[name=Ethernet1/200/1]",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interface\":[{\"name\":\"Ethernet1/200/1\",\"config\":{\"name\":\"Ethernet1/200/1\"}}]}",
+      "title": "Set Interface ipv4 address"
     }
   ]
 }

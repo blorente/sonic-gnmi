@@ -51,10 +51,6 @@ func TestFileServer(t *testing.T) {
 		_, err = stream.CloseAndRecv()
 		testErr(err, codes.Unimplemented, "Method file.Put is unimplemented.", t)
 	})
-	t.Run("StatFailsAsUnimplemented", func(t *testing.T) {
-		_, err := sc.Stat(ctx, &file.StatRequest{})
-		testErr(err, codes.Unimplemented, "Method file.Stat is unimplemented.", t)
-	})
 	t.Run("RemoveFailsIfRemoteFileMissing", func(t *testing.T) {
 		req := &file.RemoveRequest{}
 

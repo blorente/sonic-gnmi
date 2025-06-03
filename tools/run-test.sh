@@ -38,6 +38,7 @@ ${BAZELISK} run --config=remote --collect_code_coverage --verbose_failures //gnm
                --env TEST_PATTERN="${TEST_PATTERN}" \
                --env LVL=${LVL} \
                --env JSON_TGT=${JSON_TGT} \
+               --env TEST_SUITE=${TEST_SUITE} \
                --env KOKORO_JOB=${KOKORO_JOB} \
                --sysctl net.ipv6.conf.all.disable_ipv6=0 \
                --sysctl net.ipv6.conf.default.disable_ipv6=0 \

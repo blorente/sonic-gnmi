@@ -1,5 +1,5 @@
 {
-  "title": "Set and Get System config and state",
+  "title": "Set_and_Get_System_config_and_state",
   "operations":[
     {
       "operation": "get",
@@ -109,7 +109,25 @@
                 }
               }
             }
-          }
+          },
+          "subOpers": [
+            {
+              "oper": "dbHGetValidate",
+              "db": "CONFIG_DB",
+              "value": {
+                "DEVICE_METADATA|localhost" : {
+                  "hwsku": "test-sku",
+                  "platform": "test",
+                  "mac": "00:01:02:03:04:05",
+                  "synchronous_mode": "enable",
+                  "type": "LeafRouter",
+                  "zmq_mode": "enable",
+                  "default_bgp_status": "up",
+                  "default_pfcwd_status": "disable"
+                }
+              }
+            }
+          ]
         }
       }
     },
@@ -271,7 +289,7 @@
       }
     },
     {
-      "operation": "update",
+      "operation": "replace",
       "returnCode": 0,
       "xpath": "/openconfig/system",
       "target": "OC_YANG",
@@ -282,7 +300,15 @@
           "db": "CONFIG_DB",
           "value": {
             "DEVICE_METADATA|localhost" : {
-              "config-meta-data": "v1"
+              "config-meta-data": "v1",
+              "hwsku": "test-sku",
+              "platform": "test",
+              "mac": "00:01:02:03:04:05",
+              "synchronous_mode": "enable",
+              "type": "LeafRouter",
+              "zmq_mode": "enable",
+              "default_bgp_status": "up",
+              "default_pfcwd_status": "disable"
             }
           }
         }
@@ -511,6 +537,87 @@
             "DEVICE_METADATA|localhost" : {
               "hostname": "sonicv2"
             }
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "title": "Test alternate state hostname source (state_db:DEVICE_METADATA|localhost:hostname)",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/state/hostname",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:hostname"
+      ],
+      "properties": {
+        "openconfig-system:hostname": {
+          "type": "string",
+          "const": "sonicv4"
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHDel",
+          "title": "Delete primary state hostname",
+          "db": "STATE_DB",
+          "value": {
+            "HOST_STATS|HOSTNAME": [ "hostname" ]
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/state/hostname",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:hostname"
+      ],
+      "properties": {
+        "openconfig-system:hostname": {
+          "type": "string",
+          "const": "sonicv2_from_device_metadata"
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHDel",
+          "title": "Delete secondary state hostname",
+          "db": "STATE_DB",
+          "value": {
+            "DEVICE_METADATA|localhost": [ "hostname" ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Test second! alternate state hostname source (config_db:DEVICE_METADATA|localhost:hostname)",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "/openconfig/system/state/hostname",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-system:hostname"
+      ],
+      "properties": {
+        "openconfig-system:hostname": {
+          "type": "string",
+          "const": "sonicv2"
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "title": "Restore primary state hostname",
+          "db": "STATE_DB",
+          "value": {
+            "HOST_STATS|HOSTNAME": { "hostname":"sonicv4" },
+            "DEVICE_METADATA|localhost": { "hostname":"sonicv2_from_device_metadata" }
           }
         }
       ]

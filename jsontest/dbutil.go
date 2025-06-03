@@ -7,8 +7,8 @@ import (
 	"reflect"
 	"sync"
 
-	sdcfg "github.com/sonic-net/sonic-gnmi/sonic_db_config"
 	"github.com/redis/go-redis/v9"
+	sdcfg "github.com/sonic-net/sonic-gnmi/sonic_db_config"
 )
 
 // Shared database clients per db.
@@ -161,7 +161,7 @@ func readFromDBandValidate(db string, mpi map[string]interface{}) error {
 			for field, wantVal := range fv.(map[string]interface{}) {
 				gotVal, err := rClient.HGet(context.Background(), key, field).Result()
 				if err != nil {
-					return fmt.Errorf("Invalid data for db:  %v : %v %v", key, field, err)
+					return fmt.Errorf("Invalid data for db: key=%s field=%s err=%v", key, field, err)
 				}
 				if gotVal != wantVal.(string) {
 					return fmt.Errorf("Get values did not match for field \"%v\": gotVal (%v); wantVal (%v)", field, gotVal, wantVal)

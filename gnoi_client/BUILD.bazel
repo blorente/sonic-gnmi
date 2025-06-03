@@ -9,6 +9,7 @@ go_library(
         "//proto/sonic_gnoi",
         "//proto/sonic_gnoi/jwt",
         "@com_github_google_gnxi//utils/credentials",
+        "@com_github_openconfig_gnoi//file",
         "@com_github_openconfig_gnoi//system",
         "@org_golang_google_grpc//:grpc",
         "@org_golang_google_grpc//metadata",

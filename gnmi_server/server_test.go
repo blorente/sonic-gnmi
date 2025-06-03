@@ -50,6 +50,7 @@ import (
 	gnoi_system_pb "github.com/openconfig/gnoi/system"
 	"github.com/openconfig/ygot/ygot"
 	"github.com/redis/go-redis/v9"
+	gnoi_file_pb "github.com/openconfig/gnoi/file"
 	"github.com/sonic-net/sonic-gnmi/common_utils"
 	jtest "github.com/sonic-net/sonic-gnmi/jsontest"
 	spb "github.com/sonic-net/sonic-gnmi/proto/gnmi_sonic"
@@ -91,7 +92,7 @@ const (
 )
 
 
-var controllerPaths = []struct {
+var sfePaths = []struct {
 	path string
 	mode pb.SubscriptionMode
 }{
@@ -1468,11 +1469,11 @@ func runGnmiTestGet(t *testing.T, port int64, namespace string) {
 	},
 		{
 			desc:       "Get valid but non-existing node",
-			pathTarget: "COUNTERS_DB",
+			pathTarget: stateDBPath,
 			textPbPath: `
-			elem: <name: "MyCounters" >
-		`,
-			wantRetCode: codes.NotFound,
+				elem: <name: "TRANSCEIVER_DOM_SENSOR" >
+			`,
+			wantRetCode: codes.OK,
 		}, {
 			desc:       "Get COUNTERS_PORT_NAME_MAP",
 			pathTarget: "COUNTERS_DB",
@@ -3066,6 +3067,76 @@ func TestGNOI(t *testing.T) {
 		}
 	})
 
+	t.Run("FileStatSuccess", func(t *testing.T) {
+		mockClient := &ssc.DbusClient{}
+		expectedResult := map[string]string{
+			"last_modified": "1609459200000000000",
+			"permissions":   "644",
+			"size":          "1024",
+			"umask":         "o022",
+		}
+		mock := gomonkey.ApplyMethod(reflect.TypeOf(mockClient), "GetFileStat", func(_ *ssc.DbusClient, path string) (map[string]string, error) {
+			return expectedResult, nil
+		})
+		defer mock.Reset()
+
+		// Prepare context and request
+		ctx := context.Background()
+		req := &gnoi_file_pb.StatRequest{Path: "/etc/sonic/config_db.json"}
+		fc := gnoi_file_pb.NewFileClient(conn)
+
+		resp, err := fc.Stat(ctx, req)
+		if err != nil {
+			t.Fatalf("FileStat failed: %v", err)
+		}
+		// Validate the response
+		if len(resp.Stats) == 0 {
+			t.Fatalf("Expected at least one StatInfo in response")
+		}
+	
+		statInfo := resp.Stats[0]
+
+		if statInfo.LastModified != 1609459200000000000 {
+			t.Errorf("Expected last_modified %d but got %d", 1609459200000000000, statInfo.LastModified)
+		}
+		if statInfo.Permissions != 420 {
+			t.Errorf("Expected permissions 420 but got %d", statInfo.Permissions)
+		}
+		if statInfo.Size != 1024 {
+			t.Errorf("Expected size 1024 but got %d", statInfo.Size)
+		}
+		if statInfo.Umask != 18 {
+			t.Errorf("Expected umask 18 but got %d", statInfo.Umask)
+		}
+	})
+
+	t.Run("FileStatFailure", func(t *testing.T) {
+		mockClient := &ssc.DbusClient{}
+		expectedError := fmt.Errorf("failed to get file stats")
+		
+		mock := gomonkey.ApplyMethod(reflect.TypeOf(mockClient), "GetFileStat", func(_ *ssc.DbusClient, path string) (map[string]string, error) {
+			return nil, expectedError
+		})
+		defer mock.Reset()
+
+		// Prepare context and request
+		ctx := context.Background()
+		req := &gnoi_file_pb.StatRequest{Path: "/etc/sonic/config_db.json"}
+		fc := gnoi_file_pb.NewFileClient(conn)
+
+		resp, err := fc.Stat(ctx, req)
+		if err == nil {
+			t.Fatalf("Expected error but got none")
+		}
+		if resp != nil {
+			t.Fatalf("Expected nil response but got: %v", resp)
+		}
+	
+		if !strings.Contains(err.Error(), expectedError.Error()) {
+			t.Errorf("Expected error to contain '%v' but got '%v'", expectedError, err)
+		}	
+	})
+
 	type configData struct {
 		source      string
 		destination string
@@ -3919,10 +3990,196 @@ func TestUnaryRPCLimit(t *testing.T) {
 	}
 }
 
+
+func TestWildcardTableNoError(t *testing.T) {
+	s := createServer(t)
+	go runServer(t, s)
+	defer s.ForceStop()
+
+	fileName := "../testdata/NEIGH_STATE_TABLE_MAP.txt"
+	neighStateTableByte, err := ioutil.ReadFile(fileName)
+	if err != nil {
+		t.Fatalf("read file %v err: %v", fileName, err)
+	}
+
+	var neighStateTableJson interface{}
+	json.Unmarshal(neighStateTableByte, &neighStateTableJson)
+
+	tests := []struct {
+		desc     string
+		q        client.Query
+		wantNoti []client.Notification
+		poll     int
+	}{
+		{
+			desc: "poll query for NEIGH_STATE_TABLE",
+			poll: 1,
+			q: client.Query{
+				Target:  "STATE_DB",
+				Type:    client.Poll,
+				Queries: []client.Path{{"NEIGH_STATE_TABLE"}},
+				TLS:     &tls.Config{InsecureSkipVerify: true},
+			},
+			wantNoti: []client.Notification{
+				client.Update{Path: []string{"NEIGH_STATE_TABLE"}, TS: time.Unix(0, 200), Val: neighStateTableJson},
+				client.Update{Path: []string{"NEIGH_STATE_TABLE"}, TS: time.Unix(0, 200), Val: neighStateTableJson},
+			},
+		},
+	}
+	namespace, _ := sdcfg.GetDbDefaultNamespace()
+	prepareStateDb(t, namespace)
+	var mutexNoti sync.Mutex
+	for _, tt := range tests {
+
+		t.Run(tt.desc, func(t *testing.T) {
+			q := tt.q
+			q.Addrs = []string{fmt.Sprintf("127.0.0.1:%d", s.config.Port)}
+			c := client.New()
+			var gotNoti []client.Notification
+			q.NotificationHandler = func(n client.Notification) error {
+				mutexNoti.Lock()
+				if nn, ok := n.(client.Update); ok {
+					nn.TS = time.Unix(0, 200)
+					gotNoti = append(gotNoti, nn)
+				}
+				mutexNoti.Unlock()
+				return nil
+			}
+
+			wg := new(sync.WaitGroup)
+			wg.Add(1)
+
+			go func() {
+				defer wg.Done()
+				if err := c.Subscribe(context.Background(), q); err != nil {
+					t.Errorf("c.Subscribe(): got error %v, expected nil", err)
+				}
+			}()
+
+			wg.Wait()
+
+			for i := 0; i < tt.poll; i++ {
+				if err := c.Poll(); err != nil {
+					t.Errorf("c.Poll(): got error %v, expected nil", err)
+				}
+			}
+
+			mutexNoti.Lock()
+
+			if len(gotNoti) == 0 {
+				t.Errorf("expected non zero notifications")
+			}
+
+			if diff := pretty.Compare(tt.wantNoti, gotNoti); diff != "" {
+				t.Log("\n Want: \n", tt.wantNoti)
+				t.Log("\n Got: \n", gotNoti)
+				t.Errorf("unexpected updates: \n%s", diff)
+			}
+
+			mutexNoti.Unlock()
+
+			c.Close()
+		})
+	}
+}
+
+func TestNonExistentTableNoError(t *testing.T) {
+	s := createServer(t)
+	go runServer(t, s)
+	defer s.ForceStop()
+
+	fileName := "../testdata/EMPTY_JSON.txt"
+	transceiverDomSensorTableByte, err := ioutil.ReadFile(fileName)
+	if err != nil {
+		t.Fatalf("read file %v err: %v", fileName, err)
+	}
+
+	var transceiverDomSensorTableJson interface{}
+	json.Unmarshal(transceiverDomSensorTableByte, &transceiverDomSensorTableJson)
+
+	tests := []struct {
+		desc     string
+		q        client.Query
+		wantNoti []client.Notification
+		poll     int
+	}{
+		{
+			desc: "poll query for TRANSCEIVER_DOM_SENSOR",
+			poll: 1,
+			q: client.Query{
+				Target:  "STATE_DB",
+				Type:    client.Poll,
+				Queries: []client.Path{{"TRANSCEIVER_DOM_SENSOR"}},
+				TLS:     &tls.Config{InsecureSkipVerify: true},
+			},
+			wantNoti: []client.Notification{
+				client.Update{Path: []string{"TRANSCEIVER_DOM_SENSOR"}, TS: time.Unix(0, 200), Val: transceiverDomSensorTableJson},
+				client.Update{Path: []string{"TRANSCEIVER_DOM_SENSOR"}, TS: time.Unix(0, 200), Val: transceiverDomSensorTableJson},
+			},
+		},
+	}
+	namespace, _ := sdcfg.GetDbDefaultNamespace()
+	prepareStateDb(t, namespace)
+	var mutexNoti sync.Mutex
+
+	for _, tt := range tests {
+		prepareStateDb(t, namespace)
+		t.Run(tt.desc, func(t *testing.T) {
+			q := tt.q
+			q.Addrs = []string{fmt.Sprintf("127.0.0.1:%d", s.config.Port)}
+			c := client.New()
+			var gotNoti []client.Notification
+			q.NotificationHandler = func(n client.Notification) error {
+				mutexNoti.Lock()
+				if nn, ok := n.(client.Update); ok {
+					nn.TS = time.Unix(0, 200)
+					gotNoti = append(gotNoti, nn)
+				}
+				mutexNoti.Unlock()
+				return nil
+			}
+
+			wg := new(sync.WaitGroup)
+			wg.Add(1)
+
+			go func() {
+				defer wg.Done()
+				if err := c.Subscribe(context.Background(), q); err != nil {
+					t.Errorf("c.Subscribe(): got error %v, expected nil", err)
+				}
+			}()
+
+			wg.Wait()
+
+			for i := 0; i < tt.poll; i++ {
+				if err := c.Poll(); err != nil {
+					t.Errorf("c.Poll(): got error %v, expected nil", err)
+				}
+			}
+
+			mutexNoti.Lock()
+
+			if len(gotNoti) == 0 {
+				t.Errorf("expected non zero notifications")
+			}
+
+			if diff := pretty.Compare(tt.wantNoti, gotNoti); diff != "" {
+				t.Log("\n Want: \n", tt.wantNoti)
+				t.Log("\n Got: \n", gotNoti)
+				t.Errorf("unexpected updates: \n%s", diff)
+			}
+
+			mutexNoti.Unlock()
+
+			c.Close()
+		})
+	}
+}
+
 func TestConnectionDataSet(t *testing.T) {
 	s := createServer(t)
 	go runServer(t, s)
-	defer s.Stop()
+	defer s.ForceStop()
 
 	tests := []struct {
 		desc string
@@ -3994,16 +4251,16 @@ func TestConnectionsKeepAlive(t *testing.T) {
 	defer s.Stop()
 
 	tests := []struct {
-		desc string
-		q    client.Query
-		want []client.Notification
-		poll int
+		desc    string
+		q       client.Query
+		want    []client.Notification
+		poll    int
 	}{
 		{
 			desc: "Testing KeepAlive with goroutine count",
 			poll: 3,
 			q: client.Query{
-				Target:  "COUNTERS_DB",
+				Target: "COUNTERS_DB",
 				Type:    client.Poll,
 				Queries: []client.Path{{"COUNTERS", "Ethernet*"}},
 				TLS:     &tls.Config{InsecureSkipVerify: true},
@@ -4014,12 +4271,14 @@ func TestConnectionsKeepAlive(t *testing.T) {
 			},
 		},
 	}
-	for _, tt := range tests {
+	for _, tt := range(tests) {
+		var clients []*cacheclient.CacheClient
 		for i := 0; i < 5; i++ {
 			t.Run(tt.desc, func(t *testing.T) {
 				q := tt.q
 				q.Addrs = []string{fmt.Sprintf("127.0.0.1:%d", s.config.Port)}
 				c := client.New()
+				clients = append(clients, c)
 				wg := new(sync.WaitGroup)
 				wg.Add(1)
 
@@ -4040,6 +4299,9 @@ func TestConnectionsKeepAlive(t *testing.T) {
 					t.Errorf("Expecting goroutine after sleep to be less than or equal to after subscribe, after_subscribe: %d, after_sleep: %d", after_subscribe, after_sleep)
 				}
 			})
+		}
+		for _, cacheClient := range(clients) {
+			cacheClient.Close()
 		}
 	}
 }
@@ -4348,7 +4610,7 @@ func TestOnChangeScenariosDuringSync(t *testing.T) {
 		expectedAfterSync string             // If an update is received after the SyncResponse, this is the expected value.
 	}{
 		{
-			// This test changes oper-status for a port while the CONTROLLER sync response is being processed
+			// This test changes oper-status for a port while the SFE sync response is being processed
 			// and expects an oper-status update on that port.
 			name: "FieldChangeDuringSync",
 			port: "Ethernet1/2220/1",
@@ -4383,7 +4645,7 @@ func TestOnChangeScenariosDuringSync(t *testing.T) {
 			expectedAfterSync: "DOWN",
 		},
 		{
-			// This test flaps oper-status for a port while the CONTROLLER sync response is being processed
+			// This test flaps oper-status for a port while the SFE sync response is being processed
 			// and expects an oper-status update on that port.
 			name: "LinkFlapDuringSync",
 			port: "Ethernet1/2221/1",
@@ -4423,7 +4685,7 @@ func TestOnChangeScenariosDuringSync(t *testing.T) {
 			expectedAfterSync: "UP",
 		},
 		{
-			// This test adds a new interface to the ApplStateDB while the CONTROLLER sync response is being processed
+			// This test adds a new interface to the ApplStateDB while the SFE sync response is being processed
 			// and expects a hardware-port update on that interface.
 			name: "PortAddDuringSync",
 			port: "Ethernet1/2222/1",
@@ -4454,7 +4716,7 @@ func TestOnChangeScenariosDuringSync(t *testing.T) {
 			expectedAfterSync: "UP",
 		},
 		{
-			// This test removes then adds back an interface to the ApplStateDB while the CONTROLLER sync response
+			// This test removes then adds back an interface to the ApplStateDB while the SFE sync response
 			// is being processed and expects oper-status to be correctly reported.
 			name: "PortDeleteAndAddDuringSync",
 			port: "Ethernet1/2223/1",
@@ -4501,7 +4763,7 @@ func TestOnChangeScenariosDuringSync(t *testing.T) {
 			expectedAfterSync: "UP",
 		},
 		{
-			// This deletes a port while the CONTROLLER sync response is being processed
+			// This deletes a port while the SFE sync response is being processed
 			// and expects a delete or no update during sync response for that port.
 			name: "PortDeleteDuringSync",
 			port: "Ethernet1/2224/1",
@@ -4537,7 +4799,7 @@ func TestOnChangeScenariosDuringSync(t *testing.T) {
 			expectedAfterSync: "delete",
 		},
 		{
-			// This adds and deletes a port while the CONTROLLER sync response is being processed
+			// This adds and deletes a port while the SFE sync response is being processed
 			// and expects a delete or no update during sync response for that port.
 			name: "PortAddAndDeleteDuringSync",
 			port: "Ethernet1/2225/1",
@@ -4599,14 +4861,14 @@ func TestOnChangeScenariosDuringSync(t *testing.T) {
 
 	// Construct the subscription
 	subs := []*pb.Subscription{}
-	for _, controllerSub := range controllerPaths {
-		path, err := xpath.ToGNMIPath(controllerSub.path)
+	for _, sfeSub := range sfePaths {
+		path, err := xpath.ToGNMIPath(sfeSub.path)
 		if err != nil {
 			t.Fatalf("Failed to convert string to GNMI path: %v", err)
 		}
 		subs = append(subs, &pb.Subscription{
 			Path: path,
-			Mode: controllerSub.mode,
+			Mode: sfeSub.mode,
 		})
 	}
 	subscription := &gnmipb.SubscribeRequest{
@@ -5614,13 +5876,6 @@ func TestServerPort(t *testing.T) {
 	s.Stop()
 }
 
-func TestNilServerStop(t *testing.T) {
-	// Create a server with nil grpc server, such that s.Stop is called with nil value
-	t.Log("Expecting s.Stop to log error as server is nil")
-	s := &Server{}
-	s.Stop()
-}
-
 func TestNilClientDbWriters(t *testing.T) {
 	for _, f := range []func(rc *redis.Client){recordSuccessfulSet, recordFailedSet} {
 		f(nil)
@@ -5629,6 +5884,20 @@ func TestNilClientDbWriters(t *testing.T) {
 	if disablePortCyclingErr := disablePortCycling(nil); disablePortCyclingErr == nil {
 		t.Error("disablePortCycling(nil) did not return an error")
 	}
+}
+
+func TestNilServerStop(t *testing.T) {
+	// Create a server with nil grpc server, such that s.Stop is called with nil value
+	t.Log("Expecting s.Stop to log error as server is nil")
+	s := &Server{}
+	s.Stop()
+}
+
+func TestNilServerForceStop(t *testing.T) {
+	// Create a server with nil grpc server, such that s.ForceStop is called with nil value
+	t.Log("Expecting s.ForceStop to log error as server is nil")
+	s := &Server{}
+	s.ForceStop()
 }
 
 func TestInvalidServer(t *testing.T) {
@@ -5973,7 +6242,7 @@ func TestClientCertAuthenAndAuthor(t *testing.T) {
 
 	// check auth with nil cert name
 	ctx, cancel := CreateAuthorizationCtx()
-	ctx, err = ClientCertAuthenAndAuthor(ctx, "")
+	ctx, err = ClientCertAuthenAndAuthor(ctx, "", false)
 	if err != nil {
 		t.Errorf("CommonNameMatch with empty config table should success: %v", err)
 	}
@@ -5984,7 +6253,7 @@ func TestClientCertAuthenAndAuthor(t *testing.T) {
 	ctx, cancel = CreateAuthorizationCtx()
 	configDb.Flushdb()
 	gnmiTable.Hset("certname1", "role", "role1")
-	ctx, err = ClientCertAuthenAndAuthor(ctx, "GNMI_CLIENT_CERT")
+	ctx, err = ClientCertAuthenAndAuthor(ctx, "GNMI_CLIENT_CERT", false)
 	if err != nil {
 		t.Errorf("CommonNameMatch with correct cert name should success: %v", err)
 	}
@@ -5996,7 +6265,7 @@ func TestClientCertAuthenAndAuthor(t *testing.T) {
 	configDb.Flushdb()
 	gnmiTable.Hset("certname1", "role", "role1")
 	gnmiTable.Hset("certname2", "role", "role2")
-	ctx, err = ClientCertAuthenAndAuthor(ctx, "GNMI_CLIENT_CERT")
+	ctx, err = ClientCertAuthenAndAuthor(ctx, "GNMI_CLIENT_CERT", false)
 	if err != nil {
 		t.Errorf("CommonNameMatch with correct cert name should success: %v", err)
 	}
@@ -6007,7 +6276,7 @@ func TestClientCertAuthenAndAuthor(t *testing.T) {
 	ctx, cancel = CreateAuthorizationCtx()
 	configDb.Flushdb()
 	gnmiTable.Hset("certname2", "role", "role2")
-	ctx, err = ClientCertAuthenAndAuthor(ctx, "GNMI_CLIENT_CERT")
+	ctx, err = ClientCertAuthenAndAuthor(ctx, "GNMI_CLIENT_CERT", false)
 	if err == nil {
 		t.Errorf("CommonNameMatch with invalid cert name should fail: %v", err)
 	}
@@ -8362,7 +8631,7 @@ func TestPictorSubscription(t *testing.T) {
 	}
 }
 
-func TestCONTROLLERSubscription(t *testing.T) {
+func TestSFESubscription(t *testing.T) {
 	s := createServer(t)
 	s.config.EnableTranslation = true
 	go runServer(t, s)
@@ -8389,14 +8658,14 @@ func TestCONTROLLERSubscription(t *testing.T) {
 
 	// Construct the subscription
 	subs := []*pb.Subscription{}
-	for _, controllerSub := range controllerPaths {
-		path, err := xpath.ToGNMIPath(controllerSub.path)
+	for _, sfeSub := range sfePaths {
+		path, err := xpath.ToGNMIPath(sfeSub.path)
 		if err != nil {
 			t.Fatalf("Failed to convert string to GNMI path: %v", err)
 		}
 		subs = append(subs, &pb.Subscription{
 			Path: path,
-			Mode: controllerSub.mode,
+			Mode: sfeSub.mode,
 		})
 	}
 	subscription := &pb.SubscribeRequest{
@@ -10194,9 +10463,87 @@ func TestSubscribeBenchmark(t *testing.T) {
 		},
 		{
 			
-			name:  "CONTROLLER",
+			name:  "SFE",
 			itrs:  1,
-			paths: controllerPaths,
+			paths: sfePaths,
+		},
+		{
+			name: "Interfaces",
+			itrs: 1,
+			paths: []struct {
+				path string
+				mode pb.SubscriptionMode
+			}{
+				{
+					path: "/interfaces",
+					mode: pb.SubscriptionMode_SAMPLE,
+				},
+			},
+		},
+		{
+			name: "Components",
+			itrs: 1,
+			paths: []struct {
+				path string
+				mode pb.SubscriptionMode
+			}{
+				{
+					path: "/components",
+					mode: pb.SubscriptionMode_SAMPLE,
+				},
+			},
+		},
+		{
+			name: "LACP",
+			itrs: 1,
+			paths: []struct {
+				path string
+				mode pb.SubscriptionMode
+			}{
+				{
+					path: "/lacp",
+					mode: pb.SubscriptionMode_SAMPLE,
+				},
+			},
+		},
+		{
+			name: "Sampling",
+			itrs: 1,
+			paths: []struct {
+				path string
+				mode pb.SubscriptionMode
+			}{
+				{
+					path: "/sampling",
+					mode: pb.SubscriptionMode_SAMPLE,
+				},
+			},
+		},
+		{
+			name: "System",
+			itrs: 1,
+			paths: []struct {
+				path string
+				mode pb.SubscriptionMode
+			}{
+				{
+					path: "/system",
+					mode: pb.SubscriptionMode_SAMPLE,
+				},
+			},
+		},
+		{
+			name: "QoS",
+			itrs: 1,
+			paths: []struct {
+				path string
+				mode pb.SubscriptionMode
+			}{
+				{
+					path: "/qos",
+					mode: pb.SubscriptionMode_SAMPLE,
+				},
+			},
 		},
 	}
 
@@ -10291,7 +10638,7 @@ func TestSubscribeBenchmark(t *testing.T) {
 					stream.CloseSend()
 				}
 			})
-			t.Logf("BenchmarkResults:\nItrs=%v\nTime=%v\nMemAllocs=%v\nMemBytes=%v", test.itrs, time.Duration(res.T.Nanoseconds()/int64(test.itrs)), res.MemAllocs/uint64(test.itrs), res.MemBytes/uint64(test.itrs))
+			t.Logf("BenchmarkResults for %v:\nItrs=%v\nTime=%v\nMemAllocs=%v\nMemBytes=%v", test.name, test.itrs, time.Duration(res.T.Nanoseconds()/int64(test.itrs)), res.MemAllocs/uint64(test.itrs), res.MemBytes/uint64(test.itrs))
 		})
 	}
 }

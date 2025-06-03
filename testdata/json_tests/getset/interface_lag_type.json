@@ -18,45 +18,63 @@
         "openconfig-interfaces:interface"
       ],
       "properties": {
-        "openconfig-if-aggregate:aggregation": {
+        "openconfig-interfaces:interface": {
           "type": "array",
           "items": {
-            "type": "object",
-            "required": [
-              "config",
-              "state"
-            ],
+            "required": ["openconfig-if-aggregate:aggregation"],
             "properties": {
-              "config": {
+              "openconfig-if-aggregate:aggregation": {
                 "type": "object",
-                "required": [
-                  "lag-type"
-                ],
+                "required": [ "config", "state" ],
                 "properties": {
-                  "lag-type": {
-                    "type": "string",
-                    "enum": [
-                      "openconfig-if-aggregate:LACP"
-                    ]
-                  }
-                }
-              },
-              "state": {
-                "type": "object",
-                "required": [
-                  "lag-type"
-                ],
-                "properties": {
-                  "lag-type": {
-                    "type": "string",
-                    "enum": [
-                      "openconfig-if-aggregate:LACP"
-                    ]
+                  "config": {
+                    "type": "object",
+                    "required": [ "lag-type" ],
+                    "properties": {
+                      "lag-type": { "type": "string", "const": "LACP" }
+                    }
+                  },
+                  "state": {
+                    "type": "object",
+                    "required": [ "lag-type" ],
+                    "properties": {
+                      "lag-type": { "type": "string", "const": "LACP" }
+                    }
                   }
                 }
               }
             }
           }
+        }
+      }
+    },
+    {
+      "title": "Get config lag-type",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]/aggregation/config/lag-type",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [ "openconfig-if-aggregate:lag-type" ],
+      "properties": {
+        "openconfig-if-aggregate:lag-type": {
+          "type": "string",
+          "const": "LACP"
+        }
+      }
+    },
+    {
+      "title": "Get state lag-type",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=PortChannel1]/aggregation/state/lag-type",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [ "openconfig-if-aggregate:lag-type" ],
+      "properties": {
+        "openconfig-if-aggregate:lag-type": {
+          "type": "string",
+          "const": "LACP"
         }
       }
     }

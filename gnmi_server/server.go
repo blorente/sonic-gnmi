@@ -33,7 +33,7 @@ import (
 	gnmi_extpb "github.com/openconfig/gnmi/proto/gnmi_ext"
 	gnoi_diag "github.com/openconfig/gnoi/diag"
 	"github.com/openconfig/gnoi/factory_reset"
-	gnoi_file "github.com/openconfig/gnoi/file"
+	gnoi_file_pb "github.com/openconfig/gnoi/file"
 	gnoi_healthz "github.com/openconfig/gnoi/healthz"
 	gnoi_os "github.com/openconfig/gnoi/os"
 	gnoi_system_pb "github.com/openconfig/gnoi/system"
@@ -112,7 +112,6 @@ type Server struct {
 	config        *Config
 	cMu           sync.Mutex
 	clients       map[string]*Client
-	certProviders []certprovider.Provider
 	// SaveStartupConfig points to a function that is called to save changes of
 	// configuration to a file. By default it points to an empty function -
 	// the configuration is not saved to a file.
@@ -122,6 +121,9 @@ type Server struct {
 	// comes from a master controller.
 	ReqFromMaster func(req *gnmipb.SetRequest, masterEID *uint128) error
 	masterEID     uint128
+
+  // Everything below is not in the upstream
+	certProviders []certprovider.Provider
 	// gNOI Servers
 	debugServer *GNOIDebugServer
 	ldsServer   *GNOILdsServer
@@ -154,7 +156,7 @@ type Server struct {
 	factory_reset.UnimplementedFactoryResetServer
 	// UnimplementedSystemServer is embedded to satisfy SystemServer interface requirements
 	gnoi_system_pb.UnimplementedSystemServer
-	gnoi_file.UnimplementedFileServer
+	gnoi_file_pb.UnimplementedFileServer
 	gnoi_whitebox_pb.UnimplementedWhiteBoxTestServer
 }
 
@@ -181,6 +183,8 @@ type Config struct {
 	ZmqPort             string
 	IdleConnDuration    int
 	ConfigTableName     string
+	Vrf                 string
+	EnableCrl           bool
 	EnableTranslation   bool
 	GetOptions          func(*Config) ([]grpc.ServerOption, []certprovider.Provider, error)
 	AuthzPolicy         bool   // Enable authz policy.
@@ -532,6 +536,7 @@ func NewServer(config *Config) (*Server, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to create SystemStateHelper: %v", err)
 	}
+
 	if srv.config.Port < 0 {
 		srv.config.Port = 0
 	}
@@ -549,8 +554,6 @@ func NewServer(config *Config) (*Server, error) {
 	}
 	// Register the gNOI Servers
 	gnoi_os.RegisterOSServer(srv.s, srv.osServer)
-	srv.fileServer = NewGNOIFileServer(srv)
-	gnoi_file.RegisterFileServer(srv.s, srv.fileServer)
 	gnoi_burnin_pb.RegisterBurninServer(srv.s, srv)
 	gnoi_blackbox_pb.RegisterBlackBoxTestServer(srv.s, srv)
 	gnoi_diag.RegisterDiagServer(srv.s, srv)
@@ -576,6 +579,8 @@ func NewServer(config *Config) (*Server, error) {
 	spb_jwt_gnoi.RegisterSonicJwtServiceServer(srv.s, srv)
 	if srv.config.EnableTranslibWrite || srv.config.EnableNativeWrite {
 		gnoi_system_pb.RegisterSystemServer(srv.s, srv)
+		srv.fileServer = NewGNOIFileServer(srv)
+		gnoi_file_pb.RegisterFileServer(srv.s, srv.fileServer)
 	}
 	if srv.config.EnableTranslibWrite {
 		spb_gnoi.RegisterSonicServiceServer(srv.s, srv)
@@ -723,6 +728,15 @@ func (srv *Server) Serve() error {
 	return srv.s.Serve(&listenerWrapper{srv.lis})
 }
 
+func (srv *Server) ForceStop() {
+	s := srv.s
+	if s == nil {
+		log.Errorf("ForceStop() failed: not initialized")
+		return
+	}
+	s.Stop()
+}
+
 func (srv *Server) Stop() {
 	if srv == nil {
 		return
@@ -833,7 +847,7 @@ func authenticate(config *Config, ctx context.Context) (context.Context, error) 
 		}
 	}
 	if !success && config.UserAuth.Enabled("cert") {
-		ctx, err = ClientCertAuthenAndAuthor(ctx, config.ConfigTableName)
+		ctx, err = ClientCertAuthenAndAuthor(ctx, config.ConfigTableName, config.EnableCrl)
 		if err == nil {
 			success = true
 		}
@@ -1077,7 +1091,7 @@ func (s *Server) Get(ctx context.Context, req *gnmipb.GetRequest) (*gnmipb.GetRe
 			}
 		}
 		if check := IsNativeOrigin(origin); check {
-			dc, err = sdc.NewMixedDbClient(paths, prefix, origin, encoding, s.config.ZmqPort)
+			dc, err = sdc.NewMixedDbClient(paths, prefix, origin, encoding, s.config.ZmqPort, s.config.Vrf)
 		} else {
 			dc, err = sdc.NewTranslClient(prefix, paths, ctx, encoding, extensions)
 		}
@@ -1329,7 +1343,7 @@ func (s *Server) Set(ctx context.Context, req *gnmipb.SetRequest) (*gnmipb.SetRe
 			common_utils.IncCounter(common_utils.GNMI_SET_FAIL)
 			return nil, grpc.Errorf(codes.Unimplemented, "GNMI native write is disabled")
 		}
-		dc, err = sdc.NewMixedDbClient(paths, prefix, origin, encoding, s.config.ZmqPort)
+		dc, err = sdc.NewMixedDbClient(paths, prefix, origin, encoding, s.config.ZmqPort, s.config.Vrf)
 	} else {
 		if s.config.EnableTranslibWrite == false {
 			common_utils.IncCounter(common_utils.GNMI_SET_FAIL)
@@ -1482,7 +1496,7 @@ func (s *Server) Capabilities(ctx context.Context, req *gnmipb.CapabilityRequest
 	var supportedModels []gnmipb.ModelData
 	dc, _ := sdc.NewTranslClient(nil, nil, ctx, gnmipb.Encoding_JSON_IETF, extensions)
 	supportedModels = append(supportedModels, dc.Capabilities()...)
-	dc, _ = sdc.NewMixedDbClient(nil, nil, "", gnmipb.Encoding_JSON_IETF, s.config.ZmqPort)
+	dc, _ = sdc.NewMixedDbClient(nil, nil, "", gnmipb.Encoding_JSON_IETF, s.config.ZmqPort, s.config.Vrf)
 	supportedModels = append(supportedModels, dc.Capabilities()...)
 
 	suppModels := make([]*gnmipb.ModelData, len(supportedModels))
@@ -1680,7 +1694,7 @@ func cleanupProviders(ps []certprovider.Provider) {
 // Cleanup stops the gNMI/gNOI server and does required cleanup.
 func (srv *Server) Cleanup() {
 	if srv.s != nil {
-		srv.s.Stop()
+		srv.s.GracefulStop()
 	}
 	cleanupProviders(srv.certProviders)
 	if srv.recorder != nil {

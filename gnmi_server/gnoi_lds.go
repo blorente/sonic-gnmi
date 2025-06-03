@@ -22,7 +22,7 @@ const (
 	ldsCommandReqChFmt  string = "LDS_Request_Channel_Internal.%d"
 	ldsCommandRespChFmt string = "LDS_Response_Channel_Internal.%d"
 
-	ldsCommandTimeout time.Duration = 10 * time.Second
+	ldsCommandTimeout time.Duration = 30 * time.Second
 )
 
 type GNOILdsServer struct {

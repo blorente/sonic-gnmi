@@ -9,6 +9,27 @@
       "attributeData": "{\"config\": {\"openconfig-if-ethernet:aggregate-id\":\"PortChannel1\"}}"
     },
     {
+      "title": "Get Ethernet1/7/3 aggregate-id",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=Ethernet1/7/3]/ethernet/state/aggregate-id",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-if-aggregate:aggregate-id"],
+      "properties": {
+        "properties": {
+          "openconfig-if-aggregate:aggregate-id": { "type": "string", "const": "PortChannel1" }
+        }
+      }
+    },
+    {
+      "title": "Get Invalid Interface aggregate-id",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "openconfig/interfaces/interface[name=FooBar]/ethernet/state/aggregate-id",
+      "target": "OC_YANG"
+    },
+    {
       "operation": "get",
       "returnCode": 0,
       "xpath": "openconfig/interfaces/interface[name=Ethernet1/7/3]/",

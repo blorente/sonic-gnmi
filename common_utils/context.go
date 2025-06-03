@@ -80,6 +80,8 @@ const (
 	DBUS_CONFIG_RELOAD
 	DBUS_STOP_SERVICE
 	DBUS_RESTART_SERVICE
+	DBUS_FILE_STAT
+	DBUS_HALT_SYSTEM
 	COUNTER_SIZE
 )
 
@@ -147,6 +149,10 @@ func (c CounterType) String() string {
 		return "DBUS stop service"
 	case DBUS_RESTART_SERVICE:
 		return "DBUS restart service"
+	case DBUS_FILE_STAT:
+		return "DBUS file stat"
+	case DBUS_HALT_SYSTEM:
+		return "DBUS halt system"
 	default:
 		return ""
 	}

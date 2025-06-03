@@ -12,7 +12,7 @@
           "oper": "validate",
           "title": "Validates initial updates",
           "timeout": 20000,
-          "allowDuplicateUpdates": true,
+          "allowDuplicateUpdates": false,
           "finalValidator": {
             "xpath": "/",
             "syncResponse": true,

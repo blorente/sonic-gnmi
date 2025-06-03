@@ -4,7 +4,7 @@ The benchmark tests in server.go can be used to benchmark common gNMI operations
 - GetState
 - SetConfig
 - Pictor Subscription
-- CONTROLLER Subscription
+- SFE Subscription
 
 These tests are modular so new tests can be added easily. Aside from the gNMI requests specified in the test structs, there are some tuneable paramaters that will be covered in this document.
 

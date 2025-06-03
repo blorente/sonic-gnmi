@@ -114,7 +114,43 @@
           "type": "string",
           "enum": ["openconfig-pins-platform-chassis:CPU_TYPE_SEGUNDO"]
         }
-      }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHDel",
+          "title": "Set missing cpu-type",
+          "db": "STATE_DB",
+          "value": {
+            "CHASSIS_INFO|chassis": [ "cpu-type" ]
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=chassis]/chassis/state/cpu-type",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-pins-platform-chassis:cpu-type"
+      ],
+      "properties": {
+        "openconfig-pins-platform-chassis:cpu-type": {
+          "type": "string",
+          "enum": ["openconfig-pins-platform-chassis:CPU_TYPE_UKNOWN"]
+        }
+      },
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "title": "Restore missing cpu-type",
+          "db": "STATE_DB",
+          "value": {
+            "CHASSIS_INFO|chassis": { "cpu-type":"segundo" }
+          }
+        }
+      ]
     }
   ]
 }

@@ -670,11 +670,14 @@ func populateDbtablePath(prefix, path *gnmipb.Path, pathG2S *map[*gnmipb.Path][]
 	// <5> DB Table Key Key Field
 	switch len(stringSlice) {
 	case 2: // only table name provided
-		res, err := redisDb.Keys(context.Background(), tblPath.tableName+"*").Result()
-		if err != nil || len(res) < 1 {
+		wildcardTableName := tblPath.tableName + "*"
+		log.V(6).Infof("Fetching all keys for %v with table name %s", target, wildcardTableName)
+		res, err := redisDb.Keys(context.Background(), wildcardTableName).Result()
+		if err != nil {
 			log.V(2).Infof("Invalid db table Path %v %v", target, dbPath)
-			return fmt.Errorf("Failed to find %v %v %v %v", target, dbPath, err, res)
+			return fmt.Errorf("redis Keys op failed for %v %v, got err %v %v", target, dbPath, err, res)
 		}
+		log.V(6).Infof("Result of keys operation for %v %v, got %v", target, dbPath, res)
 		tblPath.tableKey = ""
 	case 3: // Third element could be table key; or field name in which case table name itself is the key too
 		n, err := redisDb.Exists(context.Background(), tblPath.tableName+tblPath.delimitor+mappedKey).Result()

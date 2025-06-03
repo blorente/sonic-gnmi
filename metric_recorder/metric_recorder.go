@@ -40,8 +40,9 @@ const (
 )
 
 var (
-	consoleRE       = regexp.MustCompile(`^(?P<time>[\d]{4}-[\d]{2}-[\d]{2}T[\d]+:[\d]+:[\d]+\.[\d]+[-+][\d:]+) \[?\w+\]? auth\.(info|warning) login\[(?P<pid>[\d]+)]:`)
-	consoleAccept   = regexp.MustCompile(`^(?P<time>[\d]{4}-[\d]{2}-[\d]{2}T[\d]+:[\d]+:[\d]+\.[\d]+[-+][\d:]+) \[?\w+\]? auth\.(info|warning) login\[(?P<pid>[\d]+)]: \w+ logged in on`)
+	consoleRE       = regexp.MustCompile(`^(?P<time>[\d]{4}-[\d]{2}-[\d]{2}T[\d]+:[\d]+:[\d]+\.[\d]+[-+][\d:]+) \[?\w+\]? auth(priv)?\.(info|warning|notice) (inbandmgr\#)?login\[(?P<pid>[\d]+)]:`)
+	consoleAccept   = regexp.MustCompile(`^(?P<time>[\d]{4}-[\d]{2}-[\d]{2}T[\d]+:[\d]+:[\d]+\.[\d]+[-+][\d:]+) \[?\w+\]? auth(priv)?\.(info|warning) (inbandmgr\#)?login\[(?P<pid>[\d]+)]:.+(logged in|session opened)`)
+	consoleReject   = regexp.MustCompile(`^(?P<time>[\d]{4}-[\d]{2}-[\d]{2}T[\d]+:[\d]+:[\d]+\.[\d]+[-+][\d:]+) \[?\w+\]? auth(priv)?\.(warning|notice) (inbandmgr\#)?login\[(?P<pid>[\d]+)]:.+(login attempt|invalid password|authentication failure)`)
 	sshRE           = regexp.MustCompile(`^(?P<time>[\d]{4}-[\d]{2}-[\d]{2}T[\d]+:[\d]+:[\d]+\.[\d]+[-+][\d:]+) \[?\w+\]? auth\.(info|crit) (inbandmgr\#)?sshd.*\[(?P<pid>[\d]+)]:`)
 	sshStart        = regexp.MustCompile(`^.*? sshd.*\[([\d]+)]: Connection from`)
 	sshAccept       = regexp.MustCompile(`^.*? sshd.*\[([\d]+)]: Accepted (key|publickey|password|certificate ID)`)
@@ -144,7 +145,7 @@ func (r *SecurityMetricRecorder) handleConsoleLines(line string) bool {
 			r.console.AccessAccepts += 1
 			r.console.LastAccessAccept = uint64(pTime.UnixNano())
 			r.writeConsoleCounters(accept)
-		} else {
+		} else if consoleReject.MatchString(line) {
 			r.console.AccessRejects += 1
 			r.console.LastAccessReject = uint64(pTime.UnixNano())
 			r.writeConsoleCounters(reject)

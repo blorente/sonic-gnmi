@@ -2,7 +2,6 @@ package client
 
 import (
 	"fmt"
-	"reflect"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -76,7 +75,7 @@ func findSuperSubscription(subscription *gnmipb.SubscriptionList) *superSubscrip
 		if sub.request == nil {
 			continue
 		}
-		if reflect.DeepEqual(*sub.request, *subscription) {
+		if proto.Equal(sub.request, subscription) {
 			return sub
 		}
 	}

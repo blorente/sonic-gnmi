@@ -29,7 +29,9 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/keepalive"
-	*/)
+	*/
+	"github.com/sonic-net/sonic-gnmi/swsscommon"
+)
 
 type ServerControlValue int
 
@@ -61,6 +63,9 @@ type TelemetryConfig struct {
 	WithMasterArbitration *bool
 	WithSaveOnSet         *bool
 	IdleConnDuration      *int
+	Vrf                   *string
+	EnableCrl             *bool
+	CrlExpireDuration     *int
 
 	// Not in upstream:
 	CacheResponses      *bool
@@ -112,12 +117,15 @@ func runTelemetry(args []string) error {
 		return err
 	}
 
+	// enable swss-common debug level
+	swsscommon.LoggerLinkToDbNative("telemetry")
+
 	var wg sync.WaitGroup
 	// serverControlSignal channel is a channel that will be used to notify gnmi server to start, stop, restart, depending of syscall or cert updates
 	var serverControlSignal = make(chan ServerControlValue, 1)
 	var stopSignalHandler = make(chan bool, 1)
 	sigchannel := make(chan os.Signal, 1)
-	signal.Notify(sigchannel, syscall.SIGTERM, syscall.SIGQUIT)
+	signal.Notify(sigchannel, syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGINT, syscall.SIGHUP)
 
 	wg.Add(1)
 
@@ -220,6 +228,9 @@ func setupFlags(fs *flag.FlagSet) (*TelemetryConfig, *gnmi.Config, error) {
 		WithMasterArbitration: fs.Bool("with-master-arbitration", false, "Enables master arbitration policy."),
 		WithSaveOnSet:         fs.Bool("with-save-on-set", false, "Enables save-on-set."),
 		IdleConnDuration:      fs.Int("idle_conn_duration", 5, "Seconds before server closes idle connections"),
+		Vrf:                   fs.String("vrf", "", "VRF name, when zmq_address belong on a VRF, need VRF name to bind ZMQ."),
+		EnableCrl:             fs.Bool("enable_crl", false, "Enable certificate revocation list"),
+		CrlExpireDuration:     fs.Int("crl_expire_duration", 86400, "Certificate revocation list cache expire duration"),
 		ImgDirPath:            fs.String("img_dir", "/tmp/host_tmp", "Directory path where image will be transferred."),
 		CacheResponses:        fs.Bool("cache_responses", true, "Cache gNMI responses when possible"),
 		CertCRLConfig:         fs.String("cert_crl_dir", "", "CRL directory. Disable if empty."),
@@ -310,7 +321,11 @@ func setupFlags(fs *flag.FlagSet) (*TelemetryConfig, *gnmi.Config, error) {
 	cfg.StreamingThreshold = int(*telemetryCfg.StreamingThreshold)
 	cfg.UnaryThreshold = int(*telemetryCfg.UnaryThreshold)
 	cfg.IdleConnDuration = int(*telemetryCfg.IdleConnDuration)
-	cfg.ConfigTableName = string(*telemetryCfg.ConfigTableName)
+	cfg.ConfigTableName = *telemetryCfg.ConfigTableName
+	cfg.Vrf = *telemetryCfg.Vrf
+	cfg.EnableCrl = *telemetryCfg.EnableCrl
+
+	gnmi.SetCrlExpireDuration(time.Duration(*telemetryCfg.CrlExpireDuration) * time.Second)
 
 	// TODO: After other dependent projects are migrated to ZmqPort, remove ZmqAddress
 	zmqAddress := *telemetryCfg.ZmqAddress
@@ -679,12 +694,13 @@ func startGNMIServer(telemetryCfg *TelemetryConfig, cfg *gnmi.Config, serverCont
 
 		serverControlValue := <-serverControlSignal
 		log.V(1).Infof("Received signal for gnmi server to close")
-		s.Stop()
 		if serverControlValue == ServerStop {
+			s.ForceStop() // No graceful stop
 			stopSignalHandler <- true
 			log.Flush()
 			return
 		}
+		s.Stop() // Graceful stop
 		// Both ServerStart and ServerRestart will loop and restart server
 		// We use different value to distinguish between write/create and remove/rename
 	}

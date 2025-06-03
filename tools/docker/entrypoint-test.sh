@@ -12,7 +12,7 @@ execute_test() {
     TEST_OPTS="-test.coverprofile=/mnt/artifacts/${test_name}.lcov -test.timeout=45m -test.v -v=${LVL} -logtostdout -alsologtostderr ${OPTS}"
     echo Command: ./${test_name} ${TEST_OPTS}
     time "./${test_name}" ${TEST_OPTS}
-    [ $? -ne 0 ] &&  exit -1
+    [ $? -ne 0 ] && exit -1
     echo "**** Finished ${test_name}"
     if [ $LVL -gt 3 ]; then
       killall redis-cli
@@ -113,23 +113,43 @@ OPTS="-test.skip TestGNMINative|TestClient"
 
 DFLT_LOG_LVL=2
 
-# If a specific test was requested on the command line (TEST_PATTERN is set)
-# assume it is in gnmi_server_test and run only that suite with a more verbose
-# log level.
-TEST_LIST=(gnmi_server_test)
+ALL_TESTS=(gnmi_server_test cs_test db_test transformer_test sonic_db_config_test sonic_data_client_test transl_utils_test translib_test log_test tlerr_test ocbinds_test path_test pathtransl_test common_utils_test metric_recorder_test pathz_authorizer_test platform_test)
+TEST_LIST=()
 BENCHMARK_LIST=()
-if [ -z ${TEST_PATTERN} ]; then
-  for t in cs_test db_test transformer_test sonic_db_config_test sonic_data_client_test transl_utils_test translib_test log_test tlerr_test ocbinds_test path_test pathtransl_test common_utils_test metric_recorder_test pathz_authorizer_test platform_test; do
+
+if [ ! -z ${TEST_SUITE} ]; then
+  # A specific test suite was requested on the command line, run only that
+  # suite eith a more verbose log level.  Make sure it is a valid suite though.
+  if [[ ! " ${ALL_TESTS[*]} " =~ [[:space:]]${TEST_SUITE}[[:space:]] ]]; then
+    echo "Requested test suite \"${TEST_SUITE}\" is not a valid suite."
+    echo "Options: ${ALL_TESTS[*]}"
+    exit 1
+  fi
+  TEST_LIST+=(${TEST_SUITE})
+  DFLT_LOG_LVL=3
+elif [ ! -z ${TEST_PATTERN} ]; then
+  # A specific test was requested on the command line (TEST_PATTERN is set) but
+  # no test suite was requested (TEST_SUITE is empty).  Assume it is in
+  # gnmi_server_test and run only that suite with a more verbose log level.
+  TEST_LIST+=(gnmi_server_test)
+  DFLT_LOG_LVL=3
+else
+  # No specific test suite or test case were specified, run everything.
+  for t in gnmi_server_test cs_test db_test transformer_test sonic_db_config_test sonic_data_client_test transl_utils_test translib_test log_test tlerr_test ocbinds_test path_test pathtransl_test common_utils_test metric_recorder_test pathz_authorizer_test platform_test; do
     TEST_LIST+=($t)
   done
   BENCHMARK_LIST+=(gnmi_server_test)
-else
-  DFLT_LOG_LVL=3
+fi
+
+if [ ! -z ${TEST_PATTERN} ]; then
+  # A test case (or test case pattern) was requested, add it to the options
   OPTS="${OPTS} -test.run ${TEST_PATTERN}"
 fi
+
 echo "==== Executing tests: ${TEST_LIST[*]}"
 
 if [ -z ${LVL} ]; then
+  # No explicit logging level was provided, use the default level.
   LVL=${DFLT_LOG_LVL}
 fi
 
@@ -154,6 +174,6 @@ done
 
 # Run the telemetry binary and do a simple gNMI request to ensure it has basic
 # functionality.
-if [ -z ${TEST_PATTERN} ]; then
+if [ -z ${TEST_SUITE} ] && [ -z ${TEST_PATTERN} ]; then
     execute_telemetery
 fi
