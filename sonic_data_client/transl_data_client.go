@@ -5,6 +5,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"maps"
 	"reflect"
 	"runtime"
 	"sync"
@@ -30,8 +31,9 @@ const (
 	REPLACE int = 1
 	UPDATE  int = 2
 
-	DefaultSampleInterval = 10 // default sample interval is 10 seconds
-	maxWorkers            = 2  // max workers for parallel processing of Get/Subscribe requests
+	DefaultSampleInterval = 10 // default sample interval is 10 seconds.
+	maxWorkers            = 2  // max workers for parallel processing of Get/Subscribe requests.
+	maxSampleWorkers      = 3  // max number of workers for handling sample ticks.
 )
 
 type TranslClient struct {
@@ -49,6 +51,9 @@ type TranslClient struct {
 	wakeChan   chan bool       // wakeChan is used to wake up the client to notify it is the new primary client.
 	extensions []*gnmi_extpb.Extension
 
+	tickMu         *sync.Mutex
+	tickLatencyMap map[int]TickLatencyStats // A map from sample interval to latency stats for that interval.
+
 	version  *translib.Version // Client version; populated by parseVersion()
 	encoding gnmipb.Encoding
 }
@@ -62,6 +67,14 @@ type pathFromGetReq struct {
 type pathFromSubReq struct {
 	path string
 	ts   *translSubscriber
+}
+
+type TickLatencyStats struct {
+	Min      time.Duration
+	Mean     time.Duration
+	Max      time.Duration
+	total    time.Duration
+	numTicks int
 }
 
 func NewTranslClient(prefix *gnmipb.Path, getpaths []*gnmipb.Path, ctx context.Context, encoding gnmipb.Encoding, extensions []*gnmi_extpb.Extension, opts ...TranslClientOption) (Client, error) {
@@ -85,6 +98,9 @@ func NewTranslClient(prefix *gnmipb.Path, getpaths []*gnmipb.Path, ctx context.C
 		err = transutil.PopulateClientPaths(prefix, getpaths, &client.path2URI, addWildcardKeys)
 	}
 	client.wakeChan = make(chan bool, 1)
+
+	client.tickMu = &sync.Mutex{}
+	client.tickLatencyMap = map[int]TickLatencyStats{}
 
 	if err != nil {
 		return nil, err
@@ -422,6 +438,15 @@ func (c *TranslClient) StreamRun(q *queue.PriorityQueue, stop chan struct{}, w *
 		enqueueSyncMessage(c)
 	}
 
+	// The server limits the number of unique sample intervals that can be handled in a subscription.
+	// Since each unique interval requires its own routine,
+	// this limit helps bound the number of routines a subscription can spawn.
+	if len(intervalToTickerInfoMap) > maxSampleWorkers {
+		log.V(lvl.ERROR).Infof("Subscription requested %d unique sample intervals, but a max of %d are supported!", len(intervalToTickerInfoMap), maxSampleWorkers)
+		enqueFatalMsgTranslib(c, fmt.Sprintf("Subscription requested %d unique sample intervals, but a max of %d are supported!", len(intervalToTickerInfoMap), maxSampleWorkers))
+		return
+	}
+
 	// Add the subscription to a SuperSubscrption.
 	c.addClientToSuperSubscription(subscribe)
 	defer c.leaveSuperSubscription()
@@ -432,7 +457,6 @@ func (c *TranslClient) StreamRun(q *queue.PriorityQueue, stop chan struct{}, w *
 		errMsg := fmt.Sprintf("Failed to fetch shared tickers from Super Subscription: %v", err)
 		log.V(lvl.ERROR).Info(errMsg)
 		enqueFatalMsgTranslib(c, errMsg)
-		close(subChan)
 		return
 	}
 	cases, caseIndexToIntervalMap := buildSelectCases(intervalToTickerInfoMap, c.channel)
@@ -449,33 +473,25 @@ func (c *TranslClient) StreamRun(q *queue.PriorityQueue, stop chan struct{}, w *
 		}
 	}
 
+	// Start workers to handle sample ticks. A single tick is handled by a single worker.
+	// The handling of a single tick is not parallelized to avoid excessive CPU usage.
+	tickChan := make(chan []*ticker_info) // Unbuffered channel must have a reader or the write will block.
+	for i := 0; i < len(intervalToTickerInfoMap); i++ {
+		wg.Add(1)
+		go processSampleTickWorker(tickChan, c, ss, sampleCache, wg)
+	}
 	for {
 		chosen, _, ok := reflect.Select(cases)
 		if !ok || chosen >= len(caseIndexToIntervalMap) || c.q == nil || c.q.Disposed() {
+			close(tickChan)
+			wg.Wait()
 			log.V(lvl.INFO).Infof("TranslClient (%p) exiting StreamRun because an exit signal was received!", c)
 			return
 		}
 
 		// Start goroutines to process the Sample.
 		ticks := intervalToTickerInfoMap[caseIndexToIntervalMap[chosen]]
-		tickSubChan := make(chan pathFromSubReq, len(ticks))
-		for i := 0; i < min(len(ticks), maxWorkers); i++ {
-			wg.Add(1)
-			go processSubWorker(tickSubChan, wg)
-		}
-		for _, tick := range ticks {
-			log.V(6).Infof("tick, heartbeat: %t, path: %s\n", tick.heartbeat, c.path2URI[tick.sub.Path])
-			ts := translSubscriber{
-				client:      c,
-				session:     ss,
-				sampleCache: sampleCache[tick.pathStr],
-				filterDups:  (!tick.heartbeat && tick.sub.SuppressRedundant),
-				sampleWg:    wg,
-			}
-			tickSubChan <- pathFromSubReq{path: tick.pathStr, ts: &ts}
-		}
-		close(tickSubChan)
-		wg.Wait()
+		tickChan <- ticks
 	}
 }
 
@@ -483,6 +499,26 @@ func processSubWorker(subChan <-chan pathFromSubReq, wg *sync.WaitGroup) {
 	defer wg.Done()
 	for sub := range subChan {
 		sub.ts.doSample(sub.path)
+	}
+}
+
+func processSampleTickWorker(tickChan <-chan []*ticker_info, c *TranslClient, ss *translib.SubscribeSession, sampleCache map[string]*ygotCache, wg *sync.WaitGroup) {
+	defer wg.Done()
+	for tickerInfoList := range tickChan {
+		var interval int
+		start := time.Now()
+		for _, tickerInfo := range tickerInfoList {
+			interval = tickerInfo.interval
+			log.V(lvl.DEBUG).Infof("tick, heartbeat: %t, path: %v\n", tickerInfo.heartbeat, tickerInfo.pathStr)
+			ts := translSubscriber{
+				client:      c,
+				session:     ss,
+				sampleCache: sampleCache[tickerInfo.pathStr],
+				filterDups:  (!tickerInfo.heartbeat && tickerInfo.sub.SuppressRedundant),
+			}
+			ts.doSample(tickerInfo.pathStr)
+		}
+		c.updateTickLatencyStats(interval, start)
 	}
 }
 
@@ -655,6 +691,16 @@ func getBundleVersion(extensions []*gnmi_extpb.Extension) *string {
 	return nil
 }
 
+func (c *TranslClient) TickLatencyInfo() map[int]TickLatencyStats {
+	c.tickMu.Lock()
+	defer c.tickMu.Unlock()
+	tickLatency := map[int]TickLatencyStats{}
+	if c.tickLatencyMap != nil && len(c.tickLatencyMap) > 0 {
+		maps.Copy(tickLatency, c.tickLatencyMap)
+	}
+	return tickLatency
+}
+
 // setPrefixTarget fills prefix taregt for given Notification objects.
 func setPrefixTarget(notifs []*gnmipb.Notification, target string) {
 	for _, n := range notifs {
@@ -760,6 +806,34 @@ func (c *TranslClient) parseVersion() error {
 	}
 	log.V(4).Infof("Failed to parse version \"%s\"; err=%v", *bv, err)
 	return fmt.Errorf("Invalid bundle version: %v", *bv)
+}
+
+
+func (c *TranslClient) updateTickLatencyStats(interval int, start time.Time) {
+	latency := time.Since(start)
+
+	c.tickMu.Lock()
+	defer c.tickMu.Unlock()
+
+	var stats TickLatencyStats
+	var ok bool
+	if stats, ok = c.tickLatencyMap[interval]; !ok {
+		stats = TickLatencyStats{
+			Min:      latency,
+			Max:      latency,
+			Mean:     latency,
+			total:    latency,
+			numTicks: 1,
+		}
+	} else {
+		stats.Min = min(stats.Min, latency)
+		stats.Max = max(stats.Max, latency)
+
+		stats.total += latency
+		stats.numTicks += 1
+		stats.Mean = time.Duration(stats.total.Nanoseconds() / int64(stats.numTicks))
+	}
+	c.tickLatencyMap[interval] = stats
 }
 
 type TranslClientOption interface {

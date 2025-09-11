@@ -173,44 +173,6 @@ func (srv *GNSIAuthzServer) processRotateRequest(req *authz.RotateAuthzRequest) 
 	return resp, nil
 }
 
-func copyFile(srcPath, dstPath string) error {
-	srcStat, err := os.Stat(srcPath)
-	if err != nil {
-		return err
-	}
-	if !srcStat.Mode().IsRegular() {
-		return fmt.Errorf("%s is not a regular file", srcPath)
-	}
-	src, err := os.Open(srcPath)
-	if err != nil {
-		return err
-	}
-	defer src.Close()
-	tmpDst, err := os.CreateTemp(filepath.Dir(dstPath), filepath.Base(dstPath))
-	if err != nil {
-		return err
-	}
-	if _, err := io.Copy(tmpDst, src); err != nil {
-		if e := os.Remove(tmpDst.Name()); e != nil {
-			log.V(lvl.WARNING).Infof("Failed to cleanup file: %v: %v", tmpDst.Name(), e)
-		}
-		return err
-	}
-	if err := tmpDst.Close(); err != nil {
-		if e := os.Remove(tmpDst.Name()); e != nil {
-			log.V(lvl.WARNING).Infof("Failed to cleanup file: %v: %v", tmpDst.Name(), e)
-		}
-		return err
-	}
-	if err := os.Rename(tmpDst.Name(), dstPath); err != nil {
-		if e := os.Remove(tmpDst.Name()); e != nil {
-			log.V(lvl.WARNING).Infof("Failed to cleanup file: %v: %v", tmpDst.Name(), e)
-		}
-		return err
-	}
-	return os.Chmod(dstPath, 0600)
-}
-
 func (srv *GNSIAuthzServer) saveToAuthzFile(p string) error {
 	tmpDst, err := os.CreateTemp(filepath.Dir(srv.config.AuthzPolicyFile), filepath.Base(srv.config.AuthzPolicyFile))
 	if err != nil {

@@ -330,6 +330,7 @@ func strSliceContains(ss []string, v string) bool {
 
 // ygotCache holds path to ygot struct mappings
 type ygotCache struct {
+	mu     *sync.Mutex
 	values  map[string]ygot.GoStruct
 	pattern *gnmipb.Path // Prefix pattern for the cache keys
 }
@@ -337,6 +338,7 @@ type ygotCache struct {
 // newYgotCache creates a new ygotCache instance
 func newYgotCache(pattern *gnmipb.Path) *ygotCache {
 	return &ygotCache{
+		mu:     &sync.Mutex{},
 		values:  make(map[string]ygot.GoStruct),
 		pattern: pattern,
 	}
@@ -354,8 +356,7 @@ func (c *ygotCache) msgBuilder(v *translib.SubscribeResponse, ts *translSubscrib
 		return c.deleteMsgBuilder(ts)
 	}
 
-	old := c.values[v.Path]
-	c.values[v.Path] = v.Update
+	old := c.updateCache(v)
 	ts.rcvdPaths[v.Path] = true
 	log.V(lvl.DEBUG).Infof("%s updated; old=%p, new=%p, filterDups=%v", v.Path, old, v.Update, ts.filterDups)
 	if ts.filterMsgs {
@@ -400,14 +401,7 @@ func (c *ygotCache) deleteMsgBuilder(ts *translSubscriber) ([]*gnmipb.Notificati
 		log.V(lvl.DEBUG).Infof("Msg suppressed due to updates_only")
 		return nil, nil
 	}
-	var deletePaths []*gnmipb.Path
-	for path := range c.values {
-		if !ts.rcvdPaths[path] {
-			log.V(3).Infof("%s deleted", path)
-			deletePaths = append(deletePaths, c.toDeletePath(path))
-			delete(c.values, path)
-		}
-	}
+	deletePaths := c.deletePathsFromCache(ts)
 	if len(deletePaths) == 0 {
 		return nil, nil
 	}
@@ -428,4 +422,36 @@ func (c *ygotCache) toDeletePath(path string) *gnmipb.Path {
 		p.Elem = append(p.Elem, suffix...)
 	}
 	return p
+}
+
+// updateCache updates the ygotCache with update that is passed in and returns
+// the old value that was in the cache.
+func (c *ygotCache) updateCache(v *translib.SubscribeResponse) ygot.GoStruct {
+	if v == nil {
+		return nil
+	}
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	old := c.values[v.Path]
+	c.values[v.Path] = v.Update
+	return old
+}
+
+// deletePathsFromCache deletes the cache entries whose path does not appear in
+// the translSubscriber.rcvdPaths map
+func (c *ygotCache) deletePathsFromCache(ts *translSubscriber) []*gnmipb.Path {
+	deletePaths := []*gnmipb.Path{}
+	if ts == nil {
+		return deletePaths
+	}
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	for path := range c.values {
+		if !ts.rcvdPaths[path] {
+			log.Infof("%s deleted", path)
+			deletePaths = append(deletePaths, ts.toPrefix(path))
+			delete(c.values, path)
+		}
+	}
+	return deletePaths
 }

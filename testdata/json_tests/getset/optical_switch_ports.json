@@ -1,0 +1,568 @@
+{
+    "title": "Optical Switch Port Config Path Tests",
+    "globalDef" : {
+      "validators": {
+        "port_config.1N": {
+          "type": "object",
+          "required": [
+              "name",
+              "slot-number",
+              "port-number"
+          ],
+          "properties": {
+            "name": {
+              "type": "string",
+              "enum": ["1N"]
+            },
+            "slot-number": {
+              "type": "integer",
+              "enum": [1]
+            },
+            "port-number": {
+              "type": "integer",
+              "enum": [1001]
+            }
+          }
+        },
+        "port_config.1S": {
+          "type": "object",
+          "required": [
+              "name",
+              "slot-number",
+              "port-number"
+          ],
+          "properties": {
+            "name": {
+              "type": "string",
+              "enum": ["1S"]
+            },
+            "slot-number": {
+              "type": "integer",
+              "enum": [1]
+            },
+            "port-number": {
+              "type": "integer",
+              "enum": [2001]
+            }
+          }
+        }
+      }
+    },
+    "operations": [
+      {
+        "title": "Root-Level Get, Success",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "/openconfig-optical-switch:optical-switch/ports",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-optical-switch:ports"
+        ],
+        "properties": {
+          "openconfig-optical-switch:ports": {
+            "type": "object",
+            "required": ["port"],
+            "properties": {
+              "port": {
+                "type": "array",
+                "items": [
+                  {
+                    "type": "object",
+                    "required": ["name", "config", "state"],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "enum": ["1N"]
+                      },
+                      "config": {
+                        "$ref": "#/globalDef/validators/port_config.1N"
+                      },
+                      "state": {
+                        "$ref": "#/globalDef/validators/port_config.1N"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": ["name", "config", "state"],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "enum": ["1S"]
+                      },
+                      "config": {
+                        "$ref": "#/globalDef/validators/port_config.1S"
+                      },
+                      "state": {
+                        "$ref": "#/globalDef/validators/port_config.1S"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "title": "Specific port 1N Get, Config Level, Success",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "/openconfig-optical-switch:optical-switch/ports/port[name=1N]/config",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-optical-switch:config"
+        ],
+        "properties": {
+          "openconfig-optical-switch:config": {
+            "$ref": "#/globalDef/validators/port_config.1N"
+          }
+        }
+      },
+      {
+        "title": "Specific port 1N slot-number Leaf Get, Success",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "/openconfig-optical-switch:optical-switch/ports/port[name=1N]/config/slot-number",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-optical-switch:slot-number"
+        ],
+        "properties": {
+          "openconfig-optical-switch:slot-number": {
+            "type": "integer",
+            "enum": [1]
+          }
+        }
+      },
+      {
+        "title": "Specific port 1N port-number Leaf Get, Success",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "/openconfig-optical-switch:optical-switch/ports/port[name=1N]/config/port-number",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-optical-switch:port-number"
+        ],
+        "properties": {
+          "openconfig-optical-switch:port-number": {
+            "type": "integer",
+            "enum": [1001]
+          }
+        }
+      },
+      {
+        "title": "Specific port 1N Get, State Level, Success",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "/openconfig-optical-switch:optical-switch/ports/port[name=1N]/state",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-optical-switch:state"
+        ],
+        "properties": {
+          "openconfig-optical-switch:state": {
+            "$ref": "#/globalDef/validators/port_config.1N"
+          }
+        }
+      },
+      {
+        "title": "Specific port 1N State-Level slot-number Leaf Get, Success",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "/openconfig-optical-switch:optical-switch/ports/port[name=1N]/state/slot-number",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-optical-switch:slot-number"
+        ],
+        "properties": {
+          "openconfig-optical-switch:slot-number": {
+            "type": "integer",
+            "enum": [1]
+          }
+        }
+      },
+      {
+        "title": "Specific port 1N State-Level port-number Leaf Get, Success",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "/openconfig-optical-switch:optical-switch/ports/port[name=1N]/state/port-number",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-optical-switch:port-number"
+        ],
+        "properties": {
+          "openconfig-optical-switch:port-number": {
+            "type": "integer",
+            "enum": [1001]
+          }
+        }
+      },
+      {
+        "title": "Delete port 1N, Success",
+        "operation": "delete",
+        "returnCode": 0,
+        "xpath": "/openconfig-optical-switch:optical-switch/ports/port[name=1N]",
+        "target": "OC_YANG",
+        "type": "object",
+        "subOpers": [
+          {
+            "oper": "dbHDel",
+            "title": "Delete of same Port in state DB.",
+            "db": "STATE_DB",
+            "value": {
+              "OCS_PORTS|1N": []
+            }
+          }
+        ]
+      },
+      {
+        "title": "Read Back deleted Port 1N, NotFound",
+        "operation": "get",
+        "returnCode": 5,
+        "xpath": "/openconfig-optical-switch:optical-switch/ports/port[name=1N]",
+        "target": "OC_YANG",
+        "type": "object"
+      },
+      {
+        "title": "Add Port 1N, Success",
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "/openconfig-optical-switch:optical-switch/ports/port[name=1N]",
+        "target": "OC_YANG",
+        "attributeData": "{\"port\": [{\"name\": \"1N\", \"config\": {\"slot-number\": 1, \"port-number\": 1001}}]}"
+      },
+      {
+        "title": "Read Back re-added Port 1N, Success",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "/openconfig-optical-switch:optical-switch/ports/port[name=1N]/config",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-optical-switch:config"
+        ],
+        "properties": {
+          "openconfig-optical-switch:config": {
+            "$ref": "#/globalDef/validators/port_config.1N"
+          }
+        }
+      },
+      {
+        "title": "Add Port, slot-number Out-of-Range",
+        "operation": "replace",
+        "returnCode": 10,
+        "xpath": "/openconfig-optical-switch:optical-switch/ports/port[port-name=99N]",
+        "target": "OC_YANG",
+        "attributeData": "{\"port\": [{\"name\": \"99N\", \"slot-number\": 123, \"port-number\": 1099, \"config\": {\"slot-number\": 123, \"port-number\": 1099}}]}"
+      },
+      {
+        "title": "Add Port, port-number Out-of-Range",
+        "operation": "replace",
+        "returnCode": 10,
+        "xpath": "/openconfig-optical-switch:optical-switch/ports/port[port-name=123123N]",
+        "target": "OC_YANG",
+        "attributeData": "{\"port\": [{\"name\": \"123123N\", \"slot-number\": 1, \"port-number\": 123123, \"config\": {\"slot-number\": 1, \"port-number\": 123123}}]}"
+      },
+      {
+        "title": "Add Port, missing slot-number",
+        "operation": "replace",
+        "returnCode": 10,
+        "xpath": "/openconfig-optical-switch:optical-switch/ports/port[port-name=99N]",
+        "target": "OC_YANG",
+        "attributeData": "{\"port\": [{\"name\": \"99N\", \"port-number\": 1099, \"config\": {\"port-number\": 1099}}]}"
+      },
+      {
+        "title": "Add Port, missing port-number",
+        "operation": "replace",
+        "returnCode": 10,
+        "xpath": "/openconfig-optical-switch:optical-switch/ports/port[port-name=99N]",
+        "target": "OC_YANG",
+        "attributeData": "{\"port\": [{\"name\": \"99N\", \"slot-number\": 1, \"config\": {\"slot-number\": 1}}]}"
+      },
+      {
+        "title": "Replace All Ports, Success",
+        "operation": "replace",
+        "returnCode": 0,
+        "xpath": "/openconfig-optical-switch:optical-switch/ports",
+        "target": "OC_YANG",
+        "attributeData":"{ \"ports\": { \"port\": [ { \"name\": \"13N\", \"config\": { \"name\": \"13N\", \"slot-number\": 1, \"port-number\": 1013 } }, { \"name\": \"29N\", \"config\": { \"name\": \"29N\", \"slot-number\": 1, \"port-number\": 1029 } }, { \"name\": \"35N\", \"config\": { \"name\": \"35N\", \"slot-number\": 1, \"port-number\": 1035} } ] }}",
+        "subOpers": [
+          {
+            "oper": "dbHDel",
+            "title": "Delete of 1S (exists but not specified in replace) in state DB.",
+            "db": "STATE_DB",
+            "value": {
+              "OCS_PORTS|1S": []
+            }
+          }
+        ]
+      },
+      {
+        "title": "Read Back Replaced Ports, Success",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "/openconfig-optical-switch:optical-switch/ports",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-optical-switch:ports"
+        ],
+        "properties": {
+          "openconfig-optical-switch:ports": {
+            "type": "object",
+            "required": [
+              "port"
+            ],
+            "properties": {
+              "port": {
+                "type": "array",
+                "items": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "name",
+                      "config"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "enum": [
+                          "1N"
+                        ]
+                      },
+                      "config": {
+                        "type": "object",
+                        "required": [
+                          "name",
+                          "port-number",
+                          "slot-number"
+                        ],
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "enum": [
+                              "1N"
+                            ]
+                          },
+                          "port-number": {
+                            "type": "integer",
+                            "enum": [
+                              1001
+                            ]
+                          },
+                          "slot-number": {
+                            "type": "integer",
+                            "enum": [
+                              1
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "config",
+                      "name"
+                    ],
+                    "properties": {
+                      "config": {
+                        "type": "object",
+                        "required": [
+                          "port-number",
+                          "slot-number",
+                          "name"
+                        ],
+                        "properties": {
+                          "port-number": {
+                            "type": "integer",
+                            "enum": [
+                              2001
+                            ]
+                          },
+                          "slot-number": {
+                            "type": "integer",
+                            "enum": [
+                              1
+                            ]
+                          },
+                          "name": {
+                            "type": "string",
+                            "enum": [
+                              "1S"
+                            ]
+                          }
+                        }
+                      },
+                      "name": {
+                        "type": "string",
+                        "enum": [
+                          "1S"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "config",
+                      "name"
+                    ],
+                    "properties": {
+                      "config": {
+                        "type": "object",
+                        "required": [
+                          "name",
+                          "port-number",
+                          "slot-number"
+                        ],
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "enum": [
+                              "13N"
+                            ]
+                          },
+                          "port-number": {
+                            "type": "integer",
+                            "enum": [
+                              1013
+                            ]
+                          },
+                          "slot-number": {
+                            "type": "integer",
+                            "enum": [
+                              1
+                            ]
+                          }
+                        }
+                      },
+                      "name": {
+                        "type": "string",
+                        "enum": [
+                          "13N"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "config",
+                      "name"
+                    ],
+                    "properties": {
+                      "config": {
+                        "type": "object",
+                        "required": [
+                          "name",
+                          "port-number",
+                          "slot-number"
+                        ],
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "enum": [
+                              "29N"
+                            ]
+                          },
+                          "port-number": {
+                            "type": "integer",
+                            "enum": [
+                              1029
+                            ]
+                          },
+                          "slot-number": {
+                            "type": "integer",
+                            "enum": [
+                              1
+                            ]
+                          }
+                        }
+                      },
+                      "name": {
+                        "type": "string",
+                        "enum": [
+                          "29N"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "config",
+                      "name"
+                    ],
+                    "properties": {
+                      "config": {
+                        "type": "object",
+                        "required": [
+                          "name",
+                          "port-number",
+                          "slot-number"
+                        ],
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "enum": [
+                              "35N"
+                            ]
+                          },
+                          "port-number": {
+                            "type": "integer",
+                            "enum": [
+                              1035
+                            ]
+                          },
+                          "slot-number": {
+                            "type": "integer",
+                            "enum": [
+                              1
+                            ]
+                          }
+                        }
+                      },
+                      "name": {
+                        "type": "string",
+                        "enum": [
+                          "35N"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "title": "Delete all Ports, Success",
+        "operation": "delete",
+        "returnCode": 0,
+        "xpath": "/openconfig-optical-switch:optical-switch/ports",
+        "target": "OC_YANG"
+      },
+      {
+        "title": "Check for Empty Ports, Success",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "/openconfig-optical-switch:optical-switch/ports",
+        "target": "OC_YANG",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+        }
+      }
+    ]
+  }

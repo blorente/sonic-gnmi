@@ -1,101 +1,109 @@
 {
-  "title": "ONCE Subscribe with root with wildcard",
-  "operations":[
+  "operations": [
     {
-      "title": "subscribe (ONCE) to /",
-      "operation": "subscribe",
       "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO mode:ONCE}",
+      "operation": "subscribe",
       "returnCode": 0,
-
       "subOpers": [
         {
-          "oper": "validate",
-          "title": "Validates initial updates",
-          "timeout": 20000,
           "allowDuplicateUpdates": false,
           "finalValidator": {
-            "xpath": "/",
-            "syncResponse": true,
             "schema": {
-              "type": "object",
-              "required": ["openconfig-interfaces:interfaces", "openconfig-lacp:lacp", "openconfig-platform:components", "openconfig-optical-switch:optical-switch", "openconfig-qos:qos", "openconfig-sampling:sampling", "openconfig-system:system"],
+              "additionalProperties": false,
               "properties": {
                 "openconfig-interfaces:interfaces": {
-                  "type": "object",
-                  "required": ["interface"],
                   "properties": {
                     "interface": {
+                      "additionalItems": false,
+                      "maxItems": 25,
+                      "minItems": 25,
                       "type": "array",
-                      "uniqueItems": true,
-                      "minItems" : 25,
-                      "maxItems" : 25,
-                      "additionalItems": false
+                      "uniqueItems": true
                     }
-                  }
+                  },
+                  "required": [
+                    "interface"
+                  ],
+                  "type": "object"
                 },
                 "openconfig-lacp:lacp": {
-                  "type": "object",
-                  "required": ["config", "interfaces", "state"],
                   "additionalProperties": false,
                   "properties": {
                     "config": {
-                      "type": "object",
-                      "required": ["google-pins-lacp:enable-host-signaling"],
                       "additionalProperties": false,
                       "properties": {
-                        "google-pins-lacp:enable-host-signaling": { "type": "boolean", "const": false }
-                      }
+                        "google-pins-lacp:enable-host-signaling": {
+                          "const": false,
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "google-pins-lacp:enable-host-signaling"
+                      ],
+                      "type": "object"
                     },
                     "interfaces": {
-                      "type": "object",
-                      "required": ["interface"],
                       "additionalProperties": false,
                       "properties": {
                         "interface": {
+                          "additionalItems": false,
+                          "maxItems": 2,
+                          "minItems": 2,
                           "type": "array",
-                          "uniqueItems": true,
-                          "minItems" : 2,
-                          "maxItems" : 2,
-                          "additionalItems": false
+                          "uniqueItems": true
                         }
-                      }
+                      },
+                      "required": [
+                        "interface"
+                      ],
+                      "type": "object"
                     },
                     "state": {
-                      "type": "object",
-                      "required": ["google-pins-lacp:enable-host-signaling"],
                       "additionalProperties": false,
                       "properties": {
-                        "google-pins-lacp:enable-host-signaling": { "type": "boolean", "const": false }
-                      }
-                    }
-                  }
-                },
-                "openconfig-platform:components": {
-                  "type": "object",
-                  "required": ["component"],
-                  "properties": {
-                    "component": {
-                      "type": "array",
-                      "uniqueItems": true,
-                      "minItems" : 75,
-                      "maxItems" : 75,
-                      "additionalItems": false
+                        "google-pins-lacp:enable-host-signaling": {
+                          "const": false,
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "google-pins-lacp:enable-host-signaling"
+                      ],
+                      "type": "object"
                     }
                   },
-                  "additionalProperties": false
+                  "required": [
+                    "config",
+                    "interfaces",
+                    "state"
+                  ],
+                  "type": "object"
                 },
                 "openconfig-optical-switch:optical-switch": {
-                  "type": "object",
                   "required": [
-                    "google-optical-switch:telemetry",
                     "optical-switch-topology",
-                    "port-connection-recovery",
                     "port-connections",
                     "port-statuses"
-                  ]
+                  ],
+                  "type": "object"
+                },
+                "openconfig-platform:components": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "component": {
+                      "additionalItems": false,
+                      "maxItems": 77,
+                      "minItems": 77,
+                      "type": "array",
+                      "uniqueItems": true
+                    }
+                  },
+                  "required": [
+                    "component"
+                  ],
+                  "type": "object"
                 },
                 "openconfig-qos:qos": {
-                  "type": "object",
                   "required": [
                     "buffer-allocation-profiles",
                     "classifiers",
@@ -105,16 +113,16 @@
                     "queue-management-profiles",
                     "queues",
                     "scheduler-policies"
-                  ]
+                  ],
+                  "type": "object"
                 },
                 "openconfig-sampling:sampling": {
-                  "type": "object",
                   "required": [
                     "openconfig-sampling-sflow:sflow"
-                  ]
+                  ],
+                  "type": "object"
                 },
                 "openconfig-system:system": {
-                  "type": "object",
                   "required": [
                     "aaa",
                     "alarms",
@@ -128,14 +136,31 @@
                     "processes",
                     "ssh-server",
                     "state"
-                  ]
+                  ],
+                  "type": "object"
                 }
               },
-              "additionalProperties": false
-            }
-          }
+              "required": [
+                "openconfig-interfaces:interfaces",
+                "openconfig-lacp:lacp",
+                "openconfig-platform:components",
+                "openconfig-optical-switch:optical-switch",
+                "openconfig-qos:qos",
+                "openconfig-sampling:sampling",
+                "openconfig-system:system"
+              ],
+              "type": "object"
+            },
+            "syncResponse": true,
+            "xpath": "/"
+          },
+          "oper": "validate",
+          "timeout": 20000,
+          "title": "Validates initial updates"
         }
-      ]
+      ],
+      "title": "subscribe (ONCE) to /"
     }
-  ]
+  ],
+  "title": "ONCE Subscribe with root with wildcard"
 }

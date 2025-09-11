@@ -1,0 +1,128 @@
+{
+  "title": "Get_Disk_Component_State_paths",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=ssd1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "type", "description", "model-name", "parent", "part-no", "serial-no"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": ["ssd1"]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["openconfig-platform-types:STORAGE"]
+                  },
+                  "description": {
+                    "type": "string",
+                    "enum": ["SSD1"]
+                  },
+                  "model-name": {
+                    "type": "string",
+                    "enum": ["SSD1"]
+                  },
+                  "parent": {
+                    "type": "string",
+                    "enum": ["controller_card"]
+                  },
+                  "part-no": {
+                    "type": "string",
+                    "enum": ["12345"]
+                  },
+                  "serial-no": {
+                    "type": "string",
+                    "enum": ["FFF"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=ssd1]/state/name",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:name"
+      ],
+      "properties": {
+        "openconfig-platform:name": {
+          "type": "string",
+          "enum": ["ssd1"]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=ssd1]/state/part-no",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:part-no"
+      ],
+      "properties": {
+        "openconfig-platform:part-no": {
+          "type": "string",
+          "enum": ["12345"]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=ssd1]/state/serial-no",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:serial-no"
+      ],
+      "properties": {
+        "openconfig-platform:serial-no": {
+          "type": "string",
+          "enum": ["FFF"]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=ssd1]/state/model-name",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:model-name"
+      ],
+      "properties": {
+        "openconfig-platform:model-name": {
+          "type": "string",
+          "enum": ["SSD1"]
+        }
+      }
+    }
+  ]
+}

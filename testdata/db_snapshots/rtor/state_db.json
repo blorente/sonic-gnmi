@@ -695,12 +695,12 @@
       "boot-time": "11/06/2023 20:29:29 +0000 UTC",
       "enable_host_signaling": "true",
       "firmware-version": "lucasrod-portchannel3",
-switch",
+      "fully-qualified-name": "switch",
       "hardware-version": "10",
       "mac_addr_num": "262",
       "manufacture_date": "06/17/2019 00:00:00",
       "part-no": "1039209030A",
-      "platform": "torswitch",
+      "platform": "torswitch1",
       "product_name": "TA",
       "serial": "TOSCTH192400863"
   },
@@ -1135,7 +1135,7 @@ switch",
       "last-configuration-timestamp": "1699302791881035617"
   },
   "HOST_STATS|HOSTNAME": {
-switch"
+      "hostname": "switch"
   },
   "INTERFACE_TABLE|Ethernet1/1/1": {
       "vrf": ""
@@ -6837,6 +6837,9 @@ switch"
   "WARM_RESTART_TABLE|coppmgrd": {
       "restore_count": "0",
       "state": "reconciled"
+  },
+  "DYNAMIC_BOOTSTRAP_CYCLE_PORTS_INFO|port_cycler": {
+      "status": "exited"
   },
   "WARM_RESTART_TABLE|fdbsyncd": {
       "restore_count": "0",

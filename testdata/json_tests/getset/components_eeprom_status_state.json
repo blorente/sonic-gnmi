@@ -1,0 +1,275 @@
+{
+  "title": "Get_Eeprom_Status_Component_State_paths",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=lds_321N]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "type", "parent", "oper-status"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": ["321N"]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["google-pins-platform:EEPROM"]
+                  },
+                  "parent": {
+                    "type": "string",
+                    "enum": ["chassis"]
+                  },
+                  "oper-status": {
+                    "type": "string",
+                    "enum": ["openconfig-platform-types:ACTIVE"]
+                  },
+                  "pcie": {
+                    "type": "object",
+                    "required": [
+                      "correctable-errors"
+                    ],
+                    "properties": {
+                      "correctable-errors": {
+                        "type": "object",
+                        "required": [
+                          "total-errors"
+                        ],
+                        "properties": {
+                          "total-errors": {
+                            "type": "string",
+                            "enum": ["0"]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=core_/dev/mtd/mems_calibration_a]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "type", "parent", "oper-status"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": ["/dev/mtd/mems_calibration_a"]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["google-pins-platform:EEPROM"]
+                  },
+                  "parent": {
+                    "type": "string",
+                    "enum": ["chassis"]
+                  },
+                  "oper-status": {
+                    "type": "string",
+                    "enum": ["openconfig-platform-types:INACTIVE"]
+                  },
+                  "pcie": {
+                    "type": "object",
+                    "required": [
+                      "correctable-errors"
+                    ],
+                    "properties": {
+                      "correctable-errors": {
+                        "type": "object",
+                        "required": [
+                          "total-errors"
+                        ],
+                        "properties": {
+                          "total-errors": {
+                            "type": "string",
+                            "enum": ["5"]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=lds_321N]/state/name",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:name"
+      ],
+      "properties": {
+        "openconfig-platform:name": {
+          "type": "string",
+          "enum": ["321N"]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=lds_321N]/state/type",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:type"
+      ],
+      "properties": {
+        "openconfig-platform:type": {
+          "type": "string",
+          "enum": ["google-pins-platform:EEPROM"]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=lds_321N]/state/parent",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:parent"
+      ],
+      "properties": {
+        "openconfig-platform:parent": {
+          "type": "string",
+          "enum": ["chassis"]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=lds_321N]/state/oper-status",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:oper-status"
+      ],
+      "properties": {
+        "openconfig-platform:oper-status": {
+          "type": "string",
+          "enum": ["openconfig-platform-types:ACTIVE"]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=lds_321N]/state/pcie",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:pcie"
+      ],
+      "properties": {
+        "openconfig-platform:pcie": {
+          "type": "object",
+          "required": [
+            "correctable-errors"
+          ],
+          "properties": {
+            "correctable-errors": {
+              "type": "object",
+              "required": [
+                "total-errors"
+              ],
+              "properties": {
+                "total-errors": {
+                  "type": "string",
+                  "enum": ["0"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=lds_321N]/state/pcie/correctable-errors",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:correctable-errors"
+      ],
+      "properties": {
+        "openconfig-platform:correctable-errors": {
+          "type": "object",
+          "required": [
+            "total-errors"
+          ],
+          "properties": {
+            "total-errors": {
+              "type": "string",
+              "enum": ["0"]
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=lds_321N]/state/pcie/correctable-errors/total-errors",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:total-errors"
+      ],
+      "properties": {
+        "openconfig-platform:total-errors": {
+          "type": "string",
+          "enum": ["0"]
+        }
+      }
+    }
+  ]
+}

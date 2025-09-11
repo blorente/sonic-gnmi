@@ -14,7 +14,9 @@ require (
 	github.com/golang/glog v1.2.1
 	github.com/golang/protobuf v1.5.4
 	github.com/google/gnxi v0.0.0-20191016182648-6697a080bc2d
+	github.com/google/go-tpm v0.9.3
 	github.com/google/gofuzz v1.2.0
+	github.com/google/gousb v1.1.3
 	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.1.0
 	github.com/hashicorp/golang-lru v0.5.4
 	github.com/kylelemons/godebug v1.1.0
@@ -22,8 +24,9 @@ require (
 	github.com/nxadm/tail v1.4.11
 	github.com/openconfig/gnmi v0.11.0
 	github.com/openconfig/gnoi v0.4.1-0.20240320162840-dbdca7782474
-	github.com/openconfig/gnsi v1.5.0
+	github.com/openconfig/gnsi v1.7.0
 	github.com/openconfig/ygot v0.13.1
+	github.com/pkg/errors v0.9.1
 	github.com/redis/go-redis/v9 v9.6.1
 	github.com/xeipuuv/gojsonschema v1.2.0
 	golang.org/x/crypto v0.31.0
@@ -65,5 +68,4 @@ require (
 )
 
 replace github.com/Azure/sonic-mgmt-common => ../sonic-mgmt-common
-
 replace github.com/golang/glog => github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b

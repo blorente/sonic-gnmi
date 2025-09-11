@@ -3,7 +3,7 @@
   "globalDef" : {
     "pfm_ic": {
       "IC0_name":    { "type": "string", "const": "integrated_circuit0" },
-switch" },
+      "IC0_fq_name": { "type": "string", "const": "switch" },
       "IC0_cfg": {
         "type": "object",
         "required": ["name", "openconfig-pins-platform:fully-qualified-name"],

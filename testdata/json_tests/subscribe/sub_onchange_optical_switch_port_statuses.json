@@ -2,16 +2,16 @@
   "title": "Optical Switch Port Statuses Subscribe On Change",
   "operations": [
     {
-      "title": "subscribe to /port-statuses/port-status[1,99]/state ON_CHANGE",
+      "title": "subscribe to /port-statuses/port-status[99N]/state ON_CHANGE",
       "operation": "subscribe",
-      "operProto": "subscribe: { prefix: { origin:'openconfig' target:'OC_YANG' } encoding:PROTO subscription: { path: { elem: { name:'optical-switch'} elem: { name:'port-statuses' } elem: { name:'port-status' key: { key:'slot-number' value:'1' } key: { key:'port-number' value:'99' } } elem: { name: 'state' } } mode:ON_CHANGE } mode:STREAM }",
+      "operProto": "subscribe: { prefix: { origin:'openconfig' target:'OC_YANG' } encoding:PROTO subscription: { path: { elem: { name:'optical-switch'} elem: { name:'port-statuses' } elem: { name:'port-status' key: { key:'port-name' value:'99N' } } elem: { name: 'state' } } mode:ON_CHANGE } mode:STREAM }",
       "returnCode": 0,
       "subOpers": [
         {
           "oper": "validate",
           "timeout": 3000,
           "finalValidator": {
-            "xpath": "/optical-switch/port-statuses/port-status[port-number=99][slot-number=1]",
+            "xpath": "/optical-switch/port-statuses/port-status[port-name=99N]",
             "syncResponse": true,
             "schema": {
               "type": "object",
@@ -25,8 +25,7 @@
                     {
                       "required": [
                         "state",
-                        "port-number",
-                        "slot-number"
+                        "port-name"
                       ],
                       "properties": {
                         "state": {
@@ -46,13 +45,9 @@
                             }
                           }
                         },
-                        "port-number": {
-                          "type": "integer",
-                          "enum": [ 99 ]
-                        },
-                        "slot-number": {
-                          "type": "integer",
-                          "enum": [ 1 ]
+                        "port-name": {
+                          "type": "string",
+                          "enum": [ "99N" ]
                         }
                       }
                     }
@@ -66,7 +61,7 @@
           "oper": "dbHSet",
           "db": "STATE_DB",
           "value": {
-            "OCS_PORT_STATUSES|1|99": {
+            "OCS_PORT_STATUSES|99N": {
               "port-status": "STATUS_FAILED"
             }
           }
@@ -76,7 +71,7 @@
           "timeout": 3000,
           "pathValidators": [
             {
-              "xpath": "/optical-switch/port-statuses/port-status[port-number=99][slot-number=1]/state/port-status",
+              "xpath": "/optical-switch/port-statuses/port-status[port-name=99N]/state/port-status",
               "schema": {
                 "type": "object",
                 "required": [
@@ -98,7 +93,7 @@
     {
       "title": "subscribe to /port-statuses/port-status[*,*]/state ON_CHANGE",
       "operation": "subscribe",
-      "operProto": "subscribe: { prefix: { origin:'openconfig' target:'OC_YANG' } encoding:PROTO subscription: { path: { elem: { name:'optical-switch'} elem: { name:'port-statuses' } elem: { name:'port-status' key: { key:'slot-number' value:'*' } key: { key:'port-number' value:'*' } } elem: { name: 'state' } } mode:ON_CHANGE } mode:STREAM }",
+      "operProto": "subscribe: { prefix: { origin:'openconfig' target:'OC_YANG' } encoding:PROTO subscription: { path: { elem: { name:'optical-switch'} elem: { name:'port-statuses' } elem: { name:'port-status' key: { key:'port-name' value:'*' } } elem: { name: 'state' } } mode:ON_CHANGE } mode:STREAM }",
       "returnCode": 0,
       "subOpers": [
         {
@@ -119,8 +114,7 @@
                     {
                       "required": [
                         "state",
-                        "port-number",
-                        "slot-number"
+                        "port-name"
                       ],
                       "properties": {
                         "state": {
@@ -135,16 +129,10 @@
                             }
                           }
                         },
-                        "port-number": {
-                          "type": "integer",
+                        "port-name": {
+                          "type": "string",
                           "enum": [
-                            1
-                          ]
-                        },
-                        "slot-number": {
-                          "type": "integer",
-                          "enum": [
-                            1
+                            "1N"
                           ]
                         }
                       }
@@ -153,8 +141,7 @@
                     {
                       "required": [
                         "state",
-                        "port-number",
-                        "slot-number"
+                        "port-name"
                       ],
                       "properties": {
                         "state": {
@@ -169,16 +156,10 @@
                             }
                           }
                         },
-                        "port-number": {
-                          "type": "integer",
+                        "port-name": {
+                          "type": "string",
                           "enum": [
-                            99
-                          ]
-                        },
-                        "slot-number": {
-                          "type": "integer",
-                          "enum": [
-                            1
+                            "99N"
                           ]
                         }
                       }
@@ -193,7 +174,7 @@
           "oper": "dbHSet",
           "db": "STATE_DB",
           "value": {
-            "OCS_PORT_STATUSES|1|99": {
+            "OCS_PORT_STATUSES|99N": {
               "port-status": "STATUS_ENABLED"
             }
           }
@@ -203,7 +184,7 @@
           "timeout": 3000,
           "pathValidators": [
             {
-              "xpath": "/optical-switch/port-statuses/port-status[port-number=99][slot-number=1]/state/port-status",
+              "xpath": "/optical-switch/port-statuses/port-status[port-name=99N]/state/port-status",
               "schema": {
                 "type": "object",
                 "required": [
@@ -223,7 +204,7 @@
           "oper": "dbHSet",
           "db": "STATE_DB",
           "value": {
-            "OCS_PORT_STATUSES|1|1": {
+            "OCS_PORT_STATUSES|1N": {
               "port-status": "STATUS_DISABLED"
             }
           }
@@ -233,7 +214,7 @@
           "timeout": 3000,
           "pathValidators": [
             {
-              "xpath": "/optical-switch/port-statuses/port-status[port-number=1][slot-number=1]/state/port-status",
+              "xpath": "/optical-switch/port-statuses/port-status[port-name=1N]/state/port-status",
               "schema": {
                 "type": "object",
                 "required": [

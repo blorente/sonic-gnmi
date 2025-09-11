@@ -1,18 +1,40 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
 
 go_library(
     name = "gnoi_client_lib",
-    srcs = ["gnoi_client.go"],
+    srcs = [
+        "blackbox.go",
+        "burnin.go",
+        "diag.go",
+        "factory_reset.go",
+        "gnoi_client.go",
+        "healthz.go",
+        "lds.go",
+        "ocs.go",
+        "qual.go",
+        "system.go",
+        ],
     importpath = "github.com/sonic-net/sonic-gnmi/gnoi_client",
     visibility = ["//visibility:private"],
     deps = [
+        "//proto/gnoi/blackbox",
+        "//proto/gnoi/burnin",
+        "//proto/gnoi/ocs",
+        "//proto/gnoi/qualification",
         "//proto/sonic_gnoi",
         "//proto/sonic_gnoi/jwt",
         "@com_github_google_gnxi//utils/credentials",
+        "@com_github_openconfig_gnoi//diag",
+        "@com_github_openconfig_gnoi//factory_reset",
         "@com_github_openconfig_gnoi//file",
+        "@com_github_openconfig_gnoi//healthz",
         "@com_github_openconfig_gnoi//system",
+        "@com_github_openconfig_gnoi//types",
         "@org_golang_google_grpc//:grpc",
         "@org_golang_google_grpc//metadata",
+        "@org_golang_google_protobuf//encoding/protojson",
+        "@org_golang_google_protobuf//encoding/prototext",
+        "@com_github_golang_protobuf//proto:go_default_library",
     ],
 )
 
@@ -20,4 +42,27 @@ go_binary(
     name = "gnoi_client",
     embed = [":gnoi_client_lib"],
     visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "gnoi_client_test",
+    srcs = [
+        "blackbox_test.go",
+        "diag_test.go",
+        "healthz_test.go",
+        "lds_test.go",
+        "ocs_test.go",
+        "qual_test.go",
+    ],
+    embed = [":gnoi_client_lib"],
+    deps = [
+        "//proto/gnoi/blackbox",
+        "//proto/gnoi/ocs",
+        "//proto/gnoi/qualification",
+        "@com_github_openconfig_gnoi//diag",
+        "@com_github_openconfig_gnoi//healthz",
+        "@com_github_openconfig_gnoi//types",
+        "@org_golang_google_grpc//:go_default_library",
+        "@org_golang_google_grpc//credentials",
+    ],
 )

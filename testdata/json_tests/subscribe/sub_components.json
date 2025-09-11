@@ -9,8 +9,8 @@
           "openconfig-platform:component" : {
             "type": "array",
             "uniqueItems": true,
-            "minItems" : 75,
-            "maxItems" : 75,
+            "minItems" : 77,
+            "maxItems" : 77,
             "additionalItems": false,
             "items":{
               "type": "object",
@@ -29,6 +29,7 @@
                            "PSU 1","PSU 2",
                            "boot_loader",
                            "chassis",
+                           "core_/dev/mtd/mems_calibration_a",
                            "cpu_sensor_1","cpu_sensor_2","dimm_sensor_1","exhaust_sensor_1",
                            "fan1","fan2","fan3",
                            "fpga_0","haven",
@@ -38,6 +39,7 @@
                            "hotswap_adm1272-i2c-501-10",
                            "inlet_sensor",
                            "integrated_circuit0",
+                           "lds_321N",
                            "network_stack0","network_stack1",
                            "os0","os1",
                            "power_brick_1",

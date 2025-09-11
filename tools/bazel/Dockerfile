@@ -35,6 +35,9 @@ RUN apt install -y make \
     uuid-dev            \
     libzmq3-dev
 
+# Needed for cyrpta_client (attestation)
+RUN apt install -y libusb-1.0-0-dev
+
 # Moved into bazel WORKSPACE to build from source
 #    nlohmann-json-dev
 

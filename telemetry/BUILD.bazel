@@ -65,6 +65,7 @@ go_library(
     importpath = "github.com/sonic-net/sonic-gnmi/telemetry",
     visibility = ["//visibility:private"],
     deps = [
+        "//common_utils",
         "//gnmi_server",
         "//gnmi_server/log",
         "//swsscommon",

@@ -7,7 +7,7 @@ all: init sonic-telemetry clients
 
 sonic-telemetry: $(MAKEFILE_LIST) $(GO_DEPS)
 	echo '***BEGIN TELEMETRY BUILD***'
-	bazel build $(BAZEL_OPTS) telemetry:telemetry
+	bazel build $(BAZEL_OPTS) telemetry:telemetry --linkopt=-lusb-1.0
 	echo '***END TELEMETRY BUILD***'
 
 clients:

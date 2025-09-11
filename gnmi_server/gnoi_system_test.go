@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
+	"sync"
 	"testing"
 	"time"
 
@@ -16,6 +17,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/status"
+	sdcfg "github.com/sonic-net/sonic-gnmi/sonic_db_config"
 )
 
 // Mock interface implementation that returns success!
@@ -178,7 +180,7 @@ func errorCodeToSwss(errCode codes.Code) string {
 	return ""
 }
 
-func nsfManagerResponse(t *testing.T, sc *redis.Client, expectedResponse codes.Code, fvs map[string]string, done chan bool, key string) {
+func nsfManagerResponse(t *testing.T, sc *redis.Client, expectedResponse codes.Code, fvs map[string]string, done chan bool, key string, timeoutExpected bool) {
 	sub := sc.Subscribe(context.Background(), "Reboot_Request_Channel")
 	if _, err := sub.Receive(context.Background()); err != nil {
 		t.Errorf("nsfManagerResponse failed to subscribe to request channel: %v", err)
@@ -206,6 +208,9 @@ func nsfManagerResponse(t *testing.T, sc *redis.Client, expectedResponse codes.C
 	case <-done:
 		return
 	case <-tc:
+		if timeoutExpected {
+			return
+		}
 		t.Error("nsfManagerResponse timed out waiting for request")
 		return
 	}
@@ -370,7 +375,7 @@ func TestGnoiSystem(t *testing.T) {
 		done := make(chan bool, 1)
 		fvs := make(map[string]string)
 		fvs["MESSAGE"] = "{\"active\": true, \"method\":\"NSF\",\"status\":{\"status\":\"STATUS_SUCCESS\"}}"
-		go nsfManagerResponse(t, rclient, codes.OK, fvs, done, rebootStatusKey)
+		go nsfManagerResponse(t, rclient, codes.OK, fvs, done, rebootStatusKey, false /* timeoutExpected */)
 		defer func() { done <- true }()
 
 		sysXfmr = mocksysXfmrSuccess{}
@@ -395,7 +400,7 @@ func TestGnoiSystem(t *testing.T) {
 		done := make(chan bool, 1)
 		fvs := make(map[string]string)
 		fvs["MESSAGE"] = "{}"
-		go nsfManagerResponse(t, rclient, codes.OK, fvs, done, rebootCancelKey)
+		go nsfManagerResponse(t, rclient, codes.OK, fvs, done, rebootCancelKey, false /* timeoutExpected */)
 		defer func() { done <- true }()
 
 		req := &syspb.CancelRebootRequest{
@@ -568,7 +573,7 @@ func TestSystemNSFReboot(t *testing.T) {
 			done := make(chan bool, 1)
 			fvs := make(map[string]string)
 			fvs["MESSAGE"] = "{}"
-			go nsfManagerResponse(t, rclient, test.errCode, fvs, done, rebootKey)
+			go nsfManagerResponse(t, rclient, test.errCode, fvs, done, rebootKey, false /* timeoutExpected */)
 			defer func() { done <- true }()
 
 			_, err := sc.Reboot(ctx, req)
@@ -591,6 +596,153 @@ func TestSystemNSFReboot(t *testing.T) {
 			}
 		}
 	}
+
+	s.SsHelper.Close()
+	s.SsHelper = savedSsHelper
+	s.WarmRestartHelper = savedWRHelper
+}
+
+func TestHandshakeWithPortCyclerOnReboot(t *testing.T) {
+	s := createServer(t)
+	go runServer(t, s)
+	defer s.Stop()
+
+	tlsConfig := &tls.Config{InsecureSkipVerify: true}
+	opts := []grpc.DialOption{grpc.WithTransportCredentials(credentials.NewTLS(tlsConfig))}
+
+	targetAddr := fmt.Sprintf("127.0.0.1:%d", s.config.Port)
+	conn, err := grpc.Dial(targetAddr, opts...)
+	if err != nil {
+		t.Fatalf("Dialing to %q failed: %v", targetAddr, err)
+	}
+	defer conn.Close()
+
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	sc := syspb.NewSystemClient(conn)
+	rclient := db.TransactionalRedisClient(db.StateDB)
+	defer db.CloseRedisClient(rclient)
+
+	ns, _ := sdcfg.GetDbDefaultNamespace()
+	cfgDbId, _ := sdcfg.GetDbId("CONFIG_DB", ns)
+	configDb := getRedisClientN(t, cfgDbId, ns)
+	defer db.CloseRedisClient(configDb)
+	stateDbId, _ := sdcfg.GetDbId("STATE_DB", ns)
+	stateDb := getRedisClientN(t, stateDbId, ns)
+	defer db.CloseRedisClient(stateDb)
+
+	savedSsHelper := s.SsHelper
+	s.SsHelper = mockSystemStateHelperSuccess{}
+	savedWRHelper := s.WarmRestartHelper
+	s.WarmRestartHelper = mockSystemWarmRebootSuccess{}
+
+	t.Run("Expect REBOOT SUCCEED with Port Cycler Ack", func(t *testing.T) {
+		stateDb.Del(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS_INFO|port_cycler").Result()
+		configDb.Del(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local").Result()
+		s.doPortCycleDisable = true
+
+		req := &syspb.RebootRequest{
+			Method:  syspb.RebootMethod_NSF,
+			Delay:   0,
+			Message: "Starting NSF reboot ...",
+		}
+
+		sysXfmr = mocksysXfmrSuccess{}
+
+		// Start goroutine to respond to reboot requests
+		done := make(chan bool, 1)
+		fvs := make(map[string]string)
+		fvs["MESSAGE"] = "{}"
+		go nsfManagerResponse(t, rclient, codes.OK, fvs, done, rebootKey, false /* timeoutExpected */)
+		defer func() { done <- true }()
+
+		var wg sync.WaitGroup
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			_, err := sc.Reboot(ctx, req)
+			if err != nil {
+				t.Fatalf("Reboot should not fail. Err: %v", err)
+			}
+		}()
+		stateDb.HSet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS_INFO|port_cycler", "status", "exited")
+		wg.Wait()
+
+		cfg_status, _ := configDb.HGet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local", "enable").Result()
+		if cfg_status != "false" {
+			t.Fatalf("UMF failed to request port cycler to exit")
+		}
+		if s.doPortCycleDisable {
+			t.Fatalf("Port Cycler should cache exited port cycler")
+		}
+	})
+	t.Run("Expect REBOOT SUCCEED with Port Cycler disabled", func(t *testing.T) {
+		stateDb.HSet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS_INFO|port_cycler", "status", "exited").Result()
+		configDb.HSet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local", "enable", "false").Result()
+		s.doPortCycleDisable = false
+
+		req := &syspb.RebootRequest{
+			Method:  syspb.RebootMethod_NSF,
+			Delay:   0,
+			Message: "Starting NSF reboot ...",
+		}
+
+		sysXfmr = mocksysXfmrSuccess{}
+
+		// Start goroutine to respond to reboot requests
+		done := make(chan bool, 1)
+		fvs := make(map[string]string)
+		fvs["MESSAGE"] = "{}"
+		go nsfManagerResponse(t, rclient, codes.OK, fvs, done, rebootKey, false /* timeoutExpected */)
+		defer func() { done <- true }()
+
+		_, err := sc.Reboot(ctx, req)
+		if err != nil {
+			t.Fatalf("Reboot should not fail. Err: %v", err)
+		}
+
+		cfg_status, _ := configDb.HGet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local", "enable").Result()
+		if cfg_status != "false" {
+			t.Fatalf("UMF failed to request port cycler to exit")
+		}
+		if s.doPortCycleDisable {
+			t.Fatalf("Port Cycler should cache exited port cycler")
+		}
+	})
+	t.Run("Expect REBOOT Abort when PC ack late", func(t *testing.T) {
+		stateDb.HSet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS_INFO|port_cycler", "status", "fail")
+		configDb.Del(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local").Result()
+		s.doPortCycleDisable = true
+
+		req := &syspb.RebootRequest{
+			Method:  syspb.RebootMethod_NSF,
+			Delay:   0,
+			Message: "Starting NSF reboot ...",
+		}
+
+		sysXfmr = mocksysXfmrSuccess{}
+
+		// Start goroutine to respond to reboot requests
+		done := make(chan bool, 1)
+		fvs := make(map[string]string)
+		fvs["MESSAGE"] = "{}"
+		go nsfManagerResponse(t, rclient, codes.OK, fvs, done, rebootKey, true /* timeoutExpected */)
+		defer func() { done <- true }()
+
+		_, err := sc.Reboot(ctx, req)
+		if err == nil {
+			t.Fatalf("Expected Aborted, but Reboot succeeded")
+		}
+
+		cfg_status, _ := configDb.HGet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local", "enable").Result()
+		if cfg_status != "false" {
+			t.Fatalf("UMF failed to request port cycler to exit")
+		}
+		if !s.doPortCycleDisable {
+			t.Fatalf("Port Cycler still needs to be disabled, but the control flag indicates it's no longer necessary")
+		}
+	})
 
 	s.SsHelper.Close()
 	s.SsHelper = savedSsHelper

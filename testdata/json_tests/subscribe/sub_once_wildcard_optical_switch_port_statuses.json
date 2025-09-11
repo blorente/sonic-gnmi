@@ -2,9 +2,9 @@
 "title": "Optical Switch Port Statuses Subscribe Once Wildcards",
 "operations": [
   {
-    "title": "subscribe to /port-statuses/port-status[1,*] ONCE",
+    "title": "subscribe to /port-statuses/port-status[1N,*] ONCE",
     "operation": "subscribe",
-    "operProto": "subscribe: { prefix: { origin:'openconfig' target:'OC_YANG' }encoding:PROTO subscription: { path: { elem: { name:'optical-switch'} elem: { name:'port-statuses' } elem: { name:'port-status' key: { key:'slot-number' value:'1' } key: { key:'port-number' value:'*' } } } } mode:ONCE }",
+    "operProto": "subscribe: { prefix: { origin:'openconfig' target:'OC_YANG' }encoding:PROTO subscription: { path: { elem: { name:'optical-switch'} elem: { name:'port-statuses' } elem: { name:'port-status' key: { key:'port-name' value:'*' } } } } mode:ONCE }",
     "returnCode": 0,
     "subOpers": [
       {
@@ -33,17 +33,12 @@
                       {
                         "required": [
                           "state",
-                          "port-number",
-                          "slot-number"
+                          "port-name"
                         ],
                         "properties": {
-                          "port-number": {
-                            "type": "integer",
-                            "enum": [1]
-                          },
-                          "slot-number": {
-                            "type": "integer",
-                            "enum": [1]
+                          "port-name": {
+                            "type": "string",
+                            "enum": ["1N"]
                           },
                           "state": {
                             "type": "object",
@@ -64,17 +59,12 @@
                       {
                         "required": [
                           "state",
-                          "port-number",
-                          "slot-number"
+                          "port-name"
                         ],
                         "properties": {
-                          "port-number": {
-                            "type": "integer",
-                            "enum": [99]
-                          },
-                          "slot-number": {
-                            "type": "integer",
-                            "enum": [1]
+                          "port-name": {
+                            "type": "string",
+                            "enum": ["99N"]
                           },
                           "state": {
                             "type": "object",
@@ -103,9 +93,9 @@
     ]
   },
   {
-    "title": "subscribe to /port-statuses/port-status[*,1] ONCE",
+    "title": "subscribe to /port-statuses/port-status[1N] ONCE",
     "operation": "subscribe",
-    "operProto": "subscribe: { prefix: { origin:'openconfig' target:'OC_YANG' }encoding:PROTO subscription: { path: { elem: { name:'optical-switch'} elem: { name:'port-statuses' } elem: { name:'port-status' key: { key:'slot-number' value:'*' } key: { key:'port-number' value:'1' } } } } mode:ONCE }",
+    "operProto": "subscribe: { prefix: { origin:'openconfig' target:'OC_YANG' }encoding:PROTO subscription: { path: { elem: { name:'optical-switch'} elem: { name:'port-statuses' } elem: { name:'port-status' key: { key:'port-name' value:'1N' } } } } mode:ONCE }",
     "returnCode": 0,
     "subOpers": [
       {
@@ -134,17 +124,12 @@
                       {
                         "required": [
                           "state",
-                          "port-number",
-                          "slot-number"
+                          "port-name"
                         ],
                         "properties": {
-                          "port-number": {
-                            "type": "integer",
-                            "enum": [1]
-                          },
-                          "slot-number": {
-                            "type": "integer",
-                            "enum": [1]
+                          "port-name": {
+                            "type": "string",
+                            "enum": ["1N"]
                           },
                           "state": {
                             "type": "object",
@@ -167,26 +152,6 @@
                 }
               }
             }
-          }
-        }
-      }
-    ]
-  },
-  {
-    "title": "subscribe to /port-statuses/port-status[2,*] ONCE",
-    "operation": "subscribe",
-    "operProto": "subscribe: { prefix: { origin:'openconfig' target:'OC_YANG' }encoding:PROTO subscription: { path: { elem: { name:'optical-switch'} elem: { name:'port-statuses' } elem: { name:'port-status' key: { key:'slot-number' value:'2' } key: { key:'port-number' value:'*' } } } } mode:ONCE }",
-    "returnCode": 0,
-    "subOpers": [
-      {
-        "oper": "validate",
-        "timeout": 3000,
-        "finalValidator": {
-          "xpath": "/optical-switch/port-statuses",
-          "syncResponse": true,
-          "schema": {
-            "type": "object",
-            "maxProperties": 0
           }
         }
       }

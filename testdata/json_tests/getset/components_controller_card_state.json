@@ -1,0 +1,148 @@
+{
+  "title": "Get_Controller_Card_Component_State_paths",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=controller_card]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "type", "description", "model-name", "parent", "part-no", "serial-no", "oper-status"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": ["controller_card"]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["openconfig-platform-types:CONTROLLER_CARD"]
+                  },
+                  "description": {
+                    "type": "string",
+                    "enum": ["CONTROLLER_CARD"]
+                  },
+                  "model-name": {
+                    "type": "string",
+                    "enum": ["CONTROLLER_CARD"]
+                  },
+                  "parent": {
+                    "type": "string",
+                    "enum": ["chassis"]
+                  },
+                  "part-no": {
+                    "type": "string",
+                    "enum": ["1234"]
+                  },
+                  "serial-no": {
+                    "type": "string",
+                    "enum": ["FFF"]
+                  },
+                  "oper-status": {
+                    "type": "string",
+                    "enum": ["openconfig-platform-types:ACTIVE"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=controller_card]/state/name",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:name"
+      ],
+      "properties": {
+        "openconfig-platform:name": {
+          "type": "string",
+          "enum": ["controller_card"]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=controller_card]/state/part-no",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:part-no"
+      ],
+      "properties": {
+        "openconfig-platform:part-no": {
+          "type": "string",
+          "enum": ["1234"]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=controller_card]/state/serial-no",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:serial-no"
+      ],
+      "properties": {
+        "openconfig-platform:serial-no": {
+          "type": "string",
+          "enum": ["FFF"]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=controller_card]/state/model-name",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:model-name"
+      ],
+      "properties": {
+        "openconfig-platform:model-name": {
+          "type": "string",
+          "enum": ["CONTROLLER_CARD"]
+        }
+      }
+    },
+        {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=controller_card]/state/oper-status",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:oper-status"
+      ],
+      "properties": {
+        "openconfig-platform:oper-status": {
+          "type": "string",
+          "enum": ["openconfig-platform-types:ACTIVE"]
+        }
+      }
+    }
+  ]
+}

@@ -156,6 +156,11 @@ func prepareStartPktQualResp(req *qual.StartPacketQualificationRequest) (*qual.S
 
 // StartPacketQualification implements the corresponding RPC.
 func (srv *Server) StartPacketQualification(ctx context.Context, req *qual.StartPacketQualificationRequest) (*qual.StartPacketQualificationResponse, error) {
+	// Reject if the platform does not support packet based link qualification.
+	if !srv.lqHelper.SupportsPktLq() {
+		log.V(lvl.ERROR).Info("gNOI qual StartPacketQualification RPC is not supported!")
+		return nil, status.Errorf(codes.Unimplemented, "gNOI qual StartPacketQualification RPC is not supported!")
+	}
 	// Reject while NSF Freeze is ongoing
 	if srv.WarmRestartHelper.FetchFreezeStatus() {
 		log.V(lvl.ERROR).Info("gNOI Qual StartPacketQualification RPC disabled since NSF is ongoing!")
@@ -234,6 +239,11 @@ func prepareStopPktQualResp(req *qual.StopPacketQualificationRequest) (*qual.Sto
 
 // StopPacketQualification implements the corresponding RPC.
 func (srv *Server) StopPacketQualification(ctx context.Context, req *qual.StopPacketQualificationRequest) (*qual.StopPacketQualificationResponse, error) {
+	// Reject if the platform does not support packet based link qualification.
+	if !srv.lqHelper.SupportsPktLq() {
+		log.V(lvl.ERROR).Info("gNOI qual StopPacketQualification RPC is not supported!")
+		return nil, status.Errorf(codes.Unimplemented, "gNOI qual StopPacketQualification RPC is not supported!")
+	}
 	// Reject while NSF Freeze is ongoing
 	if srv.WarmRestartHelper.FetchFreezeStatus() {
 		log.V(lvl.ERROR).Info("gNOI Qual StopPacketQualification RPC disabled since NSF is ongoing!")
@@ -309,6 +319,11 @@ func getPktResult(req *qual.GetPacketQualificationResultRequest, rclient *redis.
 
 // GetPacketQualificationResult implements the corresponding RPC.
 func (srv *Server) GetPacketQualificationResult(ctx context.Context, req *qual.GetPacketQualificationResultRequest) (*qual.GetPacketQualificationResultResponse, error) {
+	// Reject if the platform does not support packet based link qualification.
+	if !srv.lqHelper.SupportsPktLq() {
+		log.V(lvl.ERROR).Info("gNOI qual GetPacketQualificationResult RPC is not supported!")
+		return nil, status.Errorf(codes.Unimplemented, "gNOI qual GetPacketQualificationResult RPC is not supported!")
+	}
 	// Reject while NSF Freeze is ongoing
 	if srv.WarmRestartHelper.FetchFreezeStatus() {
 		log.V(lvl.ERROR).Info("gNOI Qual GetPacketQualificationResult RPC disabled since NSF is ongoing!")

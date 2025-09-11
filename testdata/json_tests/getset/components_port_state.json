@@ -44,7 +44,7 @@
               "state": {
                 "type": "object",
                 "required": [
-                  "name", "type", "parent"
+                  "name", "type", "parent", "firmware-version"
                 ],
                 "properties": {
                   "name": {
@@ -64,11 +64,35 @@
                     "enum": [
                       "integrated_circuit0"
                     ]
+                  },
+                  "firmware-version": {
+                    "type": "string",
+                    "enum": [
+                      "my-fw-version"
+                    ]
                   }
                 }
               }
             }
           }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=1/1]/state/firmware-version",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:firmware-version"
+      ],
+      "properties": {
+        "openconfig-platform:firmware-version": {
+          "type": "string",
+          "enum": [
+            "my-fw-version"
+          ]
         }
       }
     }

@@ -53,8 +53,8 @@
                       }
                     }
                   },
-                  "minItems": 42,
-                  "maxItems": 42,
+                  "minItems": 44,
+                  "maxItems": 44,
                   "additionalItems": false,
                   "allOf": [
                     {
@@ -356,6 +356,38 @@
                             "additionalProperties": false,
                             "properties": {
                               "type": { "type": "string", "const": "openconfig-platform-types:POWER_SUPPLY" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "lds_321N"},
+                          "state": {
+                            "type": "object",
+                            "required": [ "type" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "type": { "type": "string", "const": "google-pins-platform:EEPROM" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "contains": {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string", "const": "core_/dev/mtd/mems_calibration_a"},
+                          "state": {
+                            "type": "object",
+                            "required": [ "type" ],
+                            "additionalProperties": false,
+                            "properties": {
+                              "type": { "type": "string", "const": "google-pins-platform:EEPROM" }
                             }
                           }
                         }

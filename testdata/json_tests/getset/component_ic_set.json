@@ -63,7 +63,7 @@
       "returnCode": 0,
       "xpath": "openconfig/components/",
       "target": "OC_YANG",
-switch\"},\"integrated-circuit\": {\"config\": {\"node-id\": \"183930889\"}}}]}}"
+      "attributeData": "{\"openconfig-platform:components\": {\"component\": [{\"name\": \"integrated_circuit0\",\"config\": {\"name\": \"integrated_circuit0\", \"fully-qualified-name\" : \"switch\"},\"integrated-circuit\": {\"config\": {\"node-id\": \"183930889\"}}}]}}"
     },
     {
       "operation": "get",
@@ -86,7 +86,7 @@ switch\"},\"integrated-circuit\": {\"config\": {\"node-id\": \"183930889\"}}}]}}
                   "name": { "$ref": "#/globalDef/pfm_ic/IC0_name" },
                   "openconfig-pins-platform:fully-qualified-name": {
                     "type": "string",
-switch"
+                    "const": "switch"
                   }
                 }
               },
@@ -127,7 +127,7 @@ switch"
                   "type": { "$ref": "#/globalDef/pfm_ic/IC0_type" },
                   "openconfig-pins-platform:fully-qualified-name": {
                     "type": "string",
-switch"
+                    "const": "switch"
                   }
                 }
               }
@@ -207,7 +207,7 @@ switch"
       "returnCode": 0,
       "xpath": "openconfig/components/",
       "target": "OC_YANG",
-switch\"}}]}}"
+      "attributeData": "{\"openconfig-platform:components\": {\"component\": [{\"name\": \"integrated_circuit0\",\"config\": {\"fully-qualified-name\": \"switch\"}}]}}"
     },
     {
       "title": "SetUpdate integrated_circuit0 node-id",

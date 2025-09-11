@@ -1,1179 +1,1077 @@
 {
-   "OCS_HV_CARD|1": {
-        "slot-number": "1",
-        "hv-card-type": "ALVIN3",
-        "operation-status": "HV_POWERED_UP",
-        "eeprom-status": "INCOMPLETE_DATA"
-    },
-    "OCS_HV_CARD_PORT|1|1": {
-        "port-id": "1",
-        "port-state": "FAULT"
-    },
-    "OCS_HV_CARD_PORT|1|10": {
-        "port-id": "10",
-        "port-state": "GOOD"
-    },
-    "OCS_HV_CARD_CHANNEL|1|16": {
-        "channel-id": "16",
-        "ocs-side": "NORTH",
-        "port-id": "1",
-        "mirror-id": "10",
-        "actuator": "X_POSITIVE",
-        "expected-voltage": "123.0",
-        "readback-voltage": "456.0",
-        "front-panel-port-name": "Front panel port name."
-    },
-    "OCS_HV_CARD_CHANNEL|1|32": {
-        "channel-id": "32",
-        "ocs-side": "SOUTH",
-        "port-id": "1",
-        "mirror-id": "4",
-        "actuator": "Y_NEGATIVE",
-        "expected-voltage": "124.0",
-        "readback-voltage": "457.0",
-        "front-panel-port-name": "Different front panel port name."
-    },
-    "OCS_HV_CARD|10": {
-        "slot-number": "10",
-        "hv-card-type": "ALVIN2",
-        "operation-status": "HV_POWERED_UP",
-        "eeprom-status": "GOOD"
-    },
-    "OCS_HV_CARD_PORT|10|1": {
-        "port-id": "1",
-        "port-state": "GOOD"
-    },
-    "OCS_HV_CARD_PORT|10|100": {
-        "port-id": "100",
-        "port-state": "UNKNOWN"
-    },
-    "OCS_HV_CARD_CHANNEL|10|27": {
-        "channel-id": "27",
-        "ocs-side": "SOUTH",
-        "port-id": "1",
-        "mirror-id": "10",
-        "actuator": "X_NEGATIVE",
-        "expected-voltage": "123.0",
-        "readback-voltage": "456.0",
-        "front-panel-port-name": "Front panel port name."
-    },
-    "OCS_HV_CARD_CHANNEL|10|32": {
-        "channel-id": "32",
-        "ocs-side": "SOUTH",
-        "port-id": "1",
-        "mirror-id": "4",
-        "actuator": "Y_NEGATIVE",
-        "expected-voltage": "123.0",
-        "readback-voltage": "456.0",
-        "front-panel-port-name": "Different front panel port name."
-    },
-   "OCS_PORT_STATUS_INFO|11": {
-        "success": "true",
-        "peer-port-id": "10035",
-        "error-status": "0",
-        "error-description": "No errors.",
-        "port-info-port-state": "WORKING",
-        "port-info-port-state-description": "The port is working hard.",
-        "port-info-side": "NORTH",
-        "port-info-mirror-x-axis-dac-code": "1337",
-        "port-info-mirror-y-axis-dac-code": "1336",
-        "port-info-reconnect-count": "10",
-        "port-info-initial-training-count": "14",
-        "port-info-interfered-centroid-count": "1",
-        "port-info-rejected-request-count": "2",
-        "port-info-peer-rejected-request-count": "3",
-        "port-info-mirror-x-positive-actuator-state": "UNCONTROLLABLE",
-        "port-info-mirror-x-negative-actuator-state": "GOOD",
-        "port-info-mirror-y-positive-actuator-state": "GOOD",
-        "port-info-mirror-y-negative-actuator-state": "VOLTAGE_MISMATCH",
-        "port-info-racetrack-request-complete": "true",
-        "peer-port-info-port-state": "TUNING",
-        "peer-port-info-port-state-description": "The port is adjusting the dial.",
-        "peer-port-info-side": "SOUTH",
-        "peer-port-info-mirror-x-axis-dac-code": "2337",
-        "peer-port-info-mirror-y-axis-dac-code": "2336",
-        "peer-port-info-reconnect-count": "20",
-        "peer-port-info-initial-training-count": "24",
-        "peer-port-info-interfered-centroid-count": "2",
-        "peer-port-info-rejected-request-count": "3",
-        "peer-port-info-peer-rejected-request-count": "4",
-        "peer-port-info-mirror-x-positive-actuator-state": "UNCONTROLLABLE",
-        "peer-port-info-mirror-x-negative-actuator-state": "GOOD",
-        "peer-port-info-mirror-y-positive-actuator-state": "GOOD",
-        "peer-port-info-mirror-y-negative-actuator-state": "VOLTAGE_MISMATCH",
-        "peer-port-info-racetrack-request-complete": "false"
-    },
-    "OCS_PORT_STATUS_INFO|14": {
-        "success": "true",
-        "peer-port-id": "10055",
-        "error-status": "0",
-        "error-description": "No errors.",
-        "port-info-port-state": "WORKING",
-        "port-info-port-state-description": "The port is working hard.",
-        "port-info-side": "NORTH",
-        "port-info-mirror-x-axis-dac-code": "1337",
-        "port-info-mirror-y-axis-dac-code": "1336",
-        "port-info-reconnect-count": "10",
-        "port-info-initial-training-count": "14",
-        "port-info-interfered-centroid-count": "1",
-        "port-info-rejected-request-count": "2",
-        "port-info-peer-rejected-request-count": "3",
-        "port-info-mirror-x-positive-actuator-state": "UNCONTROLLABLE",
-        "port-info-mirror-x-negative-actuator-state": "GOOD",
-        "port-info-mirror-y-positive-actuator-state": "GOOD",
-        "port-info-mirror-y-negative-actuator-state": "VOLTAGE_MISMATCH",
-        "port-info-racetrack-request-complete": "true",
-        "peer-port-info-port-state": "TUNING",
-        "peer-port-info-port-state-description": "The port is adjusting the dial.",
-        "peer-port-info-side": "SOUTH",
-        "peer-port-info-mirror-x-axis-dac-code": "2337",
-        "peer-port-info-mirror-y-axis-dac-code": "2336",
-        "peer-port-info-reconnect-count": "20",
-        "peer-port-info-initial-training-count": "24",
-        "peer-port-info-interfered-centroid-count": "2",
-        "peer-port-info-rejected-request-count": "3",
-        "peer-port-info-peer-rejected-request-count": "4",
-        "peer-port-info-mirror-x-positive-actuator-state": "UNCONTROLLABLE",
-        "peer-port-info-mirror-x-negative-actuator-state": "GOOD",
-        "peer-port-info-mirror-y-positive-actuator-state": "GOOD",
-        "peer-port-info-mirror-y-negative-actuator-state": "VOLTAGE_MISMATCH",
-        "peer-port-info-racetrack-request-complete": "false"
-    },
-    "OCS_CAMERA_INFO|cameraA": {
-        "side": "NORTH",
-        "power-good": "true",
-        "camera-gain": "1000",
-        "camera-shutter-width": "1001"
-    },
-    "OCS_CAMERA_INFO|cameraB": {
-        "side": "SOUTH",
-        "power-good": "false",
-        "camera-gain": "5000",
-        "camera-shutter-width": "5001"
-    },
-    "OCS_INJECTOR_INFO|injectorA": {
-        "side": "NORTH",
-        "dac-output": "1337",
-        "internal-ref": "true",
-        "power-enabled": "false",
-        "laser-feedback-code": "2337",
-        "laser-feedback-gain": "HIGH"
-    },
-    "OCS_INJECTOR_INFO|injectorB": {
-        "side": "SOUTH",
-        "dac-output": "9001",
-        "internal-ref": "false",
-        "power-enabled": "true",
-        "laser-feedback-code": "9002",
-        "laser-feedback-gain": "LOW"
-    },
-    "OCS_LDS_INFO|ldsA": {
-        "side": "NORTH",
-        "hotswap-controller-adc-alert": "true",
-        "hotswap-controller-hs-alert": "false"
-    },
-    "OCS_LDS_PORT_INFO|ldsA|1": {
-        "return-adc-input": "1337",
-        "return-adc-gain": "HIGH",
-        "forward-adc-input": "9001",
-        "forward-adc-gain": "LOW",
-        "dac-output": "1446",
-        "dac-internal-ref": "true",
-        "power-enabled": "true",
-        "digipot-rdac0": "1234",
-        "temperature": "123.0"
-    },
-    "OCS_LDS_PORT_INFO|ldsA|2": {
-        "return-adc-input": "2337",
-        "return-adc-gain": "LOW",
-        "forward-adc-input": "9002",
-        "forward-adc-gain": "HIGH",
-        "dac-output": "1334",
-        "dac-internal-ref": "false",
-        "power-enabled": "false",
-        "digipot-rdac0": "4567",
-        "temperature": "24.0"
-    },
-    "OCS_LDS_INFO|ldsB": {
-        "side": "SOUTH",
-        "hotswap-controller-adc-alert": "false",
-        "hotswap-controller-hs-alert": "true"
-    },
-    "OCS_LDS_PORT_INFO|ldsB|2": {
-        "return-adc-input": "4567",
-        "return-adc-gain": "LOW",
-        "forward-adc-input": "8910",
-        "forward-adc-gain": "HIGH",
-        "dac-output": "9005",
-        "dac-internal-ref": "true",
-        "power-enabled": "false",
-        "digipot-rdac0": "1887",
-        "temperature": "-14.0"
-    },
-    "OCS_LDS_PORT_INFO|ldsB|3": {
-        "return-adc-input": "7654",
-        "return-adc-gain": "HIGH",
-        "forward-adc-input": "198",
-        "forward-adc-gain": "LOW",
-        "dac-output": "5009",
-        "dac-internal-ref": "false",
-        "power-enabled": "true",
-        "digipot-rdac0": "7881",
-        "temperature": "14.0"
-    },
-    "OCS_TOPOLOGY|global_topology": {
-      "port-connectivity": "INGRESS_EGRESS",
-      "total-port-count": "100",
-      "total-optical-module-count": "1",
-      "ingress-port-count": "100",
-      "egress-port-count": "100",
-      "ingress-start-index": "1",
-      "egress-start-index": "10000",
-      "inter-module-connection-support": "true"
-    },
-    "OCS_XCONNECT_RECOVERY|global_xconnect_recovery": {
-        "port-connection-recovery-capability": "CONNECTIONS_PERSIST_REBOOT_RECOVERABLE_BY_NVM",
-        "port-connection-recovery-behavior": "RECOVER_PORT_CONNECTIONS_FROM_MEMORY"
-    },
-    "OCS_XCONNECTS|1|1": {
-        "peer-port-number": 10098,
-        "peer-slot-number": 1
-    },
-    "OCS_XCONNECTS|1|99": {
-        "peer-port-number": 10002,
-        "peer-slot-number": 1
-    },
-    "OCS_PORT_STATUSES|1|1": {
-        "port-status": "STATUS_ENABLED",
-        "port-status-message": "no message."
-    },
-    "OCS_PORT_STATUSES|1|99": {
-        "port-status": "STATUS_DISABLED",
-        "port-status-message": "no message."
-    },
-    "MGMT_PORT_TABLE|bond0": {
-       "oper_status": "up"
-    },
-    "CREDENTIALS|SSH_HOST": {
-        "ca_public_keys_version": "0",
-        "ca_public_keys_created_on": "0",
-        "access_accepts": "2",
-        "access_rejects": "3",
-        "last_access_accept": "4",
-        "last_access_reject": "5"
-    },
-    "CREDENTIALS|SSH_ACCOUNT|tester": {
-        "keys_version": "3",
-        "keys_created_on": "4",
-        "users_version": "5",
-        "users_created_on": "6"
-    },
-    "CREDENTIALS|CONSOLE_ACCOUNT|tester": {
-        "password_version": "1",
-        "password_created_on": "2"
-    },
-    "CREDENTIALS|CONSOLE_METRICS": {
-        "access_accepts": "3",
-        "access_rejects": "4",
-        "last_access_accept": "5",
-        "last_access_reject": "6"
-    },
-    "CREDENTIALS|PATHZ_POLICY|SANDBOX": {
-        "instance":"SANDBOX",
-        "pathz_version":"pathzVersionStateDB",
-        "pathz_created_on":"767"
-    },
-    "CREDENTIALS|AUTHZ_POLICY|gnxi": {
-        "authz_version": "1714761458829463154",
-        "authz_created_on": "1714761458829463854"
-    },
-    "FPGA_INFO|fpga_0": {
-        "description": "fpga_0 description",
-        "mfg_name": "GOOGLE",
-        "firmware-version": "1.0",
-        "reset_count": "3",
-        "reset_cause_d0": "power",
-        "reset_cause_d1": "switch",
-        "reset_cause_d2": "watchdog",
-        "reset_cause_d3": "software",
-        "reset_cause_d4": "emulator",
-        "reset_cause_d5": "cpu",
-        "reset_cause_d6": "blah blah",
-        "reset_cause_d7": "blah blah"
-    },
-    "STORAGE_INFO|/dev/sda": {
-        "name": "/dev/sda",
-        "part-no": "ssd:part:123456",
-        "serial-no": "ssd:serial:123456",
-        "io-errors": "123456",
-        "removable": "false",
-        "raw-read-error-rate": "0.0",
-        "throughput-performance": "10.10",
-        "reallocated-sector-count": "0",
-        "power-on-time": "0",
-        "ssd-life-left": "50",
-        "avg-erase-count": "50",
-        "max-erase-count": "100"
-    },
-    "STORAGE_INFO|/dev/sdb": {
-        "name": "/dev/sdb",
-        "part-no": "ssd:part:123457",
-        "serial-no": "ssd:serial:123457",
-        "io-errors": "123457",
-        "removable": "true",
-        "write-amplification-factor": "10",
-        "throughput-performance": "10.10",
-        "reallocated-sector-count": "0",
-        "power-on-time": "0"
-    },
-    "MOUNT_POINTS|udev": {
-        "name": "udev",
-        "storage-component": "/dev",
-        "available": "111111",
-        "utilized": "222222",
-        "size": "333333",
-        "filesystem-type": "ext4"
-    },
-    "MOUNT_POINTS|/var/log/tmp": {
-        "storage-component": "varlogtmp",
-        "available": "63144",
-        "used": "2392",
-        "size": "65536",
-        "filesystem-type": "ramfs"
-    },
-    "HOST_STATS|HOSTNAME": {
-        "hostname": "sonicv4"
-    },
-    "HOST_STATS|CONFIG": {
-        "last-configuration-timestamp": "1611693908"
-    },
-    "CHASSIS_INFO|chassis": {
-        "name": "chassis",
-        "product_name": "BX",
-        "firmware-version": "BIOS version",
-        "hardware-version": "10",
-        "manufacture_date": "07/29/2019 00:00:00",
-        "oper-status": "active",
-        "part-no": "1234",
-        "serial": "FFF",
-        "fully-qualified-name": "chassisXYZ",
-        "base_mac_addr": "aa:bb:00:11:cc:22",
-        "mac_addr_num": "4",
-        "enable_host_signaling": "false"
-    },
-    "NODE_INFO|integrated_circuit0": {
-        "name": "integrated_circuit0",
-        "node-id": "12345678",
-switch"
-    },
-    "PORT_BREAKOUT|Ethernet1/1/1": {
-        "name": "1/1",
-        "parent": "integrated_circuit0",
-        "port-id": "654"
-    },
-    "PORT_TABLE|Ethernet1/1/1": {
-        "ref_count": "1",
-        "xcvr_qualified": "True",
-        "sfec_oper_mode": "enable"
-    },
-    "PORT_TABLE|Ethernet1/1/5": {
-        "ref_count": "1"
-    },
-    "PORT_BREAKOUT|Ethernet1/4/1": {
-        "name": "1/4",
-        "parent": "integrated_circuit0",
-        "port-id": "876"
-    },
-    "PORT_BREAKOUT|Ethernet1/5/1": {
-        "name": "1/5",
-        "parent": "integrated_circuit0",
-        "port-id": "5"
-    },
-    "PORT_BREAKOUT|Ethernet1/8/1": {
-        "name": "1/8",
-        "parent": "integrated_circuit0",
-        "port-id": "8"
-    },
-    "PORT_BREAKOUT|Ethernet1/9/1": {
-        "name": "1/9",
-        "parent": "integrated_circuit0",
-        "port-id": "9"
-    },
-    "PORT_BREAKOUT|Ethernet1/11/1": {
-        "name": "1/11",
-        "parent": "integrated_circuit0",
-        "port-id": "11"
-    },
-    "PORT_TABLE|Ethernet1/4/1": {
-        "ref_count": "1"
-    },
-    "PORT_TABLE|Ethernet1/4/5": {
-        "ref_count": "1"
-    },
-    "PORT_TABLE|Ethernet1/5/1": {
-        "ref_count": "1"
-    },
-    "PORT_TABLE|Ethernet1/5/5": {
-        "ref_count": "1"
-    },
-    "PORT_TABLE|Ethernet1/20/1": {
-        "ref_count": "2"
-    },
-    "PORT_TABLE|Ethernet1/20/5": {
-        "ref_count": "2"
-    },
-    "PORT_TABLE|Ethernet1/8/1": {
-        "ref_count": "1"
-    },
-    "PORT_TABLE|Ethernet1/8/5": {
-        "ref_count": "1"
-    },
-    "PORT_TABLE|Ethernet1/9/1": {
-        "ref_count": "1"
-    },
-    "PORT_TABLE|Ethernet1/9/5": {
-        "ref_count": "1"
-    },
-    "PORT_TABLE|Ethernet1/11/1": {
-        "ref_count": "1"
-    },
-    "PORT_TABLE|Ethernet1/11/5": {
-        "ref_count": "1"
-    },
-    "SW_COMP_INFO|network_stack0": {
-        "software-version": "v2021",
-        "oper-status": "active",
-        "storage-side": "a"
-    },
-    "SW_COMP_INFO|network_stack1": {
-        "software-version": "v2021",
-        "oper-status": "inactive",
-        "storage-side": "b"
-    },
-    "SW_COMP_INFO|os0": {
-        "software-version": "os-v2",
-        "oper-status": "active",
-        "storage-side": "a"
-    },
-    "SW_COMP_INFO|os1": {
-        "software-version": "os-v3",
-        "oper-status": "inactive",
-        "storage-side": "b"
-    },
-    "SW_COMP_INFO|boot_loader": {
-        "software-version": "netlo-v1"
-    },
-    "COMPONENT_STATE_TABLE|telemetry:telemetry": {
-        "state": "UP",
-        "reason": "Go Panic",
-        "timestamp": "2021-02-15 08:45:08",
-        "timestamp-seconds": "1611693908",
-        "timestamp-nanoseconds": "44444",
-        "essential": "true",
-        "hw-err": "false",
-        "debug_info": "true",
-        "debug_info_list": "file1,file2"
-    },
-    "COMPONENT_STATE_TABLE|swss:orchagent": {
-        "state": "INITIALIZING",
-        "reason": "",
-        "timestamp": "2021-02-15 08:45:08",
-        "timestamp-seconds": "1611693908",
-        "timestamp-nanoseconds": "7777",
-        "essential": "true"
-    },
-    "COMPONENT_STATE_TABLE|linkqual:linkqual": {
-        "state": "INACTIVE",
-        "reason": "Unknown",
-        "timestamp": "2021-02-15 08:45:08",
-        "timestamp-seconds": "1611693908",
-        "timestamp-nanoseconds": "99999",
-        "hw-err": "true"
-    },
-    "COMPONENT_STATE_TABLE|p4rt:p4rt": {
-        "state": "UP",
-        "reason": "Go Panic",
-        "timestamp": "2021-02-15 08:45:08",
-        "timestamp-seconds": "1611693908",
-        "timestamp-nanoseconds": "44444",
-        "essential": "true",
-        "hw-err": "true"
-    },
-    "COMPONENT_STATE_TABLE|syncd:syncd": {
-        "state": "MINOR",
-        "reason": "Go Panic",
-        "timestamp": "2021-02-15 08:45:08",
-        "timestamp-seconds": "1611693908",
-        "timestamp-nanoseconds": "44444",
-        "essential": "true",
-        "hw-err": "false",
-        "debug_info": "false"
-    },
-    "COMPONENT_STATE_TABLE|container_monitor": {
-        "state": "UP",
-        "timestamp": "2021-02-15 08:45:08",
-        "timestamp-seconds": "1611693908",
-        "timestamp-nanoseconds": "44444",
-        "essential": "true",
-        "debug_info": "true",
-        "debug_info_list": "foo,bar"
-    },
-    "TRANSCEIVER_INFO|Ethernet4": {
-        "vendor_revision": "1000",
-        "vendor_date_code": "2021-12-12",
-        "vendor_name": "XYZ987",
-        "vendor_part_number": "9876",
-        "vendor_serial_number": "RX987",
-        "ethernet-pmd": "100G_CLR4",
-        "fec-mode": "rs",
-        "form_factor": "QSFP+",
-        "type": "OSFP 8X Pluggable Transceiver",
-        "parent": "1/4",
-        "hardware_rev": "1001",
-        "vendor_date": "2021-01-01",
-        "manufacturer": "ABC123",
-        "model": "1234",
-        "serial": "TX123",
-        "latest_fw_rev": "1002"
-    },
-    "TRANSCEIVER_DOM_SENSOR|Ethernet4": {
-        "rx1power": "12",
-        "rx2power": "13",
-        "rx3power": "N/A",
-        "rx4power": "N/A",
-        "rx5power": "N/A",
-        "rx6power": "N/A",
-        "rx7power": "N/A",
-        "tx1power": "16",
-        "tx2power": "17",
-        "tx3power": "N/A",
-        "tx4power": "N/A",
-        "tx5power": "N/A",
-        "tx6power": "N/A",
-        "tx7power": "N/A",
-        "tx1bias": "20",
-        "tx2bias": "N/A",
-        "tx3bias": "N/A",
-        "tx4bias": "N/A",
-        "tx5bias": "N/A",
-        "tx6bias": "N/A",
-        "tx7bias": "N/A",
-        "temperature": "30"
-    },
-    "TRANSCEIVER_STATUS|Ethernet4": {
-        "status": "1"
-    },
-    "TRANSCEIVER_STATUS|Ethernet5": {
-        "status": "0"
-    },
-    "TRANSCEIVER_INFO|Ethernet6": {
-        "parent": "1/6",
-        "ethernet-pmd": "400G_DR4+",
-        "type": "QSFP-DD Double Density 8X Pluggable Transceiver"
-    },
-    "TRANSCEIVER_DOM_SENSOR|Ethernet6": {
-        "temperature": "30"
-    },
-    "TRANSCEIVER_STATUS|Ethernet6": {
-        "status": "1"
-    },
-    "TRANSCEIVER_INFO|Ethernet1": {
-        "parent": "1/1",
-        "ethernet-pmd": "PMD_UNKNOWN",
-        "type": "OSFP 8X Pluggable Transceiver"
-    },
-    "TRANSCEIVER_DOM_SENSOR|Ethernet1": {
-        "temperature": "30"
-    },
-    "TRANSCEIVER_STATUS|Ethernet1": {
-        "status": "1"
-    },
-    "TRANSCEIVER_INFO|Ethernet7": {
-        "parent": "1/7",
-        "ethernet-pmd": "400G_PSM4"
-    },
-    "TRANSCEIVER_DOM_SENSOR|Ethernet7": {
-        "temperature": "30"
-    },
-    "TRANSCEIVER_STATUS|Ethernet7": {
-        "status": "1"
-    },
-    "TRANSCEIVER_INFO|Ethernet8": {
-        "parent": "1/8",
-        "ethernet-pmd": "400G_AOC"
-    },
-    "TRANSCEIVER_DOM_SENSOR|Ethernet8": {
-        "temperature": "30"
-    },
-    "TRANSCEIVER_STATUS|Ethernet8": {
-        "status": "1"
-    },
-    "TRANSCEIVER_INFO|Ethernet33": {
-        "parent": "1/33",
-        "type": "SFP/SFP+/SFP28"
-    },
-    "TRANSCEIVER_INFO|Ethernet34": {
-        "parent": "1/34",
-        "type": "SFP/SFP+/SFP28"
-    },
-    "MEMORY_STATS|system": {
-        "total": "8219400",
-        "used": "3542160",
-        "free": "2075290",
-        "total-ecc-errors": "333333",
-        "correctable-ecc-errors": "111111",
-        "uncorrectable-ecc-errors": "222222"
-    },
-    "SYSLOG_SERVER|127.0.0.1": {
-        "host": "127.0.0.1"
-    },
-    "SYSLOG_SERVER|127.0.0.2": {
-        "host": "127.0.0.2"
-    },
-    "TEMPERATURE_INFO|exhaust_sensor_1": {
-        "temperature": "36.0"
-    },
-    "TEMPERATURE_INFO|inlet_sensor": {
-        "temperature": "37.2"
-    },
-    "TEMPERATURE_INFO|heatsink_sensor_1": {
-        "temperature": "38.1"
-    },
-    "TEMPERATURE_INFO|heatsink_sensor_15": {
-        "temperature": "39.4"
-    },
-    "TEMPERATURE_INFO|cpu_sensor_1": {
-        "temperature": "36.5"
-    },
-    "TEMPERATURE_INFO|cpu_sensor_2": {
-        "temperature": "37.4"
-    },
-    "TEMPERATURE_INFO|dimm_sensor_1": {
-        "temperature": "35.4"
-    },
-    "PSU_INFO|PSU 1": {
-        "presence": "true",
-        "status": "true",
-        "model": "AC-RED",
-        "serial": "N/A"
-    },
-    "PSU_INFO|PSU 2": {
-        "presence": "true",
-        "status": "false",
-        "model": "DC-RED",
-        "serial": "A1"
-    },
-    "FAN_INFO|fan1": {
-        "presence": "True",
-        "drawer_name": "N/A",
-        "mfg_date": "12/06/2021 00:00:00",
-        "model": "N/A",
-        "serial": "BFFCTH214900113",
-        "status": "True",
-        "speed": "4800",
-        "part_no": "NDC_R80H54BS2PC-07A2",
-        "pwm": "33",
-        "hardware_revision" : "hw_ver_0",
-        "direction": "intake",
-        "speed_tolerance": "N/A",
-        "speed_target": "N/A",
-        "is_replaceable": "True",
-        "timestamp": "20230328 13:13:37",
-        "led_status": "green"
-    },
-    "FAN_INFO|fan2": {
-        "presence": "False",
-        "drawer_name": "FanTray1",
-        "is_replaceable": "False"
-    },
-    "FAN_INFO|fan3": {
-        "presence": "False"
-    },
-    "FAN_DRAWER_INFO|FanTray1": {
-        "presence": "True",
-        "model": "N/A",
-        "mfg_date": "12/06/2021 00:00:00",
-        "serial": "N/A",
-        "status": "True",
-        "is_replaceable": "True"
-    },
-    "NTP_SERVER|1.1.1.1": {
-        "refId": ".INIT.",
-        "stratum": "16",
-        "peer_type": "u",
-        "when": "-",
-        "poll": "64",
-        "reach": "0",
-        "delay": "0.000",
-        "offset": "0.000",
-        "jitter": "0.000"
-    },
-    "PROCESS_STATS|31212": {
-        "CMD": "/bin/bash grep",
-        "USER_TIME": "452",
-        "SYS_TIME": "679",
-        "STIME": "Dec 9 2021 10:00:29 PST",
-        "%CPU": "1",
-        "%MEM": "10",
-        "MEM_LIMIT": "2147483648"
-    },
-    "PROCESS_STATS|43210": {
-        "CMD": "telemetry",
-        "USER_TIME": "1268.02",
-        "SYS_TIME": "117.38",
-        "STIME": "Dec 9 2021 10:00:29 PST",
-        "%CPU": "46.7",
-        "%MEM": "3.6"
-    },
-    "CPU_STATS|1": {
-        "total_avg": "60.7",
-        "total_interval": "3.4"
-    },
-    "CPU_STATS|0": {
-        "total_avg": "50",
-        "total_interval": "2"
-    },
-    "CPU_STATS|2": {
-        "total_avg": "80",
-        "total_interval": "4"
-    },
-    "LAG_TABLE|PortChannel1": {
-        "state": "ok",
-        "setup.runner_name": "lacp",
-        "setup.kernel_team_mode_name": "loadbalance",
-        "setup.pid": "29",
-        "runner.active": "false",
-        "runner.min_ports": "1",
-        "runner.fast_rate": "true",
-        "runner.fallback": "false",
-        "runner.sys_prio": "256",
-        "team_device.ifinfo.dev_addr": "fc:bd:67:2c:08:f4",
-        "team_device.ifinfo.ifindex": "271"
-    },
-    "LAG_MEMBER_TABLE|PortChannel1|Ethernet1/7/3": {
-        "link.speed": "1000000",
-        "runner.selected": "true",
-        "runner.actor_lacpdu_info.state": 63,
-        "runner.actor_lacpdu_info.system": "fc:bd:67:2c:08:f4",
-        "runner.actor_lacpdu_info.key": "1",
-        "runner.actor_lacpdu_info.port": "3",
-        "runner.partner_lacpdu_info.system": "fc:bd:67:2c:08:f5",
-        "runner.partner_lacpdu_info.key": "11",
-        "runner.partner_lacpdu_info.port": "105",
-        "runner.counters.lacp-in-packets": "1234",
-        "runner.counters.lacp-out-packets": "4321",
-        "runner.counters.lacp-rx-errors": "666"
-    },
-    "LAG_MEMBER_TABLE|PortChannel1|Ethernet1/7/4": {
-        "link.speed": "1000000",
-        "runner.selected": "true",
-        "runner.actor_lacpdu_info.state": 0,
-        "runner.actor_lacpdu_info.system": "fc:bd:67:2c:08:f6",
-        "runner.actor_lacpdu_info.key": "1",
-        "runner.partner_lacpdu_info.system": "fc:bd:67:2c:08:f7",
-        "runner.partner_lacpdu_info.key": "22",
-        "runner.counters.lacp-in-packets": "2234",
-        "runner.counters.lacp-out-packets": "2321",
-        "runner.counters.lacp-rx-errors": "266"
-    },
-    "LAG_TABLE|PortChannel2": {
-        "state": "ok",
-        "setup.runner_name": "lacp",
-        "setup.kernel_team_mode_name": "loadbalance",
-        "setup.pid": "29",
-        "runner.active": "true",
-        "runner.min_ports": "1",
-        "runner.fast_rate": "false",
-        "runner.fallback": "false",
-        "runner.sys_prio": "256",
-        "team_device.ifinfo.dev_addr": "fc:bd:67:2c:08:f4",
-        "team_device.ifinfo.ifindex": "271"
-    },
-    "LAG_MEMBER_TABLE|PortChannel2|Ethernet1/3/5": {
-        "link.speed": "1000000",
-        "runner.selected": "true",
-        "runner.actor_lacpdu_info.state": 63,
-        "runner.actor_lacpdu_info.system": "fc:bd:67:2c:08:f4",
-        "runner.actor_lacpdu_info.key": "1",
-        "runner.partner_lacpdu_info.system": "fc:bd:67:2c:08:f5",
-        "runner.partner_lacpdu_info.key": "11",
-        "runner.counters.lacp-in-packets": "1234",
-        "runner.counters.lacp-out-packets": "4321",
-        "runner.counters.lacp-rx-errors": "666"
-    },
-    "FW_SECURITY_INFO|haven": {
-        "firmware-version": "0.3.2021111102/capitaine",
-        "serial-no": "1-95ac52370700b047-150f0001-0-3",
-        "secure-payload-enforced": "True",
-        "payload-version": "999999999.20211102.204917.0",
-        "payload-signature-type": "IMAGE_DEV"
-    },
-    "PCIE_DEVICE|01:00.0": {
-        "id": "0xb996",
-        "non_fatal|TOTAL_ERR_NONFATAL": "1",
-        "non_fatal|TLP": "2",
-        "correctable|Timeout": "3",
-        "correctable|BadTLP": "4",
-        "non_fatal|AtomicOpBlocked": "5",
-        "fatal|UncorrIntErr": "6",
-        "correctable|HeaderOF": "7",
-        "correctable|NonFatalErr": "8",
-        "non_fatal|BlockedTLP": "9",
-        "correctable|BadDLLP": "10",
-        "fatal|MalfTLP": "11",
-        "correctable|TOTAL_ERR_COR": "12",
-        "fatal|AtomicOpBlocked": "13",
-        "correctable|RxErr": "14",
-        "non_fatal|SDES": "15",
-        "fatal|UnxCmplt": "16",
-        "fatal|TLPBlockedErr": "17",
-        "non_fatal|RxOF": "18",
-        "non_fatal|DLP": "19",
-        "non_fatal|CmpltAbrt": "20",
-        "non_fatal|ECRC": "21",
-        "non_fatal|ACSViol": "22",
-        "non_fatal|UncorrIntErr": "23",
-        "fatal|Undefined": "24",
-        "non_fatal|MalfTLP": "25",
-        "fatal|TLP": "26",
-        "non_fatal|FCP": "27",
-        "correctable|Rollover": "28",
-        "fatal|ECRC": "29",
-        "fatal|TOTAL_ERR_FATAL": "30",
-        "correctable|CorrIntErr": "31",
-        "fatal|RxOF": "32",
-        "non_fatal|CmpltTO": "33",
-        "fatal|CmpltAbrt": "34",
-        "fatal|BlockedTLP": "35",
-        "fatal|UnsupReq": "36",
-        "fatal|FCP": "37",
-        "non_fatal|Undefined": "38",
-        "fatal|SDES": "39",
-        "fatal|ACSViol": "40",
-        "fatal|DLP": "41",
-        "fatal|CmpltTO": "42",
-        "non_fatal|UnsupReq": "43",
-        "non_fatal|UnxCmplt": "44",
-        "non_fatal|TLPBlockedErr": "45"
-    },
-    "POWER_INFO|power_brick_1": {
-        "temperature": "41.0",
-        "frequency": "800",
-        "input-voltage": "12.08",
-        "output-voltage": "3.33",
-        "commanded-output-voltage": "3.32",
-        "output-current": "1.1464",
-        "manufacturer-status": "0x0042",
-        "commanded-frequency": "50.0"
-    },
-    "POWER_INFO|hotswap_1_1": {
-        "temperature": "48.714",
-        "temperature_max": "42.0",
-        "temperature_interval": "2",
-        "frequency": "800",
-        "commanded-output-voltage": "3.32",
-        "output-current": "1.1464",
-        "manufacturer-status": "0x0042",
-        "commanded-frequency": "50.0",
-        "status-gpio": "ff"
-    },
-    "POWER_INFO|hotswap_1|VDD_12S5": {
-        "direction": "output",
-        "voltage": "3.33",
-        "current": "2.2464",
-        "power": "2.23",
-        "commanded-voltage": "0.99",
-        "peak-power": "1.11",
-        "peak-voltage": "1.22",
-        "peak-current": "3.11",
-        "temperature": "10.5"
-    },
-    "POWER_INFO|hotswap_1|VDD_12S6": {
-        "direction": "output",
-        "voltage": "13.33"
-    },
-    "POWER_INFO|voltage_regulator_1": {
-        "temperature": "48.714",
-        "frequency": "800",
-        "input-voltage": "12.08",
-        "output-voltage": "3.33",
-        "commanded-output-voltage": "3.32",
-        "output-current": "1.1464",
-        "manufacturer-status": "0x0042",
-        "location": "10001-0060"
-    },
-    "POWER_INFO|voltage_regulator_1|VDD_12R0": {
-        "direction": "output",
-        "voltage": "3.33",
-        "current": "2.2464",
-        "energy": "4.55",
-        "power": "1.23"
-    },
-    "POWER_INFO|voltage_regulator_1|VDD_12R1": {
-        "direction": "input",
-        "voltage": "5.33",
-        "current": "2.2464"
-    },
-    "POWER_INFO|voltage_regulator_2": {
-        "temperature": "28.714",
-        "frequency": "200",
-        "input-voltage": "22.08",
-        "output-voltage": "2.33",
-        "commanded-output-voltage": "2.32",
-        "output-current": "2.1464",
-        "manufacturer-status": "0x0042",
-        "location": "10001-0062"
-    },
-    "POWER_INFO|voltage_regulator_2|VDD_12R2": {
-        "direction": "output",
-        "voltage": "2.33",
-        "current": "2.2462",
-        "energy": "2.55",
-        "power": "2.23"
-    },
-    "POWER_INFO|voltage_regulator_2|VDD_12R3": {
-        "direction": "input",
-        "voltage": "2.33",
-        "current": "2.2462"
-    },
-    "POWER_INFO|power_sequencer_adm1266-i2c-10001-44": {
-        "location": "10001-0044",
-        "manufacturer-status": "0x04"
-    },
-    "POWER_INFO|power_sequencer_adm1266-i2c-10001-44|SEQ_MON_AVDD_0R75_B": {
-        "direction": "input",
-        "voltage": "0.7560",
-        "all-status-vout": "0x00",
-        "temperature": "10.2"
-    },
-    "POWER_INFO|hotswap_adm1272-i2c-501-10": {
-        "location": "501-0010",
-        "manufacturer-status": "0x0000"
-    },
-    "POWER_INFO|hotswap_adm1272-i2c-501-10|XP48R0V_IN": {
-        "direction": "input",
-        "voltage": "54.4060",
-        "peak-voltage": "55.1690"
-    },
-    "POWER_INFO|hotswap_adm1272-i2c-501-10|XP48R0V_SWAP": {
-        "direction": "input",
-        "target-clear-interval-seconds": "55",
-        "voltage": "54.3820",
-        "peak-voltage": "54.6520",
-        "current": "3.4840",
-        "peak-current": "4.7960",
-        "power": "190.3180",
-        "peak-power": "630.9445",
-        "peak-power-interval": "60000000123",
-        "temperature": "30.9280"
-    },
-    "PATHZ_TABLE|get|/|permitted": {
-        "count": "111",
-        "timestamp": "1628778558191233000"
-    },
-    "PATHZ_TABLE|get|/|denied": {
-        "count": "10",
-        "timestamp": "1628778558112211000"
-    },
-    "PATHZ_TABLE|get|/dev|permitted": {
-        "count": "19",
-        "timestamp": "1628778558111111000"
-    },
-    "PATHZ_TABLE|subscribe|/dev|permitted": {
-        "count": "1",
-        "timestamp": "1628778558111111009"
-    },
-    "PATHZ_TABLE|subscribe|/dev|denied": {
-        "count": "10",
-        "timestamp": "1628778558111111005"
-    },
-    "PATHZ_TABLE|get|/dev|denied": {
-        "count": "76",
-        "timestamp": "1628778558112211310"
-    },
-    "PATHZ_TABLE|set|/|permitted": {
-        "count": "145",
-        "timestamp": "16287785581111671092"
-    },
-    "PATHZ_TABLE|set|/|denied": {
-        "count": "146",
-        "timestamp": "16287785580982211000"
-    },
-    "PATHZ_TABLE|set|/dev|permitted": {
-        "count": "59",
-        "timestamp": "1628778558675111000"
-    },
-    "PATHZ_TABLE|set|/dev|denied": {
-        "count": "91",
-        "timestamp": "1628778545612211310"
-    },
-    "PATHZ_TABLE|set|/mount_point|denied": {
-        "count": "87",
-        "timestamp": "1628778558111112100"
-    },
-    "PATHZ_TABLE|set|/mount_point|rejected": {
-        "count": "87",
-        "timestamp": "1628778558111112100"
-    },
-    "PATHZ_TABLE|set|/dev/tmp|denied": {
-        "count": "568",
-        "timestamp": "1628778558114575010"
-    },
-    "AUTHZ_TABLE|gnxi|service1|set|permitted": {
-        "count": "188",
-        "timestamp": "1628778558214575020"
-    },
-    "AUTHZ_TABLE|gnxi|service2|set|permitted": {
-        "count": "67",
-        "timestamp": "1628778558214575021"
-    },
-    "AUTHZ_TABLE|gnxi|service1|get|permitted": {
-        "count": "90",
-        "timestamp": "1628778558214575531"
-    },
-    "AUTHZ_TABLE|gnxi|service2|get|permitted": {
-        "count": "650",
-        "timestamp": "1628778558214575539"
-    },
-    "AUTHZ_TABLE|gnxi|service1|set|denied": {
-        "count": "5",
-        "timestamp": "1628778558314575626"
-    },
-    "AUTHZ_TABLE|gnxi|service2|set|denied": {
-        "count": "51",
-        "timestamp": "1628778558314575620"
-    },
-    "AUTHZ_TABLE|gnxi|service1|get|denied": {
-        "count": "34",
-        "timestamp": "1628778558214575999"
-    },
-    "AUTHZ_TABLE|gnxi|service2|get|denied": {
-        "count": "7",
-        "timestamp": "1628778558214567671"
-    },
-    "AUTHZ_TABLE|gnxi|service3|set|permitted": {
-        "timestamp": "1628778558214575029"
-    },
-    "AUTHZ_TABLE|gnxi|service3|set|denied": {
-        "count": "109"
-    },
-    "AUTHZ_TABLE|p4rt|service2|set|denied": {
-        "count": "6711",
-        "timestamp": "1628778558214575090"
-    },
-    "AUTHZ_TABLE|p4rt|service1|get|permitted": {
-        "count": "9670",
-        "timestamp": "1628778558214575576"
-    },
-    "AUTHZ_TABLE|p4rt|service3|set|permitted": {
-        "timestamp": "1628778558214575001"
-    },
-    "AUTHZ_TABLE|p4rt|service3|set|denied": {
-        "count": "1989"
-    },
-    "VERIFY_STATE_RESP_TABLE|all": {
-        "timestamp": "2021-01-26 08:45:08",
-        "status": "fail",
-        "err_str": "Foo doesn't match bar."
-    },
-    "BOOT_INFO|system": {
-        "boot-type": "warm_boot",
-        "warmboot-count": "3",
-        "last-coldboot-timestamp": "02/12/2024 03:18:18 +0000 UTC",
-        "last-coldboot-version": "gpins_release_20240202_17_prod_RC00"
-    },
-    "WARM_RESTART_REGISTRATION_TABLE|telemetry|telemetry": {
-        "stop_on_freeze": "false",
-        "freeze": "true",
-        "checkpoint": "false",
-        "reconciliation": "true",
-        "timestamp": "2023-06-14.05:50:41.12345"
-    },
-    "WARM_RESTART_TABLE|syncd": {
-        "restore_count": "0",
-        "state": "checkpointed",
-        "timestamp": "2023-06-14.05:50:41.12345"
-    },
-    "WARM_RESTART_PERFORMANCE_TABLE|system": {
-        "status": "in-progress",
-        "start-timestamp": "2023-06-14.05:57:41.12345",
-        "finish-timestamp": "2023-06-14.06:03:41.12345"
-    },
-    "WARM_RESTART_PERFORMANCE_TABLE|freeze": {
-        "status": "success",
-        "start-timestamp": "2023-06-14.05:57:41.12345",
-        "finish-timestamp": "2023-06-14.06:03:41.12345"
-    },
-    "WARM_RESTART_PERFORMANCE_TABLE|freeze|telemetry": {
-        "status": "quiescent",
-        "start-timestamp": "2023-06-14.05:57:41.12345",
-        "finish-timestamp": "2023-06-14.06:03:41.12345"
-    },
-    "WARM_RESTART_PERFORMANCE_TABLE|reconciliation|syncd": {
-        "status": "failure",
-        "start-timestamp": "2023-06-14.05:57:41.12345",
-        "finish-timestamp": "2023-06-14.06:03:41.12345"
-    },
-    "WARM_RESTART_PERFORMANCE_HISTORY|0": {
-        "firmware-version": "gpins_daily_20240104_13_RC00",
-        "stack-start-timestamp": "2024-01-04 05:30:41.123456",
-        "stack-stop-timestamp": "2024-01-04 05:45:41.123456",
-        "stack-uptime-seconds": "900",
-        "kernel-uptime-seconds": "1000",
-        "ssd-region": "a",
-        "reset-count": "0"
-    },
-    "WARM_RESTART_PERFORMANCE_HISTORY|0|system": {
-        "status": "in-progress",
-        "start-timestamp": "2023-06-14.05:57:41.12345",
-        "finish-timestamp": "2023-06-14.06:03:41.12345"
-    },
-    "WARM_RESTART_PERFORMANCE_HISTORY|0|freeze": {
-        "status": "failure",
-        "start-timestamp": "2023-06-14.05:57:41.12345",
-        "finish-timestamp": "2023-06-14.06:03:41.12345"
-    },
-    "WARM_RESTART_PERFORMANCE_HISTORY|0|reconciliation|syncd": {
-        "status": "failure",
-        "start-timestamp": "2023-06-14.05:57:41.12345",
-        "finish-timestamp": "2023-06-14.06:03:41.12345"
-    },
-    "WARM_RESTART_PERFORMANCE_HISTORY|1|unfreeze|telemetry": {
-        "status": "quiescent",
-        "start-timestamp": "2023-06-14.05:57:41.12345",
-        "finish-timestamp": "2023-06-14.06:03:41.12345"
-    },
-    "WARM_RESTART_PERFORMANCE_HISTORY|1": {
-        "firmware-version": "gpins_daily_20240104_13_RC01",
-        "stack-start-timestamp": "2024-01-04 05:30:41.123456",
-        "stack-stop-timestamp": "2024-01-04 05:45:41.123456",
-        "stack-uptime-seconds": "1800",
-        "kernel-uptime-seconds": "2000",
-        "ssd-region": "b",
-        "reset-count": "0"
-    },
-    "WARM_RESTART_PERFORMANCE_HISTORY|1|system": {
-        "status": "in-progress",
-        "start-timestamp": "2023-06-14.05:57:41.12345",
-        "finish-timestamp": "2023-06-14.06:03:41.12345"
-    },
-    "WARM_RESTART_PERFORMANCE_HISTORY|1|freeze": {
-        "status": "failure",
-        "start-timestamp": "2023-06-14.05:57:41.12345",
-        "finish-timestamp": "2023-06-14.06:03:41.12345"
-    },
-    "WARM_RESTART_PERFORMANCE_HISTORY|1|reconciliation|syncd": {
-        "status": "failure",
-        "start-timestamp": "2023-06-14.05:57:41.12345",
-        "finish-timestamp": "2023-06-14.06:03:41.12345"
-    },
-    "WARM_RESTART_RECONCILIATION_STATE|syncd": {
-        "ASIC_OPERATIONS": "97",
-        "asic-apply": "8485",
-        "redis-update": "470302",
-        "applyView": "1070787",
-        "SAI_OBJECT_TYPE_ACL_ENTRY:set": "95",
-        "SAI_OBJECT_TYPE_TUNNEL:create": "1",
-        "SAI_OBJECT_TYPE_TUNNEL:remove": "1"
-    }
+  "AUTHZ_TABLE|gnxi|service1|get|denied": {
+    "count": "34",
+    "timestamp": "1628778558214575999"
+  },
+  "AUTHZ_TABLE|gnxi|service1|get|permitted": {
+    "count": "90",
+    "timestamp": "1628778558214575531"
+  },
+  "AUTHZ_TABLE|gnxi|service1|set|denied": {
+    "count": "5",
+    "timestamp": "1628778558314575626"
+  },
+  "AUTHZ_TABLE|gnxi|service1|set|permitted": {
+    "count": "188",
+    "timestamp": "1628778558214575020"
+  },
+  "AUTHZ_TABLE|gnxi|service2|get|denied": {
+    "count": "7",
+    "timestamp": "1628778558214567671"
+  },
+  "AUTHZ_TABLE|gnxi|service2|get|permitted": {
+    "count": "650",
+    "timestamp": "1628778558214575539"
+  },
+  "AUTHZ_TABLE|gnxi|service2|set|denied": {
+    "count": "51",
+    "timestamp": "1628778558314575620"
+  },
+  "AUTHZ_TABLE|gnxi|service2|set|permitted": {
+    "count": "67",
+    "timestamp": "1628778558214575021"
+  },
+  "AUTHZ_TABLE|gnxi|service3|set|denied": {
+    "count": "109"
+  },
+  "AUTHZ_TABLE|gnxi|service3|set|permitted": {
+    "timestamp": "1628778558214575029"
+  },
+  "AUTHZ_TABLE|p4rt|service1|get|permitted": {
+    "count": "9670",
+    "timestamp": "1628778558214575576"
+  },
+  "AUTHZ_TABLE|p4rt|service2|set|denied": {
+    "count": "6711",
+    "timestamp": "1628778558214575090"
+  },
+  "AUTHZ_TABLE|p4rt|service3|set|denied": {
+    "count": "1989"
+  },
+  "AUTHZ_TABLE|p4rt|service3|set|permitted": {
+    "timestamp": "1628778558214575001"
+  },
+  "BOOT_INFO|system": {
+    "boot-type": "warm_boot",
+    "last-coldboot-timestamp": "02/12/2024 03:18:18 +0000 UTC",
+    "last-coldboot-version": "gpins_release_20240202_17_prod_RC00",
+    "warmboot-count": "3"
+  },
+  "CHASSIS_INFO|chassis": {
+    "base_mac_addr": "aa:bb:00:11:cc:22",
+    "enable_host_signaling": "false",
+    "firmware-version": "BIOS version",
+    "fully-qualified-name": "chassisXYZ",
+    "hardware-version": "10",
+    "mac_addr_num": "4",
+    "manufacture_date": "07/29/2019 00:00:00",
+    "name": "chassis",
+    "oper-status": "active",
+    "part-no": "1234",
+    "product_name": "BX",
+    "serial": "FFF"
+  },
+  "COMPONENT_STATE_TABLE|container_monitor": {
+    "debug_info": "true",
+    "debug_info_list": "foo,bar",
+    "essential": "true",
+    "state": "UP",
+    "timestamp": "2021-02-15 08:45:08",
+    "timestamp-nanoseconds": "44444",
+    "timestamp-seconds": "1611693908"
+  },
+  "COMPONENT_STATE_TABLE|linkqual:linkqual": {
+    "hw-err": "true",
+    "reason": "Unknown",
+    "state": "INACTIVE",
+    "timestamp": "2021-02-15 08:45:08",
+    "timestamp-nanoseconds": "99999",
+    "timestamp-seconds": "1611693908"
+  },
+  "COMPONENT_STATE_TABLE|p4rt:p4rt": {
+    "essential": "true",
+    "hw-err": "true",
+    "reason": "Go Panic",
+    "state": "UP",
+    "timestamp": "2021-02-15 08:45:08",
+    "timestamp-nanoseconds": "44444",
+    "timestamp-seconds": "1611693908"
+  },
+  "COMPONENT_STATE_TABLE|swss:orchagent": {
+    "essential": "true",
+    "reason": "",
+    "state": "INITIALIZING",
+    "timestamp": "2021-02-15 08:45:08",
+    "timestamp-nanoseconds": "7777",
+    "timestamp-seconds": "1611693908"
+  },
+  "COMPONENT_STATE_TABLE|syncd:syncd": {
+    "debug_info": "false",
+    "essential": "true",
+    "hw-err": "false",
+    "reason": "Go Panic",
+    "state": "MINOR",
+    "timestamp": "2021-02-15 08:45:08",
+    "timestamp-nanoseconds": "44444",
+    "timestamp-seconds": "1611693908"
+  },
+  "COMPONENT_STATE_TABLE|telemetry:telemetry": {
+    "debug_info": "true",
+    "debug_info_list": "file1,file2",
+    "essential": "true",
+    "hw-err": "false",
+    "reason": "Go Panic",
+    "state": "UP",
+    "timestamp": "2021-02-15 08:45:08",
+    "timestamp-nanoseconds": "44444",
+    "timestamp-seconds": "1611693908"
+  },
+  "CPU_STATS|0": {
+    "total_avg": "50",
+    "total_interval": "2"
+  },
+  "CPU_STATS|1": {
+    "total_avg": "60.7",
+    "total_interval": "3.4"
+  },
+  "CPU_STATS|2": {
+    "total_avg": "80",
+    "total_interval": "4"
+  },
+  "CREDENTIALS|AUTHZ_POLICY|gnxi": {
+    "authz_created_on": "1714761458829463854",
+    "authz_version": "1714761458829463154"
+  },
+  "CREDENTIALS|CONSOLE_ACCOUNT|tester": {
+    "password_created_on": "2",
+    "password_version": "1"
+  },
+  "CREDENTIALS|CONSOLE_METRICS": {
+    "access_accepts": "3",
+    "access_rejects": "4",
+    "last_access_accept": "5",
+    "last_access_reject": "6"
+  },
+  "CREDENTIALS|PATHZ_POLICY|SANDBOX": {
+    "instance": "SANDBOX",
+    "pathz_created_on": "767",
+    "pathz_version": "pathzVersionStateDB"
+  },
+  "CREDENTIALS|SSH_ACCOUNT|tester": {
+    "keys_created_on": "4",
+    "keys_version": "3",
+    "users_created_on": "6",
+    "users_version": "5"
+  },
+  "CREDENTIALS|SSH_HOST": {
+    "access_accepts": "2",
+    "access_rejects": "3",
+    "ca_public_keys_created_on": "0",
+    "ca_public_keys_version": "0",
+    "last_access_accept": "4",
+    "last_access_reject": "5"
+  },
+  "EEPROM_STATUS_INFO|core_/dev/mtd/mems_calibration_a": {
+    "name": "/dev/mtd/mems_calibration_a",
+    "num-correctable-errors": "5",
+    "status": "UNCORRECTABLE_ERROR"
+  },
+  "EEPROM_STATUS_INFO|lds_321N": {
+    "name": "321N",
+    "num-correctable-errors": "0",
+    "status": "GOOD"
+  },
+  "ERROR_COUNTER_INFO|arnie_charr_a": {
+    "bus_name": "mipi0",
+    "frame_aligner_frame_errors": "0",
+    "frame_aligner_overflow_errors": "0",
+    "frame_aligner_synchronization_errors": "0",
+    "mipi_data_crc_errors": "0",
+    "mipi_frame_errors": "0",
+    "mipi_line_buffer_full_error_bit": "0",
+    "mipi_synchronization_errors": "0",
+    "mipi_word_corruption_error_bit": "0"
+  },
+  "ERROR_COUNTER_INFO|arnie_charr_b": {
+    "bus_name": "mipi1",
+    "frame_aligner_frame_errors": "1",
+    "frame_aligner_overflow_errors": "3",
+    "frame_aligner_synchronization_errors": "2",
+    "mipi_data_crc_errors": "4",
+    "mipi_frame_errors": "5",
+    "mipi_line_buffer_full_error_bit": "1",
+    "mipi_synchronization_errors": "6",
+    "mipi_word_corruption_error_bit": "1"
+  },
+  "ERROR_COUNTER_INFO|arnie_hdmi": {
+    "hdmi_host_memory_correctable_errors": "0",
+    "hdmi_host_memory_uncorrectable_errors": "2"
+  },
+  "ERROR_COUNTER_INFO|gfpga_arnie": {
+    "arnie_soft_error_mitigation_correction": "0",
+    "arnie_soft_error_mitigation_heartbeat_watchdog_expired": "0",
+    "arnie_soft_error_mitigation_uncorrectable": "1"
+  },
+  "ERROR_COUNTER_INFO|gfpga_carl": {
+    "carl_soft_error_mitigation_correction": "0",
+    "carl_soft_error_mitigation_heartbeat_watchdog_expired": "1",
+    "carl_soft_error_mitigation_uncorrectable": "0"
+  },
+  "ERROR_COUNTER_INFO|gfpga_jesse": {
+    "jesse_soft_error_mitigation_correction": "1",
+    "jesse_soft_error_mitigation_heartbeat_watchdog_expired": "0",
+    "jesse_soft_error_mitigation_uncorrectable": "0"
+  },
+  "FAN_DRAWER_INFO|FanTray1": {
+    "is_replaceable": "True",
+    "mfg_date": "12/06/2021 00:00:00",
+    "model": "N/A",
+    "presence": "True",
+    "serial": "N/A",
+    "status": "True"
+  },
+  "FAN_INFO|fan1": {
+    "direction": "intake",
+    "drawer_name": "N/A",
+    "hardware_revision": "hw_ver_0",
+    "is_replaceable": "True",
+    "led_status": "green",
+    "mfg_date": "12/06/2021 00:00:00",
+    "model": "FINBACK",
+    "part_no": "NDC_R80H54BS2PC-07A2",
+    "presence": "True",
+    "pwm": "33",
+    "serial": "BFFCTH214900113",
+    "speed": "4800",
+    "speed_target": "N/A",
+    "speed_tolerance": "N/A",
+    "status": "True",
+    "timestamp": "20230328 13:13:37"
+  },
+  "FAN_INFO|fan2": {
+    "drawer_name": "FanTray1",
+    "is_replaceable": "False",
+    "presence": "False"
+  },
+  "FAN_INFO|fan3": {
+    "presence": "False"
+  },
+  "FPGA_INFO|fpga_0": {
+    "description": "fpga_0 description",
+    "firmware-version": "1.0",
+    "mfg_name": "GOOGLE",
+    "reset_cause_d0": "power",
+    "reset_cause_d1": "switch",
+    "reset_cause_d2": "watchdog",
+    "reset_cause_d3": "software",
+    "reset_cause_d4": "emulator",
+    "reset_cause_d5": "cpu",
+    "reset_cause_d6": "blah blah",
+    "reset_cause_d7": "blah blah",
+    "reset_count": "3"
+  },
+  "FW_SECURITY_INFO|haven": {
+    "firmware-version": "0.3.2021111102/capitaine",
+    "payload-signature-type": "IMAGE_DEV",
+    "payload-version": "999999999.20211102.204917.0",
+    "secure-payload-enforced": "True",
+    "serial-no": "1-95ac52370700b047-150f0001-0-3"
+  },
+  "HOST_STATS|CONFIG": {
+    "last-configuration-timestamp": "1611693908"
+  },
+  "HOST_STATS|HOSTNAME": {
+    "hostname": "sonicv4"
+  },
+  "LAG_MEMBER_TABLE|PortChannel1|Ethernet1/7/3": {
+    "link.speed": "1000000",
+    "runner.actor_lacpdu_info.key": "1",
+    "runner.actor_lacpdu_info.port": "3",
+    "runner.actor_lacpdu_info.state": 63,
+    "runner.actor_lacpdu_info.system": "fc:bd:67:2c:08:f4",
+    "runner.counters.lacp-in-packets": "1234",
+    "runner.counters.lacp-out-packets": "4321",
+    "runner.counters.lacp-rx-errors": "666",
+    "runner.partner_lacpdu_info.key": "11",
+    "runner.partner_lacpdu_info.port": "105",
+    "runner.partner_lacpdu_info.system": "fc:bd:67:2c:08:f5",
+    "runner.selected": "true"
+  },
+  "LAG_MEMBER_TABLE|PortChannel1|Ethernet1/7/4": {
+    "link.speed": "1000000",
+    "runner.actor_lacpdu_info.key": "1",
+    "runner.actor_lacpdu_info.state": 0,
+    "runner.actor_lacpdu_info.system": "fc:bd:67:2c:08:f6",
+    "runner.counters.lacp-in-packets": "2234",
+    "runner.counters.lacp-out-packets": "2321",
+    "runner.counters.lacp-rx-errors": "266",
+    "runner.partner_lacpdu_info.key": "22",
+    "runner.partner_lacpdu_info.system": "fc:bd:67:2c:08:f7",
+    "runner.selected": "true"
+  },
+  "LAG_MEMBER_TABLE|PortChannel2|Ethernet1/3/5": {
+    "link.speed": "1000000",
+    "runner.actor_lacpdu_info.key": "1",
+    "runner.actor_lacpdu_info.state": 63,
+    "runner.actor_lacpdu_info.system": "fc:bd:67:2c:08:f4",
+    "runner.counters.lacp-in-packets": "1234",
+    "runner.counters.lacp-out-packets": "4321",
+    "runner.counters.lacp-rx-errors": "666",
+    "runner.partner_lacpdu_info.key": "11",
+    "runner.partner_lacpdu_info.system": "fc:bd:67:2c:08:f5",
+    "runner.selected": "true"
+  },
+  "LAG_TABLE|PortChannel1": {
+    "runner.active": "false",
+    "runner.fallback": "false",
+    "runner.fast_rate": "true",
+    "runner.min_ports": "1",
+    "runner.sys_prio": "256",
+    "setup.kernel_team_mode_name": "loadbalance",
+    "setup.pid": "29",
+    "setup.runner_name": "lacp",
+    "state": "ok",
+    "team_device.ifinfo.dev_addr": "fc:bd:67:2c:08:f4",
+    "team_device.ifinfo.ifindex": "271"
+  },
+  "LAG_TABLE|PortChannel2": {
+    "runner.active": "true",
+    "runner.fallback": "false",
+    "runner.fast_rate": "false",
+    "runner.min_ports": "1",
+    "runner.sys_prio": "256",
+    "setup.kernel_team_mode_name": "loadbalance",
+    "setup.pid": "29",
+    "setup.runner_name": "lacp",
+    "state": "ok",
+    "team_device.ifinfo.dev_addr": "fc:bd:67:2c:08:f4",
+    "team_device.ifinfo.ifindex": "271"
+  },
+  "MEMORY_STATS|system": {
+    "correctable-ecc-errors": "111111",
+    "free": "2075290",
+    "total": "8219400",
+    "total-ecc-errors": "333333",
+    "uncorrectable-ecc-errors": "222222",
+    "used": "3542160"
+  },
+  "MGMT_PORT_TABLE|bond0": {
+    "oper_status": "up"
+  },
+  "MOUNT_POINTS|/var/log/tmp": {
+    "available": "63144",
+    "filesystem-type": "ramfs",
+    "size": "65536",
+    "storage-component": "varlogtmp",
+    "used": "2392"
+  },
+  "MOUNT_POINTS|udev": {
+    "available": "111111",
+    "filesystem-type": "ext4",
+    "name": "udev",
+    "size": "333333",
+    "storage-component": "/dev",
+    "utilized": "222222"
+  },
+  "NODE_INFO|integrated_circuit0": {
+    "fully-qualified-name": "switch",
+    "name": "integrated_circuit0",
+    "node-id": "12345678"
+  },
+  "NTP_SERVER|1.1.1.1": {
+    "delay": "0.000",
+    "jitter": "0.000",
+    "offset": "0.000",
+    "peer_type": "u",
+    "poll": "64",
+    "reach": "0",
+    "refId": ".INIT.",
+    "stratum": "16",
+    "when": "-"
+  },
+  "OCS_PORT_STATUSES|1N": {
+    "port-status": "STATUS_ENABLED",
+    "port-status-message": "no message."
+  },
+  "OCS_PORT_STATUSES|99N": {
+    "port-status": "STATUS_DISABLED",
+    "port-status-message": "no message."
+  },
+  "OCS_PORT_STATUS_INFO|11": {
+    "error-description": "No errors.",
+    "error-status": "0",
+    "peer-port-id": "10035",
+    "peer-port-info--request-complete": "false",
+    "peer-port-info-initial-training-count": "24",
+    "peer-port-info-interfered-centroid-count": "2",
+    "peer-port-info-mirror-x-axis-dac-code": "2337",
+    "peer-port-info-mirror-x-negative-actuator-state": "GOOD",
+    "peer-port-info-mirror-x-positive-actuator-state": "UNCONTROLLABLE",
+    "peer-port-info-mirror-y-axis-dac-code": "2336",
+    "peer-port-info-mirror-y-negative-actuator-state": "VOLTAGE_MISMATCH",
+    "peer-port-info-mirror-y-positive-actuator-state": "GOOD",
+    "peer-port-info-peer-rejected-request-count": "4",
+    "peer-port-info-port-state": "TUNING",
+    "peer-port-info-port-state-description": "The port is adjusting the dial.",
+    "peer-port-info-reconnect-count": "20",
+    "peer-port-info-rejected-request-count": "3",
+    "peer-port-info-side": "SOUTH",
+    "port-info--request-complete": "true",
+    "port-info-initial-training-count": "14",
+    "port-info-interfered-centroid-count": "1",
+    "port-info-mirror-x-axis-dac-code": "1337",
+    "port-info-mirror-x-negative-actuator-state": "GOOD",
+    "port-info-mirror-x-positive-actuator-state": "UNCONTROLLABLE",
+    "port-info-mirror-y-axis-dac-code": "1336",
+    "port-info-mirror-y-negative-actuator-state": "VOLTAGE_MISMATCH",
+    "port-info-mirror-y-positive-actuator-state": "GOOD",
+    "port-info-peer-rejected-request-count": "3",
+    "port-info-port-state": "WORKING",
+    "port-info-port-state-description": "The port is working hard.",
+    "port-info-reconnect-count": "10",
+    "port-info-rejected-request-count": "2",
+    "port-info-side": "NORTH",
+    "success": "true"
+  },
+  "OCS_PORT_STATUS_INFO|14": {
+    "error-description": "No errors.",
+    "error-status": "0",
+    "peer-port-id": "10055",
+    "peer-port-info--request-complete": "false",
+    "peer-port-info-initial-training-count": "24",
+    "peer-port-info-interfered-centroid-count": "2",
+    "peer-port-info-mirror-x-axis-dac-code": "2337",
+    "peer-port-info-mirror-x-negative-actuator-state": "GOOD",
+    "peer-port-info-mirror-x-positive-actuator-state": "UNCONTROLLABLE",
+    "peer-port-info-mirror-y-axis-dac-code": "2336",
+    "peer-port-info-mirror-y-negative-actuator-state": "VOLTAGE_MISMATCH",
+    "peer-port-info-mirror-y-positive-actuator-state": "GOOD",
+    "peer-port-info-peer-rejected-request-count": "4",
+    "peer-port-info-port-state": "TUNING",
+    "peer-port-info-port-state-description": "The port is adjusting the dial.",
+    "peer-port-info-reconnect-count": "20",
+    "peer-port-info-rejected-request-count": "3",
+    "peer-port-info-side": "SOUTH",
+    "port-info--request-complete": "true",
+    "port-info-initial-training-count": "14",
+    "port-info-interfered-centroid-count": "1",
+    "port-info-mirror-x-axis-dac-code": "1337",
+    "port-info-mirror-x-negative-actuator-state": "GOOD",
+    "port-info-mirror-x-positive-actuator-state": "UNCONTROLLABLE",
+    "port-info-mirror-y-axis-dac-code": "1336",
+    "port-info-mirror-y-negative-actuator-state": "VOLTAGE_MISMATCH",
+    "port-info-mirror-y-positive-actuator-state": "GOOD",
+    "port-info-peer-rejected-request-count": "3",
+    "port-info-port-state": "WORKING",
+    "port-info-port-state-description": "The port is working hard.",
+    "port-info-reconnect-count": "10",
+    "port-info-rejected-request-count": "2",
+    "port-info-side": "NORTH",
+    "success": "true"
+  },
+  "OCS_TOPOLOGY|global_topology": {
+    "egress-port-count": "320",
+    "egress-start-index": "2001",
+    "ingress-port-count": "320",
+    "ingress-start-index": "1001",
+    "inter-module-connection-support": "true",
+    "port-connectivity": "INGRESS_EGRESS",
+    "total-optical-module-count": "1",
+    "total-port-count": "640"
+  },
+  "OCS_XCONNECTS|1N": {
+    "peer-port-name": "98S"
+  },
+  "OCS_XCONNECTS|99N": {
+    "peer-port-name": "2S"
+  },
+  "PATHZ_TABLE|get|/dev|denied": {
+    "count": "76",
+    "timestamp": "1628778558112211310"
+  },
+  "PATHZ_TABLE|get|/dev|permitted": {
+    "count": "19",
+    "timestamp": "1628778558111111000"
+  },
+  "PATHZ_TABLE|get|/|denied": {
+    "count": "10",
+    "timestamp": "1628778558112211000"
+  },
+  "PATHZ_TABLE|get|/|permitted": {
+    "count": "111",
+    "timestamp": "1628778558191233000"
+  },
+  "PATHZ_TABLE|set|/dev/tmp|denied": {
+    "count": "568",
+    "timestamp": "1628778558114575010"
+  },
+  "PATHZ_TABLE|set|/dev|denied": {
+    "count": "91",
+    "timestamp": "1628778545612211310"
+  },
+  "PATHZ_TABLE|set|/dev|permitted": {
+    "count": "59",
+    "timestamp": "1628778558675111000"
+  },
+  "PATHZ_TABLE|set|/mount_point|denied": {
+    "count": "87",
+    "timestamp": "1628778558111112100"
+  },
+  "PATHZ_TABLE|set|/mount_point|rejected": {
+    "count": "87",
+    "timestamp": "1628778558111112100"
+  },
+  "PATHZ_TABLE|set|/|denied": {
+    "count": "146",
+    "timestamp": "16287785580982211000"
+  },
+  "PATHZ_TABLE|set|/|permitted": {
+    "count": "145",
+    "timestamp": "16287785581111671092"
+  },
+  "PATHZ_TABLE|subscribe|/dev|denied": {
+    "count": "10",
+    "timestamp": "1628778558111111005"
+  },
+  "PATHZ_TABLE|subscribe|/dev|permitted": {
+    "count": "1",
+    "timestamp": "1628778558111111009"
+  },
+  "PCIE_DEVICE|01:00.0": {
+    "correctable|BadDLLP": "10",
+    "correctable|BadTLP": "4",
+    "correctable|CorrIntErr": "31",
+    "correctable|HeaderOF": "7",
+    "correctable|NonFatalErr": "8",
+    "correctable|Rollover": "28",
+    "correctable|RxErr": "14",
+    "correctable|TOTAL_ERR_COR": "12",
+    "correctable|Timeout": "3",
+    "fatal|ACSViol": "40",
+    "fatal|AtomicOpBlocked": "13",
+    "fatal|BlockedTLP": "35",
+    "fatal|CmpltAbrt": "34",
+    "fatal|CmpltTO": "42",
+    "fatal|DLP": "41",
+    "fatal|ECRC": "29",
+    "fatal|FCP": "37",
+    "fatal|MalfTLP": "11",
+    "fatal|RxOF": "32",
+    "fatal|SDES": "39",
+    "fatal|TLP": "26",
+    "fatal|TLPBlockedErr": "17",
+    "fatal|TOTAL_ERR_FATAL": "30",
+    "fatal|UncorrIntErr": "6",
+    "fatal|Undefined": "24",
+    "fatal|UnsupReq": "36",
+    "fatal|UnxCmplt": "16",
+    "id": "0xb996",
+    "link_speed": "5.0",
+    "link_width": "2",
+    "non_fatal|ACSViol": "22",
+    "non_fatal|AtomicOpBlocked": "5",
+    "non_fatal|BlockedTLP": "9",
+    "non_fatal|CmpltAbrt": "20",
+    "non_fatal|CmpltTO": "33",
+    "non_fatal|DLP": "19",
+    "non_fatal|ECRC": "21",
+    "non_fatal|FCP": "27",
+    "non_fatal|MalfTLP": "25",
+    "non_fatal|RxOF": "18",
+    "non_fatal|SDES": "15",
+    "non_fatal|TLP": "2",
+    "non_fatal|TLPBlockedErr": "45",
+    "non_fatal|TOTAL_ERR_NONFATAL": "1",
+    "non_fatal|UncorrIntErr": "23",
+    "non_fatal|Undefined": "38",
+    "non_fatal|UnsupReq": "43",
+    "non_fatal|UnxCmplt": "44"
+  },
+  "PORT_BREAKOUT|Ethernet1/1/1": {
+    "name": "1/1",
+    "parent": "integrated_circuit0",
+    "port-id": "654"
+  },
+  "PORT_BREAKOUT|Ethernet1/11/1": {
+    "name": "1/11",
+    "parent": "integrated_circuit0",
+    "port-id": "11"
+  },
+  "PORT_BREAKOUT|Ethernet1/4/1": {
+    "name": "1/4",
+    "parent": "integrated_circuit0",
+    "port-id": "876"
+  },
+  "PORT_BREAKOUT|Ethernet1/5/1": {
+    "name": "1/5",
+    "parent": "integrated_circuit0",
+    "port-id": "5"
+  },
+  "PORT_BREAKOUT|Ethernet1/8/1": {
+    "name": "1/8",
+    "parent": "integrated_circuit0",
+    "port-id": "8"
+  },
+  "PORT_BREAKOUT|Ethernet1/9/1": {
+    "name": "1/9",
+    "parent": "integrated_circuit0",
+    "port-id": "9"
+  },
+  "PORT_TABLE|Ethernet1/1/1": {
+    "ref_count": "1",
+    "sfec_oper_mode": "enable",
+    "xcvr_qualified": "True"
+  },
+  "PORT_TABLE|Ethernet1/1/5": {
+    "ref_count": "1"
+  },
+  "PORT_TABLE|Ethernet1/11/1": {
+    "ref_count": "1"
+  },
+  "PORT_TABLE|Ethernet1/11/5": {
+    "ref_count": "1"
+  },
+  "PORT_TABLE|Ethernet1/20/1": {
+    "ref_count": "2"
+  },
+  "PORT_TABLE|Ethernet1/20/5": {
+    "ref_count": "2"
+  },
+  "PORT_TABLE|Ethernet1/4/1": {
+    "ref_count": "1"
+  },
+  "PORT_TABLE|Ethernet1/4/5": {
+    "ref_count": "1"
+  },
+  "PORT_TABLE|Ethernet1/5/1": {
+    "ref_count": "1"
+  },
+  "PORT_TABLE|Ethernet1/5/5": {
+    "ref_count": "1"
+  },
+  "PORT_TABLE|Ethernet1/8/1": {
+    "ref_count": "1"
+  },
+  "PORT_TABLE|Ethernet1/8/5": {
+    "ref_count": "1"
+  },
+  "PORT_TABLE|Ethernet1/9/1": {
+    "ref_count": "1"
+  },
+  "PORT_TABLE|Ethernet1/9/5": {
+    "ref_count": "1"
+  },
+  "POWER_INFO|hotswap_1_1": {
+    "commanded-frequency": "50.0",
+    "commanded-output-voltage": "3.32",
+    "frequency": "800",
+    "manufacturer-status": "0x0042",
+    "output-current": "1.1464",
+    "status-gpio": "ff",
+    "temperature": "48.714",
+    "temperature_interval": "2",
+    "temperature_max": "42.0"
+  },
+  "POWER_INFO|hotswap_1|VDD_12S5": {
+    "commanded-voltage": "0.99",
+    "current": "2.2464",
+    "direction": "output",
+    "peak-current": "3.11",
+    "peak-power": "1.11",
+    "peak-voltage": "1.22",
+    "power": "2.23",
+    "temperature": "10.5",
+    "voltage": "3.33"
+  },
+  "POWER_INFO|hotswap_1|VDD_12S6": {
+    "direction": "output",
+    "voltage": "13.33"
+  },
+  "POWER_INFO|hotswap_adm1272-i2c-501-10": {
+    "location": "501-0010",
+    "manufacturer-status": "0x0000"
+  },
+  "POWER_INFO|hotswap_adm1272-i2c-501-10|XP48R0V_IN": {
+    "direction": "input",
+    "peak-voltage": "55.1690",
+    "voltage": "54.4060"
+  },
+  "POWER_INFO|hotswap_adm1272-i2c-501-10|XP48R0V_SWAP": {
+    "current": "3.4840",
+    "direction": "input",
+    "peak-current": "4.7960",
+    "peak-power": "630.9445",
+    "peak-power-interval": "60000000123",
+    "peak-voltage": "54.6520",
+    "power": "190.3180",
+    "target-clear-interval-seconds": "55",
+    "temperature": "30.9280",
+    "voltage": "54.3820"
+  },
+  "POWER_INFO|power_brick_1": {
+    "commanded-frequency": "50.0",
+    "commanded-output-voltage": "3.32",
+    "frequency": "800",
+    "input-voltage": "12.08",
+    "manufacturer-status": "0x0042",
+    "output-current": "1.1464",
+    "output-voltage": "3.33",
+    "temperature": "41.0"
+  },
+  "POWER_INFO|power_sequencer_adm1266-i2c-10001-44": {
+    "location": "10001-0044",
+    "manufacturer-status": "0x04"
+  },
+  "POWER_INFO|power_sequencer_adm1266-i2c-10001-44|SEQ_MON_AVDD_0R75_B": {
+    "all-status-vout": "0x00",
+    "direction": "input",
+    "temperature": "10.2",
+    "voltage": "0.7560"
+  },
+  "POWER_INFO|voltage_regulator_1": {
+    "commanded-output-voltage": "3.32",
+    "frequency": "800",
+    "input-voltage": "12.08",
+    "location": "10001-0060",
+    "manufacturer-status": "0x0042",
+    "output-current": "1.1464",
+    "output-voltage": "3.33",
+    "temperature": "48.714"
+  },
+  "POWER_INFO|voltage_regulator_1|VDD_12R0": {
+    "current": "2.2464",
+    "direction": "output",
+    "energy": "4.55",
+    "power": "1.23",
+    "voltage": "3.33"
+  },
+  "POWER_INFO|voltage_regulator_1|VDD_12R1": {
+    "current": "2.2464",
+    "direction": "input",
+    "voltage": "5.33"
+  },
+  "POWER_INFO|voltage_regulator_2": {
+    "commanded-output-voltage": "2.32",
+    "frequency": "200",
+    "input-voltage": "22.08",
+    "location": "10001-0062",
+    "manufacturer-status": "0x0042",
+    "output-current": "2.1464",
+    "output-voltage": "2.33",
+    "temperature": "28.714"
+  },
+  "POWER_INFO|voltage_regulator_2|VDD_12R2": {
+    "current": "2.2462",
+    "direction": "output",
+    "energy": "2.55",
+    "power": "2.23",
+    "voltage": "2.33"
+  },
+  "POWER_INFO|voltage_regulator_2|VDD_12R3": {
+    "current": "2.2462",
+    "direction": "input",
+    "voltage": "2.33"
+  },
+  "PROCESS_STATS|31212": {
+    "%CPU": "1",
+    "%MEM": "10",
+    "CMD": "/bin/bash grep",
+    "MEM_LIMIT": "2147483648",
+    "STIME": "Dec 9 2021 10:00:29 PST",
+    "SYS_TIME": "679",
+    "USER_TIME": "452"
+  },
+  "PROCESS_STATS|43210": {
+    "%CPU": "46.7",
+    "%MEM": "3.6",
+    "CMD": "telemetry",
+    "STIME": "Dec 9 2021 10:00:29 PST",
+    "SYS_TIME": "117.38",
+    "USER_TIME": "1268.02"
+  },
+  "PSU_INFO|PSU 1": {
+    "model": "AC-RED",
+    "presence": "true",
+    "serial": "N/A",
+    "status": "true"
+  },
+  "PSU_INFO|PSU 2": {
+    "model": "DC-RED",
+    "presence": "true",
+    "serial": "A1",
+    "status": "false"
+  },
+  "STORAGE_INFO|/dev/sda": {
+    "avg-erase-count": "50",
+    "io-errors": "123456",
+    "max-erase-count": "100",
+    "name": "/dev/sda",
+    "parent": "ssd1",
+    "part-no": "ssd:part:123456",
+    "power-on-time": "0",
+    "raw-read-error-rate": "0.0",
+    "reallocated-sector-count": "0",
+    "removable": "false",
+    "serial-no": "ssd:serial:123456",
+    "ssd-life-left": "50",
+    "throughput-performance": "10.10"
+  },
+  "STORAGE_INFO|/dev/sdb": {
+    "io-errors": "123457",
+    "name": "/dev/sdb",
+    "part-no": "ssd:part:123457",
+    "power-on-time": "0",
+    "reallocated-sector-count": "0",
+    "removable": "true",
+    "serial-no": "ssd:serial:123457",
+    "throughput-performance": "10.10",
+    "write-amplification-factor": "10"
+  },
+  "SW_COMP_INFO|boot_loader": {
+    "software-version": "netlo-v1"
+  },
+  "SW_COMP_INFO|network_stack0": {
+    "oper-status": "active",
+    "software-version": "v2021",
+    "storage-side": "a"
+  },
+  "SW_COMP_INFO|network_stack1": {
+    "oper-status": "inactive",
+    "software-version": "v2021",
+    "storage-side": "b"
+  },
+  "SW_COMP_INFO|os0": {
+    "oper-status": "active",
+    "software-version": "os-v2",
+    "storage-side": "a"
+  },
+  "SW_COMP_INFO|os1": {
+    "oper-status": "inactive",
+    "software-version": "os-v3",
+    "storage-side": "b"
+  },
+  "SYSLOG_SERVER|127.0.0.1": {
+    "host": "127.0.0.1"
+  },
+  "SYSLOG_SERVER|127.0.0.2": {
+    "host": "127.0.0.2"
+  },
+  "TEMPERATURE_INFO|cpu_sensor_1": {
+    "temperature": "36.5"
+  },
+  "TEMPERATURE_INFO|cpu_sensor_2": {
+    "temperature": "37.4"
+  },
+  "TEMPERATURE_INFO|dimm_sensor_1": {
+    "temperature": "35.4"
+  },
+  "TEMPERATURE_INFO|exhaust_sensor_1": {
+    "temperature": "36.0"
+  },
+  "TEMPERATURE_INFO|heatsink_sensor_1": {
+    "temperature": "38.1"
+  },
+  "TEMPERATURE_INFO|heatsink_sensor_15": {
+    "temperature": "39.4"
+  },
+  "TEMPERATURE_INFO|inlet_sensor": {
+    "temperature": "37.2"
+  },
+  "TRANSCEIVER_DOM_SENSOR|Ethernet1": {
+    "temperature": "30"
+  },
+  "TRANSCEIVER_DOM_SENSOR|Ethernet4": {
+    "rx1power": "12",
+    "rx2power": "13",
+    "rx3power": "N/A",
+    "rx4power": "N/A",
+    "rx5power": "N/A",
+    "rx6power": "N/A",
+    "rx7power": "N/A",
+    "temperature": "30",
+    "tx1bias": "20",
+    "tx1power": "16",
+    "tx2bias": "N/A",
+    "tx2power": "17",
+    "tx3bias": "N/A",
+    "tx3power": "N/A",
+    "tx4bias": "N/A",
+    "tx4power": "N/A",
+    "tx5bias": "N/A",
+    "tx5power": "N/A",
+    "tx6bias": "N/A",
+    "tx6power": "N/A",
+    "tx7bias": "N/A",
+    "tx7power": "N/A"
+  },
+  "TRANSCEIVER_DOM_SENSOR|Ethernet6": {
+    "temperature": "30"
+  },
+  "TRANSCEIVER_DOM_SENSOR|Ethernet7": {
+    "temperature": "30"
+  },
+  "TRANSCEIVER_DOM_SENSOR|Ethernet8": {
+    "temperature": "30"
+  },
+  "TRANSCEIVER_INFO|Ethernet1": {
+    "ethernet-pmd": "PMD_UNKNOWN",
+    "parent": "1/1",
+    "type": "OSFP 8X Pluggable Transceiver"
+  },
+  "TRANSCEIVER_INFO|Ethernet33": {
+    "parent": "1/33",
+    "type": "SFP/SFP+/SFP28"
+  },
+  "TRANSCEIVER_INFO|Ethernet34": {
+    "parent": "1/34",
+    "type": "SFP/SFP+/SFP28"
+  },
+  "TRANSCEIVER_INFO|Ethernet4": {
+    "ethernet-pmd": "100G_CLR4",
+    "fec-mode": "rs",
+    "form_factor": "QSFP+",
+    "hardware_rev": "1001",
+    "latest_fw_rev": "1002",
+    "manufacturer": "ABC123",
+    "model": "1234",
+    "parent": "1/4",
+    "serial": "TX123",
+    "type": "OSFP 8X Pluggable Transceiver",
+    "vendor_date": "2021-01-01",
+    "vendor_date_code": "2021-12-12",
+    "vendor_name": "XYZ987",
+    "vendor_part_number": "9876",
+    "vendor_revision": "1000",
+    "vendor_serial_number": "RX987"
+  },
+  "TRANSCEIVER_INFO|Ethernet6": {
+    "ethernet-pmd": "400G_DR4+",
+    "parent": "1/6",
+    "type": "QSFP-DD Double Density 8X Pluggable Transceiver"
+  },
+  "TRANSCEIVER_INFO|Ethernet7": {
+    "ethernet-pmd": "400G_PSM4",
+    "parent": "1/7"
+  },
+  "TRANSCEIVER_INFO|Ethernet8": {
+    "ethernet-pmd": "400G_AOC",
+    "parent": "1/8"
+  },
+  "TRANSCEIVER_STATUS|Ethernet1": {
+    "status": "1"
+  },
+  "TRANSCEIVER_STATUS|Ethernet4": {
+    "status": "1"
+  },
+  "TRANSCEIVER_STATUS|Ethernet5": {
+    "status": "0"
+  },
+  "TRANSCEIVER_STATUS|Ethernet6": {
+    "status": "1"
+  },
+  "TRANSCEIVER_STATUS|Ethernet7": {
+    "status": "1"
+  },
+  "TRANSCEIVER_STATUS|Ethernet8": {
+    "status": "1"
+  },
+  "VERIFY_STATE_RESP_TABLE|all": {
+    "err_str": "Foo doesn't match bar.",
+    "status": "fail",
+    "timestamp": "2021-01-26 08:45:08"
+  },
+  "WARM_RESTART_PERFORMANCE_HISTORY|0": {
+    "firmware-version": "gpins_daily_20240104_13_RC00",
+    "kernel-uptime-seconds": "1000",
+    "reset-count": "0",
+    "ssd-region": "a",
+    "stack-start-timestamp": "2024-01-04 05:30:41.123456",
+    "stack-stop-timestamp": "2024-01-04 05:45:41.123456",
+    "stack-uptime-seconds": "900"
+  },
+  "WARM_RESTART_PERFORMANCE_HISTORY|0|freeze": {
+    "finish-timestamp": "2023-06-14.06:03:41.12345",
+    "start-timestamp": "2023-06-14.05:57:41.12345",
+    "status": "failure"
+  },
+  "WARM_RESTART_PERFORMANCE_HISTORY|0|reconciliation|syncd": {
+    "finish-timestamp": "2023-06-14.06:03:41.12345",
+    "start-timestamp": "2023-06-14.05:57:41.12345",
+    "status": "failure"
+  },
+  "WARM_RESTART_PERFORMANCE_HISTORY|0|system": {
+    "finish-timestamp": "2023-06-14.06:03:41.12345",
+    "start-timestamp": "2023-06-14.05:57:41.12345",
+    "status": "in-progress"
+  },
+  "WARM_RESTART_PERFORMANCE_HISTORY|1": {
+    "firmware-version": "gpins_daily_20240104_13_RC01",
+    "kernel-uptime-seconds": "2000",
+    "reset-count": "0",
+    "ssd-region": "b",
+    "stack-start-timestamp": "2024-01-04 05:30:41.123456",
+    "stack-stop-timestamp": "2024-01-04 05:45:41.123456",
+    "stack-uptime-seconds": "1800"
+  },
+  "WARM_RESTART_PERFORMANCE_HISTORY|1|freeze": {
+    "finish-timestamp": "2023-06-14.06:03:41.12345",
+    "start-timestamp": "2023-06-14.05:57:41.12345",
+    "status": "failure"
+  },
+  "WARM_RESTART_PERFORMANCE_HISTORY|1|reconciliation|syncd": {
+    "finish-timestamp": "2023-06-14.06:03:41.12345",
+    "start-timestamp": "2023-06-14.05:57:41.12345",
+    "status": "failure"
+  },
+  "WARM_RESTART_PERFORMANCE_HISTORY|1|system": {
+    "finish-timestamp": "2023-06-14.06:03:41.12345",
+    "start-timestamp": "2023-06-14.05:57:41.12345",
+    "status": "in-progress"
+  },
+  "WARM_RESTART_PERFORMANCE_HISTORY|1|unfreeze|telemetry": {
+    "finish-timestamp": "2023-06-14.06:03:41.12345",
+    "start-timestamp": "2023-06-14.05:57:41.12345",
+    "status": "quiescent"
+  },
+  "WARM_RESTART_PERFORMANCE_TABLE|freeze": {
+    "finish-timestamp": "2023-06-14.06:03:41.12345",
+    "start-timestamp": "2023-06-14.05:57:41.12345",
+    "status": "success"
+  },
+  "WARM_RESTART_PERFORMANCE_TABLE|freeze|telemetry": {
+    "finish-timestamp": "2023-06-14.06:03:41.12345",
+    "start-timestamp": "2023-06-14.05:57:41.12345",
+    "status": "quiescent"
+  },
+  "WARM_RESTART_PERFORMANCE_TABLE|reconciliation|syncd": {
+    "finish-timestamp": "2023-06-14.06:03:41.12345",
+    "start-timestamp": "2023-06-14.05:57:41.12345",
+    "status": "failure"
+  },
+  "WARM_RESTART_PERFORMANCE_TABLE|system": {
+    "finish-timestamp": "2023-06-14.06:03:41.12345",
+    "start-timestamp": "2023-06-14.05:57:41.12345",
+    "status": "in-progress"
+  },
+  "WARM_RESTART_RECONCILIATION_STATE|syncd": {
+    "ASIC_OPERATIONS": "97",
+    "SAI_OBJECT_TYPE_ACL_ENTRY:set": "95",
+    "SAI_OBJECT_TYPE_TUNNEL:create": "1",
+    "SAI_OBJECT_TYPE_TUNNEL:remove": "1",
+    "applyView": "1070787",
+    "asic-apply": "8485",
+    "redis-update": "470302"
+  },
+  "WARM_RESTART_REGISTRATION_TABLE|telemetry|telemetry": {
+    "checkpoint": "false",
+    "freeze": "true",
+    "reconciliation": "true",
+    "stop_on_freeze": "false",
+    "timestamp": "2023-06-14.05:50:41.12345"
+  },
+  "WARM_RESTART_TABLE|syncd": {
+    "restore_count": "0",
+    "state": "checkpointed",
+    "timestamp": "2023-06-14.05:50:41.12345"
+  }
 }

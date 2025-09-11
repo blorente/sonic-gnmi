@@ -1,0 +1,89 @@
+{
+    "title": "Bad_Interval_Tests",
+    "operations":
+    [
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/system/diag/config/bad-intervals-monitoring-enable",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-diag:bad-intervals-monitoring-enable"
+            ],
+            "properties": {
+                "google-pins-diag:bad-intervals-monitoring-enable": {
+                    "type": "boolean",
+                    "enum": [ false ]
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/system/diag/state/bad-intervals-monitoring-enable",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-diag:bad-intervals-monitoring-enable"
+            ],
+            "properties": {
+                "google-pins-diag:bad-intervals-monitoring-enable": {
+                    "type": "boolean",
+                    "enum": [ false ]
+                }
+            }
+        },
+        {
+            "title": "Enable bad interval mornitering config",
+            "operation": "replace",
+            "returnCode": 0,
+            "xpath": "/openconfig/system",
+            "target": "OC_YANG",
+            "attributeData": "{\"openconfig-system:system\":{\"google-pins-diag:diag\":{\"config\":{\"bad-intervals-monitoring-enable\":true}}}}",
+            "subOpers": [
+                {
+                    "oper": "dbHSet",
+                    "db": "APPL_STATE_DB",
+                    "value": {
+                        "BAD_INTERVALS_MONITORING:GLOBAL" : {
+                            "state": "enabled"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/system/diag/config/bad-intervals-monitoring-enable",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-diag:bad-intervals-monitoring-enable"
+            ],
+            "properties": {
+                "google-pins-diag:bad-intervals-monitoring-enable": {
+                    "type": "boolean",
+                    "enum": [ true ]
+                }
+            }
+        },
+        {
+            "operation": "get",
+            "returnCode": 0,
+            "xpath": "openconfig/system/diag/state/bad-intervals-monitoring-enable",
+            "target": "OC_YANG",
+            "type": "object",
+            "required": [
+                "google-pins-diag:bad-intervals-monitoring-enable"
+            ],
+            "properties": {
+                "google-pins-diag:bad-intervals-monitoring-enable": {
+                    "type": "boolean",
+                    "enum": [ true ]
+                }
+            }
+        }
+    ]
+}

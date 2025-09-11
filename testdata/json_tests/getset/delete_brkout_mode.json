@@ -25,7 +25,7 @@
                 "ecmp_hash_offset": "0",
                 "egress_timestamp_enable": "false",
                 "fec": "rs544-interleaved",
-switch:Ethernet1/12/1",
+                "fully-qualified-interface-name": "switch:Ethernet1/12/1",
                 "health_indicator": "good",
                 "hold_time_down": "0",
                 "hold_time_up": "8000",
@@ -58,6 +58,10 @@ switch:Ethernet1/12/1",
                 "name": "1/12",
                 "parent": "integrated_circuit0",
                 "port-id": "12"
+              },
+              "PORT_TABLE|Ethernet1/12/1": {
+                "admin_status": "up",
+                "ref_count": "0"
               }
             }
           },
@@ -106,7 +110,7 @@ switch:Ethernet1/12/1",
         "returnCode": 10,
         "xpath": "openconfig/",
         "target": "OC_YANG",
-switch:eth-1/12/1\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/12/1\",\"openconfig-p4rt:id\":1,\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/4/1\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"port-speed\":\"openconfig-if-ethernet:SPEED_200GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"port-id\":4},\"breakout-mode\":{\"groups\":{\"group\":[{\"index\":0,\"config\":{\"index\":0,\"num-breakouts\":1,\"breakout-speed\":\"SPEED_200GB\",\"num-physical-channels\":8}}]}}}}]}}"
+        "attributeData": "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"config\":{\"description\":\"switch:eth-1/12/1 [(not a trunk member)]\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:eth-1/12/1\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/12/1\",\"openconfig-p4rt:id\":1,\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/4/1\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"port-speed\":\"openconfig-if-ethernet:SPEED_200GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"port-id\":4},\"breakout-mode\":{\"groups\":{\"group\":[{\"index\":0,\"config\":{\"index\":0,\"num-breakouts\":1,\"breakout-speed\":\"SPEED_200GB\",\"num-physical-channels\":8}}]}}}}]}}"
       }
     ]
   }

@@ -11,11 +11,12 @@
           "name": { "$ref": "#/globalDef/pfm_storage/SDA_name" }
         }
       },
-      "SDA_st_parent":  { "type": "string", "const": "chassis" },
+      "SDA_st_parent":  { "type": "string", "const": "ssd1" },
       "SDA_st_type":    { "type": "string", "const": "openconfig-platform-types:STORAGE" },
       "SDA_st_pn":      { "type": "string", "const": "ssd:part:123456" },
       "SDA_st_sn":      { "type": "string", "const": "ssd:serial:123456" },
       "SDA_st_rmv":     { "type": "boolean", "const": false },
+      "SDA_st_os":      { "type": "string", "const": "openconfig-platform-types:ACTIVE" },
       "SDA_st_temp_inst": { "type": "string", "const": "44.1" },
       "SDA_st_temp": {
         "type": "object",
@@ -36,7 +37,8 @@
           "temperature": { "$ref": "#/globalDef/pfm_storage/SDA_st_temp" },
           "part-no": { "$ref": "#/globalDef/pfm_storage/SDA_st_pn" },
           "serial-no": { "$ref": "#/globalDef/pfm_storage/SDA_st_sn" },
-          "removable": { "$ref": "#/globalDef/pfm_storage/SDA_st_rmv" }
+          "removable": { "$ref": "#/globalDef/pfm_storage/SDA_st_rmv" },
+          "oper-status": { "$ref": "#/globalDef/pfm_storage/SDA_st_os" }
         }
       },
       "SDA_storage_st": {
@@ -48,8 +50,6 @@
                      "google-pins-platform:reallocated-sector-count",
                      "google-pins-platform:power-on-seconds",
                      "google-pins-platform:ssd-life-left",
-                     "google-pins-platform:avg-erase-count",
-                     "google-pins-platform:max-erase-count",
                      "google-pins-platform:power-cycle-count",
                      "google-pins-platform:uncorrectable-sector-count-on-line",
                      "google-pins-platform:num-pure-spare",
@@ -83,8 +83,6 @@
           "google-pins-platform:reallocated-sector-count":   { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_rasc" },
           "google-pins-platform:power-on-seconds":           { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_pos" },
           "google-pins-platform:ssd-life-left":              { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_sll" },
-          "google-pins-platform:avg-erase-count":            { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_aec" },
-          "google-pins-platform:max-erase-count":            { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_mec" },
           "google-pins-platform:power-cycle-count":          { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_pcc" },
           "google-pins-platform:uncorrectable-sector-count-on-line": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_uscol" },
           "google-pins-platform:num-pure-spare":             { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_nps" },
@@ -118,8 +116,6 @@
                      "google-pins-platform:reallocated-sector-count",
                      "google-pins-platform:power-on-seconds",
                      "google-pins-platform:ssd-life-left",
-                     "google-pins-platform:avg-erase-count",
-                     "google-pins-platform:max-erase-count",
                      "google-pins-platform:power-cycle-count",
                      "google-pins-platform:uncorrectable-sector-count-on-line",
                      "google-pins-platform:num-pure-spare",
@@ -152,8 +148,6 @@
           "google-pins-platform:reallocated-sector-count":   { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_rasc" },
           "google-pins-platform:power-on-seconds":           { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_pos" },
           "google-pins-platform:ssd-life-left":              { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_sll" },
-          "google-pins-platform:avg-erase-count":            { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_aec" },
-          "google-pins-platform:max-erase-count":            { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_mec" },
           "google-pins-platform:power-cycle-count":          { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_pcc" },
           "google-pins-platform:uncorrectable-sector-count-on-line": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_uscol" },
           "google-pins-platform:num-pure-spare":             { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_nps" },
@@ -186,8 +180,6 @@
       "SDA_storage_st_rasc":  { "type": "string",  "const": "0" },
       "SDA_storage_st_pos":   { "type": "string",  "const": "0" },
       "SDA_storage_st_sll":   { "type": "string",  "const": "50" },
-      "SDA_storage_st_aec":   { "type": "integer", "const": 50 },
-      "SDA_storage_st_mec":   { "type": "integer", "const": 100 },
       "SDA_storage_st_pcc":   { "type": "integer", "const": 5 },
       "SDA_storage_st_uscol": { "type": "integer", "const": 6 },
       "SDA_storage_st_nps":   { "type": "integer", "const": 7 },
@@ -260,11 +252,12 @@
           "name": { "$ref": "#/globalDef/pfm_storage/SDB_name" }
         }
       },
-      "SDB_st_parent":  { "type": "string", "const": "chassis" },
+      "SDB_st_parent":  { "type": "string", "const": "Missing in State DB" },
       "SDB_st_type":    { "type": "string", "const": "openconfig-platform-types:STORAGE" },
       "SDB_st_pn":      { "type": "string", "const": "ssd:part:123457" },
       "SDB_st_sn":      { "type": "string", "const": "ssd:serial:123457" },
       "SDB_st_rmv":     { "type": "boolean", "const": true },
+      "SDB_st_os":      { "type": "string", "const": "openconfig-platform-types:ACTIVE" },
       "SDB_st_temp_inst": { "type": "string", "const": "44.3" },
       "SDB_st_temp": {
         "type": "object",
@@ -285,7 +278,8 @@
           "temperature": { "$ref": "#/globalDef/pfm_storage/SDB_st_temp" },
           "part-no": { "$ref": "#/globalDef/pfm_storage/SDB_st_pn" },
           "serial-no": { "$ref": "#/globalDef/pfm_storage/SDB_st_sn" },
-          "removable": { "$ref": "#/globalDef/pfm_storage/SDB_st_rmv" }
+          "removable": { "$ref": "#/globalDef/pfm_storage/SDB_st_rmv" },
+          "oper-status": { "$ref": "#/globalDef/pfm_storage/SDB_st_os" }
         }
       },
       "SDB_storage_st": {
@@ -297,8 +291,6 @@
                      "google-pins-platform:reallocated-sector-count",
                      "google-pins-platform:power-on-seconds",
                      "google-pins-platform:ssd-life-left",
-                     "google-pins-platform:avg-erase-count",
-                     "google-pins-platform:max-erase-count",
                      "google-pins-platform:power-cycle-count",
                      "google-pins-platform:uncorrectable-sector-count-on-line",
                      "google-pins-platform:num-pure-spare",
@@ -332,8 +324,6 @@
           "google-pins-platform:reallocated-sector-count":   { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_rasc" },
           "google-pins-platform:power-on-seconds":           { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_pos" },
           "google-pins-platform:ssd-life-left":              { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_sll" },
-          "google-pins-platform:avg-erase-count":            { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_aec" },
-          "google-pins-platform:max-erase-count":            { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_mec" },
           "google-pins-platform:power-cycle-count":          { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_pcc" },
           "google-pins-platform:uncorrectable-sector-count-on-line": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_uscol" },
           "google-pins-platform:num-pure-spare":             { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_nps" },
@@ -366,8 +356,6 @@
       "SDB_storage_st_rasc":  { "type": "string",  "const": "0" },
       "SDB_storage_st_pos":   { "type": "string",  "const": "0" },
       "SDB_storage_st_sll":   { "type": "string",  "const": "100" },
-      "SDB_storage_st_aec":   { "type": "integer", "const": 120 },
-      "SDB_storage_st_mec":   { "type": "integer", "const": 100 },
       "SDB_storage_st_pcc":   { "type": "integer", "const": 50 },
       "SDB_storage_st_uscol": { "type": "integer", "const": 60 },
       "SDB_storage_st_nps":   { "type": "integer", "const": 70 },
@@ -409,7 +397,12 @@
           "state": { "$ref": "#/globalDef/pfm_storage/SDB_st" },
           "storage": { "$ref": "#/globalDef/pfm_storage/SDB_storage" }
         }
-      }
+      },
+
+
+
+
+      "SDC_st_os":      { "type": "string", "const": "openconfig-platform-types:INACTIVE" }
     }
   }
 }

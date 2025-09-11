@@ -1,0 +1,153 @@
+{
+    "title": "Set interface csig-tag-action",
+    "operations":[
+      {
+        "title": "Set CSIG strip action.",
+        "operation": "update",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/config/",
+        "target": "OC_YANG",
+        "attributeData": "{\"config\": {\"google-pins-interfaces:csig-tag-action\":\"STRIP_TAG\"}}",
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_TABLE:Ethernet1/1/1" : {
+                "csig_tag_action": "strip_tag"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "Get CSIG strip action.",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:interface"
+        ],
+        "properties": {
+          "openconfig-interfaces:interface": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "state", "config"
+              ],
+              "properties": {
+                "state": {
+                  "type": "object",
+                  "required": [
+                    "google-pins-interfaces:csig-tag-action"
+                  ],
+                  "properties": {
+                    "google-pins-interfaces:csig-tag-action": {
+                      "type": "string",
+                      "enum": ["STRIP_TAG"]
+                    }
+                  }
+                },
+                "config": {
+                  "type": "object",
+                  "required": [
+                    "google-pins-interfaces:csig-tag-action"
+                  ],
+                  "properties": {
+                    "google-pins-interfaces:csig-tag-action": {
+                      "type": "string",
+                      "enum": ["STRIP_TAG"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "title": "Set CSIG keep action.",
+        "operation": "update",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/config/",
+        "target": "OC_YANG",
+        "attributeData": "{\"config\": {\"google-pins-interfaces:csig-tag-action\":\"KEEP_TAG\"}}",
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_TABLE:Ethernet1/1/1" : {
+                "csig_tag_action": "keep_tag"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "Get CSIG keep action.",
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:interface"
+        ],
+        "properties": {
+          "openconfig-interfaces:interface": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "state", "config"
+              ],
+              "properties": {
+                "state": {
+                  "type": "object",
+                  "required": [
+                    "google-pins-interfaces:csig-tag-action"
+                  ],
+                  "properties": {
+                    "google-pins-interfaces:csig-tag-action": {
+                      "type": "string",
+                      "enum": ["KEEP_TAG"]
+                    }
+                  }
+                },
+                "config": {
+                  "type": "object",
+                  "required": [
+                    "google-pins-interfaces:csig-tag-action"
+                  ],
+                  "properties": {
+                    "google-pins-interfaces:csig-tag-action": {
+                      "type": "string",
+                      "enum": ["KEEP_TAG"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "title": "Delete CSIG action.",
+        "operation": "delete",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/config/google-pins-interfaces:csig-tag-action",
+        "target": "OC_YANG"
+      },
+      {
+        "title": "Set CSIG action fails on non-ethernet ports.",
+        "operation": "update",
+        "returnCode": 10,
+        "xpath": "openconfig/interfaces/interface[name=PortChannel1]/config/google-pins-interfaces:csig-tag-actions",
+        "target": "OC_YANG"
+      }
+    ]
+  }

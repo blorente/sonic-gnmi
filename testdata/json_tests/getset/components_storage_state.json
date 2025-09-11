@@ -70,6 +70,17 @@
         }
       }
     },
+        {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=/dev/sdc]/state/oper-status",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": ["openconfig-platform:oper-status"],
+      "properties": {
+        "openconfig-platform:oper-status": { "$ref": "#/globalDef/pfm_storage/SDC_st_os" }
+      }
+    },
     {
       "title": "Get /dev/sdb storage subtree",
       "operation": "get",
@@ -198,32 +209,6 @@
       "additionalProperties": false,
       "properties": {
         "google-pins-platform:ssd-life-left": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_sll" }
-      }
-    },
-    {
-      "title": "Get /dev/sda leaf=avg-erase-count",
-      "operation": "get",
-      "returnCode": 0,
-      "xpath": "components/component[name=/dev/sda]/storage/state/avg-erase-count",
-      "target": "OC_YANG",
-      "type": "object",
-      "required": ["google-pins-platform:avg-erase-count"],
-      "additionalProperties": false,
-      "properties": {
-        "google-pins-platform:avg-erase-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_aec" }
-      }
-    },
-    {
-      "title": "Get /dev/sda leaf=max-erase-count",
-      "operation": "get",
-      "returnCode": 0,
-      "xpath": "components/component[name=/dev/sda]/storage/state/max-erase-count",
-      "target": "OC_YANG",
-      "type": "object",
-      "required": ["google-pins-platform:max-erase-count"],
-      "additionalProperties": false,
-      "properties": {
-        "google-pins-platform:max-erase-count": { "$ref": "#/globalDef/pfm_storage/SDA_storage_st_mec" }
       }
     },
     {
@@ -614,32 +599,6 @@
       "additionalProperties": false,
       "properties": {
         "google-pins-platform:ssd-life-left": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_sll" }
-      }
-    },
-    {
-      "title": "Get /dev/sdb leaf=avg-erase-count",
-      "operation": "get",
-      "returnCode": 0,
-      "xpath": "components/component[name=/dev/sdb]/storage/state/avg-erase-count",
-      "target": "OC_YANG",
-      "type": "object",
-      "required": ["google-pins-platform:avg-erase-count"],
-      "additionalProperties": false,
-      "properties": {
-        "google-pins-platform:avg-erase-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_aec" }
-      }
-    },
-    {
-      "title": "Get /dev/sdb leaf=max-erase-count",
-      "operation": "get",
-      "returnCode": 0,
-      "xpath": "components/component[name=/dev/sdb]/storage/state/max-erase-count",
-      "target": "OC_YANG",
-      "type": "object",
-      "required": ["google-pins-platform:max-erase-count"],
-      "additionalProperties": false,
-      "properties": {
-        "google-pins-platform:max-erase-count": { "$ref": "#/globalDef/pfm_storage/SDB_storage_st_mec" }
       }
     },
     {
@@ -1146,7 +1105,5 @@
       "xpath": "components/component[name=/dev/sda]/storage/state/io-errors",
       "target": "OC_YANG"
     }
-
-
   ]
 }

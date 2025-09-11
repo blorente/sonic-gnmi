@@ -412,7 +412,7 @@ func TestTranslSubscribe(t *testing.T) {
 		t.Logf("Verify next iteration has delete notification")
 		sub.VerifyT(sampleInterval - 3*time.Second)
 		sub.Verify(
-			Deleted(acl2Path + "/state/description"),
+			Deleted(acl2Path + "/state"),
 		)
 
 		t.Logf("Verify next iteration has no notifications")

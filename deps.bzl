@@ -263,10 +263,30 @@ def go_dependencies():
         version = "v0.6.0",
     )
     go_repository(
+        name = "com_github_google_go_tpm",
+        importpath = "github.com/google/go-tpm",
+        sum = "h1:+yx0/anQuGzi+ssRqeD6WpXjW2L/V0dItUayO0i9sRc=",
+        version = "v0.9.3",
+    )
+    go_repository(
+        name = "com_github_google_go_tpm_tools",
+        importpath = "github.com/google/go-tpm-tools",
+        sum = "h1:qJEJcuLzH5KDR0gKc0zcktin6KSAwL7+jWKBYceddTc=",
+        version = "v0.3.13-0.20230620182252-4639ecce2aba",
+    )
+    go_repository(
         name = "com_github_google_gofuzz",
         importpath = "github.com/google/gofuzz",
         sum = "h1:xRy4A+RhZaiKjJ1bPfwQ8sedCA+YS2YcCHW6ec7JMi0=",
         version = "v1.2.0",
+    )
+    go_repository(
+        name = "com_github_google_gousb",
+        importpath = "github.com/google/gousb",
+        patch_args = ["-p1"],
+        patches = ["//patches:github.com-google-gousb.patch"],
+        sum = "h1:xt6M5TDsGSZ+rlomz5Si5Hmd/Fvbmo2YCJHN+yGaK4o=",
+        version = "v1.1.3",
     )
     go_repository(
         name = "com_github_google_pprof",
@@ -424,8 +444,8 @@ def go_dependencies():
         # This patch is working around an import issue with pathz and gnmi proto
         # it uses the pregen proto instead of build from source
         patches = ["//patches:github.com-openconfig-gnsi.patch"],
-        sum = "h1:ghqduJ3kxgBGPD8mUoz2mQCwR1E7Dbttob6KrAAkeCw=",
-        version = "v1.5.0",
+        sum = "h1:Enn5i3m6KsnHeUI+kalB9OH8fADf0oeymd/3Ze0BzME=",
+        version = "v1.7.0",
     )
     go_repository(
         name = "com_github_openconfig_goyang",
@@ -484,6 +504,12 @@ def go_dependencies():
         importpath = "github.com/pkg/diff",
         sum = "h1:aoZm08cpOy4WuID//EZDgcC4zIxODThtZNPirFr42+A=",
         version = "v0.0.0-20210226163009-20ebb0f2a09e",
+    )
+    go_repository(
+        name = "com_github_pkg_errors",
+        importpath = "github.com/pkg/errors",
+        sum = "h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=",
+        version = "v0.9.1",
     )
     go_repository(
         name = "com_github_pkg_profile",

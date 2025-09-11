@@ -1,0 +1,65 @@
+diff --git a/constants.go b/constants.go
+index aa1ce40..c77d05c 100644
+--- a/constants.go
++++ b/constants.go
+@@ -15,7 +15,7 @@
+ 
+ package gousb
+ 
+-// #include <libusb.h>
++// #include <libusb-1.0/libusb.h>
+ import "C"
+ import "strconv"
+ 
+diff --git a/error.go b/error.go
+index 1358993..9a6158b 100644
+--- a/error.go
++++ b/error.go
+@@ -19,7 +19,7 @@ import (
+ 	"fmt"
+ )
+ 
+-// #include <libusb.h>
++// #include <libusb-1.0/libusb.h>
+ import "C"
+ 
+ // Error is an error code from a USB operation. See the list of Error constants below.
+diff --git a/libusb.go b/libusb.go
+index ddc0b2a..0b4a96c 100644
+--- a/libusb.go
++++ b/libusb.go
+@@ -25,7 +25,7 @@ import (
+ 
+ /*
+ #cgo pkg-config: libusb-1.0
+-#include <libusb.h>
++#include <libusb-1.0/libusb.h>
+ 
+ int gousb_compact_iso_data(struct libusb_transfer *xfer, unsigned char *status);
+ struct libusb_transfer *gousb_alloc_transfer_and_buffer(int bufLen, int numIsoPackets);
+diff --git a/transfer.c b/transfer.c
+index 636ac55..e4b8693 100644
+--- a/transfer.c
++++ b/transfer.c
+@@ -13,7 +13,7 @@
+ // See the License for the specific language governing permissions and
+ // limitations under the License.
+ 
+-#include <libusb.h>
++#include <libusb-1.0/libusb.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+diff --git a/usb.c b/usb.c
+index 2acc865..522d003 100644
+--- a/usb.c
++++ b/usb.c
+@@ -13,7 +13,7 @@
+ // See the License for the specific language governing permissions and
+ // limitations under the License.
+ 
+-#include <libusb.h>
++#include <libusb-1.0/libusb.h>
+ 
+ void gousb_set_debug(libusb_context *ctx, int lvl) {
+     // TODO(sebek): remove libusb_debug entirely in 2.1 or 3.0,

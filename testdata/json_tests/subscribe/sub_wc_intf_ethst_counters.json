@@ -1,0 +1,46 @@
+{
+  "title": "evanWildcard Sampling Subscription: /openconfig/interfaces/interface[name=*]/ethernet/state/counters/",
+  "operations":[
+    {
+      "title": "Subscribes to /openconfig/interfaces/interface[name=*]/ethernet/state/counters/",
+      "operation": "subscribe",
+      "operProto": "subscribe:{prefix:{origin:'openconfig'target:'OC_YANG'}encoding:PROTO subscription:{path:{elem:{name:'interfaces'}elem:{name:'interface'key:{key:'name'value:'*'}}elem:{name:'ethernet'}elem:{name:'state'}elem:{name:'counters'}}mode:SAMPLE sample_interval:3000000000}mode:STREAM}",
+      "returnCode": 0,
+      "subOpers": [
+        {
+          "oper": "validate",
+          "title": "Validates initial updates",
+          "timeout": 5000,
+          "allowDuplicateUpdates": false,
+          "finalValidator": {
+            "xpath": "/interfaces/interface",
+            "syncResponse": true,
+            "schema": {
+              "type": "object",
+              "required": ["openconfig-interfaces:interface"],
+              "properties": {
+                "openconfig-interfaces:interface" : {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "required": ["name", "openconfig-if-ethernet:ethernet"],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "enum": [ "Ethernet1/1/1","Ethernet1/7/3", "Ethernet1/7/4"]
+                      }
+                    }
+                  },
+                  "minItems" : 3,
+                  "maxItems" : 3,
+                  "additionalItems": false
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

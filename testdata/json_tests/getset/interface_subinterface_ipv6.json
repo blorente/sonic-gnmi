@@ -463,7 +463,18 @@
       "returnCode": 0,
       "xpath": "openconfig-interfaces:interfaces/interface[name=Loopback4]/subinterfaces/subinterface[index=0]/ipv6/addresses/address[ip=2620:1080:2000:100::]",
       "target": "OC_YANG",
-      "title": "Delete Interface ipv6 address"
+      "title": "Delete Interface ipv6 address",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "CONFIG_DB",
+          "value": {
+            "MGMT_INTERFACE|bond0|2620:1081:1c20::1/64" : {
+              "preexisting_field_was_preserved": "true"
+            }
+          }
+        }
+      ]
     },
     {
       "operation": "replace",
@@ -471,7 +482,18 @@
       "xpath": "openconfig-interfaces:interfaces/interface[name=bond0]/subinterfaces/subinterface[index=0]",
       "target": "OC_YANG",
       "attributeData": "{\"openconfig-interfaces:subinterface\":[{\"index\":0,\"config\":{\"index\":0},\"openconfig-if-ip:ipv6\":{\"addresses\":{\"address\":[{\"ip\":\"2620:1081:1c20::1\",\"config\":{\"ip\":\"2620:1081:1c20::1\",\"prefix-length\":64}}]}}}]}",
-      "title": "Set Interface ipv6 address"
+      "title": "Set Interface ipv6 address",
+      "subOpers": [
+        {
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "MGMT_INTERFACE|bond0|2620:1081:1c20::1/64" : {
+              "preexisting_field_was_preserved": "true"
+            }
+          }
+        }
+      ]
     },
     {
       "operation": "get",

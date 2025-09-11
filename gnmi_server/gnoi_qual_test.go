@@ -936,6 +936,22 @@ func TestPacketLinkQual(t *testing.T) {
 		}
 	})
 
+	// Test packet based link qualification capability.
+	s.lqHelper.SetPktLqCapability(false)
+	t.Run("StartPacketQualificationFailsIfPlatformDoesNotSupport", func(t *testing.T) {
+		_, err := sc.StartPacketQualification(ctx, &qualpb.StartPacketQualificationRequest{})
+		testErr(err, codes.Unimplemented, "RPC is not supported!", t)
+	})
+	t.Run("StopPacketQualificationFailsIfPlatformDoesNotSupport", func(t *testing.T) {
+		_, err := sc.StopPacketQualification(ctx, &qualpb.StopPacketQualificationRequest{})
+		testErr(err, codes.Unimplemented, "RPC is not supported!", t)
+	})
+	t.Run("GetPacketQualificationResultFailsIfPlatformDoesNotSupport", func(t *testing.T) {
+		_, err := sc.GetPacketQualificationResult(ctx, &qualpb.GetPacketQualificationResultRequest{})
+		testErr(err, codes.Unimplemented, "RPC is not supported!", t)
+	})
+	s.lqHelper.SetPktLqCapability(true)
+
 	// Test RPCs during NSF freeze mode.
 	s.WarmRestartHelper.SetFreezeStatus(true)
 	t.Run("StartPacketQualificationUnavailableDuringFreeze", func(t *testing.T) {

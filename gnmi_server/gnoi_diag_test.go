@@ -1054,6 +1054,22 @@ func TestDiag(t *testing.T) {
 		}
 	})
 
+	// Test BERT capability.
+	s.lqHelper.SetBertCapability(false)
+	t.Run("StartBertFailsIfPlatformDoesNotSupportBert", func(t *testing.T) {
+		_, err := sc.StartBERT(ctx, &dpb.StartBERTRequest{})
+		testErr(err, codes.Unimplemented, "RPC is not supported!", t)
+	})
+	t.Run("StopBertFailsIfPlatformDoesNotSupportBert", func(t *testing.T) {
+		_, err := sc.StopBERT(ctx, &dpb.StopBERTRequest{})
+		testErr(err, codes.Unimplemented, "RPC is not supported!", t)
+	})
+	t.Run("GetBertResultFailsIfPlatformDoesNotSupportBert", func(t *testing.T) {
+		_, err := sc.GetBERTResult(ctx, &dpb.GetBERTResultRequest{})
+		testErr(err, codes.Unimplemented, "RPC is not supported!", t)
+	})
+	s.lqHelper.SetBertCapability(true)
+
 	// Test RPCs during NSF freeze mode.
 	s.WarmRestartHelper.SetFreezeStatus(true)
 	t.Run("StartBertUnavailableDuringFreeze", func(t *testing.T) {

@@ -2,6 +2,18 @@
   "title": "Wildcard OnChange Subscription: /openconfig/components/component[name=*]/state/parent",
   "globalDef": {
     "validators": {
+      "state.parent.ssd1": {
+        "type": "object",
+        "required": [
+          "parent"
+        ],
+        "properties": {
+          "parent": {
+            "type": "string",
+            "const": "ssd1"
+          }
+        }
+      },
       "state.parent.chassis": {
         "type": "object",
         "required": [
@@ -146,7 +158,7 @@
                         "type": "object",
                         "properties": {
                           "name": { "type": "string", "const": "/dev/sda"},
-                          "state": { "$ref": "#/globalDef/validators/state.parent.chassis" }
+                          "state": { "$ref": "#/globalDef/validators/state.parent.ssd1" }
                         }
                       }
                     },

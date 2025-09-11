@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "ec",
+    srcs = [
+        "commands.go",
+        "common.go",
+        "errors.go",
+        "structures.go",
+    ],
+    importpath = "github.com/sonic-net/sonic-gnmi/crypta_client/pkg/ec",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":ec",
+    visibility = ["//visibility:public"],
+)

@@ -21,6 +21,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	durationpb "google.golang.org/protobuf/types/known/durationpb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 )
 
@@ -47,6 +48,7 @@ type Client struct {
 	logLevel          int
 	pathzProcessor    pathz_authorizer.GnmiAuthzProcessorInterface
 	recorder          *metric_recorder.SecurityMetricRecorder
+	sonicDataClient   sdc.Client
 	startTime         time.Time
 	syncTime          time.Time
 }
@@ -248,6 +250,7 @@ func (c *Client) Run(stream gnmipb.GNMI_SubscribeServer) (err error) {
 		return grpc.Errorf(codes.NotFound, "%v", err)
 	}
 
+	c.sonicDataClient = dc
 	defer dc.Close()
 
 	switch mode {
@@ -301,8 +304,10 @@ func (c *Client) Close() {
 		if c.q.Disposed() {
 			return
 		}
-		if c.subscribe.Mode != gnmipb.SubscriptionList_ONCE {
-			c.q.Dispose()
+		if c.subscribe != nil {
+			if c.subscribe.Mode != gnmipb.SubscriptionList_ONCE {
+				c.q.Dispose()
+			}
 		}
 	}
 }
@@ -427,6 +432,7 @@ func (c *Client) Info() (result *spb.GnmiSubscriptionClientInfo) {
 		SyncResponseTime:    timestamppb.New(time.Time{}),
 		CurrentQueueDepth:   0,
 		MaxQueueDepth:       0,
+		TickLatencyInfo:     []*spb.TickLatencyInfo{},
 	}
 	if c == nil || c.addr == nil {
 		return
@@ -484,6 +490,17 @@ func (c *Client) Info() (result *spb.GnmiSubscriptionClientInfo) {
 			}
 		}
 	}
+	if c.sonicDataClient != nil {
+		tickerLatencyMap := c.sonicDataClient.TickLatencyInfo()
+		for interval, stats := range tickerLatencyMap {
+			result.TickLatencyInfo = append(result.TickLatencyInfo, &spb.TickLatencyInfo{
+				Interval:    uint64(interval),
+				MinLatency:  durationpb.New(stats.Min),
+				MaxLatency:  durationpb.New(stats.Max),
+				MeanLatency: durationpb.New(stats.Mean),
+			})
+		}
+	}
 	return
 }
 
@@ -494,7 +511,7 @@ func (c *Client) printSensitiveStatusUpdates(resp *gnmipb.SubscribeResponse) {
 	notif := resp.GetUpdate()
 	if notif == nil {
 		if sync := resp.GetSyncResponse(); sync == true {
-			log.V(lvl.INFO).Infof("SyncResponse for %v", c.addr.String())
+			log.V(lvl.INFO).Infof("SyncResponse for %s", c.String())
 		}
 		return
 	}
@@ -510,14 +527,14 @@ func (c *Client) printSensitiveStatusUpdates(resp *gnmipb.SubscribeResponse) {
 		for _, elem := range elems {
 			switch elem.GetName() {
 			case "oper-status":
-				log.V(lvl.WARNING).Infof("interface/state/oper-status update: key=%v value()=%v client=%v",
-					pelem[1].Key["name"], update.Val.GetStringVal(), c.addr.String())
+				log.V(lvl.WARNING).Infof("interface/state/oper-status update: key=%v value()=%v client=%s",
+					pelem[1].Key["name"], update.Val.GetStringVal(), c.String())
 			case "hardware-port":
-				log.V(lvl.WARNING).Infof("interface/state/hardware-port update: key=%v value()=%v client=%v",
-					pelem[1].Key["name"], update.Val.GetStringVal(), c.addr.String())
+				log.V(lvl.WARNING).Infof("interface/state/hardware-port update: key=%v value()=%v client=%s",
+					pelem[1].Key["name"], update.Val.GetStringVal(), c.String())
 			case "id":
-				log.V(lvl.WARNING).Infof("interface/state/id update: key=%v value()=%v client=%v",
-					pelem[1].Key["name"], update.Val.GetUintVal(), c.addr.String())
+				log.V(lvl.WARNING).Infof("interface/state/id update: key=%v value()=%v client=%s",
+					pelem[1].Key["name"], update.Val.GetUintVal(), c.String())
 			}
 		}
 	}

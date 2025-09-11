@@ -1,0 +1,18 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "usb",
+    srcs = ["usb.go"],
+    importpath = "github.com/sonic-net/sonic-gnmi/crypta_client/pkg/transport/usb",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_google_gousb//:gousb",
+        "@com_github_pkg_errors//:errors",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":usb",
+    visibility = ["//visibility:public"],
+)

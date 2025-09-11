@@ -21,7 +21,7 @@
         },
         "Ethernet1/1/5": {
             "index": "1",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/1/6": {
             "index": "1",
@@ -56,7 +56,7 @@
         },
         "Ethernet1/2/5": {
             "index": "2",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/2/6": {
             "index": "2",
@@ -91,7 +91,7 @@
         },
         "Ethernet1/3/5": {
             "index": "3",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/3/6": {
             "index": "3",
@@ -126,7 +126,7 @@
         },
         "Ethernet1/4/5": {
             "index": "4",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/4/6": {
             "index": "4",
@@ -161,7 +161,7 @@
         },
         "Ethernet1/5/5": {
             "index": "5",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/5/6": {
             "index": "5",
@@ -196,7 +196,7 @@
         },
         "Ethernet1/6/5": {
             "index": "6",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/6/6": {
             "index": "6",
@@ -231,7 +231,7 @@
         },
         "Ethernet1/7/5": {
             "index": "7",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/7/6": {
             "index": "7",
@@ -266,7 +266,7 @@
         },
         "Ethernet1/8/5": {
             "index": "8",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/8/6": {
             "index": "8",
@@ -301,7 +301,7 @@
         },
         "Ethernet1/9/5": {
             "index": "9",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/9/6": {
             "index": "9",
@@ -336,7 +336,7 @@
         },
         "Ethernet1/10/5": {
             "index": "10",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/10/6": {
             "index": "10",
@@ -371,7 +371,7 @@
         },
         "Ethernet1/11/5": {
             "index": "11",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/11/6": {
             "index": "11",
@@ -406,7 +406,7 @@
         },
         "Ethernet1/12/5": {
             "index": "12",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/12/6": {
             "index": "12",
@@ -441,7 +441,7 @@
         },
         "Ethernet1/13/5": {
             "index": "13",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/13/6": {
             "index": "13",
@@ -476,7 +476,7 @@
         },
         "Ethernet1/14/5": {
             "index": "14",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/14/6": {
             "index": "14",
@@ -511,7 +511,7 @@
         },
         "Ethernet1/15/5": {
             "index": "15",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/15/6": {
             "index": "15",
@@ -546,7 +546,7 @@
         },
         "Ethernet1/16/5": {
             "index": "16",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/16/6": {
             "index": "16",
@@ -581,7 +581,7 @@
         },
         "Ethernet1/17/5": {
             "index": "17",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/17/6": {
             "index": "17",
@@ -616,7 +616,7 @@
         },
         "Ethernet1/18/5": {
             "index": "18",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/18/6": {
             "index": "18",
@@ -651,7 +651,7 @@
         },
         "Ethernet1/19/5": {
             "index": "19",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/19/6": {
             "index": "19",
@@ -686,7 +686,7 @@
         },
         "Ethernet1/20/5": {
             "index": "20",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/20/6": {
             "index": "20",
@@ -721,7 +721,7 @@
         },
         "Ethernet1/21/5": {
             "index": "21",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/21/6": {
             "index": "21",
@@ -756,7 +756,7 @@
         },
         "Ethernet1/22/5": {
             "index": "22",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/22/6": {
             "index": "22",
@@ -791,7 +791,7 @@
         },
         "Ethernet1/23/5": {
             "index": "23",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/23/6": {
             "index": "23",
@@ -826,7 +826,7 @@
         },
         "Ethernet1/24/5": {
             "index": "24",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/24/6": {
             "index": "24",
@@ -861,7 +861,7 @@
         },
         "Ethernet1/25/5": {
             "index": "25",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/25/6": {
             "index": "25",
@@ -896,7 +896,7 @@
         },
         "Ethernet1/26/5": {
             "index": "26",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/26/6": {
             "index": "26",
@@ -931,7 +931,7 @@
         },
         "Ethernet1/27/5": {
             "index": "27",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/27/6": {
             "index": "27",
@@ -966,7 +966,7 @@
         },
         "Ethernet1/28/5": {
             "index": "28",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/28/6": {
             "index": "28",
@@ -1001,7 +1001,7 @@
         },
         "Ethernet1/29/5": {
             "index": "29",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/29/6": {
             "index": "29",
@@ -1036,7 +1036,7 @@
         },
         "Ethernet1/30/5": {
             "index": "30",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/30/6": {
             "index": "30",
@@ -1071,7 +1071,7 @@
         },
         "Ethernet1/31/5": {
             "index": "31",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/31/6": {
             "index": "31",
@@ -1106,7 +1106,7 @@
         },
         "Ethernet1/32/5": {
             "index": "32",
-            "breakout_modes": "1x400G[200G,100G,50G,25G,10G], 2x25G"
+            "breakout_modes": "1x400G[200G,100G,50G,40G,25G,10G], 2x25G"
         },
         "Ethernet1/32/6": {
             "index": "32",

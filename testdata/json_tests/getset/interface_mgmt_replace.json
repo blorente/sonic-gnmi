@@ -1,0 +1,71 @@
+{
+  "title": "replace_mgmt_port_preserves_existing_fields",
+  "operations":[
+    {
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/",
+      "target": "OC_YANG",
+      "attributeData": "{\"openconfig-interfaces:interfaces\": {\"interface\": [{\"name\": \"bond0\",\"config\": {\"name\": \"bond0\", \"type\": \"iana-if-type:ieee8023adLag\"}}]}}"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/interfaces/interface[name=bond0]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-interfaces:interface"
+      ],
+      "properties": {
+        "openconfig-interfaces:interface": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "cpu", "management", "name", "type"
+                ],
+                "properties": {
+                  "cpu": {
+                    "type": "boolean",
+                    "enum": [false]
+                  },
+                  "management": {
+                    "type": "boolean",
+                    "enum": [true]
+                  },
+                  "name": {
+                    "type": "string",
+                    "enum": ["bond0"]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["iana-if-type:ieee8023adLag"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "subOpers": [
+        {
+          "title": "Confirm preexiting field wasn't lost",
+          "oper": "dbHGetValidate",
+          "db": "CONFIG_DB",
+          "value": {
+            "MGMT_PORT|bond0" : {
+              "bond-miimon": "100"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

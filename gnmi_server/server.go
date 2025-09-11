@@ -18,13 +18,14 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Azure/sonic-mgmt-common/cvl/custom_validation"
-	"github.com/Azure/sonic-mgmt-common/translib"
-	"github.com/Azure/sonic-mgmt-common/translib/db"
 	lvl "github.com/sonic-net/sonic-gnmi/gnmi_server/log"
 	"github.com/sonic-net/sonic-gnmi/metric_recorder"
 	"github.com/sonic-net/sonic-gnmi/pathz_authorizer"
 	sdcfg "github.com/sonic-net/sonic-gnmi/sonic_db_config"
+
+	"github.com/Azure/sonic-mgmt-common/cvl/custom_validation"
+	"github.com/Azure/sonic-mgmt-common/translib"
+	"github.com/Azure/sonic-mgmt-common/translib/db"
 
 	log "github.com/golang/glog"
 	"github.com/golang/protobuf/proto"
@@ -107,11 +108,12 @@ func resetDbusCaller() {
 // via Subscribe or Get will receive a stream of updates based on the requested
 // path. Set request is processed by server too.
 type Server struct {
-	s             *grpc.Server
-	lis           net.Listener
-	config        *Config
-	cMu           sync.Mutex
-	clients       map[string]*Client
+	s                  *grpc.Server
+	lis                net.Listener
+	config             *Config
+	cMu                sync.Mutex
+	clients            map[string]*Client
+	doPortCycleDisable bool
 	// SaveStartupConfig points to a function that is called to save changes of
 	// configuration to a file. By default it points to an empty function -
 	// the configuration is not saved to a file.
@@ -122,14 +124,15 @@ type Server struct {
 	ReqFromMaster func(req *gnmipb.SetRequest, masterEID *uint128) error
 	masterEID     uint128
 
-  // Everything below is not in the upstream
+	// Everything below is not in the upstream
 	certProviders []certprovider.Provider
 	// gNOI Servers
 	debugServer *GNOIDebugServer
 	ldsServer   *GNOILdsServer
+	ocsServer   *GNOIOcsServer
 	osServer    *OSServer
 	fileServer  *GNOIFileServer
-	hlthServer  *GNOIHealthzServer
+	hlthServer *GNOIHealthzServer
 	// gNSI Servers
 	authzWatcher *authz.FileWatcherInterceptor
 	recorder     *metric_recorder.SecurityMetricRecorder
@@ -137,6 +140,8 @@ type Server struct {
 	gnsiCertz    *GNSICertzServer
 	gnsiCredz    *GNSICredentialzServer
 	gnsiPathz    *GNSIPathzServer
+	// Linkqual Helper
+	lqHelper common_utils.LinkQualificationHelperInterface
 	// NSF/ISSU Helper
 	WarmRestartHelper common_utils.WarmRestartHelperInterface
 	// Healthz Debug Data Handler
@@ -249,8 +254,10 @@ func (*loggerBuilder) ParseLoggerConfig(config json.RawMessage) (audit.LoggerCon
 	return nil, nil
 }
 
-var AuthLock sync.Mutex
-var maMu sync.Mutex
+var (
+	AuthLock sync.Mutex
+	maMu     sync.Mutex
+)
 
 func (i AuthTypes) String() string {
 	if i["none"] {
@@ -562,6 +569,8 @@ func NewServer(config *Config) (*Server, error) {
 	gnoi_debug_pb.RegisterDebugServer(srv.s, srv.debugServer)
 	srv.ldsServer = NewGNOILdsServer(srv)
 	gnoi_ocs_pb.RegisterLdsServer(srv.s, srv.ldsServer)
+	srv.ocsServer = NewGNOIOcsServer(srv)
+	gnoi_ocs_pb.RegisterOcsServer(srv.s, srv.ocsServer)
 	srv.hlthServer = NewGNOIHealthzServer(srv)
 	gnoi_healthz.RegisterHealthzServer(srv.s, srv.hlthServer)
 	gnoi_qual_pb.RegisterPacketLinkQualServer(srv.s, srv)
@@ -582,6 +591,7 @@ func NewServer(config *Config) (*Server, error) {
 		srv.fileServer = NewGNOIFileServer(srv)
 		gnoi_file_pb.RegisterFileServer(srv.s, srv.fileServer)
 	}
+
 	if srv.config.EnableTranslibWrite {
 		spb_gnoi.RegisterSonicServiceServer(srv.s, srv)
 	}
@@ -632,6 +642,25 @@ func NewServer(config *Config) (*Server, error) {
 			go srv.WarmRestartHelper.WaitForReconciliation()
 		}
 	}
+	// Set up LinkQualificationHelper.
+	srv.lqHelper, err = common_utils.NewLinkQualificationHelper()
+	if err != nil || srv.lqHelper == nil {
+		return nil, fmt.Errorf("failed to create LinkQualificationHelper: %v", err)
+	}
+	// Init doPortCycleDisable
+	stateDbClient, err := common_utils.NewStateDBClient()
+	if err != nil {
+		return nil, status.Errorf(codes.Aborted, "Failed to start a new StateDB client with error %w.", err)
+	}
+	defer db.CloseRedisClient(stateDbClient)
+
+	cfgDbClient, err := common_utils.NewConfigDBClient()
+	if err != nil {
+		return nil, status.Errorf(codes.Aborted, "Failed to start a new ConfigDB client with error %w.", err)
+	}
+	defer db.CloseRedisClient(cfgDbClient)
+
+	srv.doPortCycleDisable = common_utils.IsPortCyclerRunning(stateDbClient, cfgDbClient)
 	log.V(1).Infof("Created Server on %s, read-only: %t", srv.Address(), !srv.config.EnableTranslibWrite)
 	return srv, nil
 }
@@ -816,7 +845,11 @@ func (srv *Server) CloseExistingClientsOnFreeze() error {
 	for _, client := range srv.clients {
 		// Wait until all child go routines have exited to delete the client.
 		client.w.Wait()
-		log.V(lvl.INFO).Infof("NSF Freeze Mode: closed %v Subscription with %v", client.subscribe.Mode, client.String())
+		if client.subscribe != nil {
+			log.V(lvl.INFO).Infof("NSF Freeze Mode: closed %v Subscription with %v", client.subscribe.Mode, client.String())
+		} else {
+			log.V(lvl.INFO).Infof("NSF Freeze Mode: closed <unknown> Subscription with %v", client.String())
+		}
 		delete(srv.clients, client.String())
 	}
 
@@ -828,7 +861,7 @@ func authenticate(config *Config, ctx context.Context) (context.Context, error) 
 	success := false
 	rc, ctx := common_utils.GetContext(ctx)
 	if !config.UserAuth.Any() {
-		//No Auth enabled
+		// No Auth enabled
 		rc.Auth.AuthEnabled = false
 		return ctx, nil
 	}
@@ -853,7 +886,7 @@ func authenticate(config *Config, ctx context.Context) (context.Context, error) 
 		}
 	}
 
-	//Allow for future authentication mechanisms here...
+	// Allow for future authentication mechanisms here...
 
 	if !success {
 		return ctx, status.Error(codes.Unauthenticated, "Unauthenticated")
@@ -881,16 +914,11 @@ func (s *Server) Subscribe(stream gnmipb.GNMI_SubscribeServer) error {
 	pr, ok := peer.FromContext(ctx)
 	if !ok {
 		return grpc.Errorf(codes.InvalidArgument, "failed to get peer from ctx")
-		//return fmt.Errorf("failed to get peer from ctx")
+		// return fmt.Errorf("failed to get peer from ctx")
 	}
 	if pr.Addr == net.Addr(nil) {
 		return grpc.Errorf(codes.InvalidArgument, "failed to get peer address")
 	}
-
-	log.V(lvl.INFO).Infof("Entering Subscribe RPC with client: %v ", pr.Addr)
-	defer func() {
-		log.V(lvl.INFO).Infof("Exiting Subscribe RPC after %v with client: %v ", time.Since(start), pr.Addr)
-	}()
 
 	/* TODO: authorize the user
 	msg, ok := credentials.AuthorizeUser(ctx)
@@ -905,6 +933,11 @@ func (s *Server) Subscribe(stream gnmipb.GNMI_SubscribeServer) error {
 		pathzProcessor = nil
 	}
 	c := NewClient(pr.Addr, pathzProcessor, s.recorder, s.ConnectionManager)
+
+	log.V(lvl.INFO).Infof("Entering Subscribe RPC with client: %s ", c.String())
+	defer func() {
+		log.V(lvl.INFO).Infof("Exiting Subscribe RPC after %v with client: %s ", time.Since(start), c.String())
+	}()
 
 	c.setLogLevel(s.config.LogLevel)
 	c.setEnableTranslation(s.config.EnableTranslation)
@@ -1299,12 +1332,18 @@ func (s *Server) Set(ctx context.Context, req *gnmipb.SetRequest) (*gnmipb.SetRe
 
 	// Prior to making any changes, signal that port cycling should cease so that
 	// it does not overwrite any of our changes.
-	rClient := db.RedisClient(db.ConfigDB)
+	rClient, rClientErr := common_utils.NewConfigDBClient()
+	if rClientErr != nil {
+		return nil, status.Errorf(codes.Aborted, "Failed to start a new ConfigDB client with error %v. Cannot disable Port-Cycling.", rClientErr)
+	}
 	defer db.CloseRedisClient(rClient)
 
-	if disablePortCyclingErr := disablePortCycling(rClient); disablePortCyclingErr != nil {
-		recordFailedSet(rClient)
-		return nil, status.Errorf(codes.Aborted, "Failed to disable Port-Cycling with error %w.", disablePortCyclingErr)
+	if s.doPortCycleDisable {
+		if err = common_utils.DisablePortCycler(rClient); err != nil {
+			recordFailedSet(rClient)
+			return nil, status.Errorf(codes.Aborted, "Failed to disable Port-Cycling with error %w.", err)
+		}
+		s.doPortCycleDisable = false
 	}
 
 	var results []*gnmipb.UpdateResult
@@ -1442,13 +1481,6 @@ func (s *Server) Set(ctx context.Context, req *gnmipb.SetRequest) (*gnmipb.SetRe
 	return resp, nil
 }
 
-func disablePortCycling(rc *redis.Client) error {
-	if rc == nil {
-		return errors.New("Redis Client is unexpectedly nil.")
-	}
-	return rc.HSet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local", "enable", "false").Err()
-}
-
 func recordSuccessfulSet(rc *redis.Client) {
 	if rc == nil {
 		return
@@ -1456,6 +1488,7 @@ func recordSuccessfulSet(rc *redis.Client) {
 	successfulSets += 1
 	rc.HSet(context.Background(), "UMF_STATS|local", "successful-sets", strconv.Itoa(successfulSets))
 }
+
 func recordFailedSet(rc *redis.Client) {
 	if rc == nil {
 		return
@@ -1518,17 +1551,21 @@ func (s *Server) Capabilities(ctx context.Context, req *gnmipb.CapabilityRequest
 	ext.Ext = &gnmi_extpb.Extension_RegisteredExt{
 		RegisteredExt: &gnmi_extpb.RegisteredExtension{
 			Id:  spb.SUPPORTED_VERSIONS_EXT,
-			Msg: sup_msg}}
+			Msg: sup_msg,
+		},
+	}
 	exts := []*gnmi_extpb.Extension{&ext}
 
-	return &gnmipb.CapabilityResponse{SupportedModels: suppModels,
+	return &gnmipb.CapabilityResponse{
+		SupportedModels:    suppModels,
 		SupportedEncodings: supportedEncodings,
 		GNMIVersion:        "0.7.0",
-		Extension:          exts}, nil
+		Extension:          exts,
+	}, nil
 }
 
 func (s *Server) ChangeLogLevel(stopRequest, stoppedResponse chan bool) {
-	//The WaitGroup is used to ensure that the goroutine is running before leaving this function.
+	// The WaitGroup is used to ensure that the goroutine is running before leaving this function.
 	var wg sync.WaitGroup
 	wg.Add(1)
 	go func() {
@@ -1705,6 +1742,9 @@ func (srv *Server) Cleanup() {
 	}
 	if srv.WarmRestartHelper != nil {
 		srv.WarmRestartHelper.Close()
+	}
+	if srv.lqHelper != nil {
+		srv.lqHelper.Close()
 	}
 	if srv.debugHandler != nil {
 		srv.debugHandler.Close()

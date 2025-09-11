@@ -195,6 +195,136 @@
             }
           }
         }
+      },
+      {
+        "operation": "update",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/config/",
+        "target": "OC_YANG",
+        "attributeData": "{\"config\": {\"google-pins-interfaces:port-direction\":\"FABRIC_DOWNLINK\"}}",
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_TABLE:Ethernet1/1/1" : {
+                "port_direction": "fabric_downlink"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:interface"
+        ],
+        "properties": {
+          "openconfig-interfaces:interface": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "state", "config"
+              ],
+              "properties": {
+                "state": {
+                  "type": "object",
+                  "required": [
+                    "google-pins-interfaces:port-direction"
+                  ],
+                  "properties": {
+                    "google-pins-interfaces:port-direction": {
+                      "type": "string",
+                      "enum": ["FABRIC_DOWNLINK"]
+                    }
+                  }
+                },
+                "config": {
+                  "type": "object",
+                  "required": [
+                    "google-pins-interfaces:port-direction"
+                  ],
+                  "properties": {
+                    "google-pins-interfaces:port-direction": {
+                      "type": "string",
+                      "enum": ["FABRIC_DOWNLINK"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "operation": "update",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]/config/",
+        "target": "OC_YANG",
+        "attributeData": "{\"config\": {\"google-pins-interfaces:port-direction\":\"FABRIC_UPLINK\"}}",
+        "subOpers": [
+          {
+            "oper": "dbHSet",
+            "db": "APPL_STATE_DB",
+            "value": {
+              "PORT_TABLE:Ethernet1/1/1" : {
+                "port_direction": "fabric_uplink"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "operation": "get",
+        "returnCode": 0,
+        "xpath": "openconfig/interfaces/interface[name=Ethernet1/1/1]",
+        "target": "OC_YANG",
+        "type": "object",
+        "required": [
+          "openconfig-interfaces:interface"
+        ],
+        "properties": {
+          "openconfig-interfaces:interface": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "state", "config"
+              ],
+              "properties": {
+                "state": {
+                  "type": "object",
+                  "required": [
+                    "google-pins-interfaces:port-direction"
+                  ],
+                  "properties": {
+                    "google-pins-interfaces:port-direction": {
+                      "type": "string",
+                      "enum": ["FABRIC_UPLINK"]
+                    }
+                  }
+                },
+                "config": {
+                  "type": "object",
+                  "required": [
+                    "google-pins-interfaces:port-direction"
+                  ],
+                  "properties": {
+                    "google-pins-interfaces:port-direction": {
+                      "type": "string",
+                      "enum": ["FABRIC_UPLINK"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     ]
   }

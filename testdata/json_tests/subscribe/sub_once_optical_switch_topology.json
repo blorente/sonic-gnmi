@@ -21,7 +21,7 @@
           },
           "total-port-count": {
             "type": "integer",
-            "enum": [100]
+            "enum": [640]
           },
           "total-optical-module-count": {
             "type": "integer",
@@ -29,19 +29,19 @@
           },
           "ingress-port-count": {
             "type": "integer",
-            "enum": [100]
+            "enum": [320]
           },
           "egress-port-count": {
             "type": "integer",
-            "enum": [100]
+            "enum": [320]
           },
           "ingress-start-index": {
             "type": "integer",
-            "enum": [1]
+            "enum": [1001]
           },
           "egress-start-index": {
             "type": "integer",
-            "enum": [10000]
+            "enum": [2001]
           },
           "inter-module-connection-support": {
             "type": "boolean",

@@ -33,7 +33,7 @@ fi
 set -e
 set -o pipefail
 
-${BAZELISK} run --config=remote --collect_code_coverage --verbose_failures //gnmi_server:gnmi_server_test_image \
+${BAZELISK} run --config=remote --collect_code_coverage --verbose_failures //gnmi_server:gnmi_server_test_image --linkopt=-lusb-1.0 \
 && docker run  --cap-add=NET_ADMIN --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
                --env TEST_PATTERN="${TEST_PATTERN}" \
                --env LVL=${LVL} \

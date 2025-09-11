@@ -28,7 +28,7 @@
                   "pcie": {
                     "type": "object",
                     "required": [
-                      "correctable-errors", "fatal-errors", "non-fatal-errors"
+                      "correctable-errors", "fatal-errors", "non-fatal-errors", "google-pins-platform:pins-link-speed", "google-pins-platform:pins-link-width"
                     ],
                     "properties": {
                       "correctable-errors": {
@@ -234,6 +234,14 @@
                             "enum": ["43"]
                           }
                         }
+                      },
+                      "pins-link-speed": {
+                        "type": "string",
+                        "enum": ["5"]
+                      },
+                      "pins-link-width": {
+                        "type": "integer",
+                        "enum": [2]
                       }
                     }
                   }
@@ -294,6 +302,42 @@
           "type": "string",
           "enum": [
             "15"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=01:00.0]/state/pcie/pins-link-speed",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-platform:pins-link-speed"
+      ],
+      "properties": {
+        "openconfig-platform:pins-link-speed": {
+          "type": "string",
+          "enum": [
+            "5"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=01:00.0]/state/pcie/pins-link-width",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-platform:pins-link-width"
+      ],
+      "properties": {
+        "openconfig-platform:pins-link-width": {
+          "type": "integer",
+          "enum": [
+            2
           ]
         }
       }

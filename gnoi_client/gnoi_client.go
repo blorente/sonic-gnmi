@@ -1,29 +1,42 @@
 package main
 
 import (
-	"google.golang.org/grpc"
-	gnoi_file_pb "github.com/openconfig/gnoi/file"
-	gnoi_system_pb "github.com/openconfig/gnoi/system"
-	spb "github.com/sonic-net/sonic-gnmi/proto/sonic_gnoi"
-	spb_jwt "github.com/sonic-net/sonic-gnmi/proto/sonic_gnoi/jwt"
 	"context"
+	"encoding/json"
+	"flag"
+	"fmt"
 	"os"
 	"os/signal"
-	"fmt"
-	"flag"
-	"google.golang.org/grpc/metadata"
+
 	"github.com/google/gnxi/utils/credentials"
-	"encoding/json"
+	bbpb "github.com/sonic-net/sonic-gnmi/proto/gnoi/blackbox"
+	burnin_pb "github.com/sonic-net/sonic-gnmi/proto/gnoi/burnin"
+	ocs_pb "github.com/sonic-net/sonic-gnmi/proto/gnoi/ocs"
+	qual_pb "github.com/sonic-net/sonic-gnmi/proto/gnoi/qualification"
+	dpb "github.com/openconfig/gnoi/diag"
+	healthz_pb "github.com/openconfig/gnoi/healthz"
+	factory_reset_pb "github.com/openconfig/gnoi/factory_reset"
+	file_pb "github.com/openconfig/gnoi/file"
+	system_pb "github.com/openconfig/gnoi/system"
+	spb "github.com/sonic-net/sonic-gnmi/proto/sonic_gnoi"
+	spb_jwt "github.com/sonic-net/sonic-gnmi/proto/sonic_gnoi/jwt"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/metadata"
 )
 
 var (
-	module = flag.String("module", "System", "gNOI Module")
-	rpc = flag.String("rpc", "Time", "rpc call in specified module to call")
-	target = flag.String("target", "localhost:8080", "Address:port of gNOI Server")
-	args = flag.String("jsonin", "", "RPC Arguments in json format")
-	jwtToken = flag.String("jwt_token", "", "JWT Token if required")
+	module     = flag.String("module", "System", "gNOI Module")
+	rpc        = flag.String("rpc", "Time", "rpc call in specified module to call")
+	target     = flag.String("target", "localhost:9339", "Address:port of gNOI Server")
+	jsonArgs   = flag.String("jsonin", "", "RPC Arguments in json format")
+	protoArgs  = flag.String("protoin", "", "RPC arguments in proto format")
+	intf       = flag.String("intf", "", "Interface name (ex. EthernetX)")
+	xcvr       = flag.String("xcvr", "", "Xcvr name (ex. EthernetX)")
+	nsf        = flag.String("nsf", "", "NSF Debug Data")
+	jwtToken   = flag.String("jwt_token", "", "JWT Token if required")
 	targetName = flag.String("target_name", "hostname.com", "The target name use to verify the hostname returned by TLS handshake")
 )
+
 func setUserCreds(ctx context.Context) context.Context {
 	if len(*jwtToken) > 0 {
 		ctx = metadata.AppendToOutgoingContext(ctx, "access_token", *jwtToken)
@@ -34,21 +47,95 @@ func main() {
 	flag.Parse()
 	opts := credentials.ClientCredentials(*targetName)
 
-    ctx, cancel := context.WithCancel(context.Background())
-    go func() {
-            c := make(chan os.Signal, 1)
-            signal.Notify(c, os.Interrupt)
-            <-c
-            cancel()
-    }()
+	ctx, cancel := context.WithCancel(context.Background())
+	go func() {
+		c := make(chan os.Signal, 1)
+		signal.Notify(c, os.Interrupt)
+		<-c
+		cancel()
+	}()
 	conn, err := grpc.Dial(*target, opts...)
 	if err != nil {
 		panic(err.Error())
 	}
 
 	switch *module {
+	case "BlackBox":
+		bc := bbpb.NewBlackBoxTestClient(conn)
+		switch *rpc {
+		case "SetTransceiverState":
+			setTransceiverState(bc, ctx)
+		case "SetHardwareLinkState":
+			setHardwareLinkState(bc, ctx)
+		case "SetAlarm":
+			setAlarm(bc, ctx)
+		default:
+			panic("Invalid RPC Name")
+		}
+	case "Burnin":
+		bc := burnin_pb.NewBurninClient(conn)
+		switch *rpc {
+		case "StartBurnin":
+			startBurnin(bc, ctx)
+		case "StopBurnin":
+			stopBurnin(bc, ctx)
+		case "GetBurninResult":
+			getBurninResult(bc, ctx)
+		default:
+			panic("Invalid RPC Name")
+		}
+	case "Diag":
+		dc := dpb.NewDiagClient(conn)
+		switch *rpc {
+		case "StartBERT":
+			startBert(dc, ctx)
+		case "StopBERT":
+			stopBert(dc, ctx)
+		case "GetBERTResult":
+			getBertResult(dc, ctx)
+		default:
+			panic("Invalid RPC Name")
+		}
+	case "Healthz":
+		hc := healthz_pb.NewHealthzClient(conn)
+		switch *rpc {
+		case "Get":
+			getHealth(hc, ctx)
+		default:
+			panic("Invalid RPC Name")
+		}
+	case "Lds":
+		lc := ocs_pb.NewLdsClient(conn)
+		switch *rpc {
+		case "LdsCommand":
+			ldsCommand(lc, ctx)
+		default:
+			panic("Invalid RPC Name")
+		}
+	case "Ocs":
+		oc := ocs_pb.NewOcsClient(conn)
+		switch *rpc {
+		case "SetConnections":
+			setConnections(oc, ctx)
+		case "GetConnections":
+			getConnections(oc, ctx)
+		default:
+			panic("Invalid RPC Name")
+		}
+	case "Qual":
+		qc := qual_pb.NewPacketLinkQualClient(conn)
+		switch *rpc {
+		case "StartPktQual":
+			startPktQual(qc, ctx)
+		case "StopPktQual":
+			stopPktQual(qc, ctx)
+		case "GetPktQualResult":
+			getPktQualResult(qc, ctx)
+		default:
+			panic("Invalid RPC Name")
+		}
 	case "System":
-		sc := gnoi_system_pb.NewSystemClient(conn)
+		sc := system_pb.NewSystemClient(conn)
 		switch *rpc {
 		case "Time":
 			systemTime(sc, ctx)
@@ -63,8 +150,16 @@ func main() {
 		default:
 			panic("Invalid RPC Name")
 		}
+	case "FactoryReset":
+		frc := factory_reset_pb.NewFactoryResetClient(conn)
+		switch *rpc {
+		case "Start":
+			startFactoryReset(frc, ctx)
+		default:
+			panic("Invalid RPC Name")
+		}
 	case "File":
-		fc := gnoi_file_pb.NewFileClient(conn)
+		fc := file_pb.NewFileClient(conn)
 		switch *rpc {
 		case "Stat":
 			fileStat(fc, ctx)
@@ -106,85 +201,29 @@ func main() {
 
 }
 
-func systemTime(sc gnoi_system_pb.SystemClient, ctx context.Context) {
-	fmt.Println("System Time")
-	ctx = setUserCreds(ctx)
-	resp,err := sc.Time(ctx, new(gnoi_system_pb.TimeRequest))
-	if err != nil {
-		panic(err.Error())
-	}
-	respstr, err := json.Marshal(resp)
-	if err != nil {
-		panic(err.Error())
-	}
-	fmt.Println(string(respstr))
-}
-
-func killProcess(sc gnoi_system_pb.SystemClient, ctx context.Context) {
+func killProcess(sc system_pb.SystemClient, ctx context.Context) {
 	fmt.Println("Kill Process with optional restart")
 	ctx = setUserCreds(ctx)
-	req := &gnoi_system_pb.KillProcessRequest {}
-	err := json.Unmarshal([]byte(*args), req)
+	req := &system_pb.KillProcessRequest{}
+	err := json.Unmarshal([]byte(*jsonArgs), req)
 	if err != nil {
 		panic(err.Error())
 	}
-	_,err = sc.KillProcess(ctx, req)
+	_, err = sc.KillProcess(ctx, req)
 	if err != nil {
 		panic(err.Error())
 	}
 }
 
-func fileStat(fc gnoi_file_pb.FileClient, ctx context.Context) {
+func fileStat(fc file_pb.FileClient, ctx context.Context) {
 	fmt.Println("File Stat")
 	ctx = setUserCreds(ctx)
-	req := &gnoi_file_pb.StatRequest {}
-	err := json.Unmarshal([]byte(*args), req)
+	req := &file_pb.StatRequest{}
+	err := json.Unmarshal([]byte(*jsonArgs), req)
 	if err != nil {
 		panic(err.Error())
 	}
-	resp,err := fc.Stat(ctx, req)
-	if err != nil {
-		panic(err.Error())
-	}
-	respstr, err := json.Marshal(resp)
-	if err != nil {
-		panic(err.Error())
-	}
-	fmt.Println(string(respstr))
-}
-
-func systemReboot(sc gnoi_system_pb.SystemClient, ctx context.Context) {
-	fmt.Println("System Reboot")
-	ctx = setUserCreds(ctx)
-	req := &gnoi_system_pb.RebootRequest {}
-	json.Unmarshal([]byte(*args), req)
-	_,err := sc.Reboot(ctx, req)
-	if err != nil {
-		panic(err.Error())
-	}
-}
-
-func systemCancelReboot(sc gnoi_system_pb.SystemClient, ctx context.Context) {
-	fmt.Println("System CancelReboot")
-	ctx = setUserCreds(ctx)
-	req := &gnoi_system_pb.CancelRebootRequest {}
-	json.Unmarshal([]byte(*args), req)
-	resp,err := sc.CancelReboot(ctx, req)
-	if err != nil {
-		panic(err.Error())
-	}
-	respstr, err := json.Marshal(resp)
-	if err != nil {
-		panic(err.Error())
-	}
-	fmt.Println(string(respstr))
-}
-
-func systemRebootStatus(sc gnoi_system_pb.SystemClient, ctx context.Context) {
-	fmt.Println("System RebootStatus")
-	ctx = setUserCreds(ctx)
-	req := &gnoi_system_pb.RebootStatusRequest {}
-	resp,err := sc.RebootStatus(ctx, req)
+	resp, err := fc.Stat(ctx, req)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -198,15 +237,13 @@ func systemRebootStatus(sc gnoi_system_pb.SystemClient, ctx context.Context) {
 func sonicShowTechSupport(sc spb.SonicServiceClient, ctx context.Context) {
 	fmt.Println("Sonic ShowTechsupport")
 	ctx = setUserCreds(ctx)
-	req := &spb.TechsupportRequest {
-		Input: &spb.TechsupportRequest_Input{
-
-		},
+	req := &spb.TechsupportRequest{
+		Input: &spb.TechsupportRequest_Input{},
 	}
 
-	json.Unmarshal([]byte(*args), req)
+	json.Unmarshal([]byte(*jsonArgs), req)
 
-	resp,err := sc.ShowTechsupport(ctx, req)
+	resp, err := sc.ShowTechsupport(ctx, req)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -223,9 +260,9 @@ func copyConfig(sc spb.SonicServiceClient, ctx context.Context) {
 	req := &spb.CopyConfigRequest{
 		Input: &spb.CopyConfigRequest_Input{},
 	}
-	json.Unmarshal([]byte(*args), req)
+	json.Unmarshal([]byte(*jsonArgs), req)
 
-	resp,err := sc.CopyConfig(ctx, req)
+	resp, err := sc.CopyConfig(ctx, req)
 
 	if err != nil {
 		panic(err.Error())
@@ -242,9 +279,9 @@ func imageInstall(sc spb.SonicServiceClient, ctx context.Context) {
 	req := &spb.ImageInstallRequest{
 		Input: &spb.ImageInstallRequest_Input{},
 	}
-	json.Unmarshal([]byte(*args), req)
+	json.Unmarshal([]byte(*jsonArgs), req)
 
-	resp,err := sc.ImageInstall(ctx, req)
+	resp, err := sc.ImageInstall(ctx, req)
 
 	if err != nil {
 		panic(err.Error())
@@ -261,9 +298,9 @@ func imageRemove(sc spb.SonicServiceClient, ctx context.Context) {
 	req := &spb.ImageRemoveRequest{
 		Input: &spb.ImageRemoveRequest_Input{},
 	}
-	json.Unmarshal([]byte(*args), req)
+	json.Unmarshal([]byte(*jsonArgs), req)
 
-	resp,err := sc.ImageRemove(ctx, req)
+	resp, err := sc.ImageRemove(ctx, req)
 
 	if err != nil {
 		panic(err.Error())
@@ -281,9 +318,9 @@ func imageDefault(sc spb.SonicServiceClient, ctx context.Context) {
 	req := &spb.ImageDefaultRequest{
 		Input: &spb.ImageDefaultRequest_Input{},
 	}
-	json.Unmarshal([]byte(*args), req)
+	json.Unmarshal([]byte(*jsonArgs), req)
 
-	resp,err := sc.ImageDefault(ctx, req)
+	resp, err := sc.ImageDefault(ctx, req)
 
 	if err != nil {
 		panic(err.Error())
@@ -298,11 +335,11 @@ func imageDefault(sc spb.SonicServiceClient, ctx context.Context) {
 func authenticate(sc spb_jwt.SonicJwtServiceClient, ctx context.Context) {
 	fmt.Println("Sonic Authenticate")
 	ctx = setUserCreds(ctx)
-	req := &spb_jwt.AuthenticateRequest {}
+	req := &spb_jwt.AuthenticateRequest{}
 
-	json.Unmarshal([]byte(*args), req)
+	json.Unmarshal([]byte(*jsonArgs), req)
 
-	resp,err := sc.Authenticate(ctx, req)
+	resp, err := sc.Authenticate(ctx, req)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -316,11 +353,11 @@ func authenticate(sc spb_jwt.SonicJwtServiceClient, ctx context.Context) {
 func refresh(sc spb_jwt.SonicJwtServiceClient, ctx context.Context) {
 	fmt.Println("Sonic Refresh")
 	ctx = setUserCreds(ctx)
-	req := &spb_jwt.RefreshRequest {}
+	req := &spb_jwt.RefreshRequest{}
 
-	json.Unmarshal([]byte(*args), req)
+	json.Unmarshal([]byte(*jsonArgs), req)
 
-	resp,err := sc.Refresh(ctx, req)
+	resp, err := sc.Refresh(ctx, req)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -332,21 +369,21 @@ func refresh(sc spb_jwt.SonicJwtServiceClient, ctx context.Context) {
 }
 
 func clearNeighbors(sc spb.SonicServiceClient, ctx context.Context) {
-    fmt.Println("Sonic ClearNeighbors")
-    ctx = setUserCreds(ctx)
-    req := &spb.ClearNeighborsRequest{
-        Input: &spb.ClearNeighborsRequest_Input{},
-    }
-    json.Unmarshal([]byte(*args), req)
+	fmt.Println("Sonic ClearNeighbors")
+	ctx = setUserCreds(ctx)
+	req := &spb.ClearNeighborsRequest{
+		Input: &spb.ClearNeighborsRequest_Input{},
+	}
+	json.Unmarshal([]byte(*jsonArgs), req)
 
-    resp,err := sc.ClearNeighbors(ctx, req)
+	resp, err := sc.ClearNeighbors(ctx, req)
 
-    if err != nil {
-        panic(err.Error())
-    }
-    respstr, err := json.Marshal(resp)
-    if err != nil {
-        panic(err.Error())
-    }
-    fmt.Println(string(respstr))
+	if err != nil {
+		panic(err.Error())
+	}
+	respstr, err := json.Marshal(resp)
+	if err != nil {
+		panic(err.Error())
+	}
+	fmt.Println(string(respstr))
 }

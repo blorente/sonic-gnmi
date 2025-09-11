@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"slices"
 	"strings"
 	"sync"
 
@@ -641,7 +640,9 @@ func (ot *ocTranslator) TranslGetRequest(req *gnmipb.GetRequest) (bool, Translat
 	if !needFixPath {
 		if prefixFixed {
 			ctx.prefixType = ptOCPath
-			log.V(lvl.DEBUG).Infof("Translated GetRequest(prefix): %.1000s", marshalProtoMessage(req, false /*packed=*/))
+			if log.V(lvl.DEBUG) {
+				log.Infof("Translated GetRequest(prefix): %.1000s", marshalProtoMessage(req, false /*packed=*/))
+			}
 		}
 		return prefixFixed, TranslatorCtx(ctx)
 	}
@@ -649,7 +650,9 @@ func (ot *ocTranslator) TranslGetRequest(req *gnmipb.GetRequest) (bool, Translat
 	if prefixFixed && (req.GetPath() == nil || len(req.GetPath()) == 0) {
 		ctx.fullOrigin = true
 		fillAllOCPaths(&req.Path)
-		log.V(lvl.DEBUG).Infof("Translated GetRequest(full origin): %.1000s", marshalProtoMessage(req, false /*packed=*/))
+		if log.V(lvl.DEBUG) {
+			log.Infof("Translated GetRequest(full origin): %.1000s", marshalProtoMessage(req, false /*packed=*/))
+		}
 		return true, TranslatorCtx(ctx)
 	}
 
@@ -662,7 +665,9 @@ func (ot *ocTranslator) TranslGetRequest(req *gnmipb.GetRequest) (bool, Translat
 	}
 
 	if translated {
-		log.V(lvl.DEBUG).Infof("Translated GetRequest(path): %.1000s", marshalProtoMessage(req, false /*packed=*/))
+		if log.V(lvl.DEBUG) {
+			log.Infof("Translated GetRequest(path): %.1000s", marshalProtoMessage(req, false /*packed=*/))
+		}
 	}
 
 	return translated, TranslatorCtx(ctx)
@@ -672,7 +677,9 @@ func (ot *ocTranslator) TranslGetRequest(req *gnmipb.GetRequest) (bool, Translat
 func (ot *ocTranslator) TranslGetResponse(resp *gnmipb.GetResponse, ctx TranslatorCtx) {
 	ocCtx := ctx.(*ocTranslCtx)
 
-	log.V(lvl.DEBUG).Infof("Translating GetResponse: %.1000s", marshalProtoMessage(resp, false /*packed=*/))
+	if log.V(lvl.DEBUG) {
+		log.Infof("Translating GetResponse: %.1000s", marshalProtoMessage(resp, false /*packed=*/))
+	}
 
 	if resp.GetNotification() == nil {
 		log.V(lvl.DEBUG).Infoln("No notifications.")
@@ -685,12 +692,16 @@ func (ot *ocTranslator) TranslGetResponse(resp *gnmipb.GetResponse, ctx Translat
 
 	encoding := ocCtx.encoding
 	if !ocCtx.fullOrigin {
-		log.V(lvl.DEBUG).Infof("Translated GetResponse: %.1000s", marshalProtoMessage(resp, false /*packed=*/))
+		if log.V(lvl.DEBUG) {
+			log.Infof("Translated GetResponse: %.1000s", marshalProtoMessage(resp, false /*packed=*/))
+		}
 		return
 	}
 
 	if encoding != gnmipb.Encoding_JSON && encoding != gnmipb.Encoding_JSON_IETF {
-		log.V(lvl.DEBUG).Infof("Translated GetResponse: notifications not combined, only Json encodings are supported, encoding=%v %.1000s.", encoding, marshalProtoMessage(resp, false /*packed=*/))
+		if log.V(lvl.DEBUG) {
+			log.Infof("Translated GetResponse: notifications not combined, only Json encodings are supported, encoding=%v %.1000s.", encoding, marshalProtoMessage(resp, false /*packed=*/))
+		}
 		return
 	}
 
@@ -699,7 +710,9 @@ func (ot *ocTranslator) TranslGetResponse(resp *gnmipb.GetResponse, ctx Translat
 	}
 
 	resp.Notification = resp.Notification[:1]
-	log.V(lvl.DEBUG).Infof("Translated GetResponse (full origin): %.1000s", marshalProtoMessage(resp, false /*packed=*/))
+	if log.V(lvl.DEBUG) {
+		log.Infof("Translated GetResponse (full origin): %.1000s", marshalProtoMessage(resp, false /*packed=*/))
+	}
 	return
 }
 
@@ -716,7 +729,9 @@ func (ot *ocTranslator) TranslSetRequest(req *gnmipb.SetRequest) (bool, Translat
 
 	if !needFixPath {
 		if prefixFixed {
-			log.V(lvl.DEBUG).Infof("Translated SetRequest(prefix): %.1000s", marshalProtoMessage(req, false /*packed=*/))
+			if log.V(lvl.DEBUG) {
+				log.Infof("Translated SetRequest(prefix): %.1000s", marshalProtoMessage(req, false /*packed=*/))
+			}
 		}
 		return prefixFixed, ctx
 	}
@@ -784,7 +799,9 @@ func (ot *ocTranslator) TranslSetRequest(req *gnmipb.SetRequest) (bool, Translat
 	}
 
 	if translated {
-		log.V(lvl.DEBUG).Infof("Translated SetRequest: %.1000s", marshalProtoMessage(req, false /*packed=*/))
+		if log.V(lvl.DEBUG) {
+			log.Infof("Translated SetRequest: %.1000s", marshalProtoMessage(req, false /*packed=*/))
+		}
 	} else {
 		req.Prefix = ctx.origPrefix
 	}
@@ -796,11 +813,15 @@ func (ot *ocTranslator) TranslSetRequest(req *gnmipb.SetRequest) (bool, Translat
 func (ot *ocTranslator) TranslSetResponse(resp *gnmipb.SetResponse, ctx TranslatorCtx) {
 	ocCtx := ctx.(*ocTranslCtx)
 
-	log.V(lvl.DEBUG).Infof("Translated SetResponse: %.1000s", marshalProtoMessage(resp, false /*packed=*/))
+	if log.V(lvl.DEBUG) {
+		log.Infof("Translating SetResponse: %.1000s", marshalProtoMessage(resp, false /*packed=*/))
+	}
 
 	hasPrefix, hasPath := umfToOCPrefix(resp.GetPrefix(), ocCtx)
 	if hasPath {
-		log.V(lvl.DEBUG).Infof("Translated SetResponse(prefix): %.1000s", marshalProtoMessage(resp, false /*packed=*/))
+		if log.V(lvl.DEBUG) {
+			log.Infof("Translated SetResponse(prefix): %.1000s", marshalProtoMessage(resp, false /*packed=*/))
+		}
 		return
 	}
 
@@ -855,7 +876,9 @@ func (ot *ocTranslator) TranslSetResponse(resp *gnmipb.SetResponse, ctx Translat
 	}
 	resp.Response = translResps
 
-	log.V(lvl.DEBUG).Infof("Translated SetResponse: %.1000s", marshalProtoMessage(resp, false /*packed=*/))
+	if log.V(lvl.DEBUG) {
+		log.Infof("Translated SetResponse: %.1000s", marshalProtoMessage(resp, false /*packed=*/))
+	}
 }
 
 // Translates SubscribeRequest from openconfig format to UMF format.
@@ -865,19 +888,20 @@ func (ot *ocTranslator) TranslSubscribeRequest(req *gnmipb.SubscribeRequest) (bo
 		return false, nil
 	}
 
-	log.V(lvl.DEBUG).Infof("Translating SubscribeRequest: %.1000s", marshalProtoMessage(req, false /*packed=*/))
+	if log.V(lvl.DEBUG) {
+		log.Infof("Translating SubscribeRequest: %.1000s", marshalProtoMessage(req, false /*packed=*/))
+	}
 	prefix := sublist.GetPrefix()
 	ctx := newOCTranslCtx()
 	ctx.origPrefix, _ = proto.Clone(prefix).(*gnmipb.Path)
 
 	prefixFixed, needFixPath := ocToUMFPrefix(prefix, ctx)
 
-	// TODO(b/354040122): Remove workaround when all modules are supported.
-	temporaryRemoveUnsupportedPaths(req)
-
 	if !needFixPath {
 		if prefixFixed {
-			log.V(lvl.DEBUG).Infof("Translated SubscribeRequest(prefix): %.1000s", marshalProtoMessage(req, false /*packed=*/))
+			if log.V(lvl.DEBUG) {
+				log.Infof("Translated SubscribeRequest(prefix): %.1000s", marshalProtoMessage(req, false /*packed=*/))
+			}
 		}
 		return prefixFixed, ctx
 	}
@@ -906,7 +930,9 @@ func (ot *ocTranslator) TranslSubscribeRequest(req *gnmipb.SubscribeRequest) (bo
 			translSubs = append(translSubs, mSub)
 		}
 		sublist.Subscription = translSubs
-		log.V(lvl.DEBUG).Infof("Translated SubscribeRequest(full origin): %.1000s", marshalProtoMessage(req, false /*packed=*/))
+		if log.V(lvl.DEBUG) {
+			log.Infof("Translated SubscribeRequest(full origin): %.1000s", marshalProtoMessage(req, false /*packed=*/))
+		}
 		return true, TranslatorCtx(ctx)
 	}
 
@@ -919,39 +945,11 @@ func (ot *ocTranslator) TranslSubscribeRequest(req *gnmipb.SubscribeRequest) (bo
 	}
 
 	if translated {
-		log.V(lvl.DEBUG).Infof("Translated SubscribeRequest: %.1000s", marshalProtoMessage(req, false /*packed=*/))
+		if log.V(lvl.DEBUG) {
+			log.Infof("Translated SubscribeRequest: %.1000s", marshalProtoMessage(req, false /*packed=*/))
+		}
 	}
 	return translated, ctx
-}
-
-// TODO(b/354040122): Remove workaround when all modules are supported.
-var supportedModules = []string{
-	"openconfig-interfaces:interfaces", "interfaces",
-	"openconfig-platform:components", "components",
-	"openconfig-system:system", "system",
-	"openconfig-optical-switch:optical-switch", "optical-switch",
-	"openconfig-acl:acl", "acl",
-	"openconfig-lacp:lacp", "lacp",
-	"openconfig-qos:qos", "qos",
-	"openconfig-sampling:sampling", "sampling",
-}
-
-func temporaryRemoveUnsupportedPaths(req *gnmipb.SubscribeRequest) {
-	// If the prefix contains a supported path, no further processing is necessary.
-	if req.GetSubscribe().GetPrefix() != nil && req.GetSubscribe().GetPrefix().GetElem() != nil &&
-		len(req.GetSubscribe().GetPrefix().GetElem()) != 0 &&
-		slices.Contains(supportedModules, req.GetSubscribe().GetPrefix().GetElem()[0].GetName()) {
-		return
-	}
-
-	// Remove unsupported paths from the subscription.
-	subs := slices.DeleteFunc(req.GetSubscribe().GetSubscription(), func(sub *gnmipb.Subscription) bool {
-		if sub.GetPath() == nil || sub.GetPath().GetElem() == nil || len(sub.GetPath().GetElem()) == 0 {
-			return false
-		}
-		return !slices.Contains(supportedModules, sub.GetPath().GetElem()[0].GetName())
-	})
-	req.GetSubscribe().Subscription = subs
 }
 
 // Translates SubscribeResponse from UMF format to openconfig format.
@@ -964,7 +962,11 @@ func (ot *ocTranslator) TranslSubscribeResponse(resp *gnmipb.SubscribeResponse, 
 		return
 	}
 
-	log.V(lvl.DEBUG).Infof("Translating SubscribeResponse: %.1000s", marshalProtoMessage(resp, false /*packed=*/))
+	if log.V(lvl.DEBUG) {
+		log.Infof("Translating SubscribeResponse: %.1000s", marshalProtoMessage(resp, false /*packed=*/))
+	}
 	umfToOCNotification(updn, ocCtx)
-	log.V(lvl.DEBUG).Infof("Translated SubscribeResponse: %.1000s", marshalProtoMessage(resp, false /*packed=*/))
+	if log.V(lvl.DEBUG) {
+		log.Infof("Translated SubscribeResponse: %.1000s", marshalProtoMessage(resp, false /*packed=*/))
+	}
 }

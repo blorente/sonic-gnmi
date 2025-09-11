@@ -49,6 +49,9 @@ type Client interface {
 	// Capabilities of the switch
 	Capabilities() []gnmipb.ModelData
 
+	// Map of tick interval to latencies.
+	TickLatencyInfo() map[int]TickLatencyStats
+
 	// Close provides implemenation for explicit cleanup of Client
 	Close() error
 
@@ -361,6 +364,10 @@ func (c *DbClient) Get(w *sync.WaitGroup) ([]*spb.Value, error) {
 	log.V(6).Infof("Getting #%v", values)
 	log.V(4).Infof("Get done, total time taken: %v ms", int64(time.Since(ts)/time.Millisecond))
 	return values, nil
+}
+
+func (c *DbClient) TickLatencyInfo() map[int]TickLatencyStats {
+	return map[int]TickLatencyStats{}
 }
 
 // TODO: Log data related to this session

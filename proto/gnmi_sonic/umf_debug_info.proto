@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
 
 option go_package = "gnmi.sonic";
 
@@ -41,6 +42,19 @@ message GnmiSubscriptionClientInfo {
   uint64 current_queue_depth = 7;
   // The max depth of the RPC queue.
   uint64 max_queue_depth = 8;
+  // The tick latency info for each interval in the subscription.
+  repeated TickLatencyInfo tick_latency_info = 9;
+}
+
+message TickLatencyInfo {
+  // The sample interval that these latencies correspond to.
+  uint64 interval = 1;
+  // The minimum latency for handling a single tick of this interval.
+  google.protobuf.Duration min_latency = 2;
+  // The mean latency for handling a single tick of this interval.
+  google.protobuf.Duration mean_latency = 3;
+  // The max latency for handling a single tick of this interval.
+  google.protobuf.Duration max_latency = 4;
 }
 
 // GnmiRequestTimingInfo contains timestamps for when a Get request

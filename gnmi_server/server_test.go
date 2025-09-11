@@ -11,8 +11,6 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"math"
-	"math/rand"
 	"net"
 	"os"
 	"os/exec"
@@ -21,7 +19,6 @@ import (
 	"reflect"
 	"runtime"
 	"slices"
-	"sort"
 	"strconv"
 	"strings"
 	"sync"
@@ -47,10 +44,10 @@ import (
 	pb "github.com/openconfig/gnmi/proto/gnmi"
 	ext_pb "github.com/openconfig/gnmi/proto/gnmi_ext"
 	"github.com/openconfig/gnmi/value"
+	gnoi_file_pb "github.com/openconfig/gnoi/file"
 	gnoi_system_pb "github.com/openconfig/gnoi/system"
 	"github.com/openconfig/ygot/ygot"
 	"github.com/redis/go-redis/v9"
-	gnoi_file_pb "github.com/openconfig/gnoi/file"
 	"github.com/sonic-net/sonic-gnmi/common_utils"
 	jtest "github.com/sonic-net/sonic-gnmi/jsontest"
 	spb "github.com/sonic-net/sonic-gnmi/proto/gnmi_sonic"
@@ -119,7 +116,7 @@ var sfePaths = []struct {
 }
 
 
-var pictorPaths = []struct {
+var telemetryPaths = []struct {
 	path string
 	mode pb.SubscriptionMode
 }{
@@ -531,6 +528,29 @@ func getConfigDbClient(t *testing.T, namespace string) *redis.Client {
 		t.Fatalf("failed to get addr %v", err)
 	}
 	dbId, err := sdcfg.GetDbId("CONFIG_DB", namespace)
+	if err != nil {
+		t.Fatalf("failed to get db %v", err)
+	}
+	rclient := db.TransactionalRedisClientWithOpts(&redis.Options{
+		Network:     "tcp",
+		Addr:        addr,
+		Password:    "", // no password set
+		DB:          dbId,
+		DialTimeout: 0,
+	})
+	_, err = rclient.Ping(context.Background()).Result()
+	if err != nil {
+		t.Fatalf("failed to connect to redis server %v", err)
+	}
+	return rclient
+}
+
+func getStateDbClient(t *testing.T, namespace string) *redis.Client {
+	addr, err := sdcfg.GetDbTcpAddr("STATE_DB", namespace)
+	if err != nil {
+		t.Fatalf("failed to get addr %v", err)
+	}
+	dbId, err := sdcfg.GetDbId("STATE_DB", namespace)
 	if err != nil {
 		t.Fatalf("failed to get db %v", err)
 	}
@@ -1098,6 +1118,11 @@ func TestGnmiSet(t *testing.T) {
 	go runServer(t, s)
 
 	prepareDbTranslib(t)
+
+	namespace, _ := sdcfg.GetDbDefaultNamespace()
+	stateDb := getStateDbClient(t, namespace)
+	defer stateDb.Close()
+	stateDb.HSet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS_INFO|port_cycler", "status", "exited").Result()
 
 	//t.Log("Start gNMI client")
 	tlsConfig := &tls.Config{InsecureSkipVerify: true}
@@ -3093,7 +3118,7 @@ func TestGNOI(t *testing.T) {
 		if len(resp.Stats) == 0 {
 			t.Fatalf("Expected at least one StatInfo in response")
 		}
-	
+
 		statInfo := resp.Stats[0]
 
 		if statInfo.LastModified != 1609459200000000000 {
@@ -3113,7 +3138,7 @@ func TestGNOI(t *testing.T) {
 	t.Run("FileStatFailure", func(t *testing.T) {
 		mockClient := &ssc.DbusClient{}
 		expectedError := fmt.Errorf("failed to get file stats")
-		
+
 		mock := gomonkey.ApplyMethod(reflect.TypeOf(mockClient), "GetFileStat", func(_ *ssc.DbusClient, path string) (map[string]string, error) {
 			return nil, expectedError
 		})
@@ -3131,10 +3156,10 @@ func TestGNOI(t *testing.T) {
 		if resp != nil {
 			t.Fatalf("Expected nil response but got: %v", resp)
 		}
-	
+
 		if !strings.Contains(err.Error(), expectedError.Error()) {
 			t.Errorf("Expected error to contain '%v' but got '%v'", expectedError, err)
-		}	
+		}
 	})
 
 	type configData struct {
@@ -3990,7 +4015,6 @@ func TestUnaryRPCLimit(t *testing.T) {
 	}
 }
 
-
 func TestWildcardTableNoError(t *testing.T) {
 	s := createServer(t)
 	go runServer(t, s)
@@ -4251,16 +4275,16 @@ func TestConnectionsKeepAlive(t *testing.T) {
 	defer s.Stop()
 
 	tests := []struct {
-		desc    string
-		q       client.Query
-		want    []client.Notification
-		poll    int
+		desc string
+		q    client.Query
+		want []client.Notification
+		poll int
 	}{
 		{
 			desc: "Testing KeepAlive with goroutine count",
 			poll: 3,
 			q: client.Query{
-				Target: "COUNTERS_DB",
+				Target:  "COUNTERS_DB",
 				Type:    client.Poll,
 				Queries: []client.Path{{"COUNTERS", "Ethernet*"}},
 				TLS:     &tls.Config{InsecureSkipVerify: true},
@@ -4271,7 +4295,7 @@ func TestConnectionsKeepAlive(t *testing.T) {
 			},
 		},
 	}
-	for _, tt := range(tests) {
+	for _, tt := range tests {
 		var clients []*cacheclient.CacheClient
 		for i := 0; i < 5; i++ {
 			t.Run(tt.desc, func(t *testing.T) {
@@ -4300,7 +4324,7 @@ func TestConnectionsKeepAlive(t *testing.T) {
 				}
 			})
 		}
-		for _, cacheClient := range(clients) {
+		for _, cacheClient := range clients {
 			cacheClient.Close()
 		}
 	}
@@ -4591,6 +4615,172 @@ func TestOnChangeSubWithDBChange(t *testing.T) {
 	wg.Wait()
 	if changeNo != subRespNo {
 		t.Fatalf("changeNo(%v) != subRespNo(%v)", changeNo, subRespNo)
+	}
+}
+
+func TestMaxSampleIntervalsInSubscription(t *testing.T) {
+	s := createServer(t)
+	go runServer(t, s)
+	defer s.Stop()
+
+	// The server is ready - now a request is needed.
+	tlsConfig := &tls.Config{InsecureSkipVerify: true}
+	opts := []grpc.DialOption{grpc.WithTransportCredentials(credentials.NewTLS(tlsConfig))}
+
+	targetAddr := fmt.Sprintf("127.0.0.1:%d", s.config.Port)
+	conn, err := grpc.Dial(targetAddr, opts...)
+	if err != nil {
+		t.Fatalf("Dialing to %q failed: %v", targetAddr, err)
+	}
+	defer conn.Close()
+	gClient := pb.NewGNMIClient(conn)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	defer cancel()
+
+	// This subscription is valid because it has 3 sample intervals. The max is 3.
+	validSub := &pb.SubscribeRequest{
+		Request: &pb.SubscribeRequest_Subscribe{
+			Subscribe: &pb.SubscriptionList{
+				Prefix:   &pb.Path{Origin: "openconfig", Target: "OC_YANG"},
+				Mode:     pb.SubscriptionList_STREAM,
+				Encoding: pb.Encoding_PROTO,
+				Subscription: []*pb.Subscription{
+					{
+						Path: &pb.Path{
+							Elem: []*pb.PathElem{
+								{Name: "interfaces"},
+							},
+						},
+						Mode:           pb.SubscriptionMode_SAMPLE,
+						SampleInterval: 30000000000, // 30s
+					},
+					{
+						Path: &pb.Path{
+							Elem: []*pb.PathElem{
+								{Name: "qos"},
+							},
+						},
+						Mode:           pb.SubscriptionMode_SAMPLE,
+						SampleInterval: 30000000000, // 30s
+					},
+					{
+						Path: &pb.Path{
+							Elem: []*pb.PathElem{
+								{Name: "sampling"},
+							},
+						},
+						Mode:           pb.SubscriptionMode_SAMPLE,
+						SampleInterval: 10000000000, // 10s
+					},
+					{
+						Path: &pb.Path{
+							Elem: []*pb.PathElem{
+								{Name: "lacp"},
+							},
+						},
+						Mode:           pb.SubscriptionMode_SAMPLE,
+						SampleInterval: 1000000000, // 1s
+					},
+				},
+			},
+		},
+	}
+
+	// This subscription is invalid because it has 4 sample intervals. The max is 3.
+	invalidSub := &pb.SubscribeRequest{
+		Request: &pb.SubscribeRequest_Subscribe{
+			Subscribe: &pb.SubscriptionList{
+				Prefix:   &pb.Path{Origin: "openconfig", Target: "OC_YANG"},
+				Mode:     pb.SubscriptionList_STREAM,
+				Encoding: pb.Encoding_PROTO,
+				Subscription: []*pb.Subscription{
+					{
+						Path: &pb.Path{
+							Elem: []*pb.PathElem{
+								{Name: "interfaces"},
+							},
+						},
+						Mode:           pb.SubscriptionMode_SAMPLE,
+						SampleInterval: 30000000000, // 30s
+					},
+					{
+						Path: &pb.Path{
+							Elem: []*pb.PathElem{
+								{Name: "qos"},
+							},
+						},
+						Mode:           pb.SubscriptionMode_SAMPLE,
+						SampleInterval: 15000000000, // 15s
+					},
+					{
+						Path: &pb.Path{
+							Elem: []*pb.PathElem{
+								{Name: "sampling"},
+							},
+						},
+						Mode:           pb.SubscriptionMode_SAMPLE,
+						SampleInterval: 10000000000, // 10s
+					},
+					{
+						Path: &pb.Path{
+							Elem: []*pb.PathElem{
+								{Name: "lacp"},
+							},
+						},
+						Mode:           pb.SubscriptionMode_SAMPLE,
+						SampleInterval: 1000000000, // 1s
+					},
+				},
+			},
+		},
+	}
+
+	// Send the subscriptions and wait for sync response. The message immediately after the sync response
+	// will be an error if the max sample interval threshold is crossed.
+	sync := false
+	var resp *pb.SubscribeResponse
+	stream, err := gClient.Subscribe(ctx, grpc.EmptyCallOption{})
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+	if err = stream.Send(validSub); err != nil {
+		t.Fatalf("Failed to send subscription: %v", err)
+	}
+	for {
+		resp, err = stream.Recv()
+		if err != nil {
+			t.Fatalf("Received an error on valid subscription: %v", err)
+		}
+		if sync {
+			break
+		}
+		if resp.GetSyncResponse() {
+			sync = true
+		}
+	}
+
+	sync = false
+	stream, err = gClient.Subscribe(ctx, grpc.EmptyCallOption{})
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+	if err = stream.Send(invalidSub); err != nil {
+		t.Fatalf("Failed to send subscription: %v", err)
+	}
+	for {
+		resp, err = stream.Recv()
+		if err != nil {
+			break
+		}
+		if sync {
+			break
+		}
+		if resp.GetSyncResponse() {
+			sync = true
+		}
+	}
+	if err == nil {
+		t.Fatalf("Expected an error on invalidSub, but did not get one!")
 	}
 }
 
@@ -5202,28 +5392,361 @@ func TestSubscriptionDeduplication(t *testing.T) {
 	}
 }
 
-func TestDynamicPortBreakoutWithInProgressWait(t *testing.T) {
+func TestDynamicPortBreakoutWithSkipLane(t *testing.T) {
 	tests := []struct {
-		name            string
-		inProgressDelay time.Duration
-		expectFailure   bool
+		name          string
+		payload       string
+		expectedPorts []struct {
+			name    string
+			laneSet string
+		}
+		expectedSkippedPorts []string
 	}{
 		{
-			name:            "InProgressWaitFail",
-			inProgressDelay: 6 * time.Second,
-			expectFailure:   true,
+			name:    "[-Ethernet1/14/1,-Ethernet1/14/5] 2X200G",
+			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"name\":\"Ethernet1/1/1\"}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/14\"},\"name\":\"1/14\",\"port\":{\"config\":{\"port-id\":14},\"breakout-mode\":{\"groups\":{\"group\":[{\"index\":0,\"config\":{\"index\":0,\"num-breakouts\":2,\"breakout-speed\":\"SPEED_200GB\",\"num-physical-channels\":4}}]}}}}]}}",
+			expectedPorts: []struct {
+				name    string
+				laneSet string
+			}{},
+			expectedSkippedPorts: []string{"Ethernet1/14/1", "Ethernet1/14/5"},
 		},
 		{
-			name:            "InProgressWaitSucceed",
-			inProgressDelay: 3 * time.Second,
-			expectFailure:   false,
+			name:    "[-Ethernet1/14/1,-Ethernet1/14/5,-Ethernet1/14/7] 1X200G+2X100G",
+			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"name\":\"Ethernet1/1/1\"}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/14\"},\"name\":\"1/14\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_200GB\",\"index\":0,\"num-breakouts\":1,\"num-physical-channels\":4},\"index\":0},{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_100GB\",\"index\":1,\"num-breakouts\":2,\"num-physical-channels\":2},\"index\":1}]}}}}]}}",
+			expectedPorts: []struct {
+				name    string
+				laneSet string
+			}{},
+			expectedSkippedPorts: []string{"Ethernet1/14/1", "Ethernet1/14/5", "Ethernet1/14/7"},
+		},
+		{
+			name:    "[-Ethernet1/14/1,-Ethernet1/14/3,-Ethernet1/14/5] 2X100G+1X200G",
+			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"name\":\"Ethernet1/1/1\"}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/14\"},\"name\":\"1/14\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_100GB\",\"index\":0,\"num-breakouts\":2,\"num-physical-channels\":2},\"index\":0},{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_200GB\",\"index\":1,\"num-breakouts\":1,\"num-physical-channels\":4},\"index\":1}]}}}}]}}",
+			expectedPorts: []struct {
+				name    string
+				laneSet string
+			}{},
+			expectedSkippedPorts: []string{"Ethernet1/14/1", "Ethernet1/14/3", "Ethernet1/14/5"},
+		},
+		{
+			name:    "[-Ethernet1/14/1,-Ethernet1/14/3,-Ethernet1/14/5,-Ethernet1/14/7] 4X100G",
+			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"name\":\"Ethernet1/1/1\"}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/14\"},\"name\":\"1/14\",\"port\":{\"config\":{\"port-id\":14},\"breakout-mode\":{\"groups\":{\"group\":[{\"index\":0,\"config\":{\"index\":0,\"num-breakouts\":4,\"breakout-speed\":\"SPEED_100GB\",\"num-physical-channels\":2}}]}}}}]}}",
+			expectedPorts: []struct {
+				name    string
+				laneSet string
+			}{},
+			expectedSkippedPorts: []string{"Ethernet1/14/1", "Ethernet1/14/3", "Ethernet1/14/5", "Ethernet1/14/7"},
+		},
+		{
+			name:    "[Ethernet1/14/1,-Ethernet1/14/5] 2X200G",
+			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/1\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/1\",\"openconfig-p4rt:id\":4,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/1\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_200GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/14\"},\"name\":\"1/14\",\"port\":{\"config\":{\"port-id\":14},\"breakout-mode\":{\"groups\":{\"group\":[{\"index\":0,\"config\":{\"index\":0,\"num-breakouts\":2,\"breakout-speed\":\"SPEED_200GB\",\"num-physical-channels\":4}}]}}}}]}}",
+			expectedPorts: []struct {
+				name    string
+				laneSet string
+			}{
+				{
+					name:    "Ethernet1/14/1",
+					laneSet: "97,98,99,100",
+				},
+			},
+			expectedSkippedPorts: []string{"Ethernet1/14/5"},
+		},
+		{
+			name:    "[Ethernet1/14/1,Ethernet1/14/5,-Ethernet1/14/7] 1X200G+2X100G",
+			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/1\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/1\",\"openconfig-p4rt:id\":4,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/1\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_200GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}},{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/5\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/5\",\"openconfig-p4rt:id\":1028,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/5\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/14\"},\"name\":\"1/14\",\"port\":{\"config\":{\"port-id\":14},\"breakout-mode\":{\"groups\":{\"group\":[{\"index\":0,\"config\":{\"index\":0,\"num-breakouts\":1,\"breakout-speed\":\"SPEED_200GB\",\"num-physical-channels\":4}},{\"index\":1,\"config\":{\"index\":1,\"num-breakouts\":2,\"breakout-speed\":\"SPEED_100GB\",\"num-physical-channels\":2}}]}}}}]}}",
+			expectedPorts: []struct {
+				name    string
+				laneSet string
+			}{
+				{
+					name:    "Ethernet1/14/1",
+					laneSet: "97,98,99,100",
+				},
+				{
+					name:    "Ethernet1/14/5",
+					laneSet: "101,102",
+				},
+			},
+			expectedSkippedPorts: []string{"Ethernet1/14/7"},
+		},
+		{
+			name:    "[Ethernet1/14/1,-Ethernet1/14/3,Ethernet1/14/5] 2X100G+1X200G",
+			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/1\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/1\",\"openconfig-p4rt:id\":4,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/1\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}},{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/5\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/5\",\"openconfig-p4rt:id\":1028,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/5\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_200GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/14\"},\"name\":\"1/14\",\"port\":{\"config\":{\"port-id\":14},\"breakout-mode\":{\"groups\":{\"group\":[{\"index\":0,\"config\":{\"index\":0,\"num-breakouts\":2,\"breakout-speed\":\"SPEED_100GB\",\"num-physical-channels\":2}},{\"index\":1,\"config\":{\"index\":1,\"num-breakouts\":1,\"breakout-speed\":\"SPEED_200GB\",\"num-physical-channels\":4}}]}}}}]}}",
+			expectedPorts: []struct {
+				name    string
+				laneSet string
+			}{
+				{
+					name:    "Ethernet1/14/1",
+					laneSet: "97,98",
+				},
+				{
+					name:    "Ethernet1/14/5",
+					laneSet: "101,102,103,104",
+				},
+			},
+			expectedSkippedPorts: []string{"Ethernet1/14/3"},
+		},
+		{
+			name:    "[Ethernet1/14/1,Ethernet1/14/3,-Ethernet1/14/5,Ethernet1/14/7] 4X100G",
+			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/1\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/1\",\"openconfig-p4rt:id\":4,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/1\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}},{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/3\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/3\",\"openconfig-p4rt:id\":516,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/3\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}},{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/7\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/7\",\"openconfig-p4rt:id\":1540,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/7\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/14\"},\"name\":\"1/14\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_100GB\",\"index\":0,\"num-breakouts\":4,\"num-physical-channels\":2},\"index\":0}]}}}}]}}",
+			expectedPorts: []struct {
+				name    string
+				laneSet string
+			}{
+				{
+					name:    "Ethernet1/14/1",
+					laneSet: "97,98",
+				},
+				{
+					name:    "Ethernet1/14/3",
+					laneSet: "99,100",
+				},
+				{
+					name:    "Ethernet1/14/7",
+					laneSet: "103,104",
+				},
+			},
+			expectedSkippedPorts: []string{"Ethernet1/14/5"},
+		},
+		{
+			name:    "[Ethernet1/14/1,-Ethernet1/14/5,-Ethernet1/14/7] 1X200G+2X100G",
+			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/1\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/1\",\"openconfig-p4rt:id\":4,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/1\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_200GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/14\"},\"name\":\"1/14\",\"port\":{\"config\":{\"port-id\":14},\"breakout-mode\":{\"groups\":{\"group\":[{\"index\":0,\"config\":{\"index\":0,\"num-breakouts\":1,\"breakout-speed\":\"SPEED_200GB\",\"num-physical-channels\":4}},{\"index\":1,\"config\":{\"index\":1,\"num-breakouts\":2,\"breakout-speed\":\"SPEED_100GB\",\"num-physical-channels\":2}}]}}}}]}}",
+			expectedPorts: []struct {
+				name    string
+				laneSet string
+			}{
+				{
+					name:    "Ethernet1/14/1",
+					laneSet: "97,98,99,100",
+				},
+			},
+			expectedSkippedPorts: []string{"Ethernet1/14/5", "Ethernet1/14/7"},
+		},
+		{
+			name:    "[Ethernet1/14/1,-Ethernet1/14/3,-Ethernet1/14/5] 2X100G+1X200G",
+			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/1\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/1\",\"openconfig-p4rt:id\":4,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/1\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/14\"},\"name\":\"1/14\",\"port\":{\"config\":{\"port-id\":14},\"breakout-mode\":{\"groups\":{\"group\":[{\"index\":0,\"config\":{\"index\":0,\"num-breakouts\":2,\"breakout-speed\":\"SPEED_100GB\",\"num-physical-channels\":2}},{\"index\":1,\"config\":{\"index\":1,\"num-breakouts\":1,\"breakout-speed\":\"SPEED_200GB\",\"num-physical-channels\":4}}]}}}}]}}",
+			expectedPorts: []struct {
+				name    string
+				laneSet string
+			}{
+				{
+					name:    "Ethernet1/14/1",
+					laneSet: "97,98",
+				},
+			},
+			expectedSkippedPorts: []string{"Ethernet1/14/3", "Ethernet1/14/5"},
+		},
+		{
+			name:    "[Ethernet1/14/1,-Ethernet1/14/3,-Ethernet1/14/5,Ethernet1/14/7] 4X100G",
+			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/1\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/1\",\"openconfig-p4rt:id\":4,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/1\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}},{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/7\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/7\",\"openconfig-p4rt:id\":1540,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/7\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/14\"},\"name\":\"1/14\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_100GB\",\"index\":0,\"num-breakouts\":4,\"num-physical-channels\":2},\"index\":0}]}}}}]}}",
+			expectedPorts: []struct {
+				name    string
+				laneSet string
+			}{
+				{
+					name:    "Ethernet1/14/1",
+					laneSet: "97,98",
+				},
+				{
+					name:    "Ethernet1/14/7",
+					laneSet: "103,104",
+				},
+			},
+			expectedSkippedPorts: []string{"Ethernet1/14/3", "Ethernet1/14/5"},
+		},
+		{
+			name:    "[Ethernet1/14/1,-Ethernet1/14/3,Ethernet1/14/5,-Ethernet1/14/7] 4X100G",
+			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/1\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/1\",\"openconfig-p4rt:id\":4,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/1\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}},{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/5\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/5\",\"openconfig-p4rt:id\":1028,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/5\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/14\"},\"name\":\"1/14\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_100GB\",\"index\":0,\"num-breakouts\":4,\"num-physical-channels\":2},\"index\":0}]}}}}]}}",
+			expectedPorts: []struct {
+				name    string
+				laneSet string
+			}{
+				{
+					name:    "Ethernet1/14/1",
+					laneSet: "97,98",
+				},
+				{
+					name:    "Ethernet1/14/5",
+					laneSet: "101,102",
+				},
+			},
+			expectedSkippedPorts: []string{"Ethernet1/14/3", "Ethernet1/14/7"},
+		},
+		{
+			name:    "[Ethernet1/14/1,Ethernet1/14/3,Ethernet1/14/5,Ethernet1/14/7] 4X100G",
+			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/1\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/1\",\"openconfig-p4rt:id\":4,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/1\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}},{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/3\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/3\",\"openconfig-p4rt:id\":516,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/3\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}},{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/5\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/5\",\"openconfig-p4rt:id\":1028,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/5\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}},{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/7\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/7\",\"openconfig-p4rt:id\":1540,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/7\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/14\"},\"name\":\"1/14\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_100GB\",\"index\":0,\"num-breakouts\":4,\"num-physical-channels\":2},\"index\":0}]}}}}]}}",
+			expectedPorts: []struct {
+				name    string
+				laneSet string
+			}{
+				{
+					name:    "Ethernet1/14/1",
+					laneSet: "97,98",
+				},
+				{
+					name:    "Ethernet1/14/3",
+					laneSet: "99,100",
+				},
+				{
+					name:    "Ethernet1/14/5",
+					laneSet: "101,102",
+				},
+				{
+					name:    "Ethernet1/14/7",
+					laneSet: "103,104",
+				},
+			},
+			expectedSkippedPorts: []string{},
+		},
+		{
+			name:    "[-Ethernet1/14/1,Ethernet1/14/3,Ethernet1/14/5,Ethernet1/14/7] 4X100G",
+			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/3\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/3\",\"openconfig-p4rt:id\":516,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/3\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}},{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/5\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/5\",\"openconfig-p4rt:id\":1028,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/5\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}},{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/7\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/7\",\"openconfig-p4rt:id\":1540,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/7\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/14\"},\"name\":\"1/14\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_100GB\",\"index\":0,\"num-breakouts\":4,\"num-physical-channels\":2},\"index\":0}]}}}}]}}",
+			expectedPorts: []struct {
+				name    string
+				laneSet string
+			}{
+				{
+					name:    "Ethernet1/14/3",
+					laneSet: "99,100",
+				},
+				{
+					name:    "Ethernet1/14/5",
+					laneSet: "101,102",
+				},
+				{
+					name:    "Ethernet1/14/7",
+					laneSet: "103,104",
+				},
+			},
+			expectedSkippedPorts: []string{"Ethernet1/14/1"},
+		},
+		{
+			name:    "[Ethernet1/14/1,Ethernet1/14/3,Ethernet1/14/5,Ethernet1/14/7] 4X50G",
+			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/1\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/1\",\"openconfig-p4rt:id\":4,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/1\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_50GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}},{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/3\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/3\",\"openconfig-p4rt:id\":516,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/3\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_50GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}},{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/5\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/5\",\"openconfig-p4rt:id\":1028,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/5\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_50GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}},{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/7\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/7\",\"openconfig-p4rt:id\":1540,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/7\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_50GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/14\"},\"name\":\"1/14\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_50GB\",\"index\":0,\"num-breakouts\":4,\"num-physical-channels\":2},\"index\":0}]}}}}]}}",
+			expectedPorts: []struct {
+				name    string
+				laneSet string
+			}{
+				{
+					name:    "Ethernet1/14/1",
+					laneSet: "97,98",
+				},
+				{
+					name:    "Ethernet1/14/3",
+					laneSet: "99,100",
+				},
+				{
+					name:    "Ethernet1/14/5",
+					laneSet: "101,102",
+				},
+				{
+					name:    "Ethernet1/14/7",
+					laneSet: "103,104",
+				},
+			},
+			expectedSkippedPorts: []string{},
+		},
+		{
+			name:    "[Ethernet1/14/1,Ethernet1/14/5,-Ethernet1/14/7] 1X400G+2X200G",
+			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/1\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/1\",\"openconfig-p4rt:id\":4,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/1\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_400GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}},{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/5\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/5\",\"openconfig-p4rt:id\":1028,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/5\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_200GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/14\"},\"name\":\"1/14\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_400GB\",\"index\":0,\"num-breakouts\":1,\"num-physical-channels\":4},\"index\":0},{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_200GB\",\"index\":1,\"num-breakouts\":2,\"num-physical-channels\":2},\"index\":1}]}}}}]}}",
+			expectedPorts: []struct {
+				name    string
+				laneSet string
+			}{
+				{
+					name:    "Ethernet1/14/1",
+					laneSet: "97,98,99,100",
+				},
+				{
+					name:    "Ethernet1/14/5",
+					laneSet: "101,102",
+				},
+			},
+			expectedSkippedPorts: []string{"Ethernet1/14/7"},
+		},
+		{
+			name:    "[Ethernet1/14/1,Ethernet1/14/5,-Ethernet1/14/7] 1X200G+2X50G",
+			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/1\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/1\",\"openconfig-p4rt:id\":4,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/1\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_200GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}},{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/5\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/5\",\"openconfig-p4rt:id\":1028,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/5\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_50GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/14\"},\"name\":\"1/14\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_200GB\",\"index\":0,\"num-breakouts\":1,\"num-physical-channels\":4},\"index\":0},{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_50GB\",\"index\":1,\"num-breakouts\":2,\"num-physical-channels\":2},\"index\":1}]}}}}]}}",
+			expectedPorts: []struct {
+				name    string
+				laneSet string
+			}{
+				{
+					name:    "Ethernet1/14/1",
+					laneSet: "97,98,99,100",
+				},
+				{
+					name:    "Ethernet1/14/5",
+					laneSet: "101,102",
+				},
+			},
+			expectedSkippedPorts: []string{"Ethernet1/14/7"},
+		},
+		{
+			name:    "[-Ethernet1/14/1,Ethernet1/14/3,Ethernet1/14/5] 2X50G+1X200G",
+			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/3\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/3\",\"openconfig-p4rt:id\":4,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/3\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_50GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}},{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/5\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/5\",\"openconfig-p4rt:id\":1028,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/5\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_200GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/14\"},\"name\":\"1/14\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_50GB\",\"index\":0,\"num-breakouts\":2,\"num-physical-channels\":2},\"index\":0},{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_200GB\",\"index\":1,\"num-breakouts\":1,\"num-physical-channels\":4},\"index\":1}]}}}}]}}",
+			expectedPorts: []struct {
+				name    string
+				laneSet string
+			}{
+				{
+					name:    "Ethernet1/14/3",
+					laneSet: "99,100",
+				},
+				{
+					name:    "Ethernet1/14/5",
+					laneSet: "101,102,103,104",
+				},
+			},
+			expectedSkippedPorts: []string{"Ethernet1/14/1"},
+		},
+		{
+			name:    "[Ethernet1/14/1,Ethernet1/14/5,Ethernet1/14/7] 1X400G+2X50G",
+			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/1\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/1\",\"openconfig-p4rt:id\":4,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/1\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_400GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}},{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/5\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/5\",\"openconfig-p4rt:id\":1028,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/5\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_50GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}},{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/7\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/7\",\"openconfig-p4rt:id\":1028,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/7\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_50GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/14\"},\"name\":\"1/14\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_400GB\",\"index\":0,\"num-breakouts\":1,\"num-physical-channels\":4},\"index\":0},{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_50GB\",\"index\":1,\"num-breakouts\":2,\"num-physical-channels\":2},\"index\":1}]}}}}]}}",
+			expectedPorts: []struct {
+				name    string
+				laneSet string
+			}{
+				{
+					name:    "Ethernet1/14/1",
+					laneSet: "97,98,99,100",
+				},
+				{
+					name:    "Ethernet1/14/5",
+					laneSet: "101,102",
+				},
+				{
+					name:    "Ethernet1/14/7",
+					laneSet: "103,104",
+				},
+			},
+			expectedSkippedPorts: []string{},
+		},
+		{
+			name:    "[Ethernet1/14/1,Ethernet1/14/3,Ethernet1/14/5] 2X50G+1X400G",
+			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/1\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/1\",\"openconfig-p4rt:id\":4,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/1\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_50GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}},{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/3\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/3\",\"openconfig-p4rt:id\":1028,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/3\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_50GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}},{\"config\":{\"description\":\"(not a trunk member)\",\"enabled\":true,\"google-pins-interfaces:fully-qualified-interface-name\":\"switch:Ethernet1/14/5\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/14/5\",\"openconfig-p4rt:id\":1028,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/14/5\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_400GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/14\"},\"name\":\"1/14\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_50GB\",\"index\":0,\"num-breakouts\":2,\"num-physical-channels\":2},\"index\":0},{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_400GB\",\"index\":1,\"num-breakouts\":1,\"num-physical-channels\":4},\"index\":1}]}}}}]}}",
+			expectedPorts: []struct {
+				name    string
+				laneSet string
+			}{
+				{
+					name:    "Ethernet1/14/1",
+					laneSet: "97,98",
+				},
+				{
+					name:    "Ethernet1/14/3",
+					laneSet: "99,100",
+				},
+				{
+					name:    "Ethernet1/14/5",
+					laneSet: "101,102,103,104",
+				},
+			},
+			expectedSkippedPorts: []string{},
 		},
 	}
-	// Load DB snapshots
-	prepareDbUtil(t, "APPL_STATE_DB", "", "../testdata/json_tests/appl_state_db.txt")
-	prepareDbUtil(t, "CONFIG_DB", "", "../testdata/json_tests/config_db.txt")
-	prepareDbUtil(t, "STATE_DB", "", "../testdata/json_tests/state_db.txt")
-
 	// Create the server
 	s := createServer(t)
 	s.config.EnableTranslation = true
@@ -5242,8 +5765,37 @@ func TestDynamicPortBreakoutWithInProgressWait(t *testing.T) {
 	}
 	defer conn.Close()
 	gClient := pb.NewGNMIClient(conn)
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
+
+	ns, _ := sdcfg.GetDbDefaultNamespace()
+	cfgDbId, _ := sdcfg.GetDbId("CONFIG_DB", ns)
+	configDB := getRedisClientN(t, cfgDbId, ns)
+	defer db.CloseRedisClient(configDB)
+	appStateDbId, _ := sdcfg.GetDbId("APPL_STATE_DB", ns)
+	applStateDB := getRedisClientN(t, appStateDbId, ns)
+	defer db.CloseRedisClient(applStateDB)
+	stateDbId, _ := sdcfg.GetDbId("STATE_DB", ns)
+	stateDB := getRedisClientN(t, stateDbId, ns)
+	defer db.CloseRedisClient(stateDB)
+
+	// Bootstrap the first test mode
+	initPorts := []string{"Ethernet1/4/1", "Ethernet1/4/5"}
+	for _, existPort := range initPorts {
+		if _, err := applStateDB.HSet(context.Background(), "PORT_STATE:"+existPort, "phase", "pending_delete").Result(); err != nil {
+			t.Fatalf("Failed to set pending delete for PORT_STATE: %v: %v", existPort, err)
+		}
+		if _, err := applStateDB.HSet(context.Background(), "PORT_TABLE:"+existPort, "index", "4").Result(); err != nil {
+			t.Fatalf("Failed to set index for PORT_STATE: %v: %v", existPort, err)
+		}
+		if _, err := applStateDB.HSet(context.Background(), "INTF_TABLE:"+existPort, "unnumbered_enabled", "true").Result(); err != nil {
+			t.Fatalf("Failed to set unnumbered_enabled for PORT_STATE: %v: %v", existPort, err)
+		}
+		// In STATE_DB, add PORT_TABLE
+		if _, err := stateDB.HSet(context.Background(), "PORT_TABLE|"+existPort, "ref_count", "1").Result(); err != nil {
+			t.Fatalf("Failed to set unnumbered_enabled for PORT_STATE: %v: %v", existPort, err)
+		}
+	}
 
 	req := &pb.SetRequest{
 		Replace: []*pb.Update{
@@ -5257,44 +5809,155 @@ func TestDynamicPortBreakoutWithInProgressWait(t *testing.T) {
 					},
 				},
 				Val: &pb.TypedValue{
-					Value: &pb.TypedValue_JsonIetfVal{JsonIetfVal: []byte("{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"name\":\"Ethernet1/1/1\"}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"port-id\":4},\"breakout-mode\":{\"groups\":{\"group\":[{\"index\":0,\"config\":{\"index\":0,\"num-breakouts\":2,\"breakout-speed\":\"SPEED_200GB\",\"num-physical-channels\":4}}]}}}}]}}")},
+					Value: &pb.TypedValue_JsonIetfVal{JsonIetfVal: []byte(tests[0].payload)},
 				},
 			},
 		},
 	}
 
-	applStateDB := db.RedisClient(db.ApplStateDB)
-	stateDB := db.RedisClient(db.StateDB)
+	_, err = gClient.Set(ctx, req)
+	if err != nil {
+		t.Fatalf("SetRequest failed: %v", err)
+	}
 
-	initPorts := []string{"Ethernet1/4/1", "Ethernet1/4/5"}
-	for _, existPort := range initPorts {
-		if _, err := applStateDB.HSet(context.Background(), "PORT_STATE:"+existPort, "phase", "pending_delete").Result(); err != nil {
-			t.Fatalf("Failed to set pending delete for PORT_STATE: %v: %v", existPort, err)
+	for _, removePort := range tests[0].expectedSkippedPorts {
+		// In APPL_STATE_DB, delete PORT_TABLE, INTF_TABLE, and BUFFER_QUEUE_TABLEs
+		if _, err := applStateDB.Del(context.Background(), "PORT_TABLE:"+removePort).Result(); err != nil {
+			t.Fatalf("Failed to delete PORT_TABLE:%v: %v", removePort, err)
+		}
+		if _, err := applStateDB.Del(context.Background(), "INTF_TABLE:"+removePort).Result(); err != nil {
+			t.Fatalf("Failed to delete INTF_TABLE:%v: %v", removePort, err)
+		}
+		for i := 0; i < 8; i++ {
+			qID := strconv.Itoa(i)
+			if _, err := applStateDB.Del(context.Background(), "BUFFER_QUEUE_TABLE:"+removePort+":"+qID).Result(); err != nil {
+				t.Fatalf("Failed to delete BUFFER_QUEUE_TABLE:%v: %v", removePort, err)
+			}
+		}
+		// In STATE_DB, delete PORT_TABLE
+		if _, err := stateDB.Del(context.Background(), "PORT_TABLE|"+removePort).Result(); err != nil {
+			t.Fatalf("Failed to delete PORT_TABLE|%v: %v", removePort, err)
 		}
 	}
 
-	for _, test := range tests {
-		t.Run(test.name, func(t *testing.T) {
-			if _, err := stateDB.HSet(context.Background(), "PORT_BREAKOUT|Ethernet1/4/1", "status", "InProgress").Result(); err != nil {
-				t.Fatalf("Failed to set InProgress for PORT_BREAKOUT|Ethernet1/4/1: %v", err)
-			}
+	var transtionList [][]int
+	for i := 0; i < len(tests)-1; i++ {
+		transtionList = append(transtionList, []int{i, i})
+		transtionList = append(transtionList, []int{i, i + 1})
+	}
 
-			// CVL will wait up to 5 seconds for a port to finish DPB.
-			wg := sync.WaitGroup{}
-			wg.Add(1)
-			go func() {
-				defer wg.Done()
-				time.Sleep(test.inProgressDelay)
-				if _, err := stateDB.HSet(context.Background(), "PORT_BREAKOUT|Ethernet1/4/1", "status", "").Result(); err != nil {
-					t.Errorf("Failed to set InProgress for PORT_BREAKOUT|Ethernet1/4/1: %v", err)
+	transtionList = append(transtionList, []int{len(tests) - 1, len(tests) - 1})
+	for i := 1; i < len(tests); i++ {
+		for j := 0; j < len(tests)-i; j++ {
+			transtionList = append(transtionList, []int{len(tests) - i, j})
+			if len(tests)-i-1 == j {
+				continue
+			}
+			transtionList = append(transtionList, []int{j, len(tests) - i})
+		}
+	}
+
+	for _, transtion := range transtionList {
+		from_status := tests[transtion[0]]
+		to_status := tests[transtion[1]]
+		testName := from_status.name + "-->" + to_status.name
+		t.Run(testName, func(t *testing.T) {
+			// Set pending_delete for the ports existed in test[i].
+			// These ports will undergo the DBP. Skipped port in test[i]
+			// was not created, no need to set pending delete
+			for _, port := range from_status.expectedPorts {
+				if _, err := applStateDB.HSet(context.Background(), "PORT_STATE:"+port.name, "phase", "pending_delete").Result(); err != nil {
+					t.Fatalf("%v - Failed to set pending delete for PORT_STATE: %v: %v", testName, port.name, err)
 				}
-			}()
-
-			_, err = gClient.Set(ctx, req)
-			if (err != nil) != test.expectFailure {
-				t.Fatalf("SetRequest: expectedFailure=%v, got=%v", test.expectFailure, err)
+				// In APPL_STATE_DB, add PORT_TABLE and INTF_TABLE
+				if _, err := applStateDB.HSet(context.Background(), "PORT_TABLE:"+port.name, "index", "4").Result(); err != nil {
+					t.Fatalf("%v - Failed to set index for PORT_TABLE:%v: %v", testName, port.name, err)
+				}
+				if _, err := applStateDB.HSet(context.Background(), "INTF_TABLE:"+port.name, "unnumbered_enabled", "true").Result(); err != nil {
+					t.Fatalf("%v - Failed to set unnumbered_enabled for INTF_TABLE:%v: %v", testName, port.name, err)
+				}
+				// In STATE_DB, add PORT_TABLE
+				if _, err := stateDB.HSet(context.Background(), "PORT_TABLE|"+port.name, "ref_count", "1").Result(); err != nil {
+					t.Fatalf("%v - Failed to set ref_count for PORT_TABLE|%v: %v", testName, port.name, err)
+				}
 			}
-			wg.Wait()
+
+			req := &pb.SetRequest{
+				Replace: []*pb.Update{
+					{
+						Path: &pb.Path{
+							Target: "OC_YANG",
+							Elem: []*pb.PathElem{
+								{
+									Name: "openconfig",
+								},
+							},
+						},
+						Val: &pb.TypedValue{
+							Value: &pb.TypedValue_JsonIetfVal{JsonIetfVal: []byte(to_status.payload)},
+						},
+					},
+				},
+			}
+
+			_, err := gClient.Set(ctx, req)
+			if err != nil {
+				t.Fatalf("SetRequest failed: %v", err)
+			}
+
+			// Verify expected ports exist
+			for _, port := range to_status.expectedPorts {
+				laneField, err := configDB.HGet(context.Background(), "PORT|"+port.name, "lanes").Result()
+				if err != nil {
+					t.Fatalf("%v - Failed to read lanes from PORT|%v in config db.", testName, port.name)
+				}
+				if laneField != port.laneSet {
+					t.Fatalf("%v - Expect PORT %v with %v, got %v", testName, port.name, port.laneSet, laneField)
+				}
+			}
+
+			// Verify skipped ports are missing
+			for _, skipPort := range to_status.expectedSkippedPorts {
+				val, err := configDB.HKeys(context.Background(), "PORT|"+skipPort).Result()
+				if err != nil || len(val) > 0 {
+					t.Fatalf("%v - Expect no PORT table %v in config db. Got: %v with error %v", testName, skipPort, val, err)
+				}
+			}
+			// If ports removed because of breakin or skip, remove it from APPL_STATE_DB and STATE_DB
+			var breakinPorts []string
+			for _, from_port := range from_status.expectedPorts {
+				if !slices.Contains(to_status.expectedSkippedPorts, from_port.name) {
+					var exist bool
+					for _, to_port := range to_status.expectedPorts {
+						if to_port.name == from_port.name {
+							exist = true
+							break
+						}
+					}
+					if !exist {
+						breakinPorts = append(breakinPorts, from_port.name)
+					}
+				}
+			}
+			for _, removePort := range append(breakinPorts, to_status.expectedSkippedPorts...) {
+				// In APPL_STATE_DB, delete PORT_TABLE and INTF_TABLE
+				if _, err := applStateDB.Del(context.Background(), "PORT_TABLE:"+removePort).Result(); err != nil {
+					t.Fatalf("%v - Failed to delete PORT_TABLE:%v: %v", testName, removePort, err)
+				}
+				if _, err := applStateDB.Del(context.Background(), "INTF_TABLE:"+removePort).Result(); err != nil {
+					t.Fatalf("%v - Failed to delete INTF_TABLE:%v: %v", testName, removePort, err)
+				}
+				for i := 0; i < 8; i++ {
+					qID := strconv.Itoa(i)
+					if _, err := applStateDB.Del(context.Background(), "BUFFER_QUEUE_TABLE:"+removePort+":"+qID).Result(); err != nil {
+						t.Fatalf("Failed to delete BUFFER_QUEUE_TABLE:%v: %v", removePort, err)
+					}
+				}
+				// In STATE_DB, delete PORT_TABLE
+				if _, err := stateDB.Del(context.Background(), "PORT_TABLE|"+removePort).Result(); err != nil {
+					t.Fatalf("%v - Failed to delete PORT_TABLE|%v: %v", testName, removePort, err)
+				}
+			}
 		})
 	}
 }
@@ -5881,7 +6544,7 @@ func TestNilClientDbWriters(t *testing.T) {
 		f(nil)
 	}
 
-	if disablePortCyclingErr := disablePortCycling(nil); disablePortCyclingErr == nil {
+	if disablePortCyclingErr := common_utils.DisablePortCycler(nil); disablePortCyclingErr == nil {
 		t.Error("disablePortCycling(nil) did not return an error")
 	}
 }
@@ -6965,679 +7628,6 @@ func TestGnmiRootGetTypes(t *testing.T) {
 	}
 }
 
-func TestOpticalSwitch(t *testing.T) {
-	const clientTimeout = 15 * time.Minute
-	const entryCnt = 300
-	const tbl_cfg = "OCS_XCONNECTS"
-	const tbl_stt = "OCS_XCONNECTS"
-	const key_sep = "|"
-	const key_prefix_cfg = tbl_cfg + key_sep
-	const key_prefix_stt = tbl_stt + key_sep
-
-	s := createServer(t)
-	s.config.EnableTranslation = true
-	go runServer(t, s)
-	defer s.Stop()
-
-	// Clear the DBs so we are starting in a known state
-	ns, _ := sdcfg.GetDbDefaultNamespace()
-	cfgDbId, err := sdcfg.GetDbId("CONFIG_DB", ns)
-	if err != nil {
-		t.Fatalf("failed to get db %v", err)
-	}
-	sttDbId, err := sdcfg.GetDbId("STATE_DB", ns)
-	if err != nil {
-		t.Fatalf("failed to get db %v", err)
-	}
-	for _, dbNum := range [2]int{cfgDbId, sttDbId} {
-		rclient := getRedisClientN(t, dbNum, ns)
-		defer db.CloseRedisClient(rclient)
-		rclient.FlushDB(context.Background())
-	}
-	// Enable key space notifications; TODO use an API rather than redis-cli
-	os.Setenv("PATH", "/usr/bin:/sbin:/bin:/usr/local/bin")
-	cmd := exec.Command("redis-cli", "config", "set", "notify-keyspace-events", "KEA")
-	_, err = cmd.Output()
-	if err != nil {
-		t.Fatal("failed to enable redis keyspace notification ", err)
-	}
-
-	// Connect our client
-	tlsConfig := &tls.Config{InsecureSkipVerify: true}
-	opts := []grpc.DialOption{grpc.WithTransportCredentials(credentials.NewTLS(tlsConfig))}
-	targetAddr := fmt.Sprintf("127.0.0.1:%d", s.config.Port)
-	conn, err := grpc.Dial(targetAddr, opts...)
-	if err != nil {
-		t.Fatalf("Dialing to %q failed: %v", targetAddr, err)
-	}
-	defer conn.Close()
-	gClient := pb.NewGNMIClient(conn)
-	ctx, cancel := context.WithTimeout(context.Background(), clientTimeout)
-	defer cancel()
-
-	// A type and a few helpers to work with the data stored in the yang tree.
-	type EntryFlds struct {
-		PeerSlotNum int
-		PeerPortNum int
-	}
-	type Entry struct {
-		SlotNum   int
-		PortNum   int
-		Config    EntryFlds
-		State     EntryFlds
-		ConfigVal bool
-		StateVal  bool
-	}
-	newRandEntries := func(rng *rand.Rand, cnt int) []Entry {
-		rv := make([]Entry, cnt)
-		// For a two-key list, generate two lists of values, a list for the first
-		// key and a list for the second key.  The cross product of these lists will
-		// then be used to generate our entries.  This ensures that for a given
-		// value of one key there are multiple values for the other, i.e. k1|* and
-		// *|k2 would cover more than one entry.
-		limit := int(math.Sqrt(float64(cnt)))
-		var k1 []int
-		var k2 []int
-		seen := map[int]bool{}
-		for len(k1) < limit {
-			x := rng.Intn(math.MaxInt32-math.MinInt32) + math.MinInt32
-			y := rng.Intn(math.MaxInt32-math.MinInt32) + math.MinInt32
-			if _, inMap := seen[x]; inMap {
-				continue
-			}
-			if _, inMap := seen[y]; inMap {
-				continue
-			}
-			seen[x] = true
-			seen[y] = true
-			k1 = append(k1, x)
-			k2 = append(k2, y)
-		}
-		added := 0
-		for _, x := range k1 {
-			for _, y := range k2 {
-				rv[added] = Entry{
-					SlotNum: x,
-					PortNum: y,
-					Config: EntryFlds{
-						PeerSlotNum: rng.Intn(math.MaxInt32-math.MinInt32) + math.MinInt32,
-						PeerPortNum: rng.Intn(math.MaxInt32-math.MinInt32) + math.MinInt32},
-					State: EntryFlds{
-						PeerSlotNum: rng.Intn(math.MaxInt32-math.MinInt32) + math.MinInt32,
-						PeerPortNum: rng.Intn(math.MaxInt32-math.MinInt32) + math.MinInt32},
-					ConfigVal: true,
-					StateVal:  true,
-				}
-				added++
-			}
-		}
-		// We may be a few entries short of our target number of entries due to the
-		// sqrt value used above.  Just add random keys to reach our target.  This
-		// step also ensures we have some unique key values (i.e. k1|* and *|k2
-		// match a single key).
-		for added < cap(rv) {
-			x := rng.Intn(math.MaxInt32-math.MinInt32) + math.MinInt32
-			y := rng.Intn(math.MaxInt32-math.MinInt32) + math.MinInt32
-			if _, inMap := seen[x]; inMap {
-				continue
-			}
-			if _, inMap := seen[y]; inMap {
-				continue
-			}
-			seen[x] = true
-			seen[y] = true
-			rv[added] = Entry{
-				SlotNum: x,
-				PortNum: y,
-				Config: EntryFlds{
-					PeerSlotNum: rng.Intn(math.MaxInt32-math.MinInt32) + math.MinInt32,
-					PeerPortNum: rng.Intn(math.MaxInt32-math.MinInt32) + math.MinInt32},
-				State: EntryFlds{
-					PeerSlotNum: rng.Intn(math.MaxInt32-math.MinInt32) + math.MinInt32,
-					PeerPortNum: rng.Intn(math.MaxInt32-math.MinInt32) + math.MinInt32},
-				ConfigVal: true,
-				StateVal:  true,
-			}
-			added++
-		}
-		return rv
-	}
-	entryCntrToJSONStr := func(e *Entry, flds *EntryFlds) string {
-		return fmt.Sprintf("{\"slot-number\": %d, \"port-number\": %d, \"peer-slot-number\": %d, \"peer-port-number\": %d}",
-			e.SlotNum, e.PortNum, flds.PeerSlotNum, flds.PeerPortNum)
-	}
-	entryToJSONStr := func(e *Entry, config, state bool) string {
-		rv := fmt.Sprintf("{\"slot-number\": %d, \"port-number\": %d", e.SlotNum, e.PortNum)
-		suffix := "}"
-		if config {
-			rv = rv + ", \"config\": " + entryCntrToJSONStr(e, &e.Config)
-		}
-		if state {
-			rv = rv + ", \"state\": " + entryCntrToJSONStr(e, &e.State)
-		}
-		rv = rv + suffix
-		return rv
-	}
-	entriesToJSONList := func(entries []Entry, config, state bool) string {
-		rv := "["
-		for _, e := range entries {
-			rv = rv + entryToJSONStr(&e, config, state) + ", "
-		}
-		// Cut the trailing comma and space (", ") if it exists
-		if len(rv) > 0 {
-			rv = rv[:len(rv)-2]
-		}
-		rv = rv + "]"
-		return rv
-	}
-	entryEqual := func(a, b *Entry) bool {
-		if a.SlotNum != b.SlotNum || a.PortNum != b.PortNum {
-			return false
-		}
-		checked := false
-		if a.ConfigVal && b.ConfigVal {
-			if a.Config.PeerSlotNum != b.Config.PeerSlotNum || a.Config.PeerPortNum != b.Config.PeerPortNum {
-				return false
-			}
-			checked = true
-		}
-		if a.StateVal && b.StateVal {
-			if a.State.PeerSlotNum != b.State.PeerSlotNum || a.State.PeerPortNum != b.State.PeerPortNum {
-				return false
-			}
-			checked = true
-		}
-		return checked
-	}
-	// Funky "less than" function to align with the json compare used by runTestGet
-	entryListSort := func(eList []Entry) {
-		sort.Slice(eList[:], func(i, j int) bool {
-			var a, b int
-			if eList[i].SlotNum == eList[j].SlotNum {
-				a = eList[i].PortNum
-				b = eList[j].PortNum
-			} else {
-				a = eList[i].SlotNum
-				b = eList[j].SlotNum
-			}
-
-			if a < 0 && b >= 0 {
-				return true
-			} else if a >= 0 && b < 0 {
-				return false
-			}
-			astr := strconv.Itoa(a)
-			bstr := strconv.Itoa(b)
-			if len(astr) == len(bstr) {
-				return astr < bstr
-			}
-			return len(astr) < len(bstr)
-
-		})
-	}
-
-	// Create a dataset to work with.  We use random data but fix the seed for
-	// reproducibility.
-	dsStart := time.Now()
-	rng := rand.New(rand.NewSource(1027)) // Arbitrary seed value
-	valList := newRandEntries(rng, entryCnt)
-
-	// Sort them for ease of use.
-	entryListSort(valList)
-	dsTime := time.Since(dsStart)
-	fmt.Printf("TestOpticalSwitch: Dataset creation: %s\n", dsTime)
-
-	// State side is read-only to gNMI, populate the dataset directly to the DB
-	// with redis APIs.
-	{
-		rclient := getRedisClientN(t, sttDbId, ns)
-		defer db.CloseRedisClient(rclient)
-		for _, v := range valList {
-			key := tbl_stt + key_sep + strconv.Itoa(v.SlotNum) + key_sep + strconv.Itoa(v.PortNum)
-			data := map[string]interface{}{"slot-number": strconv.Itoa(v.SlotNum),
-				"port-number":      strconv.Itoa(v.PortNum),
-				"peer-slot-number": strconv.Itoa(v.State.PeerSlotNum),
-				"peer-port-number": strconv.Itoa(v.State.PeerPortNum)}
-			rclient.HMSet(context.Background(), key, data)
-		}
-	}
-
-	// Perform a bulk set to write the config side
-	{
-		bsStart := time.Now()
-		desc := "Load config"
-		pathTgt := "OC_YANG"
-		pbPath := pathToPb("/openconfig-optical-switch:optical-switch/port-connections")
-		expRetCode := codes.OK
-		cfgItems := "\"port-connection\": " + entriesToJSONList(valList, true, false)
-		setData := fmt.Sprintf("{\"openconfig-optical-switch:port-connections\": { %s }}", cfgItems)
-		op := Replace
-		t.Run(desc, func(t *testing.T) {
-			runTestSet(t, ctx, gClient, pathTgt, pbPath, expRetCode, nil, setData, op)
-		})
-		bsTime := time.Since(bsStart)
-		fmt.Printf("TestOpticalSwitch: Bulk Set: %s\n", bsTime)
-	}
-
-	// Read the databases (config and state) with redis APIs to ensure the
-	// values are present and correct.
-	for _, dbId := range []int{cfgDbId, sttDbId} {
-		isCfg := dbId == cfgDbId
-		isStt := !isCfg
-		rclient := getRedisClientN(t, dbId, ns)
-		defer db.CloseRedisClient(rclient)
-		key_prefix := tbl_cfg
-		if dbId == sttDbId {
-			key_prefix = tbl_stt
-		}
-		keys, err := rclient.Keys(context.Background(), key_prefix+"*").Result()
-		if err != nil {
-			t.Fatalf("Key verification error %v", err)
-		}
-		if len(keys) != len(valList) {
-			t.Fatalf("Unexpected number of keys in db %d, got %d, expected %d", dbId, len(keys), len(valList))
-		}
-		seen := make([]Entry, len(keys))
-		for i, k := range keys {
-			ks := strings.Split(k, key_sep)
-			if len(ks) != 3 {
-				t.Fatalf("Unexpected database key \"%s\", expected \"%s%s<num>%s<num>\"", k, key_prefix, key_sep, key_sep)
-			}
-			// Key must have the expected format
-			if ks[0] != key_prefix {
-				t.Fatalf("Unexpected database key \"%s\", expected prefix \"%s\"", k, key_prefix)
-			}
-			entMap, err := rclient.HGetAll(context.Background(), k).Result()
-			if err != nil {
-				t.Fatalf("Error (%v) reading key \"%s\" via redis API", err, k)
-			}
-			f1, _ := strconv.Atoi(ks[1])
-			f2, _ := strconv.Atoi(ks[2])
-			f3, _ := strconv.Atoi(entMap["peer-slot-number"])
-			f4, _ := strconv.Atoi(entMap["peer-port-number"])
-			seen[i] = Entry{SlotNum: f1, PortNum: f2}
-			if isCfg {
-				seen[i].ConfigVal = true
-				seen[i].Config = EntryFlds{
-					PeerSlotNum: f3,
-					PeerPortNum: f4}
-			} else {
-				seen[i].StateVal = true
-				seen[i].State = EntryFlds{
-					PeerSlotNum: f3,
-					PeerPortNum: f4}
-			}
-		}
-		entryListSort(seen)
-		for i := 0; i < len(seen); i++ {
-			if !entryEqual(&seen[i], &valList[i]) {
-				for j := 0; j < len(seen); j++ {
-					fmt.Printf("Gotten[%d] %s\n", j, entryToJSONStr(&seen[j], isCfg, isStt))
-				}
-				for j := 0; j < len(valList); j++ {
-					fmt.Printf("Expect[%d] %s\n", j, entryToJSONStr(&valList[j], isCfg, isStt))
-				}
-				t.Fatalf("Mismatched entry in db=%d at index %d, found %s, expected %s", dbId, i, entryToJSONStr(&seen[i], isCfg, isStt), entryToJSONStr(&valList[i], isCfg, isStt))
-			}
-		}
-	}
-
-	// Read with individual Get operations and verify the data
-	for _, tgt := range []string{"config", "state"} {
-		gStart := time.Now()
-		isCfg := tgt == "config"
-		for _, val := range valList {
-			k1 := val.SlotNum
-			k2 := val.PortNum
-			desc := fmt.Sprintf("Get port-connection[slot-number=%d][port-number=%d]/%s", k1, k2, tgt)
-			pathTgt := "OC_YANG"
-			pbPath := pathToPb(fmt.Sprintf("/openconfig-optical-switch:optical-switch/port-connections/port-connection[slot-number=%d][port-number=%d]/%s", k1, k2, tgt))
-			expRetCode := codes.OK
-			expResp := "{\"openconfig-optical-switch:" + tgt + "\": "
-			if isCfg {
-				expResp = expResp + entryCntrToJSONStr(&val, &val.Config) + "}"
-			} else {
-				expResp = expResp + entryCntrToJSONStr(&val, &val.State) + "}"
-			}
-			t.Run(desc, func(t *testing.T) {
-				runTestGet(t, ctx, gClient, pathTgt, pbPath, pb.GetRequest_ALL, pb.Encoding_JSON_IETF, expRetCode, expResp, true)
-			})
-		}
-		gTime := time.Since(gStart)
-		fmt.Printf("TestOpticalSwitch: Get %s individual: %s\n", tgt, gTime)
-	}
-
-	// Perform individual writes to the config side
-	{
-		bsStart := time.Now()
-		desc := "Load config"
-		pathTgt := "OC_YANG"
-		pbPath := pathToPb("/openconfig-optical-switch:optical-switch/port-connections")
-		expRetCode := codes.OK
-		op := Update
-		for _, val := range valList {
-			cfgItems := "\"port-connection\": " + entriesToJSONList([]Entry{val}, true, false)
-			setData := fmt.Sprintf("{\"openconfig-optical-switch:port-connections\": { %s }}", cfgItems)
-			t.Run(desc, func(t *testing.T) {
-				runTestSet(t, ctx, gClient, pathTgt, pbPath, expRetCode, nil, setData, op)
-			})
-		}
-
-		bsTime := time.Since(bsStart)
-		fmt.Printf("TestOpticalSwitch: Individual Set: %s\n", bsTime)
-	}
-
-	// Read with a Bulk get of state, config, and all
-	for _, tgt := range []pb.GetRequest_DataType{pb.GetRequest_CONFIG, pb.GetRequest_STATE, pb.GetRequest_OPERATIONAL, pb.GetRequest_ALL} {
-		gStart := time.Now()
-		desc := fmt.Sprintf("Bulk Get %s", tgt)
-		pathTgt := "OC_YANG"
-		pbPath := pathToPb("/openconfig-optical-switch:optical-switch/port-connections/")
-		expRetCode := codes.OK
-		var expEnts string
-		if tgt == pb.GetRequest_CONFIG {
-			expEnts = entriesToJSONList(valList, true, false)
-		} else if tgt == pb.GetRequest_STATE {
-			expEnts = entriesToJSONList(valList, false, true)
-		} else if tgt == pb.GetRequest_OPERATIONAL {
-			expEnts = ""
-		} else {
-			expEnts = entriesToJSONList(valList, true, true)
-		}
-		expResp := fmt.Sprintf("{\"openconfig-optical-switch:port-connections\": { \"port-connection\": %s } }", expEnts)
-		if expEnts == "" {
-			expResp = "{}"
-		}
-
-		t.Run(desc, func(t *testing.T) {
-			runTestGet(t, ctx, gClient, pathTgt, pbPath, tgt, pb.Encoding_JSON_IETF, expRetCode, expResp, true)
-		})
-		gTime := time.Since(gStart)
-		fmt.Printf("TestOpticalSwitch: Get %s all: %s\n", tgt, gTime)
-	}
-
-	// Read with a Subscribe-Once subscription.  Include filtered reads as well.
-	f1Fltr := valList[0].SlotNum
-	f2Fltr := valList[0].PortNum
-	var f1FltrData []Entry
-	var f2FltrData []Entry
-	for _, e := range valList {
-		if e.SlotNum == f1Fltr {
-			f1FltrData = append(f1FltrData, e)
-		}
-		if e.PortNum == f2Fltr {
-			f2FltrData = append(f2FltrData, e)
-		}
-	}
-	fldName2VarName := map[string]string{"slot-number": "SlotNum",
-		"port-number":      "PortNum",
-		"peer-slot-number": "PeerSlotNum",
-		"peer-port-number": "PeerPortNum"}
-	type subscriptionKey struct {
-		pathIndex    int
-		extractIndex int
-		keyName      string
-		keyVal       string
-	}
-	subs := []struct {
-		description string
-		path        []string
-		key         []subscriptionKey
-		expData     []Entry
-	}{
-		{
-			description: "SubOnce All Config",
-			path:        []string{"optical-switch", "port-connections", "port-connection", "config"},
-			key: []subscriptionKey{
-				{pathIndex: 2, extractIndex: 4, keyName: "slot-number", keyVal: "*"},
-				{pathIndex: 2, extractIndex: 3, keyName: "port-number", keyVal: "*"}},
-			expData: valList,
-		},
-		{
-			description: "All State",
-			path:        []string{"optical-switch", "port-connections", "port-connection", "state"},
-			key: []subscriptionKey{
-				{pathIndex: 2, extractIndex: 4, keyName: "slot-number", keyVal: "*"},
-				{pathIndex: 2, extractIndex: 3, keyName: "port-number", keyVal: "*"}},
-			expData: valList,
-		},
-		{
-			description: "All Config, implicit wildcard",
-			path:        []string{"optical-switch", "port-connections", "port-connection", "config"},
-			key: []subscriptionKey{
-				{pathIndex: 2, extractIndex: 4, keyName: "slot-number", keyVal: ""},
-				{pathIndex: 2, extractIndex: 3, keyName: "port-number", keyVal: ""}},
-			expData: valList,
-		},
-		{
-			description: "All State, implicit wildcard",
-			path:        []string{"optical-switch", "port-connections", "port-connection", "state"},
-			key: []subscriptionKey{
-				{pathIndex: 2, extractIndex: 4, keyName: "slot-number", keyVal: ""},
-				{pathIndex: 2, extractIndex: 3, keyName: "port-number", keyVal: ""}},
-			expData: valList,
-		},
-		{
-			description: "Config Filter slot-number= " + strconv.Itoa(f1Fltr) + "]",
-			path:        []string{"optical-switch", "port-connections", "port-connection", "config"},
-			key: []subscriptionKey{
-				{pathIndex: 2, extractIndex: 4, keyName: "slot-number", keyVal: strconv.Itoa(f1Fltr)},
-				{pathIndex: 2, extractIndex: 3, keyName: "port-number", keyVal: "*"}},
-			expData: f1FltrData,
-		},
-		{
-			description: "Config Filter port-number=" + strconv.Itoa(f2Fltr) + "]",
-			path:        []string{"optical-switch", "port-connections", "port-connection", "config"},
-			key: []subscriptionKey{
-				{pathIndex: 2, extractIndex: 4, keyName: "slot-number", keyVal: "*"},
-				{pathIndex: 2, extractIndex: 3, keyName: "port-number", keyVal: strconv.Itoa(f2Fltr)}},
-			expData: f2FltrData,
-		},
-		{
-			description: "State Filter slot-number= " + strconv.Itoa(f1Fltr) + "]",
-			path:        []string{"optical-switch", "port-connections", "port-connection", "state"},
-			key: []subscriptionKey{
-				{pathIndex: 2, extractIndex: 4, keyName: "slot-number", keyVal: strconv.Itoa(f1Fltr)},
-				{pathIndex: 2, extractIndex: 3, keyName: "port-number", keyVal: "*"}},
-			expData: f1FltrData,
-		},
-		{
-			description: "State Filter port-number=" + strconv.Itoa(f2Fltr) + "]",
-			path:        []string{"optical-switch", "port-connections", "port-connection", "state"},
-			key: []subscriptionKey{
-				{pathIndex: 2, extractIndex: 4, keyName: "slot-number", keyVal: "*"},
-				{pathIndex: 2, extractIndex: 3, keyName: "port-number", keyVal: strconv.Itoa(f2Fltr)}},
-			expData: f2FltrData,
-		},
-		{
-			description: "All Entries",
-			path:        []string{"optical-switch", "port-connections"},
-			key: []subscriptionKey{
-				{pathIndex: 2, extractIndex: 4, keyName: "slot-number", keyVal: ""},
-				{pathIndex: 2, extractIndex: 3, keyName: "port-number", keyVal: ""}},
-			expData: valList,
-		},
-		{
-			description: "All Filter slot-number= " + strconv.Itoa(f1Fltr) + "]",
-			path:        []string{"optical-switch", "port-connections", "port-connection"},
-			key: []subscriptionKey{
-				{pathIndex: 2, extractIndex: 4, keyName: "slot-number", keyVal: strconv.Itoa(f1Fltr)},
-				{pathIndex: 2, extractIndex: 3, keyName: "port-number", keyVal: "*"}},
-			expData: f1FltrData,
-		},
-		{
-			description: "All Filter port-number= " + strconv.Itoa(f2Fltr) + "]",
-			path:        []string{"optical-switch", "port-connections", "port-connection"},
-			key: []subscriptionKey{
-				{pathIndex: 2, extractIndex: 4, keyName: "slot-number", keyVal: "*"},
-				{pathIndex: 2, extractIndex: 3, keyName: "port-number", keyVal: strconv.Itoa(f2Fltr)}},
-			expData: f2FltrData,
-		},
-	}
-	for _, sub := range subs {
-		gStart := time.Now()
-		t.Run(sub.description, func(t *testing.T) {
-			// Set up a subscription, the notification handler will do minor
-			// checks and push the notifications to the main routine
-			var elem []*pb.PathElem
-			for _, p := range sub.path {
-				elem = append(elem, &pb.PathElem{Name: p})
-			}
-			for _, k := range sub.key {
-				if k.keyVal == "" {
-					continue
-				}
-				if elem[k.pathIndex].Key == nil {
-					elem[k.pathIndex].Key = make(map[string]string)
-				}
-				elem[k.pathIndex].Key[k.keyName] = k.keyVal
-			}
-			sr := &pb.SubscribeRequest_Subscribe{
-				Subscribe: &pb.SubscriptionList{
-					Mode:   pb.SubscriptionList_ONCE,
-					Prefix: &pb.Path{Origin: "openconfig", Target: "OC_YANG"},
-					Subscription: []*pb.Subscription{
-						{
-							Path: &pb.Path{Elem: elem},
-							Mode: gnmipb.SubscriptionMode_ON_CHANGE,
-						},
-					},
-				},
-			}
-			query, err := client.NewQuery(&pb.SubscribeRequest{Request: sr})
-			if err != nil {
-				t.Fatalf("Failed to create query, err \"%s\"", err)
-			}
-			query.UpdatesOnly = false
-			query.TLS = &tls.Config{InsecureSkipVerify: true}
-			query.Addrs = []string{fmt.Sprintf("127.0.0.1:%d", s.config.Port)}
-			c := client.New()
-			defer c.Close()
-			notifCnt, notifCntCon, notifCntUpd, notifCntSyn := 0, 0, 0, 0
-			ch := make(chan client.Notification)
-			// Basic handler to push notifications over the "ch" channel.
-			query.NotificationHandler = func(n client.Notification) error {
-				notifCnt++
-
-				if _, ok := n.(cacheclient.Connected); ok {
-					// First message must be a Connected notification
-					if notifCnt != 1 {
-						t.Fatalf("Received Connected as non-first notification (%d)", notifCnt)
-					}
-					notifCntCon++
-				} else if nn, ok := n.(cacheclient.Update); ok {
-					notifCntUpd++
-					ch <- nn
-				} else if _, ok := n.(cacheclient.Sync); ok {
-					if notifCntCon != 1 {
-						t.Fatal("Received Sync before Connected")
-					}
-					if notifCntSyn != 0 {
-						t.Fatal("Received multiple Sync messages")
-					}
-					notifCntSyn++
-					close(ch)
-				}
-				return nil
-			}
-			go func() {
-				err = c.Subscribe(context.Background(), query)
-				if err != nil {
-					t.Fatalf("Subscribe returned error %v", err)
-				}
-			}()
-
-			gottenMap := map[string]Entry{}
-			gottenCnt := 0
-			for receiving := true; receiving; {
-				select {
-				case <-time.After(clientTimeout / 4):
-					t.Fatalf("Timeout waiting for Update messages on subscription")
-				case notif, ok := <-ch:
-					if !ok {
-						receiving = false
-					} else {
-						updateNotif, _ := notif.(cacheclient.Update)
-						if len(updateNotif.Path) < (len(sub.path) + len(sub.key)) {
-							t.Fatalf("Unexpected path in notification, got \"%v\" for \"%v\"", updateNotif.Path, sub.path)
-						}
-						//t.Logf("Got Update: %v\n", updateNotif)
-
-						// Extract keys from update and find or make an Entry for this update
-						var entKey string
-						for _, k := range sub.key {
-							kv := updateNotif.Path[k.extractIndex]
-							if entKey != "" {
-								entKey = entKey + "|"
-							}
-							entKey = entKey + kv
-						}
-						e, ok := gottenMap[entKey]
-						if !ok {
-							e = Entry{}
-							//t.Logf("\t New Entry: key %s\n", entKey)
-							for i, k := range sub.key {
-								er := reflect.ValueOf(&e).Elem()
-								f := er.FieldByName(fldName2VarName[k.keyName])
-								xStr := strings.Split(entKey, "|")[i]
-								x, _ := strconv.Atoi(xStr)
-								//t.Logf("\t Setting %s to %d\n", fldName2VarName[k.keyName], x)
-								f.SetInt(int64(x))
-							}
-							gottenCnt++
-						}
-						// Populate the Entry with data from the update
-						val := updateNotif.Val.(int64)
-						var fldsr reflect.Value
-						if updateNotif.Path[len(updateNotif.Path)-1] == "slot-number" {
-							if val != int64(e.SlotNum) {
-								t.Fatalf("Inconsistent update: entry %v, field %s val %d\n", e, updateNotif.Path[6], val)
-							}
-						} else if updateNotif.Path[len(updateNotif.Path)-1] == "port-number" {
-							if val != int64(e.PortNum) {
-								t.Fatalf("Inconsistent update: entry %v, field %s val %d\n", e, updateNotif.Path[6], val)
-							}
-						} else if updateNotif.Path[5] == "config" {
-							e.ConfigVal = true
-							fldsr = reflect.ValueOf(&e.Config).Elem()
-							fldr := fldsr.FieldByName(fldName2VarName[updateNotif.Path[6]])
-							//t.Logf("\t Trying to set field %s (%s) to %v\n", fldName2VarName[updateNotif.Path[6]], updateNotif.Path[5], val)
-							fldr.SetInt(val)
-						} else if updateNotif.Path[5] == "state" {
-							e.StateVal = true
-							fldsr = reflect.ValueOf(&e.State).Elem()
-							fldr := fldsr.FieldByName(fldName2VarName[updateNotif.Path[6]])
-							//t.Logf("\t Trying to set field %s (%s) to %v\n", fldName2VarName[updateNotif.Path[6]], updateNotif.Path[5], val)
-							fldr.SetInt(val)
-						} else {
-							t.Fatalf("Unexpected notification path (not config or state) %v", updateNotif.Path)
-						}
-						gottenMap[entKey] = e
-					}
-				}
-			}
-			gotten := make([]Entry, gottenCnt)
-			gottenI := 0
-			for _, v := range gottenMap {
-				gotten[gottenI] = v
-				gottenI++
-			}
-			entryListSort(gotten)
-			if len(gotten) != len(sub.expData) {
-				t.Fatalf("Got notifications for %d entries, expected %d", len(gotten), len(sub.expData))
-			}
-			for i := 0; i < len(gotten); i++ {
-				if !entryEqual(&gotten[i], &sub.expData[i]) {
-					t.Fatalf("Received incorrect notification: gotten[%d]=%v, expected[%d]=%v", i, gotten[i], i, sub.expData[i])
-				}
-			}
-		})
-
-		gTime := time.Since(gStart)
-		fmt.Printf("Subscribe-Once: %s\n", gTime)
-	}
-}
-
 func TestNSFRegistration(t *testing.T) {
 	// Start Telemetry Server
 	s := createServer(t)
@@ -8566,7 +8556,7 @@ func TestGetConfigCacheBypassed(t *testing.T) {
 	}
 }
 
-func TestPictorSubscription(t *testing.T) {
+func TestTelemetrySubscription(t *testing.T) {
 	s := createServer(t)
 	s.config.EnableTranslation = true
 	go runServer(t, s)
@@ -8593,7 +8583,7 @@ func TestPictorSubscription(t *testing.T) {
 
 	// Construct the subscription
 	subs := []*pb.Subscription{}
-	for _, p := range pictorPaths {
+	for _, p := range telemetryPaths {
 		path, err := xpath.ToGNMIPath(p.path)
 		if err != nil {
 			t.Fatalf("Failed to convert string to GNMI path: %v", err)
@@ -8819,6 +8809,9 @@ func TestDumpDebugData(t *testing.T) {
 func TestDumpSubscriptionInfo(t *testing.T) {
 	ip := "1.1.1.1"
 	port := uint64(1234)
+	translClient, _ := sdc.NewTranslClient(nil, nil, nil, pb.Encoding_JSON, nil)
+	nonDbClient, _ := sdc.NewNonDbClient(nil, nil)
+	dbClient, _ := sdc.NewDbClient(nil, nil)
 	tests := []struct {
 		desc      string
 		mode      spb.GnmiSubscriptionClientInfo_Mode
@@ -8858,6 +8851,7 @@ func TestDumpSubscriptionInfo(t *testing.T) {
 						},
 					},
 				},
+				sonicDataClient: translClient,
 				startTime: time.Unix(10000, 900000),
 				syncTime:  time.Unix(904915413, 1325412),
 				qDepthCur: 8,
@@ -8892,6 +8886,7 @@ func TestDumpSubscriptionInfo(t *testing.T) {
 						},
 					},
 				},
+				sonicDataClient: nonDbClient,
 				startTime: time.Unix(10000, 900000),
 				syncTime:  time.Unix(904915413, 1325412),
 				qDepthCur: 8,
@@ -8926,6 +8921,7 @@ func TestDumpSubscriptionInfo(t *testing.T) {
 						},
 					},
 				},
+				sonicDataClient: dbClient,
 				startTime: time.Unix(10000, 900000),
 				syncTime:  time.Unix(904915413, 1325412),
 				qDepthCur: 8,
@@ -9256,6 +9252,104 @@ func TestDumpSubscriptionInfo(t *testing.T) {
 	}
 }
 
+func TestSubscriptionTickLatencyInfo(t *testing.T) {
+	s := createServer(t)
+	go runServer(t, s)
+	defer s.Stop()
+
+	// The server is ready - now a subscription is needed.
+	tlsConfig := &tls.Config{InsecureSkipVerify: true}
+	opts := []grpc.DialOption{grpc.WithTransportCredentials(credentials.NewTLS(tlsConfig))}
+
+	targetAddr := fmt.Sprintf("127.0.0.1:%d", s.config.Port)
+	conn, err := grpc.Dial(targetAddr, opts...)
+	if err != nil {
+		t.Fatalf("Dialing to %q failed: %v", targetAddr, err)
+	}
+	defer conn.Close()
+	gClient := pb.NewGNMIClient(conn)
+
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+
+	intervals := []uint64{1000000000, 2000000000, 3000000000}
+	req := &pb.SubscribeRequest{
+		Request: &pb.SubscribeRequest_Subscribe{
+			Subscribe: &pb.SubscriptionList{
+				Prefix:   &pb.Path{Origin: "openconfig", Target: "OC_YANG"},
+				Mode:     pb.SubscriptionList_STREAM,
+				Encoding: pb.Encoding_PROTO,
+				Subscription: []*pb.Subscription{
+					{
+						Path: &pb.Path{
+							Elem: []*pb.PathElem{
+								{Name: "interfaces"},
+							},
+						},
+						Mode:           pb.SubscriptionMode_SAMPLE,
+						SampleInterval: intervals[0],
+					},
+					{
+						Path: &pb.Path{
+							Elem: []*pb.PathElem{
+								{Name: "components"},
+							},
+						},
+						Mode:           pb.SubscriptionMode_SAMPLE,
+						SampleInterval: intervals[1],
+					},
+					{
+						Path: &pb.Path{
+							Elem: []*pb.PathElem{
+								{Name: "lacp"},
+							},
+						},
+						Mode:           pb.SubscriptionMode_SAMPLE,
+						SampleInterval: intervals[2],
+					},
+				},
+			},
+		},
+	}
+
+	stream, err := gClient.Subscribe(ctx, grpc.EmptyCallOption{})
+	if err != nil {
+		t.Fatalf("Failed to create subscribe client: %v", err)
+	}
+	err = stream.Send(req)
+	if err != nil {
+		t.Fatalf("Failed to send request: %v", err)
+	}
+
+	// Wait for the server to do a few samples on the paths.
+	time.Sleep(10 * time.Second)
+
+	s.WriteDebugData(HostVarLogPath, "all")
+	debugInfo := getDebugInfo(t)
+
+	// Expect one SubscriptionClientInfo exists in debugInfo,
+	if len(debugInfo.SubscriptionClientInfo) != 1 {
+		t.Fatalf("Invalid debugInfo: %v", debugInfo)
+	}
+	// Expect latency info for each interval in the subscription.
+	subscriptionInfo := debugInfo.SubscriptionClientInfo[0]
+	if subscriptionInfo.TickLatencyInfo == nil {
+		t.Fatalf("TickLatencyInfo does not exist in SubscriptionClientInfo: %v", subscriptionInfo)
+	}
+	if len(subscriptionInfo.TickLatencyInfo) != len(intervals) {
+		t.Fatalf("TickLatencyInfo does not contain all intervals: %v", subscriptionInfo.TickLatencyInfo)
+	}
+	t.Logf("TickLatencyInfo: %v", subscriptionInfo.TickLatencyInfo)
+	for _, stats := range subscriptionInfo.TickLatencyInfo {
+		if !slices.Contains(intervals, stats.Interval) {
+			t.Fatalf("Invalid interval: %v", stats.Interval)
+		}
+		if stats.MinLatency == nil || stats.MeanLatency == nil || stats.MaxLatency == nil {
+			t.Fatalf("Incomplete tick latency info: %v", stats)
+		}
+	}
+}
+
 func TestDumpReqTimingInfo(t *testing.T) {
 	numRequests := 10
 	s := createServer(t)
@@ -9538,576 +9632,6 @@ func TestConfigDbJournal(t *testing.T) {
 			}
 			if !strings.Contains(string(data), test.expectedEntry) {
 				t.Fatalf("Incorrect file contents: %s", data)
-			}
-		})
-	}
-}
-
-func TestDynamicPortBreakoutWithSkipLane(t *testing.T) {
-	tests := []struct {
-		name          string
-		payload       string
-		expectedPorts []struct {
-			name    string
-			laneSet string
-		}
-		expectedSkippedPorts []string
-	}{
-		{
-			name:    "[-Ethernet1/4/1,-Ethernet1/4/5] 2X200G",
-			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"name\":\"Ethernet1/1/1\"}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"port-id\":4},\"breakout-mode\":{\"groups\":{\"group\":[{\"index\":0,\"config\":{\"index\":0,\"num-breakouts\":2,\"breakout-speed\":\"SPEED_200GB\",\"num-physical-channels\":4}}]}}}}]}}",
-			expectedPorts: []struct {
-				name    string
-				laneSet string
-			}{},
-			expectedSkippedPorts: []string{"Ethernet1/4/1", "Ethernet1/4/5"},
-		},
-		{
-			name:    "[-Ethernet1/4/1,-Ethernet1/4/5,-Ethernet1/4/7] 1X200G+2X100G",
-			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"name\":\"Ethernet1/1/1\"}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_200GB\",\"index\":0,\"num-breakouts\":1,\"num-physical-channels\":4},\"index\":0},{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_100GB\",\"index\":1,\"num-breakouts\":2,\"num-physical-channels\":2},\"index\":1}]}}}}]}}",
-			expectedPorts: []struct {
-				name    string
-				laneSet string
-			}{},
-			expectedSkippedPorts: []string{"Ethernet1/4/1", "Ethernet1/4/5", "Ethernet1/4/7"},
-		},
-		{
-			name:    "[-Ethernet1/4/1,-Ethernet1/4/3,-Ethernet1/4/5] 2X100G+1X200G",
-			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"name\":\"Ethernet1/1/1\"}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_100GB\",\"index\":0,\"num-breakouts\":2,\"num-physical-channels\":2},\"index\":0},{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_200GB\",\"index\":1,\"num-breakouts\":1,\"num-physical-channels\":4},\"index\":1}]}}}}]}}",
-			expectedPorts: []struct {
-				name    string
-				laneSet string
-			}{},
-			expectedSkippedPorts: []string{"Ethernet1/4/1", "Ethernet1/4/3", "Ethernet1/4/5"},
-		},
-		{
-			name:    "[-Ethernet1/4/1,-Ethernet1/4/3,-Ethernet1/4/5,-Ethernet1/4/7] 4X100G",
-			payload: "{\"openconfig-interfaces:interfaces\":{\"interface\":[{\"name\":\"Ethernet1/1/1\"}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"port-id\":4},\"breakout-mode\":{\"groups\":{\"group\":[{\"index\":0,\"config\":{\"index\":0,\"num-breakouts\":4,\"breakout-speed\":\"SPEED_100GB\",\"num-physical-channels\":2}}]}}}}]}}",
-			expectedPorts: []struct {
-				name    string
-				laneSet string
-			}{},
-			expectedSkippedPorts: []string{"Ethernet1/4/1", "Ethernet1/4/3", "Ethernet1/4/5", "Ethernet1/4/7"},
-		},
-		{
-			name:    "[Ethernet1/4/1,-Ethernet1/4/5] 2X200G",
-switch:Ethernet1/4/1\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/4/1\",\"openconfig-p4rt:id\":4,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/4/1\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_200GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"port-id\":4},\"breakout-mode\":{\"groups\":{\"group\":[{\"index\":0,\"config\":{\"index\":0,\"num-breakouts\":2,\"breakout-speed\":\"SPEED_200GB\",\"num-physical-channels\":4}}]}}}}]}}",
-			expectedPorts: []struct {
-				name    string
-				laneSet string
-			}{
-				{
-					name:    "Ethernet1/4/1",
-					laneSet: "17,18,19,20",
-				},
-			},
-			expectedSkippedPorts: []string{"Ethernet1/4/5"},
-		},
-		{
-			name:    "[Ethernet1/4/1,Ethernet1/4/5,-Ethernet1/4/7] 1X200G+2X100G",
-switch:Ethernet1/4/5\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/4/5\",\"openconfig-p4rt:id\":1028,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/4/5\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"port-id\":4},\"breakout-mode\":{\"groups\":{\"group\":[{\"index\":0,\"config\":{\"index\":0,\"num-breakouts\":1,\"breakout-speed\":\"SPEED_200GB\",\"num-physical-channels\":4}},{\"index\":1,\"config\":{\"index\":1,\"num-breakouts\":2,\"breakout-speed\":\"SPEED_100GB\",\"num-physical-channels\":2}}]}}}}]}}",
-			expectedPorts: []struct {
-				name    string
-				laneSet string
-			}{
-				{
-					name:    "Ethernet1/4/1",
-					laneSet: "17,18,19,20",
-				},
-				{
-					name:    "Ethernet1/4/5",
-					laneSet: "21,22",
-				},
-			},
-			expectedSkippedPorts: []string{"Ethernet1/4/7"},
-		},
-		{
-			name:    "[Ethernet1/4/1,-Ethernet1/4/3,Ethernet1/4/5] 2X100G+1X200G",
-switch:Ethernet1/4/5\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/4/5\",\"openconfig-p4rt:id\":1028,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/4/5\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_200GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"port-id\":4},\"breakout-mode\":{\"groups\":{\"group\":[{\"index\":0,\"config\":{\"index\":0,\"num-breakouts\":2,\"breakout-speed\":\"SPEED_100GB\",\"num-physical-channels\":2}},{\"index\":1,\"config\":{\"index\":1,\"num-breakouts\":1,\"breakout-speed\":\"SPEED_200GB\",\"num-physical-channels\":4}}]}}}}]}}",
-			expectedPorts: []struct {
-				name    string
-				laneSet string
-			}{
-				{
-					name:    "Ethernet1/4/1",
-					laneSet: "17,18",
-				},
-				{
-					name:    "Ethernet1/4/5",
-					laneSet: "21,22,23,24",
-				},
-			},
-			expectedSkippedPorts: []string{"Ethernet1/4/3"},
-		},
-		{
-			name:    "[Ethernet1/4/1,Ethernet1/4/3,-Ethernet1/4/5,Ethernet1/4/7] 4X100G",
-switch:Ethernet1/4/7\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/4/7\",\"openconfig-p4rt:id\":1540,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/4/7\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_100GB\",\"index\":0,\"num-breakouts\":4,\"num-physical-channels\":2},\"index\":0}]}}}}]}}",
-			expectedPorts: []struct {
-				name    string
-				laneSet string
-			}{
-				{
-					name:    "Ethernet1/4/1",
-					laneSet: "17,18",
-				},
-				{
-					name:    "Ethernet1/4/3",
-					laneSet: "19,20",
-				},
-				{
-					name:    "Ethernet1/4/7",
-					laneSet: "23,24",
-				},
-			},
-			expectedSkippedPorts: []string{"Ethernet1/4/5"},
-		},
-		{
-			name:    "[Ethernet1/4/1,-Ethernet1/4/5,-Ethernet1/4/7] 1X200G+2X100G",
-switch:Ethernet1/4/1\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/4/1\",\"openconfig-p4rt:id\":4,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/4/1\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_200GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"port-id\":4},\"breakout-mode\":{\"groups\":{\"group\":[{\"index\":0,\"config\":{\"index\":0,\"num-breakouts\":1,\"breakout-speed\":\"SPEED_200GB\",\"num-physical-channels\":4}},{\"index\":1,\"config\":{\"index\":1,\"num-breakouts\":2,\"breakout-speed\":\"SPEED_100GB\",\"num-physical-channels\":2}}]}}}}]}}",
-			expectedPorts: []struct {
-				name    string
-				laneSet string
-			}{
-				{
-					name:    "Ethernet1/4/1",
-					laneSet: "17,18,19,20",
-				},
-			},
-			expectedSkippedPorts: []string{"Ethernet1/4/5", "Ethernet1/4/7"},
-		},
-		{
-			name:    "[Ethernet1/4/1,-Ethernet1/4/3,-Ethernet1/4/5] 2X100G+1X200G",
-switch:Ethernet1/4/1\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/4/1\",\"openconfig-p4rt:id\":4,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/4/1\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"port-id\":4},\"breakout-mode\":{\"groups\":{\"group\":[{\"index\":0,\"config\":{\"index\":0,\"num-breakouts\":2,\"breakout-speed\":\"SPEED_100GB\",\"num-physical-channels\":2}},{\"index\":1,\"config\":{\"index\":1,\"num-breakouts\":1,\"breakout-speed\":\"SPEED_200GB\",\"num-physical-channels\":4}}]}}}}]}}",
-			expectedPorts: []struct {
-				name    string
-				laneSet string
-			}{
-				{
-					name:    "Ethernet1/4/1",
-					laneSet: "17,18",
-				},
-			},
-			expectedSkippedPorts: []string{"Ethernet1/4/3", "Ethernet1/4/5"},
-		},
-		{
-			name:    "[Ethernet1/4/1,-Ethernet1/4/3,-Ethernet1/4/5,Ethernet1/4/7] 4X100G",
-switch:Ethernet1/4/7\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/4/7\",\"openconfig-p4rt:id\":1540,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/4/7\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_100GB\",\"index\":0,\"num-breakouts\":4,\"num-physical-channels\":2},\"index\":0}]}}}}]}}",
-			expectedPorts: []struct {
-				name    string
-				laneSet string
-			}{
-				{
-					name:    "Ethernet1/4/1",
-					laneSet: "17,18",
-				},
-				{
-					name:    "Ethernet1/4/7",
-					laneSet: "23,24",
-				},
-			},
-			expectedSkippedPorts: []string{"Ethernet1/4/3", "Ethernet1/4/5"},
-		},
-		{
-			name:    "[Ethernet1/4/1,-Ethernet1/4/3,Ethernet1/4/5,-Ethernet1/4/7] 4X100G",
-switch:Ethernet1/4/5\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/4/5\",\"openconfig-p4rt:id\":1028,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/4/5\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_100GB\",\"index\":0,\"num-breakouts\":4,\"num-physical-channels\":2},\"index\":0}]}}}}]}}",
-			expectedPorts: []struct {
-				name    string
-				laneSet string
-			}{
-				{
-					name:    "Ethernet1/4/1",
-					laneSet: "17,18",
-				},
-				{
-					name:    "Ethernet1/4/5",
-					laneSet: "21,22",
-				},
-			},
-			expectedSkippedPorts: []string{"Ethernet1/4/3", "Ethernet1/4/7"},
-		},
-		{
-			name:    "[Ethernet1/4/1,Ethernet1/4/3,Ethernet1/4/5,Ethernet1/4/7] 4X100G",
-switch:Ethernet1/4/7\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/4/7\",\"openconfig-p4rt:id\":1540,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/4/7\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_100GB\",\"index\":0,\"num-breakouts\":4,\"num-physical-channels\":2},\"index\":0}]}}}}]}}",
-			expectedPorts: []struct {
-				name    string
-				laneSet string
-			}{
-				{
-					name:    "Ethernet1/4/1",
-					laneSet: "17,18",
-				},
-				{
-					name:    "Ethernet1/4/3",
-					laneSet: "19,20",
-				},
-				{
-					name:    "Ethernet1/4/5",
-					laneSet: "21,22",
-				},
-				{
-					name:    "Ethernet1/4/7",
-					laneSet: "23,24",
-				},
-			},
-			expectedSkippedPorts: []string{},
-		},
-		{
-			name:    "[-Ethernet1/4/1,Ethernet1/4/3,Ethernet1/4/5,Ethernet1/4/7] 4X100G",
-switch:Ethernet1/4/7\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/4/7\",\"openconfig-p4rt:id\":1540,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/4/7\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_100GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_100GB\",\"index\":0,\"num-breakouts\":4,\"num-physical-channels\":2},\"index\":0}]}}}}]}}",
-			expectedPorts: []struct {
-				name    string
-				laneSet string
-			}{
-				{
-					name:    "Ethernet1/4/3",
-					laneSet: "19,20",
-				},
-				{
-					name:    "Ethernet1/4/5",
-					laneSet: "21,22",
-				},
-				{
-					name:    "Ethernet1/4/7",
-					laneSet: "23,24",
-				},
-			},
-			expectedSkippedPorts: []string{"Ethernet1/4/1"},
-		},
-		{
-			name:    "[Ethernet1/4/1,Ethernet1/4/3,Ethernet1/4/5,Ethernet1/4/7] 4X50G",
-switch:Ethernet1/4/7\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/4/7\",\"openconfig-p4rt:id\":1540,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/4/7\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_50GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_50GB\",\"index\":0,\"num-breakouts\":4,\"num-physical-channels\":2},\"index\":0}]}}}}]}}",
-			expectedPorts: []struct {
-				name    string
-				laneSet string
-			}{
-				{
-					name:    "Ethernet1/4/1",
-					laneSet: "17,18",
-				},
-				{
-					name:    "Ethernet1/4/3",
-					laneSet: "19,20",
-				},
-				{
-					name:    "Ethernet1/4/5",
-					laneSet: "21,22",
-				},
-				{
-					name:    "Ethernet1/4/7",
-					laneSet: "23,24",
-				},
-			},
-			expectedSkippedPorts: []string{},
-		},
-		{
-			name:    "[Ethernet1/4/1,Ethernet1/4/5,-Ethernet1/4/7] 1X400G+2X200G",
-switch:Ethernet1/4/5\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/4/5\",\"openconfig-p4rt:id\":1028,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/4/5\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_200GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_400GB\",\"index\":0,\"num-breakouts\":1,\"num-physical-channels\":4},\"index\":0},{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_200GB\",\"index\":1,\"num-breakouts\":2,\"num-physical-channels\":2},\"index\":1}]}}}}]}}",
-			expectedPorts: []struct {
-				name    string
-				laneSet string
-			}{
-				{
-					name:    "Ethernet1/4/1",
-					laneSet: "17,18,19,20",
-				},
-				{
-					name:    "Ethernet1/4/5",
-					laneSet: "21,22",
-				},
-			},
-			expectedSkippedPorts: []string{"Ethernet1/4/7"},
-		},
-		{
-			name:    "[Ethernet1/4/1,Ethernet1/4/5,-Ethernet1/4/7] 1X200G+2X50G",
-switch:Ethernet1/4/5\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/4/5\",\"openconfig-p4rt:id\":1028,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/4/5\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_50GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_200GB\",\"index\":0,\"num-breakouts\":1,\"num-physical-channels\":4},\"index\":0},{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_50GB\",\"index\":1,\"num-breakouts\":2,\"num-physical-channels\":2},\"index\":1}]}}}}]}}",
-			expectedPorts: []struct {
-				name    string
-				laneSet string
-			}{
-				{
-					name:    "Ethernet1/4/1",
-					laneSet: "17,18,19,20",
-				},
-				{
-					name:    "Ethernet1/4/5",
-					laneSet: "21,22",
-				},
-			},
-			expectedSkippedPorts: []string{"Ethernet1/4/7"},
-		},
-		{
-			name:    "[-Ethernet1/4/1,Ethernet1/4/3,Ethernet1/4/5] 2X50G+1X200G",
-switch:Ethernet1/4/5\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/4/5\",\"openconfig-p4rt:id\":1028,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/4/5\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_200GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_50GB\",\"index\":0,\"num-breakouts\":2,\"num-physical-channels\":2},\"index\":0},{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_200GB\",\"index\":1,\"num-breakouts\":1,\"num-physical-channels\":4},\"index\":1}]}}}}]}}",
-			expectedPorts: []struct {
-				name    string
-				laneSet string
-			}{
-				{
-					name:    "Ethernet1/4/3",
-					laneSet: "19,20",
-				},
-				{
-					name:    "Ethernet1/4/5",
-					laneSet: "21,22,23,24",
-				},
-			},
-			expectedSkippedPorts: []string{"Ethernet1/4/1"},
-		},
-		{
-			name:    "[Ethernet1/4/1,Ethernet1/4/5,Ethernet1/4/7] 1X400G+2X50G",
-switch:Ethernet1/4/7\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/4/7\",\"openconfig-p4rt:id\":1028,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/4/7\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_50GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_400GB\",\"index\":0,\"num-breakouts\":1,\"num-physical-channels\":4},\"index\":0},{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_50GB\",\"index\":1,\"num-breakouts\":2,\"num-physical-channels\":2},\"index\":1}]}}}}]}}",
-			expectedPorts: []struct {
-				name    string
-				laneSet string
-			}{
-				{
-					name:    "Ethernet1/4/1",
-					laneSet: "17,18,19,20",
-				},
-				{
-					name:    "Ethernet1/4/5",
-					laneSet: "21,22",
-				},
-				{
-					name:    "Ethernet1/4/7",
-					laneSet: "23,24",
-				},
-			},
-			expectedSkippedPorts: []string{},
-		},
-		{
-			name:    "[Ethernet1/4/1,Ethernet1/4/3,Ethernet1/4/5] 2X50G+1X400G",
-switch:Ethernet1/4/5\",\"google-pins-interfaces:port-direction\":\"FABRIC_FACING\",\"loopback-mode\":\"NONE\",\"mtu\":9216,\"name\":\"Ethernet1/4/5\",\"openconfig-p4rt:id\":1028,\"openconfig-pins-interfaces:health-indicator\":\"GOOD\",\"type\":\"iana-if-type:ethernetCsmacd\"},\"hold-time\":{\"config\":{\"down\":0,\"up\":8000}},\"name\":\"Ethernet1/4/5\",\"openconfig-if-ethernet:ethernet\":{\"config\":{\"fec-mode\":\"openconfig-if-ethernet:FEC_DISABLED\",\"port-speed\":\"openconfig-if-ethernet:SPEED_400GB\"}},\"subinterfaces\":{\"subinterface\":[{\"config\":{\"index\":0},\"index\":0,\"openconfig-if-ip:ipv6\":{\"unnumbered\":{\"config\":{\"enabled\":true}}}}]}}]},\"openconfig-platform:components\":{\"component\":[{\"config\":{\"name\":\"1/4\"},\"name\":\"1/4\",\"port\":{\"config\":{\"openconfig-pins-platform-port:port-id\":4},\"openconfig-platform-port:breakout-mode\":{\"groups\":{\"group\":[{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_50GB\",\"index\":0,\"num-breakouts\":2,\"num-physical-channels\":2},\"index\":0},{\"config\":{\"breakout-speed\":\"openconfig-if-ethernet:SPEED_400GB\",\"index\":1,\"num-breakouts\":1,\"num-physical-channels\":4},\"index\":1}]}}}}]}}",
-			expectedPorts: []struct {
-				name    string
-				laneSet string
-			}{
-				{
-					name:    "Ethernet1/4/1",
-					laneSet: "17,18",
-				},
-				{
-					name:    "Ethernet1/4/3",
-					laneSet: "19,20",
-				},
-				{
-					name:    "Ethernet1/4/5",
-					laneSet: "21,22,23,24",
-				},
-			},
-			expectedSkippedPorts: []string{},
-		},
-	}
-	// Create the server
-	s := createServer(t)
-	s.config.EnableTranslation = true
-	go runServer(t, s)
-	defer s.Stop()
-	s.SsHelper = mockSystemStateHelperSuccess{}
-
-	// The server is ready - now a request is needed.
-	tlsConfig := &tls.Config{InsecureSkipVerify: true}
-	opts := []grpc.DialOption{grpc.WithTransportCredentials(credentials.NewTLS(tlsConfig))}
-
-	targetAddr := fmt.Sprintf("127.0.0.1:%d", s.config.Port)
-	conn, err := grpc.Dial(targetAddr, opts...)
-	if err != nil {
-		t.Fatalf("Dialing to %q failed: %v", targetAddr, err)
-	}
-	defer conn.Close()
-	gClient := pb.NewGNMIClient(conn)
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-
-	ns, _ := sdcfg.GetDbDefaultNamespace()
-	cfgDbId, _ := sdcfg.GetDbId("CONFIG_DB", ns)
-	configDB := getRedisClientN(t, cfgDbId, ns)
-	defer db.CloseRedisClient(configDB)
-	appStateDbId, _ := sdcfg.GetDbId("APPL_STATE_DB", ns)
-	applStateDB := getRedisClientN(t, appStateDbId, ns)
-	defer db.CloseRedisClient(applStateDB)
-	stateDbId, _ := sdcfg.GetDbId("STATE_DB", ns)
-	stateDB := getRedisClientN(t, stateDbId, ns)
-	defer db.CloseRedisClient(stateDB)
-
-	// Bootstrap the first test mode
-	initPorts := []string{"Ethernet1/4/1", "Ethernet1/4/5"}
-	for _, existPort := range initPorts {
-		if _, err := applStateDB.HSet(context.Background(), "PORT_STATE:"+existPort, "phase", "pending_delete").Result(); err != nil {
-			t.Fatalf("Failed to set pending delete for PORT_STATE: %v: %v", existPort, err)
-		}
-		if _, err := applStateDB.HSet(context.Background(), "PORT_TABLE:"+existPort, "index", "4").Result(); err != nil {
-			t.Fatalf("Failed to set index for PORT_STATE: %v: %v", existPort, err)
-		}
-		if _, err := applStateDB.HSet(context.Background(), "INTF_TABLE:"+existPort, "unnumbered_enabled", "true").Result(); err != nil {
-			t.Fatalf("Failed to set unnumbered_enabled for PORT_STATE: %v: %v", existPort, err)
-		}
-		// In STATE_DB, add PORT_TABLE
-		if _, err := stateDB.HSet(context.Background(), "PORT_TABLE|"+existPort, "ref_count", "1").Result(); err != nil {
-			t.Fatalf("Failed to set unnumbered_enabled for PORT_STATE: %v: %v", existPort, err)
-		}
-	}
-
-	req := &pb.SetRequest{
-		Replace: []*pb.Update{
-			{
-				Path: &pb.Path{
-					Target: "OC_YANG",
-					Elem: []*pb.PathElem{
-						{
-							Name: "openconfig",
-						},
-					},
-				},
-				Val: &pb.TypedValue{
-					Value: &pb.TypedValue_JsonIetfVal{JsonIetfVal: []byte(tests[0].payload)},
-				},
-			},
-		},
-	}
-
-	_, err = gClient.Set(ctx, req)
-	if err != nil {
-		t.Fatalf("SetRequest failed: %v", err)
-	}
-
-	for _, removePort := range tests[0].expectedSkippedPorts {
-		// In APPL_STATE_DB, delete PORT_TABLE, INTF_TABLE, and BUFFER_QUEUE_TABLEs
-		if _, err := applStateDB.Del(context.Background(), "PORT_TABLE:"+removePort).Result(); err != nil {
-			t.Fatalf("Failed to delete PORT_TABLE:%v: %v", removePort, err)
-		}
-		if _, err := applStateDB.Del(context.Background(), "INTF_TABLE:"+removePort).Result(); err != nil {
-			t.Fatalf("Failed to delete INTF_TABLE:%v: %v", removePort, err)
-		}
-		for i := 0; i < 8; i++ {
-			qID := strconv.Itoa(i)
-			if _, err := applStateDB.Del(context.Background(), "BUFFER_QUEUE_TABLE:"+removePort+":"+qID).Result(); err != nil {
-				t.Fatalf("Failed to delete BUFFER_QUEUE_TABLE:%v: %v", removePort, err)
-			}
-		}
-		// In STATE_DB, delete PORT_TABLE
-		if _, err := stateDB.Del(context.Background(), "PORT_TABLE|"+removePort).Result(); err != nil {
-			t.Fatalf("Failed to delete PORT_TABLE|%v: %v", removePort, err)
-		}
-	}
-
-	var transtionList [][]int
-	for i := 0; i < len(tests)-1; i++ {
-		transtionList = append(transtionList, []int{i, i})
-		transtionList = append(transtionList, []int{i, i + 1})
-	}
-
-	transtionList = append(transtionList, []int{len(tests) - 1, len(tests) - 1})
-	for i := 1; i < len(tests); i++ {
-		for j := 0; j < len(tests)-i; j++ {
-			transtionList = append(transtionList, []int{len(tests) - i, j})
-			if len(tests)-i-1 == j {
-				continue
-			}
-			transtionList = append(transtionList, []int{j, len(tests) - i})
-		}
-	}
-
-	for _, transtion := range transtionList {
-		from_status := tests[transtion[0]]
-		to_status := tests[transtion[1]]
-		testName := from_status.name + "-->" + to_status.name
-		t.Run(testName, func(t *testing.T) {
-			// Set pending_delete for the ports existed in test[i].
-			// These ports will undergo the DBP. Skipped port in test[i]
-			// was not created, no need to set pending delete
-			for _, port := range from_status.expectedPorts {
-				if _, err := applStateDB.HSet(context.Background(), "PORT_STATE:"+port.name, "phase", "pending_delete").Result(); err != nil {
-					t.Fatalf("%v - Failed to set pending delete for PORT_STATE: %v: %v", testName, port.name, err)
-				}
-				// In APPL_STATE_DB, add PORT_TABLE and INTF_TABLE
-				if _, err := applStateDB.HSet(context.Background(), "PORT_TABLE:"+port.name, "index", "4").Result(); err != nil {
-					t.Fatalf("%v - Failed to set index for PORT_TABLE:%v: %v", testName, port.name, err)
-				}
-				if _, err := applStateDB.HSet(context.Background(), "INTF_TABLE:"+port.name, "unnumbered_enabled", "true").Result(); err != nil {
-					t.Fatalf("%v - Failed to set unnumbered_enabled for INTF_TABLE:%v: %v", testName, port.name, err)
-				}
-				// In STATE_DB, add PORT_TABLE
-				if _, err := stateDB.HSet(context.Background(), "PORT_TABLE|"+port.name, "ref_count", "1").Result(); err != nil {
-					t.Fatalf("%v - Failed to set ref_count for PORT_TABLE|%v: %v", testName, port.name, err)
-				}
-			}
-
-			req := &pb.SetRequest{
-				Replace: []*pb.Update{
-					{
-						Path: &pb.Path{
-							Target: "OC_YANG",
-							Elem: []*pb.PathElem{
-								{
-									Name: "openconfig",
-								},
-							},
-						},
-						Val: &pb.TypedValue{
-							Value: &pb.TypedValue_JsonIetfVal{JsonIetfVal: []byte(to_status.payload)},
-						},
-					},
-				},
-			}
-
-			_, err := gClient.Set(ctx, req)
-			if err != nil {
-				t.Fatalf("SetRequest failed: %v", err)
-			}
-
-			// Verify expected ports exist
-			for _, port := range to_status.expectedPorts {
-				laneField, err := configDB.HGet(context.Background(), "PORT|"+port.name, "lanes").Result()
-				if err != nil {
-					t.Fatalf("%v - Failed to read lanes from PORT|%v in config db.", testName, port.name)
-				}
-				if laneField != port.laneSet {
-					t.Fatalf("%v - Expect PORT %v with %v, got %v", testName, port.name, port.laneSet, laneField)
-				}
-			}
-
-			// Verify skipped ports are missing
-			for _, skipPort := range to_status.expectedSkippedPorts {
-				val, err := configDB.HKeys(context.Background(), "PORT|"+skipPort).Result()
-				if err != nil || len(val) > 0 {
-					t.Fatalf("%v - Expect no PORT table %v in config db. Got: %v with error %v", testName, skipPort, val, err)
-				}
-			}
-			// If ports removed because of breakin or skip, remove it from APPL_STATE_DB and STATE_DB
-			var breakinPorts []string
-			for _, from_port := range from_status.expectedPorts {
-				if !slices.Contains(to_status.expectedSkippedPorts, from_port.name) {
-					var exist bool
-					for _, to_port := range to_status.expectedPorts {
-						if to_port.name == from_port.name {
-							exist = true
-							break
-						}
-					}
-					if !exist {
-						breakinPorts = append(breakinPorts, from_port.name)
-					}
-				}
-			}
-			for _, removePort := range append(breakinPorts, to_status.expectedSkippedPorts...) {
-				// In APPL_STATE_DB, delete PORT_TABLE and INTF_TABLE
-				if _, err := applStateDB.Del(context.Background(), "PORT_TABLE:"+removePort).Result(); err != nil {
-					t.Fatalf("%v - Failed to delete PORT_TABLE:%v: %v", testName, removePort, err)
-				}
-				if _, err := applStateDB.Del(context.Background(), "INTF_TABLE:"+removePort).Result(); err != nil {
-					t.Fatalf("%v - Failed to delete INTF_TABLE:%v: %v", testName, removePort, err)
-				}
-				for i := 0; i < 8; i++ {
-					qID := strconv.Itoa(i)
-					if _, err := applStateDB.Del(context.Background(), "BUFFER_QUEUE_TABLE:"+removePort+":"+qID).Result(); err != nil {
-						t.Fatalf("Failed to delete BUFFER_QUEUE_TABLE:%v: %v", removePort, err)
-					}
-				}
-				// In STATE_DB, delete PORT_TABLE
-				if _, err := stateDB.Del(context.Background(), "PORT_TABLE|"+removePort).Result(); err != nil {
-					t.Fatalf("%v - Failed to delete PORT_TABLE|%v: %v", testName, removePort, err)
-				}
 			}
 		})
 	}
@@ -10457,9 +9981,9 @@ func TestSubscribeBenchmark(t *testing.T) {
 	}{
 		{
 			
-			name:  "Pictor",
+			name:  "Telemetry",
 			itrs:  1,
-			paths: pictorPaths,
+			paths: telemetryPaths,
 		},
 		{
 			
@@ -10641,6 +10165,323 @@ func TestSubscribeBenchmark(t *testing.T) {
 			t.Logf("BenchmarkResults for %v:\nItrs=%v\nTime=%v\nMemAllocs=%v\nMemBytes=%v", test.name, test.itrs, time.Duration(res.T.Nanoseconds()/int64(test.itrs)), res.MemAllocs/uint64(test.itrs), res.MemBytes/uint64(test.itrs))
 		})
 	}
+}
+
+func TestPCHandshakeWithTelemetryCrashAndRestart(t *testing.T) {
+	namespace, _ := sdcfg.GetDbDefaultNamespace()
+	stateDb := getStateDbClient(t, namespace)
+	defer stateDb.Close()
+
+	configDb := getConfigDbClient(t, namespace)
+	defer configDb.Close()
+
+	req := &pb.SetRequest{
+		Prefix: &pb.Path{Elem: []*pb.PathElem{{Name: "interfaces"}}},
+		Update: []*pb.Update{
+			newPbUpdate("interface[name=Ethernet1/1/1]/config/mtu", `{"mtu": 9104}`),
+		},
+	}
+
+	t.Run("Expect no handshake when exited received", func(t *testing.T) {
+		stateDb.HSet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS_INFO|port_cycler", "status", "exited").Result()
+		configDb.HSet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local", "enabele", "true").Result()
+
+		s := createCustomServer(t, testServerConfig(testSrvType))
+		go runServer(t, s)
+
+		if s.doPortCycleDisable {
+			t.Fatalf("Port Cycler should cache exited port cycler")
+		}
+
+		// Crash
+		s.Stop()
+
+		// Restart
+		s, conn := serverAndConnHelper(t)
+		defer s.Stop()
+		defer conn.Close()
+
+		if s.doPortCycleDisable {
+			t.Fatalf("Port Cycler should cache exited port cycler")
+		}
+
+		gClient := pb.NewGNMIClient(conn)
+		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+		defer cancel()
+
+		_, err := gClient.Set(ctx, req)
+		if err != nil {
+			t.Fatalf("SetRequest should not fail. Err: %v", err)
+		}
+
+		cfg_status, _ := configDb.HGet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local", "enable").Result()
+		if cfg_status != "false" {
+			t.Fatalf("UMF should update port cycler enable=false.")
+		}
+		if s.doPortCycleDisable {
+			t.Fatalf("Port Cycler should cache exited port cycler")
+		}
+	})
+	t.Run("Expect no handshake when DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local absents", func(t *testing.T) {
+		stateDb.Del(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS_INFO|port_cycler").Result()
+		configDb.Del(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local").Result()
+
+		s := createCustomServer(t, testServerConfig(testSrvType))
+		go runServer(t, s)
+
+		if s.doPortCycleDisable {
+			t.Fatalf("Port Cycler should cache exited port cycler")
+		}
+
+		// Crash
+		s.Stop()
+
+		// Restart
+		s, conn := serverAndConnHelper(t)
+		defer s.Stop()
+		defer conn.Close()
+
+		if s.doPortCycleDisable {
+			t.Fatalf("Port Cycler should cache exited port cycler")
+		}
+
+		gClient := pb.NewGNMIClient(conn)
+		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+		defer cancel()
+
+		_, err := gClient.Set(ctx, req)
+		if err != nil {
+			t.Fatalf("SetRequest should not fail. Err: %v", err)
+		}
+
+		cfg_status, _ := configDb.HGet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local", "enable").Result()
+		if cfg_status == "false" {
+			t.Fatalf("UMF failed to request port cycler to exit")
+		}
+		if s.doPortCycleDisable {
+			t.Fatalf("Port Cycler should cache exited port cycler")
+		}
+	})
+	t.Run("Expect no handshake when exited got recevied between umf crash and restart", func(t *testing.T) {
+		stateDb.Del(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS_INFO|port_cycler", "status").Result()
+		configDb.HSet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local", "enable", "").Result()
+
+		s := createCustomServer(t, testServerConfig(testSrvType))
+		go runServer(t, s)
+
+		if !s.doPortCycleDisable {
+			t.Fatalf("Port Cycler should cache running port cycler")
+		}
+
+		// Crash
+		s.Stop()
+
+		stateDb.HSet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS_INFO|port_cycler", "status", "exited").Result()
+
+		// Restart
+		s, conn := serverAndConnHelper(t)
+		defer s.Stop()
+		defer conn.Close()
+
+		if s.doPortCycleDisable {
+			t.Fatalf("Port Cycler should cache exited port cycler")
+		}
+
+		gClient := pb.NewGNMIClient(conn)
+		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+		defer cancel()
+
+		_, err := gClient.Set(ctx, req)
+		if err != nil {
+			t.Fatalf("SetRequest should not fail. Err: %v", err)
+		}
+
+		cfg_status, _ := configDb.HGet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local", "enable").Result()
+		if cfg_status != "false" {
+			t.Fatalf("UMF should update port cycler enable=false.")
+		}
+		if s.doPortCycleDisable {
+			t.Fatalf("Port Cycler should cache exited port cycler")
+		}
+	})
+	t.Run("Expect do handshake when DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local exists", func(t *testing.T) {
+		stateDb.HSet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS_INFO|port_cycler", "status", "").Result()
+		configDb.HSet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local", "enable", "").Result()
+
+		s := createCustomServer(t, testServerConfig(testSrvType))
+		go runServer(t, s)
+
+		if !s.doPortCycleDisable {
+			t.Fatalf("Port Cycler should cache running port cycler")
+		}
+
+		// Crash
+		s.Stop()
+
+		// Restart
+		s, conn := serverAndConnHelper(t)
+		defer s.Stop()
+		defer conn.Close()
+
+		if !s.doPortCycleDisable {
+			t.Fatalf("Port Cycler should cache running port cycler")
+		}
+
+		gClient := pb.NewGNMIClient(conn)
+		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+		defer cancel()
+
+		var wg sync.WaitGroup
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			_, err := gClient.Set(ctx, req)
+			if err != nil {
+				t.Fatalf("SetRequest should not fail. Err: %v", err)
+			}
+		}()
+		stateDb.HSet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS_INFO|port_cycler", "status", "exited")
+		wg.Wait()
+
+		cfg_status, _ := configDb.HGet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local", "enable").Result()
+		if cfg_status != "false" {
+			t.Fatalf("UMF failed to request port cycler to exit. cfg_status: %v", cfg_status)
+		}
+		if s.doPortCycleDisable {
+			t.Fatalf("Port Cycler should cache exited port cycler")
+		}
+	})
+}
+
+func TestHandshakeWithPortCyclerOnSet(t *testing.T) {
+	s := createServer(t)
+	go runServer(t, s)
+	defer s.Stop()
+	s.SsHelper = mockSystemStateHelperSuccess{}
+
+	// The server is ready - now a request is needed.
+	tlsConfig := &tls.Config{InsecureSkipVerify: true}
+	opts := []grpc.DialOption{grpc.WithTransportCredentials(credentials.NewTLS(tlsConfig))}
+
+	targetAddr := fmt.Sprintf("127.0.0.1:%d", s.config.Port)
+	conn, err := grpc.Dial(targetAddr, opts...)
+	if err != nil {
+		t.Fatalf("Dialing to %q failed: %v", targetAddr, err)
+	}
+	defer conn.Close()
+	gClient := pb.NewGNMIClient(conn)
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	ns, _ := sdcfg.GetDbDefaultNamespace()
+	cfgDbId, _ := sdcfg.GetDbId("CONFIG_DB", ns)
+	configDb := getRedisClientN(t, cfgDbId, ns)
+	defer db.CloseRedisClient(configDb)
+	stateDbId, _ := sdcfg.GetDbId("STATE_DB", ns)
+	stateDb := getRedisClientN(t, stateDbId, ns)
+	defer db.CloseRedisClient(stateDb)
+
+	req := &pb.SetRequest{
+		Prefix: &pb.Path{Elem: []*pb.PathElem{{Name: "interfaces"}}},
+		Update: []*pb.Update{
+			newPbUpdate("interface[name=Ethernet1/1/1]/config/mtu", `{"mtu": 9104}`),
+		},
+	}
+
+	t.Run("Expect SET SUCCEED with Port Cycler Ack", func(t *testing.T) {
+		stateDb.Del(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS_INFO|port_cycler").Result()
+		configDb.Del(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local").Result()
+		s.doPortCycleDisable = true
+		var wg sync.WaitGroup
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			_, err = gClient.Set(ctx, req)
+			if err != nil {
+				t.Fatalf("SetRequest should not fail. Err: %v", err)
+			}
+		}()
+		stateDb.HSet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS_INFO|port_cycler", "status", "exited")
+		wg.Wait()
+
+		cfg_status, _ := configDb.HGet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local", "enable").Result()
+		if cfg_status != "false" {
+			t.Fatalf("UMF failed to request port cycler to exit")
+		}
+
+		if s.doPortCycleDisable {
+			t.Fatalf("Port Cycler should cache exited port cycler")
+		}
+	})
+	t.Run("Expect SET succeed with Port Cycler disabled", func(t *testing.T) {
+		stateDb.HSet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS_INFO|port_cycler", "status", "exited").Result()
+		configDb.HSet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local", "enable", "false").Result()
+		s.doPortCycleDisable = false
+
+		_, err = gClient.Set(ctx, req)
+		if err != nil {
+			t.Fatalf("SetRequest should not fail. Err: %v", err)
+		}
+
+		cfg_status, _ := configDb.HGet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local", "enable").Result()
+		if cfg_status != "false" {
+			t.Fatalf("UMF failed to request port cycler to exit")
+		}
+		if s.doPortCycleDisable {
+			t.Fatalf("Port Cycler should cache exited port cycler")
+		}
+	})
+	t.Run("Expect subsequent SETs succeed after late PC ack", func(t *testing.T) {
+		stateDb.HSet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS_INFO|port_cycler", "status", "fail")
+		configDb.Del(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local").Result()
+		s.doPortCycleDisable = true
+
+		_, err = gClient.Set(ctx, req)
+		if err == nil {
+			t.Fatalf("Expected ABORT, but SET succeeded.")
+		}
+
+		cfg_status, _ := configDb.HGet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local", "enable").Result()
+		if cfg_status != "false" {
+			t.Fatalf("UMF failed to request port cycler to exit")
+		}
+		if !s.doPortCycleDisable {
+			t.Fatalf("Port Cycler still needs to be disabled, but the control flag indicates it's no longer necessary")
+		}
+
+		stateDb.HSet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS_INFO|port_cycler", "status", "exited")
+
+		_, err = gClient.Set(ctx, req)
+		if err != nil {
+			t.Fatalf("Expected SUCCEED, but SET aborted.")
+		}
+
+		cfg_status, _ = configDb.HGet(context.Background(), "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local", "enable").Result()
+		if cfg_status != "false" {
+			t.Fatalf("UMF failed to request port cycler to exit")
+		}
+		if s.doPortCycleDisable {
+			t.Fatalf("Port Cycler should cache exited port cycler")
+		}
+	})
+}
+
+func serverAndConnHelper(t *testing.T) (*Server, *grpc.ClientConn) {
+	s := createCustomServer(t, testServerConfig(testSrvType))
+	go runServer(t, s)
+
+	tlsConfig := &tls.Config{InsecureSkipVerify: true}
+	opts := []grpc.DialOption{grpc.WithTransportCredentials(credentials.NewTLS(tlsConfig))}
+
+	targetAddr := fmt.Sprintf("127.0.0.1:%d", s.config.Port)
+	conn, err := grpc.Dial(targetAddr, opts...)
+	if err != nil {
+		t.Fatalf("Dialing to %q failed: %v", targetAddr, err)
+	}
+
+	s.SsHelper = mockSystemStateHelperSuccess{}
+	return s, conn
+
 }
 
 func init() {

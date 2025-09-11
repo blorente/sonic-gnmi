@@ -751,6 +751,17 @@
                 "phase": "pending_delete"
               }
             }
+          },
+          {
+            "oper": "dbHSet",
+            "title": "Create PORT_TABLE|Ethernet1/1/7 STATE_DB",
+            "db": "STATE_DB",
+            "value": {
+              "PORT_TABLE|Ethernet1/1/7" : {
+                "admin_status": "up",
+                "ref_count": "0"
+              }
+            }
           }
         ]
       },
@@ -904,17 +915,7 @@
             "type": "string",
             "enum": ["Ethernet1/1/1"]
           }
-        },
-        "subOpers": [
-          {
-            "oper": "dbHDel",
-            "title": "Delete PORT_STATE:Ethernet1/1/7 in APPL_STATE_DB",
-            "db": "APPL_STATE_DB",
-            "value": {
-              "PORT_STATE:Ethernet1/1/7" : []
-            }
-          }
-        ]
+        }
       }
     ]
   }

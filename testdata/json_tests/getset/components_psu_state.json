@@ -22,7 +22,7 @@
               "state": {
                 "type": "object",
                 "required": [
-                  "name", "oper-status", "parent", "part-no", "serial-no", "type"
+                  "name", "oper-status", "parent", "part-no", "serial-no", "type", "model-name"
                 ],
                 "properties": {
                   "name": {
@@ -40,13 +40,13 @@
                   "parent": {
                     "type": "string",
                     "enum": [
-                      "chassis"
+                      "controller_card"
                     ]
                   },
                   "part-no": {
                     "type": "string",
                     "enum": [
-                      "AC-RED"
+                      "1234"
                     ]
                   },
                   "serial-no": {
@@ -59,6 +59,12 @@
                     "type": "string",
                     "enum": [
                       "openconfig-platform-types:POWER_SUPPLY"
+                    ]
+                  },
+                  "model-name": {
+                    "type": "string",
+                    "enum": [
+                      "AC-RED"
                     ]
                   }
                 }

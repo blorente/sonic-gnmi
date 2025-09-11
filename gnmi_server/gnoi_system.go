@@ -257,6 +257,20 @@ func (srv *Server) Reboot(ctx context.Context, req *syspb.RebootRequest) (*syspb
 
 	// NSF WARM BOOT.
 	if req.GetMethod() == syspb.RebootMethod_NSF {
+		// NSF requires a quiescent state, so disable PortCycler before a WARM
+		// reboot.
+		if srv.doPortCycleDisable {
+			configDbClient, configDbClientErr := common_utils.NewConfigDBClient()
+			if configDbClientErr != nil {
+				return nil, status.Errorf(codes.Aborted, "Failed to start a new ConfigDB client with error %v. Cannot disable Port-Cycling.", configDbClientErr)
+			}
+			defer db.CloseRedisClient(configDbClient)
+
+			if err = common_utils.DisablePortCycler(configDbClient); err != nil {
+				return nil, status.Errorf(codes.Aborted, "Failed to disable Port-Cycling with error %v.", err)
+			}
+			srv.doPortCycleDisable = false
+		}
 		// NSF pre-check validation before sending to NSF Manager.
 		return precheckNSFReboot(ctx, srv, req, rclient)
 	}

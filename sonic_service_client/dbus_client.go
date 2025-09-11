@@ -424,7 +424,7 @@ func (c *DbusClient) WhiteboxSet(cmd string) (string, error) {
 	debugMu.Lock()
 	defer debugMu.Unlock()
 	common_utils.IncCounter(common_utils.GNOI_WHITEBOX_SET)
-	result, err := c.caller.DbusApi(busName, busPath, intName, 10, cmd)
+	result, err := c.caller.DbusApi(busName, busPath, intName, 10, []string{cmd})
 	return dbusApiStringReturnHelper(result, err)
 }
 

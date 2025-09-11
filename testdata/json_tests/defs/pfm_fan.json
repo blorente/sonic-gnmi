@@ -14,6 +14,7 @@
       "Fan1_st_rm":   { "type": "boolean", "const": true },
       "Fan1_st_sn":   { "type": "string", "const": "BFFCTH214900113" },
       "Fan1_st_type": { "type": "string", "const": "openconfig-platform-types:FAN" },
+      "Fan1_st_mn":   { "type": "string", "const": "FINBACK" },
       "Fan1_st": {
         "type": "object",
         "required": ["empty", "hardware-version", "location", "mfg-date", "name", "oper-status", "parent", "part-no", "removable", "serial-no", "type"],
@@ -29,7 +30,8 @@
           "part-no":     { "$ref": "#/globalDef/pfm_fan/Fan1_st_pn" },
           "removable":   { "$ref": "#/globalDef/pfm_fan/Fan1_st_rm" },
           "serial-no":   { "$ref": "#/globalDef/pfm_fan/Fan1_st_sn" },
-          "type":        { "$ref": "#/globalDef/pfm_fan/Fan1_st_type" }
+          "type":        { "$ref": "#/globalDef/pfm_fan/Fan1_st_type" },
+          "model-name":  { "$ref": "#/globalDef/pfm_fan/Fan1_st_mn" }
         }
       },
       "Fan1_fan_st_scp": { "type": "integer", "const": 33 },
@@ -99,16 +101,17 @@
       "FanTray1_st_empty":{ "type": "boolean", "const": false },
       "FanTray1_st_par":  { "type": "string", "const": "chassis" },
       "FanTray1_st_rm":   { "type": "boolean", "const": true },
-      "FanTray1_st_type": { "type": "string", "const": "google-pins-platform:FANTRAY" },
+      "FanTray1_st_type": { "type": "string", "const": "openconfig-platform-types:FAN_TRAY" },
       "FanTray1_st_hv":   { "type": "string", "const": "N/A" },
       "FanTray1_st_loc":  { "type": "string", "const": "1" },
       "FanTray1_st_md":   { "type": "string", "const": "2021-12-06" },
       "FanTray1_st_op":   { "type": "string", "const": "openconfig-platform-types:ACTIVE" },
       "FanTray1_st_sn":   { "type": "string", "const": "N/A" },
       "FanTray1_st_pn":   { "type": "string", "const": "N/A" },
+      "FanTray1_st_mn":   { "type": "string", "const": "N/A" },
       "FanTray1_st": {
         "type": "object",
-        "required": ["empty", "name", "parent", "removable", "type", "hardware-version", "location", "mfg-date", "oper-status", "serial-no"],
+        "required": ["empty", "name", "parent", "removable", "type", "hardware-version", "location", "mfg-date", "oper-status", "serial-no", "model-name"],
         "additionalProperties": false,
         "properties": {
           "empty":       { "$ref": "#/globalDef/pfm_fan/FanTray1_st_empty" },
@@ -121,7 +124,8 @@
           "mfg-date":   { "$ref": "#/globalDef/pfm_fan/FanTray1_st_md" },
           "oper-status":{ "$ref": "#/globalDef/pfm_fan/FanTray1_st_op" },
           "serial-no":  { "$ref": "#/globalDef/pfm_fan/FanTray1_st_sn" },
-          "part-no":    { "$ref": "#/globalDef/pfm_fan/FanTray1_st_pn" }
+          "part-no":    { "$ref": "#/globalDef/pfm_fan/FanTray1_st_pn" },
+          "model-name": { "$ref": "#/globalDef/pfm_fan/FanTray1_st_mn" }
         }
       },
       "FanTray1": {

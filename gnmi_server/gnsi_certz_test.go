@@ -740,45 +740,64 @@ var gnsiCertzTestCases = []struct {
 		},
 	},
 	{
-		desc: "CanGenerateCSRUnimplemented",
+		desc: "CanGenerateCSRAccept",
 		f: func(ctx context.Context, t *testing.T, sc certz.CertzClient, s *Server) {
-			if _, err := sc.CanGenerateCSR(ctx, &certz.CanGenerateCSRRequest{}, grpc.EmptyCallOption{}); err != nil && status.Code(err) != codes.Unimplemented {
-				t.Error("Expected Unimplemented Error")
+			if resp, _ := sc.CanGenerateCSR(ctx, &certz.CanGenerateCSRRequest{Params: &certz.CSRParams{CommonName: "test"}}, grpc.EmptyCallOption{}); resp.GetCanGenerate() != true {
+				t.Errorf("CanGenerateCSR want: true got: %#v", resp)
 			}
 		},
 	},
 	{
-		desc: "GetIntegrityManifestFail",
+		desc: "CanGenerateCSRReject",
 		f: func(ctx context.Context, t *testing.T, sc certz.CertzClient, s *Server) {
-			integrityManifestFile = "fake/filepath.text"
-			if _, err := sc.GetIntegrityManifest(ctx, &certz.GetIntegrityManifestRequest{}, grpc.EmptyCallOption{}); err != nil && status.Code(err) != codes.Aborted {
-				t.Error("Expected Aborted Error: %v", err)
+			if resp, _ := sc.CanGenerateCSR(ctx, &certz.CanGenerateCSRRequest{}, grpc.EmptyCallOption{}); resp.GetCanGenerate() != false {
+				t.Errorf("CanGenerateCSR want: false got: %#v", resp)
 			}
 		},
 	},
 	{
-		desc: "GetIntegrityManifestSucceed",
+		desc: "GenerateCsrRSA",
 		f: func(ctx context.Context, t *testing.T, sc certz.CertzClient, s *Server) {
-			file, err := os.CreateTemp("", "")
+			stream, err := sc.Rotate(ctx, grpc.EmptyCallOption{})
 			if err != nil {
-				t.Errorf("Failed to create temp file: %v", err)
+				t.Fatal(err)
 			}
-			defer os.Remove(file.Name())
-			input := "test string"
-			if _, err := file.Write([]byte(input)); err != nil {
-				t.Errorf("Failed to write temp file: %v", err)
+			err = stream.Send(&certz.RotateCertificateRequest{
+				RotateRequest: &certz.RotateCertificateRequest_GenerateCsr{
+					GenerateCsr: &certz.GenerateCSRRequest{
+						Params: &certz.CSRParams{
+							CsrSuite:   certz.CSRSuite_CSRSUITE_X509_KEY_TYPE_RSA_2048_SIGNATURE_ALGORITHM_SHA_2_256,
+							CommonName: "test",
+							// Country: "US",
+							// State: "CA",
+							// City: "Sunnyvale",
+							// Organization: "Google",
+							// OrganizationalUnit: "Test",
+						},
+					},
+				},
+			},
+			)
+			if err != nil {
+				t.Fatal(err)
 			}
 
-			integrityManifestFile = file.Name()
-			if resp, err := sc.GetIntegrityManifest(ctx, &certz.GetIntegrityManifestRequest{}, grpc.EmptyCallOption{}); string(resp.GetManifest()) != input {
-				t.Error("Expected Aborted Error: %v", err)
+			_, err = stream.Recv()
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			stream.CloseSend()
+			_, err = stream.Recv()
+			// No finalize results in an Aborted
+			if err != nil && status.Code(err) != codes.Aborted {
+				t.Fatalf("Unexpected error: %v", err)
 			}
 		},
 	},
 	{
-		desc: "GenerateCSRUnimplemented",
+		desc: "GenerateCsrECDSA",
 		f: func(ctx context.Context, t *testing.T, sc certz.CertzClient, s *Server) {
-			// TODO(b/301177780) Update test after attestation implementation
 			stream, err := sc.Rotate(ctx, grpc.EmptyCallOption{})
 			if err != nil {
 				t.Fatal(err)
@@ -787,16 +806,74 @@ var gnsiCertzTestCases = []struct {
 			err = stream.Send(&certz.RotateCertificateRequest{
 				RotateRequest: &certz.RotateCertificateRequest_GenerateCsr{
 					GenerateCsr: &certz.GenerateCSRRequest{
-						Params: &certz.CSRParams{},
+						Params: &certz.CSRParams{
+							CsrSuite:           certz.CSRSuite_CSRSUITE_X509_KEY_TYPE_ECDSA_PRIME256V1_SIGNATURE_ALGORITHM_SHA_2_256,
+							CommonName:         "test",
+							Country:            "US",
+							State:              "CA",
+							City:               "Sunnyvale",
+							Organization:       "Google",
+							OrganizationalUnit: "Test",
+						},
 					},
 				},
-			})
+			},
+			)
 			if err != nil {
 				t.Fatal(err)
 			}
 
-			if _, err = stream.Recv(); status.Code(err) != codes.Unimplemented {
+			_, err = stream.Recv()
+			if err != nil {
 				t.Fatal(err)
+			}
+
+			stream.CloseSend()
+			_, err = stream.Recv()
+			// No finalize results in an Aborted
+			if err != nil && status.Code(err) != codes.Aborted {
+				t.Fatalf("Unexpected error: %v", err)
+			}
+		},
+	},
+	{
+		desc: "GenerateCsrAttest",
+		f: func(ctx context.Context, t *testing.T, sc certz.CertzClient, s *Server) {
+			stream, err := sc.Rotate(ctx, grpc.EmptyCallOption{})
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			err = stream.Send(&certz.RotateCertificateRequest{
+				RotateRequest: &certz.RotateCertificateRequest_GenerateCsr{
+					GenerateCsr: &certz.GenerateCSRRequest{
+						Params: &certz.CSRParams{
+							CsrSuite:           certz.CSRSuite_CSRSUITE_X509_KEY_TYPE_ECDSA_PRIME256V1_SIGNATURE_ALGORITHM_SHA_2_256,
+							CommonName:         "test",
+							Country:            "US",
+							State:              "CA",
+							City:               "Sunnyvale",
+							Organization:       "Google",
+							OrganizationalUnit: "Test",
+						},
+					},
+				},
+			},
+			)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			_, err = stream.Recv()
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			stream.CloseSend()
+			_, err = stream.Recv()
+			// No finalize results in an Aborted
+			if err != nil && status.Code(err) != codes.Aborted {
+				t.Fatalf("Unexpected error: %v", err)
 			}
 		},
 	},
@@ -961,11 +1038,21 @@ func copyCred(src, dst string) error {
 }
 
 func resetGRPCCertMetadataFile(path string) error {
-		noAPBuf := []byte(`{"gnxi":{"profile_id":"gnxi","active":{"certificate":{"EType":0,"CreatedOn":1,"Version":"startCert","CertPath":"/testdata/mtls/server_V1_cert.pem","KeyPath":"/testdata/mtls/server_V1_key.pem","Final":true},"trust_bundle":{"EType":1,"CreatedOn":2,"Version":"caStart","CertPath":"/testdata/mtls/ca_V1_bundle.pem","KeyPath":"","Final":true},"crl_bundle":{"EType":2,"CreatedOn":3,"Version":"crlStart","CertPath":"../testdata/mtls","KeyPath":"","Final":true}},"last_active":{"certificate":{"EType":0,"CreatedOn":0,"Version":"1","CertPath":"","KeyPath":"","Final":false},"trust_bundle":{"EType":0,"CreatedOn":0,"Version":"2","CertPath":"","KeyPath":"","Final":false},"crl_bundle":{"EType":0,"CreatedOn":0,"Version":"3","CertPath":"","KeyPath":"","Final":false}}}}`)
-		return attemptWrite(path, noAPBuf, 0644)
-
-	noAPBuf := []byte(`{"gnxi":{"profile_id":"gnxi","active":{"certificate":{"EType":0,"CreatedOn":1,"Version":"startCert","CertPath":"/testdata/mtls/server_V1_cert.pem","KeyPath":"/testdata/mtls/server_V1_key.pem","Final":true},"trust_bundle":{"EType":1,"CreatedOn":2,"Version":"caStart","CertPath":"/testdata/mtls/ca_V1_bundle.pem","KeyPath":"","Final":true},"crl_bundle":{"EType":2,"CreatedOn":3,"Version":"crlStart","CertPath":"../testdata/mtls","KeyPath":"","Final":true}},"last_active":{"certificate":{"EType":0,"CreatedOn":0,"Version":"1","CertPath":"","KeyPath":"","Final":false},"trust_bundle":{"EType":0,"CreatedOn":0,"Version":"2","CertPath":"","KeyPath":"","Final":false},"crl_bundle":{"EType":0,"CreatedOn":0,"Version":"3","CertPath":"","KeyPath":"","Final":false}}}}`)
-	return attemptWrite(path, noAPBuf, 0644)
+	buf := []byte(
+		`{"gnxi":{` +
+			`"profile_id":"gnxi",` +
+			`"active":{` +
+				`"certificate":{"EType":0,"CreatedOn":1,"Version":"startCert","CertPath":"/testdata/mtls/server_V1_cert.pem","KeyPath":"/testdata/mtls/server_V1_key.pem","Final":true},` +
+				`"trust_bundle":{"EType":1,"CreatedOn":2,"Version":"caStart","CertPath":"/testdata/mtls/ca_V1_bundle.pem","KeyPath":"","Final":true},` +
+				`"crl_bundle":{"EType":2,"CreatedOn":3,"Version":"crlStart","CertPath":"../testdata/mtls","KeyPath":"","Final":true},` +
+			`},` +
+			`"last_active":{` +
+				`"certificate":{"EType":0,"CreatedOn":0,"Version":"1","CertPath":"","KeyPath":"","Final":false},` +
+				`"trust_bundle":{"EType":0,"CreatedOn":0,"Version":"2","CertPath":"","KeyPath":"","Final":false},` +
+				`"crl_bundle":{"EType":0,"CreatedOn":0,"Version":"3","CertPath":"","KeyPath":"","Final":false},` +
+			`}` +
+		`}}`)
+	return attemptWrite(path, buf, 0644)
 }
 
 func resetSrvCertKeyToV1(cfg *Config) error {

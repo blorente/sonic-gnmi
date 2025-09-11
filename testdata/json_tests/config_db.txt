@@ -1,1523 +1,1532 @@
 {
-    "ACL_TABLE|LINKQUAL_ACL_TABLE": {
-        "policy_desc": "Linkqual ACL table",
-        "type": "LINKQUAL"
-    },
-    "OCS_XCONNECTS|1|1": {
-        "peer-port-number": 10099,
-        "peer-slot-number": 1
-    },
-    "OCS_XCONNECTS|1|99": {
-        "peer-port-number": 10001,
-        "peer-slot-number": 1
-    },
-    "OCS_XCONNECT_RECOVERY|global_xconnect_recovery": {
-        "port-connection-recovery-behavior": "RECOVER_PORT_CONNECTIONS_FROM_MEMORY"
-    },
-    "DEVICE_METADATA|localhost": {
-        "hostname": "sonic",
-        "platform": "test",
-        "hwsku": "test-sku",
-        "mac": "00:01:02:03:04:05",
-        "synchronous_mode": "enable",
-        "type": "LeafRouter",
-        "zmq_mode": "enable",
-        "default_bgp_status": "up",
-        "default_pfcwd_status": "disable"
-    },
-    "PORTCHANNEL|PortChannel1": {
-       "admin_status": "up",
-       "id": "2049",
-       "alias": "PortChannel1Alias",
-       "type": "iana-if-type:ieee8023adLag",
-       "description": "some description string.",
-       "mtu": "9104",
-       "lag_type": "LACP",
-       "members@": "Ethernet1/7/3,Ethernet1/7/4",
-       "min_links": "1",
-       "fast_rate": "true",
-       "active": "true",
-       "system_id": "fc:bd:67:2c:08:f4",
-       "lacp_key": "1",
-       "system_priority": "256"
-    },
-    "PORTCHANNEL_INTERFACE|PortChannel1": {
-       "NULL": "NULL"
-    },
-    "PORTCHANNEL_MEMBER|PortChannel1|Ethernet1/7/3": {
-       "NULL": "NULL"
-    },
-    "PORTCHANNEL_MEMBER|PortChannel1|Ethernet1/7/4": {
-       "NULL": "NULL"
-    },
-    "PORTCHANNEL|PortChannel2": {
-       "admin_status": "up",
-       "id": "2049",
-       "alias": "PortChannel2Alias",
-       "type": "iana-if-type:ieee8023adLag",
-       "description": "some description string.",
-       "mtu": "9104",
-       "lag_type": "LACP",
-       "members@": "Ethernet1/3/5",
-       "min_links": "1",
-       "fast_rate": "false",
-       "active": "false",
-       "system_id": "AA:BB:CC:DD:EE:FF",
-       "lacp_key": "2"
-    },
-    "PORTCHANNEL_INTERFACE|PortChannel2": {
-       "NULL": "NULL"
-    },
-    "PORTCHANNEL_MEMBER|PortChannel2|Ethernet1/3/5": {
-       "NULL": "NULL"
-    },
-    "PORT|Ethernet1/1/1": {
-        "index": "1",
-        "alias": "NoAliasEth0/1",
-        "autoneg": "on",
-        "admin_status": "up",
-        "forwarding-viable": "true",
-        "id": "100",
-        "mtu": "9104",
-        "speed": "400000",
-        "description": "Eth0",
-        "duplex-mode": "FULL",
-        "oper_status": "up",
-        "lanes": "9,10,11,12",
-        "fully-qualified-interface-name": "eth-1/1",
-        "link_training": "off",
-        "mac-address": "00:01:02:03:04:05",
-        "port_direction": "host_facing"
-    },
-    "PORT|Ethernet1/1/5": {
-        "index": "1",
-        "alias": "NoAliasEth1/1",
-        "admin_status": "down",
-        "mtu": "9104",
-        "speed": "400000",
-        "description": "Eth4",
-        "oper_status": "down",
-        "lanes": "13,14,15,16"
-    },
-    "PORT|Ethernet1/2/1": {
-        "index": "2",
-        "alias": "NoAliasEth2/1",
-        "admin_status": "up",
-        "mtu": "9104",
-        "speed": "400000",
-        "description": "Eth8",
-        "oper_status": "up",
-        "lanes": "1,2,3,4"
-    },
-    "PORT|Ethernet1/2/5": {
-        "index": "2",
-        "alias": "NoAliasEth3/1",
-        "admin_status": "down",
-        "mtu": "9104",
-        "speed": "400000",
-        "description": "Eth12",
-        "oper_status": "down",
-        "lanes": "5,6,7,8"
-    },
-    "PORT|Ethernet1/3/1": {
-        "index": "3",
-        "alias": "NoAliasEth4/1",
-        "admin_status": "up",
-        "mtu": "9104",
-        "speed": "400000",
-        "description": "Eth16",
-        "oper_status": "up",
-        "lanes": "25,26,27,28"
-    },
-    "PORT|Ethernet1/3/5": {
-        "admin_status": "up",
-        "alias": "NoAliasEth5/1",
-        "index": "3",
-        "lanes": "29,30,31,32",
-        "mtu": "9100",
-        "speed": "400000"
-    },
-    "PORT|Ethernet1/4/1": {
-        "index": "4",
-        "alias": "NoAliasEth6/1",
-        "admin_status": "up",
-        "mtu": "9104",
-        "speed": "400000",
-        "description": "Eth24",
-        "oper_status": "up",
-        "lanes": "17,18,19,20"
-    },
-    "PORT|Ethernet1/4/5": {
-        "index": "4",
-        "alias": "NoAliasEth7/1",
-        "admin_status": "up",
-        "mtu": "9104",
-        "speed": "400000",
-        "description": "Eth28",
-        "oper_status": "up",
-        "lanes": "21,22,23,24"
-    },
-    "PORT|Ethernet1/5/1": {
-        "admin_status": "up",
-        "alias": "NoAliasEth8/1",
-        "index": "5",
-        "lanes": "41,42,43,44",
-        "mtu": "9100",
-        "speed": "400000"
-    },
-    "PORT|Ethernet1/5/5": {
-        "admin_status": "up",
-        "alias": "NoAliasEth9/1",
-        "index": "5",
-        "lanes": "45,46,47,48",
-        "mtu": "9100",
-        "speed": "400000"
-    },
-    "PORT|Ethernet1/6/1": {
-        "index": "6",
-        "admin_status": "up",
-        "alias": "NoAliasEth10/1",
-        "mtu": "9104",
-        "speed": "400000",
-        "description": "Eth40",
-        "oper_status": "up",
-        "lanes": "33,34,35,36"
-    },
-    "PORT|Ethernet1/7/3": {
-        "index": "5",
-        "alias": "Eth5/1",
-        "admin_status": "up",
-        "mtu": "9104",
-        "speed": "400000",
-        "description": "Eth50",
-        "oper_status": "up",
-        "lanes": "106,107,108,109"
-    },
-    "PORT|Ethernet1/7/4": {
-        "index": "5",
-        "alias": "Eth5/2",
-        "admin_status": "up",
-        "mtu": "9104",
-        "speed": "400000",
-        "description": "Eth51",
-        "oper_status": "up",
-        "lanes": "110,111,112,113"
-    },
-    "PORT|Ethernet1/8/1": {
-        "index": "8",
-        "alias": "Eth8/1",
-        "admin_status": "up",
-        "mtu": "9104",
-        "speed": "400000",
-        "lanes": "49,50,51,52"
-    },
-    "PORT|Ethernet1/8/5": {
-        "index": "8",
-        "alias": "Eth8/1",
-        "admin_status": "up",
-        "mtu": "9104",
-        "speed": "400000",
-        "lanes": "53,54,55,56"
-    },
-    "PORT|Ethernet1/9/1": {
-        "index": "9",
-        "alias": "Eth9/1",
-        "admin_status": "up",
-        "mtu": "9104",
-        "speed": "400000",
-        "lanes": "73,74,75,76"
-    },
-    "PORT|Ethernet1/9/5": {
-        "index": "9",
-        "alias": "Eth9/1",
-        "admin_status": "up",
-        "mtu": "9104",
-        "speed": "400000",
-        "lanes": "77,78,79,80"
-    },
-    "PORT|Ethernet1/11/1": {
-        "index": "11",
-        "alias": "Eth11/1",
-        "admin_status": "up",
-        "mtu": "9104",
-        "speed": "400000",
-        "lanes": "89,90,91,92"
-    },
-    "PORT|Ethernet1/11/5": {
-        "index": "11",
-        "alias": "Eth11/1",
-        "admin_status": "up",
-        "mtu": "9104",
-        "speed": "400000",
-        "lanes": "93,94,95,96"
-    },
-    "PORT|Ethernet1/12/1": {
-        "index": "12",
-        "alias": "Eth12/1",
-        "admin_status": "up",
-        "mtu": "9104",
-        "speed": "400000",
-        "lanes": "81,82,83,84,85,86,87,88"
-    },
-    "PORT|Ethernet-BP1/35": {
-        "index": "35",
-        "alias": "Eth35",
-        "admin_status": "down",
-        "mtu": "9104",
-        "speed": "1000",
-        "lanes": "260"
-    },
-    "INTERFACE|Ethernet1/6/1": {
-        "ipv4_enabled":"enable",
-        "ipv6_use_link_local_only":"enable"
-    },
-    "CPU_PORT|CPU": {
-        "NULL": "NULL"
-    },
-    "MGMT_PORT|eth0": {
-        "NULL": "NULL",
-        "description": "Management interface"
-    },
-    "MGMT_PORT|bond0": {
-        "NULL": "NULL",
-        "description": "Management interface"
-    },
-    "MGMT_PORT|bond1": {
-        "NULL": "NULL",
-        "description": "Second Management interface"
-    },
-    "MGMT_PORT|eth1": {
-        "NULL": "NULL",
-        "description": "Management interface"
-    },
-    "MGMT_INTERFACE|bond0": {
-        "ipv4_enabled":"enable",
-        "ipv6_use_link_local_only":"enable"
-    },
-    "LOOPBACK|Loopback4": {
-        "NULL": "NULL",
-        "description": "Loopback interface"
-    },
-    "LOOPBACK_INTERFACE|Loopback4": {
-        "ipv4_enabled":"enable",
-        "ipv6_use_link_local_only":"enable"
-    },
-    "LOOPBACK_INTERFACE|Loopback4|2202:f001:ace::/64": {
-        "NULL": "NULL"
-    },
-    "CHASSIS_CFG|chassis": {
-        "name": "chassis",
-        "fully-qualified-name": "chassisXYZ",
-        "enable_host_signaling": "false"
-    },
-    "MAP_PFC_PRIORITY_TO_QUEUE|default_pfc_to_queue_map": {
-        "0": "2",
-        "1": "3",
-        "2": "4",
-        "3": "5",
-        "4": "6",
-        "5": "0",
-        "6": "1",
-        "7": "8"
-    },
-    "NODE_CFG|integrated_circuit0": {
-switch",
-        "node-id": "1234567",
-        "name": "integrated_circuit0"
-    },
-    "BREAKOUT_PORT_XCVR_CFG|1/2|Ethernet2": {
-        "NULL": "NULL"
-    },
-    "UMF_QUEUE|BE1": {
-        "NULL": "NULL"
-    },
-    "QUEUE|Ethernet1/1/1|0": {
-        "NULL": "NULL"
-    },
-    "QUEUE|Ethernet1/7/3|0": {
-        "NULL": "NULL"
-    },
-    "QUEUE|Ethernet1/7/4|0": {
-        "NULL": "NULL"
-    },
-    "QUEUE|CPU|0": {
-        "NULL": "NULL"
-    },
-    "QUEUE|Ethernet1/1/1|2": {
-        "NULL": "NULL",
-        "scheduler":"scheduler-policy@1"
-    },
-    "QUEUE|Ethernet1/6/1|2": {
-        "NULL": "NULL",
-        "scheduler":"scheduler-policy@1"
-    },
-    "QUEUE|CPU|2": {
-        "NULL": "NULL"
-    },
-    "QUEUE|CPU|47": {
-        "NULL": "NULL",
-        "scheduler":"default-cpu-scheduler"
-    },
-    "TC_TO_QUEUE_MAP|global_tc_to_queue_map": {
-        "7": "3",
-        "8": "3",
-        "2": "2",
-        "3": "2"
-    },
-    "BUFFER_POOL|default_egress": {
-        "mode": "dynamic",
-        "size": "113620296",
-        "type": "egress"
-    },
-    "BREAKOUT_CFG|Ethernet1/1/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "9,10,11,12,13,14,15,16"
-    },
-    "BREAKOUT_CFG|Ethernet1/2/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "1,2,3,4,5,6,7,8"
-    },
-    "BREAKOUT_CFG|Ethernet1/3/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "25,26,27,28,29,30,31,32"
-    },
-    "BREAKOUT_CFG|Ethernet1/4/1": {
-        "brkout_mode": "2x200G",
-        "lanes": "17,18,19,20,21,22,23,24"
-    },
-    "BREAKOUT_CFG|Ethernet1/5/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "41,42,43,44,45,46,47,48"
-    },
-    "BREAKOUT_CFG|Ethernet1/6/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "33,34,35,36,37,38,39,40"
-    },
-    "BREAKOUT_CFG|Ethernet1/7/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "57,58,59,60,61,62,63,64"
-    },
-    "BREAKOUT_CFG|Ethernet1/8/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "49,50,51,52,53,54,55,56"
-    },
-    "BREAKOUT_CFG|Ethernet1/9/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "73,74,75,76,77,78,79,80"
-    },
-    "BREAKOUT_CFG|Ethernet1/10/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "65,66,67,68,69,70,71,72"
-    },
-    "BREAKOUT_CFG|Ethernet1/11/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "89,90,91,92,93,94,95,96"
-    },
-    "BREAKOUT_CFG|Ethernet1/12/1": {
-        "brkout_mode": "1x400G",
-        "lanes": "81,82,83,84,85,86,87,88"
-    },
-    "BREAKOUT_CFG|Ethernet1/13/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "105,106,107,108,109,110,111,112"
-    },
-    "BREAKOUT_CFG|Ethernet1/14/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "97,98,99,100,101,102,103,104"
-    },
-    "BREAKOUT_CFG|Ethernet1/15/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "121,122,123,124,125,126,127,128"
-    },
-    "BREAKOUT_CFG|Ethernet1/16/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "113,114,115,116,117,118,119,120"
-    },
-    "BREAKOUT_CFG|Ethernet1/17/1": {
-        "brkout_mode": "2x200G",
-        "lanes": "137,138,139,140,141,142,143,144"
-    },
-    "BREAKOUT_CFG|Ethernet1/18/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "129,130,131,132,133,134,135,136"
-    },
-    "BREAKOUT_CFG|Ethernet1/19/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "153,154,155,156,157,158,159,160"
-    },
-    "BREAKOUT_CFG|Ethernet1/20/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "145,146,147,148,149,150,151,152"
-    },
-    "BREAKOUT_CFG|Ethernet1/21/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "169,170,171,172,173,174,175,176"
-    },
-    "BREAKOUT_CFG|Ethernet1/22/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "161,162,163,164,165,166,167,168"
-    },
-    "BREAKOUT_CFG|Ethernet1/23/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "185,186,187,188,189,190,191,192"
-    },
-    "BREAKOUT_CFG|Ethernet1/24/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "177,178,179,180,181,182,183,184"
-    },
-    "BREAKOUT_CFG|Ethernet1/25/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "201,202,203,204,205,206,207,208"
-    },
-    "BREAKOUT_CFG|Ethernet1/26/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "193,194,195,196,197,198,199,200"
-    },
-    "BREAKOUT_CFG|Ethernet1/27/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "217,218,219,220,221,222,223,224"
-    },
-    "BREAKOUT_CFG|Ethernet1/28/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "209,210,211,212,213,214,215,216"
-    },
-    "BREAKOUT_CFG|Ethernet1/29/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "233,234,235,236,237,238,239,240"
-    },
-    "BREAKOUT_CFG|Ethernet1/30/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "225,226,227,228,229,230,231,232"
-    },
-    "BREAKOUT_CFG|Ethernet1/31/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "249,250,251,252,253,254,255,256"
-    },
-    "BREAKOUT_CFG|Ethernet1/32/1": {
-        "brkout_mode": "2x400G",
-        "lanes": "241,242,243,244,245,246,247,248"
-    },
-    "BREAKOUT_CFG|Ethernet1/33": {
-        "brkout_mode": "1x10G",
-        "lanes": "258"
-    },
-    "BREAKOUT_CFG|Ethernet1/34": {
-        "brkout_mode": "1x10G",
-        "lanes": "257"
-    },
-    "BREAKOUT_CFG|Ethernet-BP1/35": {
-        "brkout_mode": "1x10G",
-        "lanes": "260"
-    },
-    "BREAKOUT_CFG|Ethernet-BP1/36": {
-        "brkout_mode": "1x10G",
-        "lanes": "261"
-    },
-    "BREAKOUT_PORTS|Ethernet1/1/1": {
-        "master": "Ethernet1/1/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/1/2": {
-        "master": "Ethernet1/1/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/1/3": {
-        "master": "Ethernet1/1/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/1/4": {
-        "master": "Ethernet1/1/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/1/5": {
-        "master": "Ethernet1/1/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/1/6": {
-        "master": "Ethernet1/1/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/1/7": {
-        "master": "Ethernet1/1/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/1/8": {
-        "master": "Ethernet1/1/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/2/1": {
-        "master": "Ethernet1/2/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/2/2": {
-        "master": "Ethernet1/2/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/2/3": {
-        "master": "Ethernet1/2/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/2/4": {
-        "master": "Ethernet1/2/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/2/5": {
-        "master": "Ethernet1/2/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/2/6": {
-        "master": "Ethernet1/2/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/2/7": {
-        "master": "Ethernet1/2/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/2/8": {
-        "master": "Ethernet1/2/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/3/1": {
-        "master": "Ethernet1/3/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/3/2": {
-        "master": "Ethernet1/3/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/3/3": {
-        "master": "Ethernet1/3/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/3/4": {
-        "master": "Ethernet1/3/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/3/5": {
-        "master": "Ethernet1/3/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/3/6": {
-        "master": "Ethernet1/3/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/3/7": {
-        "master": "Ethernet1/3/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/3/8": {
-        "master": "Ethernet1/3/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/4/1": {
-        "master": "Ethernet1/4/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/4/2": {
-        "master": "Ethernet1/4/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/4/3": {
-        "master": "Ethernet1/4/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/4/4": {
-        "master": "Ethernet1/4/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/4/5": {
-        "master": "Ethernet1/4/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/4/6": {
-        "master": "Ethernet1/4/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/4/7": {
-        "master": "Ethernet1/4/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/4/8": {
-        "master": "Ethernet1/4/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/5/1": {
-        "master": "Ethernet1/5/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/5/2": {
-        "master": "Ethernet1/5/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/5/3": {
-        "master": "Ethernet1/5/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/5/4": {
-        "master": "Ethernet1/5/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/5/5": {
-        "master": "Ethernet1/5/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/5/6": {
-        "master": "Ethernet1/5/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/5/7": {
-        "master": "Ethernet1/5/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/5/8": {
-        "master": "Ethernet1/5/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/6/1": {
-        "master": "Ethernet1/6/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/6/2": {
-        "master": "Ethernet1/6/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/6/3": {
-        "master": "Ethernet1/6/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/6/4": {
-        "master": "Ethernet1/6/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/6/5": {
-        "master": "Ethernet1/6/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/6/6": {
-        "master": "Ethernet1/6/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/6/7": {
-        "master": "Ethernet1/6/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/6/8": {
-        "master": "Ethernet1/6/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/7/1": {
-        "master": "Ethernet1/7/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/7/2": {
-        "master": "Ethernet1/7/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/7/3": {
-        "master": "Ethernet1/7/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/7/4": {
-        "master": "Ethernet1/7/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/7/5": {
-        "master": "Ethernet1/7/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/7/6": {
-        "master": "Ethernet1/7/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/7/7": {
-        "master": "Ethernet1/7/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/7/8": {
-        "master": "Ethernet1/7/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/8/1": {
-        "master": "Ethernet1/8/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/8/2": {
-        "master": "Ethernet1/8/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/8/3": {
-        "master": "Ethernet1/8/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/8/4": {
-        "master": "Ethernet1/8/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/8/5": {
-        "master": "Ethernet1/8/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/8/6": {
-        "master": "Ethernet1/8/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/8/7": {
-        "master": "Ethernet1/8/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/8/8": {
-        "master": "Ethernet1/8/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/9/1": {
-        "master": "Ethernet1/9/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/9/2": {
-        "master": "Ethernet1/9/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/9/3": {
-        "master": "Ethernet1/9/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/9/4": {
-        "master": "Ethernet1/9/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/9/5": {
-        "master": "Ethernet1/9/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/9/6": {
-        "master": "Ethernet1/9/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/9/7": {
-        "master": "Ethernet1/9/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/9/8": {
-        "master": "Ethernet1/9/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/10/1": {
-        "master": "Ethernet1/10/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/10/2": {
-        "master": "Ethernet1/10/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/10/3": {
-        "master": "Ethernet1/10/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/10/4": {
-        "master": "Ethernet1/10/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/10/5": {
-        "master": "Ethernet1/10/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/10/6": {
-        "master": "Ethernet1/10/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/10/7": {
-        "master": "Ethernet1/10/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/10/8": {
-        "master": "Ethernet1/10/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/11/1": {
-        "master": "Ethernet1/11/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/11/2": {
-        "master": "Ethernet1/11/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/11/3": {
-        "master": "Ethernet1/11/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/11/4": {
-        "master": "Ethernet1/11/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/11/5": {
-        "master": "Ethernet1/11/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/11/6": {
-        "master": "Ethernet1/11/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/11/7": {
-        "master": "Ethernet1/11/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/11/8": {
-        "master": "Ethernet1/11/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/12/1": {
-        "master": "Ethernet1/12/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/12/2": {
-        "master": "Ethernet1/12/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/12/3": {
-        "master": "Ethernet1/12/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/12/4": {
-        "master": "Ethernet1/12/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/12/5": {
-        "master": "Ethernet1/12/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/12/6": {
-        "master": "Ethernet1/12/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/12/7": {
-        "master": "Ethernet1/12/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/12/8": {
-        "master": "Ethernet1/12/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/13/1": {
-        "master": "Ethernet1/13/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/13/2": {
-        "master": "Ethernet1/13/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/13/3": {
-        "master": "Ethernet1/13/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/13/4": {
-        "master": "Ethernet1/13/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/13/5": {
-        "master": "Ethernet1/13/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/13/6": {
-        "master": "Ethernet1/13/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/13/7": {
-        "master": "Ethernet1/13/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/13/8": {
-        "master": "Ethernet1/13/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/14/1": {
-        "master": "Ethernet1/14/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/14/2": {
-        "master": "Ethernet1/14/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/14/3": {
-        "master": "Ethernet1/14/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/14/4": {
-        "master": "Ethernet1/14/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/14/5": {
-        "master": "Ethernet1/14/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/14/6": {
-        "master": "Ethernet1/14/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/14/7": {
-        "master": "Ethernet1/14/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/14/8": {
-        "master": "Ethernet1/14/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/15/1": {
-        "master": "Ethernet1/15/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/15/2": {
-        "master": "Ethernet1/15/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/15/3": {
-        "master": "Ethernet1/15/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/15/4": {
-        "master": "Ethernet1/15/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/15/5": {
-        "master": "Ethernet1/15/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/15/6": {
-        "master": "Ethernet1/15/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/15/7": {
-        "master": "Ethernet1/15/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/15/8": {
-        "master": "Ethernet1/15/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/16/1": {
-        "master": "Ethernet1/16/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/16/2": {
-        "master": "Ethernet1/16/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/16/3": {
-        "master": "Ethernet1/16/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/16/4": {
-        "master": "Ethernet1/16/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/16/5": {
-        "master": "Ethernet1/16/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/16/6": {
-        "master": "Ethernet1/16/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/16/7": {
-        "master": "Ethernet1/16/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/16/8": {
-        "master": "Ethernet1/16/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/17/1": {
-        "master": "Ethernet1/17/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/17/2": {
-        "master": "Ethernet1/17/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/17/3": {
-        "master": "Ethernet1/17/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/17/4": {
-        "master": "Ethernet1/17/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/17/5": {
-        "master": "Ethernet1/17/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/17/6": {
-        "master": "Ethernet1/17/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/17/7": {
-        "master": "Ethernet1/17/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/17/8": {
-        "master": "Ethernet1/17/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/18/1": {
-        "master": "Ethernet1/18/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/18/2": {
-        "master": "Ethernet1/18/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/18/3": {
-        "master": "Ethernet1/18/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/18/4": {
-        "master": "Ethernet1/18/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/18/5": {
-        "master": "Ethernet1/18/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/18/6": {
-        "master": "Ethernet1/18/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/18/7": {
-        "master": "Ethernet1/18/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/18/8": {
-        "master": "Ethernet1/18/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/19/1": {
-        "master": "Ethernet1/19/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/19/2": {
-        "master": "Ethernet1/19/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/19/3": {
-        "master": "Ethernet1/19/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/19/4": {
-        "master": "Ethernet1/19/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/19/5": {
-        "master": "Ethernet1/19/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/19/6": {
-        "master": "Ethernet1/19/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/19/7": {
-        "master": "Ethernet1/19/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/19/8": {
-        "master": "Ethernet1/19/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/20/1": {
-        "master": "Ethernet1/20/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/20/2": {
-        "master": "Ethernet1/20/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/20/3": {
-        "master": "Ethernet1/20/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/20/4": {
-        "master": "Ethernet1/20/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/20/5": {
-        "master": "Ethernet1/20/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/20/6": {
-        "master": "Ethernet1/20/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/20/7": {
-        "master": "Ethernet1/20/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/20/8": {
-        "master": "Ethernet1/20/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/21/1": {
-        "master": "Ethernet1/21/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/21/2": {
-        "master": "Ethernet1/21/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/21/3": {
-        "master": "Ethernet1/21/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/21/4": {
-        "master": "Ethernet1/21/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/21/5": {
-        "master": "Ethernet1/21/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/21/6": {
-        "master": "Ethernet1/21/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/21/7": {
-        "master": "Ethernet1/21/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/21/8": {
-        "master": "Ethernet1/21/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/22/1": {
-        "master": "Ethernet1/22/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/22/2": {
-        "master": "Ethernet1/22/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/22/3": {
-        "master": "Ethernet1/22/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/22/4": {
-        "master": "Ethernet1/22/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/22/5": {
-        "master": "Ethernet1/22/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/22/6": {
-        "master": "Ethernet1/22/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/22/7": {
-        "master": "Ethernet1/22/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/22/8": {
-        "master": "Ethernet1/22/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/23/1": {
-        "master": "Ethernet1/23/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/23/2": {
-        "master": "Ethernet1/23/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/23/3": {
-        "master": "Ethernet1/23/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/23/4": {
-        "master": "Ethernet1/23/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/23/5": {
-        "master": "Ethernet1/23/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/23/6": {
-        "master": "Ethernet1/23/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/23/7": {
-        "master": "Ethernet1/23/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/23/8": {
-        "master": "Ethernet1/23/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/24/1": {
-        "master": "Ethernet1/24/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/24/2": {
-        "master": "Ethernet1/24/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/24/3": {
-        "master": "Ethernet1/24/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/24/4": {
-        "master": "Ethernet1/24/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/24/5": {
-        "master": "Ethernet1/24/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/24/6": {
-        "master": "Ethernet1/24/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/24/7": {
-        "master": "Ethernet1/24/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/24/8": {
-        "master": "Ethernet1/24/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/25/1": {
-        "master": "Ethernet1/25/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/25/2": {
-        "master": "Ethernet1/25/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/25/3": {
-        "master": "Ethernet1/25/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/25/4": {
-        "master": "Ethernet1/25/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/25/5": {
-        "master": "Ethernet1/25/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/25/6": {
-        "master": "Ethernet1/25/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/25/7": {
-        "master": "Ethernet1/25/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/25/8": {
-        "master": "Ethernet1/25/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/26/1": {
-        "master": "Ethernet1/26/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/26/2": {
-        "master": "Ethernet1/26/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/26/3": {
-        "master": "Ethernet1/26/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/26/4": {
-        "master": "Ethernet1/26/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/26/5": {
-        "master": "Ethernet1/26/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/26/6": {
-        "master": "Ethernet1/26/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/26/7": {
-        "master": "Ethernet1/26/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/26/8": {
-        "master": "Ethernet1/26/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/27/1": {
-        "master": "Ethernet1/27/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/27/2": {
-        "master": "Ethernet1/27/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/27/3": {
-        "master": "Ethernet1/27/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/27/4": {
-        "master": "Ethernet1/27/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/27/5": {
-        "master": "Ethernet1/27/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/27/6": {
-        "master": "Ethernet1/27/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/27/7": {
-        "master": "Ethernet1/27/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/27/8": {
-        "master": "Ethernet1/27/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/28/1": {
-            "master": "Ethernet1/28/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/28/2": {
-            "master": "Ethernet1/28/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/28/3": {
-        "master": "Ethernet1/28/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/28/4": {
-            "master": "Ethernet1/28/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/28/5": {
-        "master": "Ethernet1/28/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/28/6": {
-            "master": "Ethernet1/28/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/28/7": {
-        "master": "Ethernet1/28/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/28/8": {
-            "master": "Ethernet1/28/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/29/1": {
-        "master": "Ethernet1/29/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/29/2": {
-        "master": "Ethernet1/29/1"
-    },
-    "BREAKOUT_PORTS|Etherne1/29/3": {
-        "master": "Ethernet1/29/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/29/4": {
-        "master": "Ethernet1/29/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/29/5": {
-        "master": "Ethernet1/29/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/29/6": {
-        "master": "Ethernet1/29/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/29/7": {
-        "master": "Ethernet1/29/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/29/8": {
-        "master": "Ethernet1/29/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/30/1": {
-        "master": "Ethernet1/30/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/30/2": {
-        "master": "Ethernet1/30/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/30/3": {
-        "master": "Ethernet1/30/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/30/4": {
-        "master": "Ethernet1/30/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/30/5": {
-        "master": "Ethernet1/30/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/30/6": {
-        "master": "Ethernet1/30/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/30/7": {
-        "master": "Ethernet1/30/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/30/8": {
-        "master": "Ethernet1/30/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/31/1": {
-        "master": "Ethernet1/31/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/31/2": {
-        "master": "Ethernet1/31/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/31/3": {
-        "master": "Ethernet1/31/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/31/4": {
-        "master": "Ethernet1/31/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/31/5": {
-        "master": "Ethernet1/31/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/31/6": {
-        "master": "Ethernet1/31/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/31/7": {
-        "master": "Ethernet1/31/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/31/8": {
-        "master": "Ethernet1/31/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/32/1": {
-        "master": "Ethernet1/32/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/32/2": {
-        "master": "Ethernet1/32/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/32/3": {
-        "master": "Ethernet1/32/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/32/4": {
-        "master": "Ethernet1/32/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/32/5": {
-        "master": "Ethernet1/32/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/32/6": {
-        "master": "Ethernet1/32/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/32/7": {
-        "master": "Ethernet1/32/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/32/8": {
-        "master": "Ethernet1/32/1"
-    },
-    "BREAKOUT_PORTS|Ethernet1/33": {
-        "master": "Ethernet1/33"
-    },
-    "BREAKOUT_PORTS|Ethernet1/34": {
-        "master": "Ethernet1/34"
-    },
-    "BREAKOUT_PORTS|Ethernet-BP1/35": {
-        "master": "Ethernet-BP1/35"
-    },
-    "BREAKOUT_PORTS|Ethernet-BP1/36": {
-        "master": "Ethernet-BP1/36"
-    },
-    "INTERFACE|Ethernet1/1/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/1/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/2/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/2/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/3/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/3/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/4/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/4/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/5/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/5/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/6/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/7/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/7/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/8/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/8/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/9/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/9/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/10/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/10/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/11/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/11/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/12/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/12/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/13/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/13/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/14/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/14/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/15/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/15/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/16/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/16/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/17/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/17/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/18/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/18/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/19/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/19/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/20/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/20/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/21/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/21/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/22/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/22/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/23/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/23/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/24/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/24/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/25/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/25/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/26/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/26/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/27/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/27/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/28/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/28/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/29/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/29/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/30/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/30/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/31/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/31/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/32/1": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/32/5": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/33": {
-        "NULL": "NULL"
-    },
-    "INTERFACE|Ethernet1/34": {
-        "NULL": "NULL"
-    },
-    "TELEMETRY|gnmi": {
-        "vmodule": "server=2,gnoi=3"
-    },
-    "DB_JOURNAL|Test": {
-        "description": "Capturing journal writes..."
-    },
-    "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local": {
-        "enable": "true"
-    },
-    "SFLOW|global" : {
-        "admin_state": "up"
-    },
-    "QUEUE_NAME_TO_ID_MAP|FRONT_PANEL": {
-        "NC1": "7",
-        "AF2": "4",
-        "LLQ2": "1",
-        "BE1": "2",
-        "AF3": "5",
-        "AF1": "3",
-        "LLQ1": "0",
-        "AF4": "6"
-    },
-    "QUEUE_NAME_TO_ID_MAP|CPU": {
-        "INBAND_PRIORITY_4": "4",
-        "INBAND_PRIORITY_3": "3",
-        "INBAND_PRIORITY_6": "6",
-        "INBAND_PRIORITY_1": "1",
-        "DEDICATED-CPU-QUEUE-FOR-INGRESS-PORT-Ethernet1/3/3": "7",
-        "INBAND_PRIORITY_0": "0",
-        "INBAND_PRIORITY_2": "2",
-        "INBAND_PRIORITY_5": "5"
-    }
+  "ACL_TABLE|LINKQUAL_ACL_TABLE": {
+    "policy_desc": "Linkqual ACL table",
+    "type": "LINKQUAL"
+  },
+  "BREAKOUT_CFG|Ethernet-BP1/35": {
+    "brkout_mode": "1x10G",
+    "lanes": "260"
+  },
+  "BREAKOUT_CFG|Ethernet-BP1/36": {
+    "brkout_mode": "1x10G",
+    "lanes": "261"
+  },
+  "BREAKOUT_CFG|Ethernet1/1/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "9,10,11,12,13,14,15,16"
+  },
+  "BREAKOUT_CFG|Ethernet1/10/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "65,66,67,68,69,70,71,72"
+  },
+  "BREAKOUT_CFG|Ethernet1/11/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "89,90,91,92,93,94,95,96"
+  },
+  "BREAKOUT_CFG|Ethernet1/12/1": {
+    "brkout_mode": "1x400G",
+    "lanes": "81,82,83,84,85,86,87,88"
+  },
+  "BREAKOUT_CFG|Ethernet1/13/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "105,106,107,108,109,110,111,112"
+  },
+  "BREAKOUT_CFG|Ethernet1/14/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "97,98,99,100,101,102,103,104"
+  },
+  "BREAKOUT_CFG|Ethernet1/15/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "121,122,123,124,125,126,127,128"
+  },
+  "BREAKOUT_CFG|Ethernet1/16/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "113,114,115,116,117,118,119,120"
+  },
+  "BREAKOUT_CFG|Ethernet1/17/1": {
+    "brkout_mode": "2x200G",
+    "lanes": "137,138,139,140,141,142,143,144"
+  },
+  "BREAKOUT_CFG|Ethernet1/18/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "129,130,131,132,133,134,135,136"
+  },
+  "BREAKOUT_CFG|Ethernet1/19/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "153,154,155,156,157,158,159,160"
+  },
+  "BREAKOUT_CFG|Ethernet1/2/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "1,2,3,4,5,6,7,8"
+  },
+  "BREAKOUT_CFG|Ethernet1/20/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "145,146,147,148,149,150,151,152"
+  },
+  "BREAKOUT_CFG|Ethernet1/21/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "169,170,171,172,173,174,175,176"
+  },
+  "BREAKOUT_CFG|Ethernet1/22/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "161,162,163,164,165,166,167,168"
+  },
+  "BREAKOUT_CFG|Ethernet1/23/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "185,186,187,188,189,190,191,192"
+  },
+  "BREAKOUT_CFG|Ethernet1/24/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "177,178,179,180,181,182,183,184"
+  },
+  "BREAKOUT_CFG|Ethernet1/25/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "201,202,203,204,205,206,207,208"
+  },
+  "BREAKOUT_CFG|Ethernet1/26/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "193,194,195,196,197,198,199,200"
+  },
+  "BREAKOUT_CFG|Ethernet1/27/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "217,218,219,220,221,222,223,224"
+  },
+  "BREAKOUT_CFG|Ethernet1/28/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "209,210,211,212,213,214,215,216"
+  },
+  "BREAKOUT_CFG|Ethernet1/29/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "233,234,235,236,237,238,239,240"
+  },
+  "BREAKOUT_CFG|Ethernet1/3/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "25,26,27,28,29,30,31,32"
+  },
+  "BREAKOUT_CFG|Ethernet1/30/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "225,226,227,228,229,230,231,232"
+  },
+  "BREAKOUT_CFG|Ethernet1/31/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "249,250,251,252,253,254,255,256"
+  },
+  "BREAKOUT_CFG|Ethernet1/32/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "241,242,243,244,245,246,247,248"
+  },
+  "BREAKOUT_CFG|Ethernet1/33": {
+    "brkout_mode": "1x10G",
+    "lanes": "258"
+  },
+  "BREAKOUT_CFG|Ethernet1/34": {
+    "brkout_mode": "1x10G",
+    "lanes": "257"
+  },
+  "BREAKOUT_CFG|Ethernet1/4/1": {
+    "brkout_mode": "2x200G",
+    "lanes": "17,18,19,20,21,22,23,24"
+  },
+  "BREAKOUT_CFG|Ethernet1/5/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "41,42,43,44,45,46,47,48"
+  },
+  "BREAKOUT_CFG|Ethernet1/6/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "33,34,35,36,37,38,39,40"
+  },
+  "BREAKOUT_CFG|Ethernet1/7/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "57,58,59,60,61,62,63,64"
+  },
+  "BREAKOUT_CFG|Ethernet1/8/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "49,50,51,52,53,54,55,56"
+  },
+  "BREAKOUT_CFG|Ethernet1/9/1": {
+    "brkout_mode": "2x400G",
+    "lanes": "73,74,75,76,77,78,79,80"
+  },
+  "BREAKOUT_PORTS|Etherne1/29/3": {
+    "master": "Ethernet1/29/1"
+  },
+  "BREAKOUT_PORTS|Ethernet-BP1/35": {
+    "master": "Ethernet-BP1/35"
+  },
+  "BREAKOUT_PORTS|Ethernet-BP1/36": {
+    "master": "Ethernet-BP1/36"
+  },
+  "BREAKOUT_PORTS|Ethernet1/1/1": {
+    "master": "Ethernet1/1/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/1/2": {
+    "master": "Ethernet1/1/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/1/3": {
+    "master": "Ethernet1/1/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/1/4": {
+    "master": "Ethernet1/1/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/1/5": {
+    "master": "Ethernet1/1/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/1/6": {
+    "master": "Ethernet1/1/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/1/7": {
+    "master": "Ethernet1/1/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/1/8": {
+    "master": "Ethernet1/1/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/10/1": {
+    "master": "Ethernet1/10/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/10/2": {
+    "master": "Ethernet1/10/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/10/3": {
+    "master": "Ethernet1/10/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/10/4": {
+    "master": "Ethernet1/10/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/10/5": {
+    "master": "Ethernet1/10/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/10/6": {
+    "master": "Ethernet1/10/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/10/7": {
+    "master": "Ethernet1/10/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/10/8": {
+    "master": "Ethernet1/10/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/11/1": {
+    "master": "Ethernet1/11/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/11/2": {
+    "master": "Ethernet1/11/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/11/3": {
+    "master": "Ethernet1/11/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/11/4": {
+    "master": "Ethernet1/11/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/11/5": {
+    "master": "Ethernet1/11/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/11/6": {
+    "master": "Ethernet1/11/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/11/7": {
+    "master": "Ethernet1/11/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/11/8": {
+    "master": "Ethernet1/11/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/12/1": {
+    "master": "Ethernet1/12/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/12/2": {
+    "master": "Ethernet1/12/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/12/3": {
+    "master": "Ethernet1/12/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/12/4": {
+    "master": "Ethernet1/12/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/12/5": {
+    "master": "Ethernet1/12/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/12/6": {
+    "master": "Ethernet1/12/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/12/7": {
+    "master": "Ethernet1/12/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/12/8": {
+    "master": "Ethernet1/12/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/13/1": {
+    "master": "Ethernet1/13/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/13/2": {
+    "master": "Ethernet1/13/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/13/3": {
+    "master": "Ethernet1/13/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/13/4": {
+    "master": "Ethernet1/13/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/13/5": {
+    "master": "Ethernet1/13/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/13/6": {
+    "master": "Ethernet1/13/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/13/7": {
+    "master": "Ethernet1/13/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/13/8": {
+    "master": "Ethernet1/13/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/14/1": {
+    "master": "Ethernet1/14/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/14/2": {
+    "master": "Ethernet1/14/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/14/3": {
+    "master": "Ethernet1/14/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/14/4": {
+    "master": "Ethernet1/14/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/14/5": {
+    "master": "Ethernet1/14/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/14/6": {
+    "master": "Ethernet1/14/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/14/7": {
+    "master": "Ethernet1/14/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/14/8": {
+    "master": "Ethernet1/14/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/15/1": {
+    "master": "Ethernet1/15/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/15/2": {
+    "master": "Ethernet1/15/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/15/3": {
+    "master": "Ethernet1/15/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/15/4": {
+    "master": "Ethernet1/15/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/15/5": {
+    "master": "Ethernet1/15/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/15/6": {
+    "master": "Ethernet1/15/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/15/7": {
+    "master": "Ethernet1/15/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/15/8": {
+    "master": "Ethernet1/15/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/16/1": {
+    "master": "Ethernet1/16/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/16/2": {
+    "master": "Ethernet1/16/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/16/3": {
+    "master": "Ethernet1/16/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/16/4": {
+    "master": "Ethernet1/16/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/16/5": {
+    "master": "Ethernet1/16/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/16/6": {
+    "master": "Ethernet1/16/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/16/7": {
+    "master": "Ethernet1/16/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/16/8": {
+    "master": "Ethernet1/16/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/17/1": {
+    "master": "Ethernet1/17/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/17/2": {
+    "master": "Ethernet1/17/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/17/3": {
+    "master": "Ethernet1/17/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/17/4": {
+    "master": "Ethernet1/17/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/17/5": {
+    "master": "Ethernet1/17/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/17/6": {
+    "master": "Ethernet1/17/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/17/7": {
+    "master": "Ethernet1/17/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/17/8": {
+    "master": "Ethernet1/17/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/18/1": {
+    "master": "Ethernet1/18/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/18/2": {
+    "master": "Ethernet1/18/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/18/3": {
+    "master": "Ethernet1/18/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/18/4": {
+    "master": "Ethernet1/18/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/18/5": {
+    "master": "Ethernet1/18/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/18/6": {
+    "master": "Ethernet1/18/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/18/7": {
+    "master": "Ethernet1/18/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/18/8": {
+    "master": "Ethernet1/18/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/19/1": {
+    "master": "Ethernet1/19/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/19/2": {
+    "master": "Ethernet1/19/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/19/3": {
+    "master": "Ethernet1/19/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/19/4": {
+    "master": "Ethernet1/19/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/19/5": {
+    "master": "Ethernet1/19/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/19/6": {
+    "master": "Ethernet1/19/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/19/7": {
+    "master": "Ethernet1/19/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/19/8": {
+    "master": "Ethernet1/19/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/2/1": {
+    "master": "Ethernet1/2/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/2/2": {
+    "master": "Ethernet1/2/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/2/3": {
+    "master": "Ethernet1/2/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/2/4": {
+    "master": "Ethernet1/2/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/2/5": {
+    "master": "Ethernet1/2/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/2/6": {
+    "master": "Ethernet1/2/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/2/7": {
+    "master": "Ethernet1/2/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/2/8": {
+    "master": "Ethernet1/2/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/20/1": {
+    "master": "Ethernet1/20/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/20/2": {
+    "master": "Ethernet1/20/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/20/3": {
+    "master": "Ethernet1/20/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/20/4": {
+    "master": "Ethernet1/20/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/20/5": {
+    "master": "Ethernet1/20/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/20/6": {
+    "master": "Ethernet1/20/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/20/7": {
+    "master": "Ethernet1/20/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/20/8": {
+    "master": "Ethernet1/20/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/21/1": {
+    "master": "Ethernet1/21/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/21/2": {
+    "master": "Ethernet1/21/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/21/3": {
+    "master": "Ethernet1/21/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/21/4": {
+    "master": "Ethernet1/21/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/21/5": {
+    "master": "Ethernet1/21/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/21/6": {
+    "master": "Ethernet1/21/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/21/7": {
+    "master": "Ethernet1/21/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/21/8": {
+    "master": "Ethernet1/21/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/22/1": {
+    "master": "Ethernet1/22/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/22/2": {
+    "master": "Ethernet1/22/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/22/3": {
+    "master": "Ethernet1/22/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/22/4": {
+    "master": "Ethernet1/22/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/22/5": {
+    "master": "Ethernet1/22/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/22/6": {
+    "master": "Ethernet1/22/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/22/7": {
+    "master": "Ethernet1/22/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/22/8": {
+    "master": "Ethernet1/22/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/23/1": {
+    "master": "Ethernet1/23/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/23/2": {
+    "master": "Ethernet1/23/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/23/3": {
+    "master": "Ethernet1/23/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/23/4": {
+    "master": "Ethernet1/23/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/23/5": {
+    "master": "Ethernet1/23/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/23/6": {
+    "master": "Ethernet1/23/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/23/7": {
+    "master": "Ethernet1/23/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/23/8": {
+    "master": "Ethernet1/23/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/24/1": {
+    "master": "Ethernet1/24/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/24/2": {
+    "master": "Ethernet1/24/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/24/3": {
+    "master": "Ethernet1/24/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/24/4": {
+    "master": "Ethernet1/24/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/24/5": {
+    "master": "Ethernet1/24/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/24/6": {
+    "master": "Ethernet1/24/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/24/7": {
+    "master": "Ethernet1/24/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/24/8": {
+    "master": "Ethernet1/24/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/25/1": {
+    "master": "Ethernet1/25/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/25/2": {
+    "master": "Ethernet1/25/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/25/3": {
+    "master": "Ethernet1/25/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/25/4": {
+    "master": "Ethernet1/25/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/25/5": {
+    "master": "Ethernet1/25/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/25/6": {
+    "master": "Ethernet1/25/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/25/7": {
+    "master": "Ethernet1/25/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/25/8": {
+    "master": "Ethernet1/25/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/26/1": {
+    "master": "Ethernet1/26/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/26/2": {
+    "master": "Ethernet1/26/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/26/3": {
+    "master": "Ethernet1/26/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/26/4": {
+    "master": "Ethernet1/26/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/26/5": {
+    "master": "Ethernet1/26/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/26/6": {
+    "master": "Ethernet1/26/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/26/7": {
+    "master": "Ethernet1/26/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/26/8": {
+    "master": "Ethernet1/26/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/27/1": {
+    "master": "Ethernet1/27/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/27/2": {
+    "master": "Ethernet1/27/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/27/3": {
+    "master": "Ethernet1/27/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/27/4": {
+    "master": "Ethernet1/27/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/27/5": {
+    "master": "Ethernet1/27/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/27/6": {
+    "master": "Ethernet1/27/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/27/7": {
+    "master": "Ethernet1/27/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/27/8": {
+    "master": "Ethernet1/27/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/28/1": {
+    "master": "Ethernet1/28/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/28/2": {
+    "master": "Ethernet1/28/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/28/3": {
+    "master": "Ethernet1/28/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/28/4": {
+    "master": "Ethernet1/28/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/28/5": {
+    "master": "Ethernet1/28/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/28/6": {
+    "master": "Ethernet1/28/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/28/7": {
+    "master": "Ethernet1/28/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/28/8": {
+    "master": "Ethernet1/28/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/29/1": {
+    "master": "Ethernet1/29/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/29/2": {
+    "master": "Ethernet1/29/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/29/4": {
+    "master": "Ethernet1/29/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/29/5": {
+    "master": "Ethernet1/29/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/29/6": {
+    "master": "Ethernet1/29/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/29/7": {
+    "master": "Ethernet1/29/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/29/8": {
+    "master": "Ethernet1/29/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/3/1": {
+    "master": "Ethernet1/3/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/3/2": {
+    "master": "Ethernet1/3/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/3/3": {
+    "master": "Ethernet1/3/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/3/4": {
+    "master": "Ethernet1/3/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/3/5": {
+    "master": "Ethernet1/3/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/3/6": {
+    "master": "Ethernet1/3/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/3/7": {
+    "master": "Ethernet1/3/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/3/8": {
+    "master": "Ethernet1/3/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/30/1": {
+    "master": "Ethernet1/30/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/30/2": {
+    "master": "Ethernet1/30/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/30/3": {
+    "master": "Ethernet1/30/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/30/4": {
+    "master": "Ethernet1/30/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/30/5": {
+    "master": "Ethernet1/30/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/30/6": {
+    "master": "Ethernet1/30/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/30/7": {
+    "master": "Ethernet1/30/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/30/8": {
+    "master": "Ethernet1/30/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/31/1": {
+    "master": "Ethernet1/31/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/31/2": {
+    "master": "Ethernet1/31/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/31/3": {
+    "master": "Ethernet1/31/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/31/4": {
+    "master": "Ethernet1/31/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/31/5": {
+    "master": "Ethernet1/31/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/31/6": {
+    "master": "Ethernet1/31/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/31/7": {
+    "master": "Ethernet1/31/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/31/8": {
+    "master": "Ethernet1/31/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/32/1": {
+    "master": "Ethernet1/32/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/32/2": {
+    "master": "Ethernet1/32/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/32/3": {
+    "master": "Ethernet1/32/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/32/4": {
+    "master": "Ethernet1/32/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/32/5": {
+    "master": "Ethernet1/32/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/32/6": {
+    "master": "Ethernet1/32/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/32/7": {
+    "master": "Ethernet1/32/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/32/8": {
+    "master": "Ethernet1/32/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/33": {
+    "master": "Ethernet1/33"
+  },
+  "BREAKOUT_PORTS|Ethernet1/34": {
+    "master": "Ethernet1/34"
+  },
+  "BREAKOUT_PORTS|Ethernet1/4/1": {
+    "master": "Ethernet1/4/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/4/2": {
+    "master": "Ethernet1/4/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/4/3": {
+    "master": "Ethernet1/4/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/4/4": {
+    "master": "Ethernet1/4/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/4/5": {
+    "master": "Ethernet1/4/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/4/6": {
+    "master": "Ethernet1/4/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/4/7": {
+    "master": "Ethernet1/4/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/4/8": {
+    "master": "Ethernet1/4/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/5/1": {
+    "master": "Ethernet1/5/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/5/2": {
+    "master": "Ethernet1/5/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/5/3": {
+    "master": "Ethernet1/5/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/5/4": {
+    "master": "Ethernet1/5/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/5/5": {
+    "master": "Ethernet1/5/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/5/6": {
+    "master": "Ethernet1/5/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/5/7": {
+    "master": "Ethernet1/5/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/5/8": {
+    "master": "Ethernet1/5/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/6/1": {
+    "master": "Ethernet1/6/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/6/2": {
+    "master": "Ethernet1/6/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/6/3": {
+    "master": "Ethernet1/6/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/6/4": {
+    "master": "Ethernet1/6/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/6/5": {
+    "master": "Ethernet1/6/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/6/6": {
+    "master": "Ethernet1/6/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/6/7": {
+    "master": "Ethernet1/6/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/6/8": {
+    "master": "Ethernet1/6/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/7/1": {
+    "master": "Ethernet1/7/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/7/2": {
+    "master": "Ethernet1/7/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/7/3": {
+    "master": "Ethernet1/7/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/7/4": {
+    "master": "Ethernet1/7/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/7/5": {
+    "master": "Ethernet1/7/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/7/6": {
+    "master": "Ethernet1/7/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/7/7": {
+    "master": "Ethernet1/7/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/7/8": {
+    "master": "Ethernet1/7/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/8/1": {
+    "master": "Ethernet1/8/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/8/2": {
+    "master": "Ethernet1/8/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/8/3": {
+    "master": "Ethernet1/8/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/8/4": {
+    "master": "Ethernet1/8/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/8/5": {
+    "master": "Ethernet1/8/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/8/6": {
+    "master": "Ethernet1/8/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/8/7": {
+    "master": "Ethernet1/8/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/8/8": {
+    "master": "Ethernet1/8/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/9/1": {
+    "master": "Ethernet1/9/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/9/2": {
+    "master": "Ethernet1/9/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/9/3": {
+    "master": "Ethernet1/9/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/9/4": {
+    "master": "Ethernet1/9/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/9/5": {
+    "master": "Ethernet1/9/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/9/6": {
+    "master": "Ethernet1/9/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/9/7": {
+    "master": "Ethernet1/9/1"
+  },
+  "BREAKOUT_PORTS|Ethernet1/9/8": {
+    "master": "Ethernet1/9/1"
+  },
+  "BREAKOUT_PORT_XCVR_CFG|1/2|Ethernet2": {
+    "NULL": "NULL"
+  },
+  "BUFFER_POOL|default_egress": {
+    "mode": "dynamic",
+    "size": "113620296",
+    "type": "egress"
+  },
+  "CHASSIS_CFG|chassis": {
+    "enable_host_signaling": "false",
+    "fully-qualified-name": "chassisXYZ",
+    "name": "chassis"
+  },
+  "CPU_PORT|CPU": {
+    "NULL": "NULL"
+  },
+  "DB_JOURNAL|Test": {
+    "description": "Capturing journal writes..."
+  },
+  "DEVICE_METADATA|localhost": {
+    "default_bgp_status": "up",
+    "default_pfcwd_status": "disable",
+    "hostname": "sonic",
+    "hwsku": "test-sku",
+    "mac": "00:01:02:03:04:05",
+    "platform": "test",
+    "synchronous_mode": "enable",
+    "type": "LeafRouter",
+    "zmq_mode": "enable"
+  },
+  "DYNAMIC_BOOTSTRAP_CYCLE_PORTS|local": {
+    "enable": "true"
+  },
+  "INTERFACE|Ethernet1/1/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/1/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/10/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/10/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/11/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/11/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/12/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/12/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/13/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/13/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/14/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/14/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/15/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/15/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/16/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/16/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/17/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/17/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/18/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/18/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/19/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/19/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/2/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/2/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/20/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/20/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/21/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/21/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/22/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/22/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/23/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/23/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/24/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/24/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/25/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/25/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/26/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/26/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/27/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/27/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/28/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/28/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/29/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/29/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/3/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/3/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/30/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/30/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/31/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/31/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/32/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/32/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/33": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/34": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/4/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/4/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/5/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/5/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/6/1": {
+    "ipv4_enabled": "enable",
+    "ipv6_use_link_local_only": "enable"
+  },
+  "INTERFACE|Ethernet1/6/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/7/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/7/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/8/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/8/5": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/9/1": {
+    "NULL": "NULL"
+  },
+  "INTERFACE|Ethernet1/9/5": {
+    "NULL": "NULL"
+  },
+  "LOOPBACK_INTERFACE|Loopback4": {
+    "ipv4_enabled": "enable",
+    "ipv6_use_link_local_only": "enable"
+  },
+  "LOOPBACK_INTERFACE|Loopback4|2202:f001:ace::/64": {
+    "NULL": "NULL"
+  },
+  "LOOPBACK|Loopback4": {
+    "NULL": "NULL",
+    "description": "Loopback interface"
+  },
+  "MAP_PFC_PRIORITY_TO_QUEUE|default_pfc_to_queue_map": {
+    "0": "2",
+    "1": "3",
+    "2": "4",
+    "3": "5",
+    "4": "6",
+    "5": "0",
+    "6": "1",
+    "7": "8"
+  },
+  "MGMT_INTERFACE|bond0": {
+    "ipv4_enabled": "enable",
+    "ipv6_use_link_local_only": "enable"
+  },
+  "MGMT_PORT|bond0": {
+    "bond-miimon": "100",
+    "bond-mode": "802.3ad",
+    "bond-slaves": "eth0",
+    "bond-updelay": "200",
+    "description": "Management interface"
+  },
+  "MGMT_PORT|bond1": {
+    "NULL": "NULL",
+    "description": "Second Management interface"
+  },
+  "MGMT_PORT|eth0": {
+    "NULL": "NULL",
+    "description": "Management interface"
+  },
+  "MGMT_PORT|eth1": {
+    "NULL": "NULL",
+    "description": "Management interface"
+  },
+  "NODE_CFG|integrated_circuit0": {
+    "fully-qualified-name": "switch",
+    "name": "integrated_circuit0",
+    "node-id": "1234567"
+  },
+  "OCS_PORTS|1N": {
+    "name": "1N",
+    "port-number": 1001,
+    "slot-number": 1
+  },
+  "OCS_PORTS|1S": {
+    "name": "1S",
+    "port-number": 2001,
+    "slot-number": 1
+  },
+  "OCS_XCONNECTS|1N": {
+    "peer-port-name": "99S"
+  },
+  "OCS_XCONNECTS|99N": {
+    "peer-port-name": "1S"
+  },
+  "PORTCHANNEL_INTERFACE|PortChannel1": {
+    "NULL": "NULL"
+  },
+  "PORTCHANNEL_INTERFACE|PortChannel2": {
+    "NULL": "NULL"
+  },
+  "PORTCHANNEL_MEMBER|PortChannel1|Ethernet1/7/3": {
+    "NULL": "NULL"
+  },
+  "PORTCHANNEL_MEMBER|PortChannel1|Ethernet1/7/4": {
+    "NULL": "NULL"
+  },
+  "PORTCHANNEL_MEMBER|PortChannel2|Ethernet1/3/5": {
+    "NULL": "NULL"
+  },
+  "PORTCHANNEL|PortChannel1": {
+    "active": "true",
+    "admin_status": "up",
+    "alias": "PortChannel1Alias",
+    "description": "some description string.",
+    "fast_rate": "true",
+    "id": "2049",
+    "lacp_key": "1",
+    "lag_type": "LACP",
+    "members@": "Ethernet1/7/3,Ethernet1/7/4",
+    "min_links": "1",
+    "mtu": "9104",
+    "system_id": "fc:bd:67:2c:08:f4",
+    "system_priority": "256",
+    "type": "iana-if-type:ieee8023adLag"
+  },
+  "PORTCHANNEL|PortChannel2": {
+    "active": "false",
+    "admin_status": "up",
+    "alias": "PortChannel2Alias",
+    "description": "some description string.",
+    "fast_rate": "false",
+    "id": "2049",
+    "lacp_key": "2",
+    "lag_type": "LACP",
+    "members@": "Ethernet1/3/5",
+    "min_links": "1",
+    "mtu": "9104",
+    "system_id": "AA:BB:CC:DD:EE:FF",
+    "type": "iana-if-type:ieee8023adLag"
+  },
+  "PORT|Ethernet-BP1/35": {
+    "admin_status": "down",
+    "alias": "Eth35",
+    "index": "35",
+    "lanes": "260",
+    "mtu": "9104",
+    "speed": "1000"
+  },
+  "PORT|Ethernet1/1/1": {
+    "admin_status": "up",
+    "alias": "NoAliasEth0/1",
+    "autoneg": "on",
+    "csig_tag_action": "strip_tag",
+    "description": "Eth0",
+    "duplex-mode": "FULL",
+    "forwarding-viable": "true",
+    "fully-qualified-interface-name": "eth-1/1",
+    "id": "100",
+    "index": "1",
+    "lanes": "9,10,11,12",
+    "link_training": "off",
+    "mac-address": "00:01:02:03:04:05",
+    "mtu": "9104",
+    "oper_status": "up",
+    "port_direction": "host_facing",
+    "speed": "400000"
+  },
+  "PORT|Ethernet1/1/5": {
+    "admin_status": "down",
+    "alias": "NoAliasEth1/1",
+    "description": "Eth4",
+    "index": "1",
+    "lanes": "13,14,15,16",
+    "mtu": "9104",
+    "oper_status": "down",
+    "speed": "400000"
+  },
+  "PORT|Ethernet1/11/1": {
+    "admin_status": "up",
+    "alias": "Eth11/1",
+    "index": "11",
+    "lanes": "89,90,91,92",
+    "mtu": "9104",
+    "speed": "400000"
+  },
+  "PORT|Ethernet1/11/5": {
+    "admin_status": "up",
+    "alias": "Eth11/1",
+    "index": "11",
+    "lanes": "93,94,95,96",
+    "mtu": "9104",
+    "speed": "400000"
+  },
+  "PORT|Ethernet1/12/1": {
+    "admin_status": "up",
+    "alias": "Eth12/1",
+    "index": "12",
+    "lanes": "81,82,83,84,85,86,87,88",
+    "mtu": "9104",
+    "speed": "400000"
+  },
+  "PORT|Ethernet1/2/1": {
+    "admin_status": "up",
+    "alias": "NoAliasEth2/1",
+    "description": "Eth8",
+    "index": "2",
+    "lanes": "1,2,3,4",
+    "mtu": "9104",
+    "oper_status": "up",
+    "speed": "400000"
+  },
+  "PORT|Ethernet1/2/5": {
+    "admin_status": "down",
+    "alias": "NoAliasEth3/1",
+    "description": "Eth12",
+    "index": "2",
+    "lanes": "5,6,7,8",
+    "mtu": "9104",
+    "oper_status": "down",
+    "speed": "400000"
+  },
+  "PORT|Ethernet1/3/1": {
+    "admin_status": "up",
+    "alias": "NoAliasEth4/1",
+    "description": "Eth16",
+    "index": "3",
+    "lanes": "25,26,27,28",
+    "mtu": "9104",
+    "oper_status": "up",
+    "speed": "400000"
+  },
+  "PORT|Ethernet1/3/5": {
+    "admin_status": "up",
+    "alias": "NoAliasEth5/1",
+    "index": "3",
+    "lanes": "29,30,31,32",
+    "mtu": "9100",
+    "speed": "400000"
+  },
+  "PORT|Ethernet1/4/1": {
+    "admin_status": "up",
+    "alias": "NoAliasEth6/1",
+    "description": "Eth24",
+    "index": "4",
+    "lanes": "17,18,19,20",
+    "mtu": "9104",
+    "oper_status": "up",
+    "speed": "400000"
+  },
+  "PORT|Ethernet1/4/5": {
+    "admin_status": "up",
+    "alias": "NoAliasEth7/1",
+    "description": "Eth28",
+    "index": "4",
+    "lanes": "21,22,23,24",
+    "mtu": "9104",
+    "oper_status": "up",
+    "speed": "400000"
+  },
+  "PORT|Ethernet1/5/1": {
+    "admin_status": "up",
+    "alias": "NoAliasEth8/1",
+    "index": "5",
+    "lanes": "41,42,43,44",
+    "mtu": "9100",
+    "speed": "400000"
+  },
+  "PORT|Ethernet1/5/5": {
+    "admin_status": "up",
+    "alias": "NoAliasEth9/1",
+    "index": "5",
+    "lanes": "45,46,47,48",
+    "mtu": "9100",
+    "speed": "400000"
+  },
+  "PORT|Ethernet1/6/1": {
+    "admin_status": "up",
+    "alias": "NoAliasEth10/1",
+    "description": "Eth40",
+    "index": "6",
+    "lanes": "33,34,35,36",
+    "mtu": "9104",
+    "oper_status": "up",
+    "speed": "400000"
+  },
+  "PORT|Ethernet1/7/3": {
+    "admin_status": "up",
+    "alias": "Eth5/1",
+    "description": "Eth50",
+    "index": "5",
+    "lanes": "106,107,108,109",
+    "mtu": "9104",
+    "oper_status": "up",
+    "speed": "400000"
+  },
+  "PORT|Ethernet1/7/4": {
+    "admin_status": "up",
+    "alias": "Eth5/2",
+    "description": "Eth51",
+    "index": "5",
+    "lanes": "110,111,112,113",
+    "mtu": "9104",
+    "oper_status": "up",
+    "speed": "400000"
+  },
+  "PORT|Ethernet1/8/1": {
+    "admin_status": "up",
+    "alias": "Eth8/1",
+    "index": "8",
+    "lanes": "49,50,51,52",
+    "mtu": "9104",
+    "speed": "400000"
+  },
+  "PORT|Ethernet1/8/5": {
+    "admin_status": "up",
+    "alias": "Eth8/1",
+    "index": "8",
+    "lanes": "53,54,55,56",
+    "mtu": "9104",
+    "speed": "400000"
+  },
+  "PORT|Ethernet1/9/1": {
+    "admin_status": "up",
+    "alias": "Eth9/1",
+    "index": "9",
+    "lanes": "73,74,75,76",
+    "mtu": "9104",
+    "speed": "400000"
+  },
+  "PORT|Ethernet1/9/5": {
+    "admin_status": "up",
+    "alias": "Eth9/1",
+    "index": "9",
+    "lanes": "77,78,79,80",
+    "mtu": "9104",
+    "speed": "400000"
+  },
+  "QUEUE_NAME_TO_ID_MAP|CPU": {
+    "DEDICATED-CPU-QUEUE-FOR-INGRESS-PORT-Ethernet1/3/3": "7",
+    "INBAND_PRIORITY_0": "0",
+    "INBAND_PRIORITY_1": "1",
+    "INBAND_PRIORITY_2": "2",
+    "INBAND_PRIORITY_3": "3",
+    "INBAND_PRIORITY_4": "4",
+    "INBAND_PRIORITY_5": "5",
+    "INBAND_PRIORITY_6": "6"
+  },
+  "QUEUE_NAME_TO_ID_MAP|FRONT_PANEL": {
+    "AF1": "3",
+    "AF2": "4",
+    "AF3": "5",
+    "AF4": "6",
+    "BE1": "2",
+    "LLQ1": "0",
+    "LLQ2": "1",
+    "NC1": "7"
+  },
+  "QUEUE|CPU|0": {
+    "NULL": "NULL"
+  },
+  "QUEUE|CPU|2": {
+    "NULL": "NULL"
+  },
+  "QUEUE|CPU|47": {
+    "NULL": "NULL",
+    "scheduler": "default-cpu-scheduler"
+  },
+  "QUEUE|Ethernet1/1/1|0": {
+    "NULL": "NULL"
+  },
+  "QUEUE|Ethernet1/1/1|2": {
+    "NULL": "NULL",
+    "scheduler": "scheduler-policy@1"
+  },
+  "QUEUE|Ethernet1/6/1|2": {
+    "NULL": "NULL",
+    "scheduler": "scheduler-policy@1"
+  },
+  "QUEUE|Ethernet1/7/3|0": {
+    "NULL": "NULL"
+  },
+  "QUEUE|Ethernet1/7/4|0": {
+    "NULL": "NULL"
+  },
+  "SFLOW|global": {
+    "admin_state": "up"
+  },
+  "TC_TO_QUEUE_MAP|global_tc_to_queue_map": {
+    "2": "2",
+    "3": "2",
+    "7": "3",
+    "8": "3"
+  },
+  "TELEMETRY|gnmi": {
+    "vmodule": "server=2,gnoi=3"
+  },
+  "UMF_QUEUE|BE1": {
+    "NULL": "NULL"
+  }
 }

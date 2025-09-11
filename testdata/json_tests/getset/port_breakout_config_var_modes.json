@@ -1149,15 +1149,11 @@
             "PORT_STATE|Ethernet1/9/1" : {
               "phase" : "pending_delete"
             },
-            "PORT_STATE|Ethernet1/9/5" : {
-              "phase" : "pending_delete"
-            },
+            "PORT_STATE|Ethernet1/9/5" : {},
             "PORT_UNLOCK|Ethernet1/9/1" : {
               "NULL" : "NULL"
             },
-            "PORT_UNLOCK|Ethernet1/9/5" : {
-              "NULL" : "NULL"
-            }
+            "PORT_UNLOCK|Ethernet1/9/5" : {}
           }
         }
       ]
@@ -1440,19 +1436,13 @@
       },
       "subOpers": [
         {
-          "oper": "dbHDel",
-          "title": "Delete PORT_TABLE:Ethernet1/9/3 from APPL_STATE_DB",
-          "db": "APPL_STATE_DB",
-          "value": {
-            "PORT_TABLE:Ethernet1/9/3": []
-          }
-        },
-        {
-          "oper": "dbHDel",
-          "title": "DeletePORT_TABLE|Ethernet1/9/3 from STATE_DB",
+          "oper": "dbHSet",
+          "title": "Delete ref on PORT_TABLE|Ethernet1/9/3",
           "db": "STATE_DB",
           "value": {
-            "PORT_TABLE|Ethernet1/9/3": []
+            "PORT_TABLE|Ethernet1/9/3": {
+              "ref_count": "0"
+            }
           }
         },
         {

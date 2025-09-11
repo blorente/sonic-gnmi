@@ -32,6 +32,37 @@
     {
       "operation": "get",
       "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=fan1]/fan",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:fan"
+      ],
+      "properties": {
+        "openconfig-platform:fan": {
+          "type": "object",
+          "required": [
+            "state"
+          ],
+          "properties": {
+            "state": {
+              "type": "object",
+              "required": [
+                "openconfig-platform-fan:speed",
+                "google-pins-platform:speed-control-pct"
+              ],
+              "properties": {
+                "openconfig-platform-fan:speed": { "$ref": "#/globalDef/pfm_fan/Fan1_fan_st_spd" },
+                "google-pins-platform:speed-control-pct": { "$ref": "#/globalDef/pfm_fan/Fan1_fan_st_scp" }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
       "xpath": "openconfig-platform:components/component[name=fan1]/state/removable",
       "target": "OC_YANG",
       "type": "object",
@@ -131,6 +162,58 @@
             "$ref": "#/globalDef/pfm_fan/FanTray1"
           }
         }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=fan1]/state/name",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:name"
+      ],
+      "properties": {
+        "openconfig-platform:name": { "$ref": "#/globalDef/pfm_fan/Fan1_name" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=fan1]/state/part-no",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:part-no"
+      ],
+      "properties": {
+        "openconfig-platform:part-no": { "$ref": "#/globalDef/pfm_fan/Fan1_st_pn" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=fan1]/state/serial-no",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:serial-no"
+      ],
+      "properties": {
+        "openconfig-platform:serial-no": { "$ref": "#/globalDef/pfm_fan/Fan1_st_sn" }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=fan1]/state/model-name",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:model-name"
+      ],
+      "properties": {
+        "openconfig-platform:model-name": { "$ref": "#/globalDef/pfm_fan/Fan1_st_mn" }
       }
     }
   ]

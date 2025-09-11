@@ -1,0 +1,332 @@
+{
+  "title": "IC Component Paths",
+  "operations":[
+    {
+      "operation": "replace",
+      "returnCode": 0,
+      "xpath": "openconfig/components/",
+      "target": "OC_YANG",
+"attributeData": "{\"openconfig-platform:components\": {\"component\": [{\"name\": \"integrated_circuit0\",\"config\": {\"name\": \"integrated_circuit0\", \"fully-qualified-name\" : \"switch\"},\"integrated-circuit\": {\"config\": {\"node-id\": \"183930889\"}, \"google-pins-platform:pins-csig\": {\"google-pins-platform:config\": {\"google-pins-platform:csig-supported\": \"SW_SUPPORTED\"}}}}]}}"
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=integrated_circuit0]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config", "integrated-circuit", "state"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "name", "openconfig-pins-platform:fully-qualified-name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "integrated_circuit0"
+                    ]
+                  },
+                  "openconfig-pins-platform:fully-qualified-name": {
+                    "type": "string",
+                    "enum": [
+                      "switch"
+                    ]
+                  }
+                }
+              },
+              "integrated-circuit": {
+                "type": "object",
+                "required": [
+                  "config", "state", "openconfig-platform-integrated-circuit:memory"
+                ],
+                "properties": {
+                  "config": {
+                    "type": "object",
+                    "required": [
+                      "openconfig-p4rt:node-id"
+                    ],
+                    "properties": {
+                      "openconfig-p4rt:node-id": {
+                        "type": "string",
+                        "enum": [
+                          "183930889"
+                        ]
+                      }
+                    }
+                  },
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "openconfig-p4rt:node-id"
+                    ],
+                    "properties": {
+                      "openconfig-p4rt:node-id": {
+                        "type": "string",
+                        "enum": [
+                          "183930889"
+                        ]
+                      }
+                    }
+                  },
+                  "openconfig-platform-integrated-circuit:memory": {
+                    "type": "object",
+                    "required": [
+                      "state"
+                    ],
+                    "properties": {
+                      "state": {
+                        "type": "object",
+                        "required": [
+                          "corrected-parity-errors", "total-parity-errors"
+                        ],
+                        "properties": {
+                          "corrected-parity-errors": {
+                            "type": "string",
+                            "enum": [
+                              "111111"
+                            ]
+                          },
+                          "total-parity-errors": {
+                            "type": "string",
+                            "enum": [
+                              "444444"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "type", "openconfig-pins-platform:fully-qualified-name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "integrated_circuit0"
+                    ]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-platform-types:INTEGRATED_CIRCUIT"
+                    ]
+                  },
+                  "parent": {
+                    "type": "string",
+                    "enum": [
+                      "chassis"
+                    ]
+                  },
+		  "openconfig-pins-platform:fully-qualified-name": {
+                    "type": "string",
+                    "enum": [
+                      "switch"
+                    ]
+		  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=integrated_circuit0]/integrated-circuit/openconfig-platform-integrated-circuit:memory",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform-integrated-circuit:memory"
+      ],
+      "properties": {
+        "openconfig-platform-integrated-circuit:memory": {
+          "type": "object",
+          "required": [
+            "state"
+          ],
+          "properties": {
+            "state": {
+              "type": "object",
+              "required": [
+                "corrected-parity-errors", "total-parity-errors"
+              ],
+              "properties": {
+                "corrected-parity-errors": {
+                  "type": "string",
+                  "enum": [
+                    "111111"
+                  ]
+                },
+                "total-parity-errors": {
+                  "type": "string",
+                  "enum": [
+                    "444444"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=integrated_circuit0]/integrated-circuit/memory/state",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform-integrated-circuit:state"
+      ],
+      "properties": {
+        "openconfig-platform:integrated-circuit:state": {
+          "type": "object",
+          "required": [
+            "corrected-parity-errors", "total-parity-errors"
+          ],
+          "properties": {
+            "corrected-parity-errors": {
+              "type": "string",
+              "enum": [
+                "111111"
+              ]
+            },
+            "total-parity-errors": {
+              "type": "string",
+              "enum": [
+                "444444"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=integrated_circuit0]/integrated-circuit/openconfig-platform-integrated-circuit:memory/state/corrected-parity-errors",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform-integrated-circuit:corrected-parity-errors"
+      ],
+      "properties": {
+        "openconfig-platform-integrated-circuit:corrected-parity-errors": {
+          "type": "string",
+          "enum": [
+            "111111"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=integrated_circuit0]/integrated-circuit/openconfig-platform-integrated-circuit:memory/state/total-parity-errors",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform-integrated-circuit:total-parity-errors"
+      ],
+      "properties": {
+        "openconfig-platform-integrated-circuit:total-parity-errors": {
+          "type": "string",
+          "enum": [
+            "444444"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=integrated_circuit0]/integrated-circuit/pipeline-counters/drop/lookup-block/state/no-route",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform-pipeline-counters:no-route"
+      ],
+      "properties": {
+        "openconfig-platform-pipeline-counters:no-route": {
+          "type": "string",
+          "enum": [
+            "1228"
+          ]
+        }
+      }
+    },
+    {
+      "title": "Get csig-supported value from the State DB; expect miss.",
+      "operation": "get",
+      "returnCode": 5,
+      "xpath": "openconfig/components/component[name=integrated_circuit0]/integrated-circuit/google-pins-platform:pins-csig/state/csig-supported",
+      "target": "OC_YANG",
+      "type": "object",
+      "subOpers": [
+        {
+          "oper": "dbHSet",
+          "db": "STATE_DB",
+          "value": {
+            "HST_CONFIG|GLOBAL": { "CSIG_SUPPORTED":"sw_assist" }
+          }
+        }
+      ]
+    },
+    {
+      "title": "Get csig-supported value from the State DB after setting values.",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=integrated_circuit0]/integrated-circuit/google-pins-platform:pins-csig/state/csig-supported",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-platform:csig-supported"
+      ],
+      "properties": {
+        "google-pins-platform:csig-supported": {
+          "type": "string",
+          "enum": [
+            "SW_SUPPORTED"
+          ]
+        }
+      }
+    },
+    {
+      "title": "Get csig-supported value from the Config DB.",
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig/components/component[name=integrated_circuit0]/integrated-circuit/google-pins-platform:pins-csig/config/csig-supported",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-platform:csig-supported"
+      ],
+      "properties": {
+        "google-pins-platform:csig-supported": {
+          "type": "string",
+          "enum": [
+            "SW_SUPPORTED"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -4,14 +4,14 @@
     {
       "title": "subscribe to /port-connections/port-connection[1,99]/state ON_CHANGE",
       "operation": "subscribe",
-      "operProto": "subscribe: { prefix: { origin:'openconfig' target:'OC_YANG' } encoding:PROTO subscription: { path: { elem: { name:'optical-switch'} elem: { name:'port-connections' } elem: { name:'port-connection' key: { key:'slot-number' value:'1' } key: { key:'port-number' value:'99' } } elem: { name: 'state' } } mode:ON_CHANGE } mode:STREAM }",
+      "operProto": "subscribe: { prefix: { origin:'openconfig' target:'OC_YANG' } encoding:PROTO subscription: { path: { elem: { name:'optical-switch'} elem: { name:'port-connections' } elem: { name:'port-connection' key: { key:'port-name' value:'99N' } } elem: { name: 'state' } } mode:ON_CHANGE } mode:STREAM }",
       "returnCode": 0,
       "subOpers": [
         {
           "oper": "validate",
           "timeout": 3000,
           "finalValidator": {
-            "xpath": "/optical-switch/port-connections/port-connection[port-number=99][slot-number=1]",
+            "xpath": "/optical-switch/port-connections/port-connection[port-name=99N]",
             "syncResponse": true,
             "schema": {
               "type": "object",
@@ -25,34 +25,27 @@
                     {
                       "required": [
                         "state",
-                        "port-number",
-                        "slot-number"
+                        "port-name"
                       ],
                       "properties": {
                         "state": {
                           "type": "object",
                           "required": [
-                            "peer-port-number"
+                            "peer-port-name"
                           ],
                           "properties": {
-                            "peer-port-number": {
-                              "type": "integer",
+                            "peer-port-name": {
+                              "type": "string",
                               "enum": [
-                                10002
+                                "2S"
                               ]
                             }
                           }
                         },
-                        "port-number": {
-                          "type": "integer",
+                        "port-name": {
+                          "type": "string",
                           "enum": [
-                            99
-                          ]
-                        },
-                        "slot-number": {
-                          "type": "integer",
-                          "enum": [
-                            1
+                            "99N"
                           ]
                         }
                       }
@@ -67,8 +60,8 @@
           "oper": "dbHSet",
           "db": "STATE_DB",
           "value": {
-            "OCS_XCONNECTS|1|99": {
-              "peer-port-number": 10005
+            "OCS_XCONNECTS|99N": {
+              "peer-port-name": "5S"
             }
           }
         },
@@ -77,17 +70,17 @@
           "timeout": 3000,
           "pathValidators": [
             {
-              "xpath": "/optical-switch/port-connections/port-connection[port-number=99][slot-number=1]/state/peer-port-number",
+              "xpath": "/optical-switch/port-connections/port-connection[port-name=99N]/state/peer-port-name",
               "schema": {
                 "type": "object",
                 "required": [
-                  "openconfig-optical-switch:peer-port-number"
+                  "openconfig-optical-switch:peer-port-name"
                 ],
                 "properties": {
-                  "openconfig-optical-switch:peer-port-number": {
-                    "type": "integer",
+                  "openconfig-optical-switch:peer-port-name": {
+                    "type": "string",
                     "enum": [
-                      10005
+                      "5S"
                     ]
                   }
                 }
@@ -101,7 +94,7 @@
     {
       "title": "subscribe to /port-connections/port-connection[*,*]/state ON_CHANGE",
       "operation": "subscribe",
-      "operProto": "subscribe: { prefix: { origin:'openconfig' target:'OC_YANG' } encoding:PROTO subscription: { path: { elem: { name:'optical-switch'} elem: { name:'port-connections' } elem: { name:'port-connection' key: { key:'slot-number' value:'*' } key: { key:'port-number' value:'*' } } elem: { name: 'state' } } mode:ON_CHANGE } mode:STREAM }",
+      "operProto": "subscribe: { prefix: { origin:'openconfig' target:'OC_YANG' } encoding:PROTO subscription: { path: { elem: { name:'optical-switch'} elem: { name:'port-connections' } elem: { name:'port-connection' key: { key:'port-name' value:'*' } } elem: { name: 'state' } } mode:ON_CHANGE } mode:STREAM }",
       "returnCode": 0,
       "subOpers": [
         {
@@ -122,34 +115,27 @@
                     {
                       "required": [
                         "state",
-                        "port-number",
-                        "slot-number"
+                        "port-name"
                       ],
                       "properties": {
                         "state": {
                           "type": "object",
                           "required": [
-                            "peer-port-number"
+                            "peer-port-name"
                           ],
                           "properties": {
-                            "peer-port-number": {
-                              "type": "integer",
+                            "peer-port-name": {
+                              "type": "string",
                               "enum": [
-                                10098
+                                "98S"
                               ]
                             }
                           }
                         },
-                        "port-number": {
-                          "type": "integer",
+                        "port-name": {
+                          "type": "string",
                           "enum": [
-                            1
-                          ]
-                        },
-                        "slot-number": {
-                          "type": "integer",
-                          "enum": [
-                            1
+                            "1N"
                           ]
                         }
                       }
@@ -158,34 +144,27 @@
                     {
                       "required": [
                         "state",
-                        "port-number",
-                        "slot-number"
+                        "port-name"
                       ],
                       "properties": {
                         "state": {
                           "type": "object",
                           "required": [
-                            "peer-port-number"
+                            "peer-port-name"
                           ],
                           "properties": {
-                            "peer-port-number": {
-                              "type": "integer",
+                            "peer-port-name": {
+                              "type": "string",
                               "enum": [
-                                10005
+                                "5S"
                               ]
                             }
                           }
                         },
-                        "port-number": {
-                          "type": "integer",
+                        "port-name": {
+                          "type": "string",
                           "enum": [
-                            99
-                          ]
-                        },
-                        "slot-number": {
-                          "type": "integer",
-                          "enum": [
-                            1
+                            "99N"
                           ]
                         }
                       }
@@ -200,8 +179,8 @@
           "oper": "dbHSet",
           "db": "STATE_DB",
           "value": {
-            "OCS_XCONNECTS|1|99": {
-              "peer-port-number": 10050
+            "OCS_XCONNECTS|99N": {
+              "peer-port-name": "50S"
             }
           }
         },
@@ -210,17 +189,17 @@
           "timeout": 3000,
           "pathValidators": [
             {
-              "xpath": "/optical-switch/port-connections/port-connection[port-number=99][slot-number=1]/state/peer-port-number",
+              "xpath": "/optical-switch/port-connections/port-connection[port-name=99N]/state/peer-port-name",
               "schema": {
                 "type": "object",
                 "required": [
-                  "openconfig-optical-switch:peer-port-number"
+                  "openconfig-optical-switch:peer-port-name"
                 ],
                 "properties": {
-                  "openconfig-optical-switch:peer-port-number": {
-                    "type": "integer",
+                  "openconfig-optical-switch:peer-port-name": {
+                    "type": "string",
                     "enum": [
-                      10050
+                      "50S"
                     ]
                   }
                 }
@@ -232,8 +211,8 @@
           "oper": "dbHSet",
           "db": "STATE_DB",
           "value": {
-            "OCS_XCONNECTS|1|1": {
-              "peer-port-number": 10081
+            "OCS_XCONNECTS|1N": {
+              "peer-port-name": "81S"
             }
           }
         },
@@ -242,17 +221,17 @@
           "timeout": 3000,
           "pathValidators": [
             {
-              "xpath": "/optical-switch/port-connections/port-connection[port-number=1][slot-number=1]/state/peer-port-number",
+              "xpath": "/optical-switch/port-connections/port-connection[port-name=1N]/state/peer-port-name",
               "schema": {
                 "type": "object",
                 "required": [
-                  "openconfig-optical-switch:peer-port-number"
+                  "openconfig-optical-switch:peer-port-name"
                 ],
                 "properties": {
-                  "openconfig-optical-switch:peer-port-number": {
-                    "type": "integer",
+                  "openconfig-optical-switch:peer-port-name": {
+                    "type": "string",
                     "enum": [
-                      10081
+                      "81S"
                     ]
                   }
                 }
@@ -266,14 +245,14 @@
     {
       "title": "subscribe to /port-connections/port-connection[1,99]/config ON_CHANGE",
       "operation": "subscribe",
-      "operProto": "subscribe: { prefix: { origin:'openconfig' target:'OC_YANG' } encoding:PROTO subscription: { path: { elem: { name:'optical-switch'} elem: { name:'port-connections' } elem: { name:'port-connection' key: { key:'slot-number' value:'1' } key: { key:'port-number' value:'99' } } elem: { name: 'config' } } mode:ON_CHANGE } mode:STREAM }",
+      "operProto": "subscribe: { prefix: { origin:'openconfig' target:'OC_YANG' } encoding:PROTO subscription: { path: { elem: { name:'optical-switch'} elem: { name:'port-connections' } elem: { name:'port-connection' key: { key:'port-name' value:'99N' } } elem: { name: 'config' } } mode:ON_CHANGE } mode:STREAM }",
       "returnCode": 0,
       "subOpers": [
         {
           "oper": "validate",
           "timeout": 3000,
           "finalValidator": {
-            "xpath": "/optical-switch/port-connections/port-connection[port-number=99][slot-number=1]",
+            "xpath": "/optical-switch/port-connections/port-connection[port-name=99N]",
             "syncResponse": true,
             "schema": {
               "type": "object",
@@ -287,34 +266,27 @@
                     {
                       "required": [
                         "config",
-                        "port-number",
-                        "slot-number"
+                        "port-name"
                       ],
                       "properties": {
                         "config": {
                           "type": "object",
                           "required": [
-                            "peer-port-number"
+                            "peer-port-name"
                           ],
                           "properties": {
-                            "peer-port-number": {
-                              "type": "integer",
+                            "peer-port-name": {
+                              "type": "string",
                               "enum": [
-                                10001
+                                "1S"
                               ]
                             }
                           }
                         },
-                        "port-number": {
-                          "type": "integer",
+                        "port-name": {
+                          "type": "string",
                           "enum": [
-                            99
-                          ]
-                        },
-                        "slot-number": {
-                          "type": "integer",
-                          "enum": [
-                            1
+                            "99N"
                           ]
                         }
                       }
@@ -329,8 +301,8 @@
           "oper": "dbHSet",
           "db": "CONFIG_DB",
           "value": {
-            "OCS_XCONNECTS|1|99": {
-              "peer-port-number": 10090
+            "OCS_XCONNECTS|99N": {
+              "peer-port-name": "90S"
             }
           }
         },
@@ -339,17 +311,17 @@
           "timeout": 3000,
           "pathValidators": [
             {
-              "xpath": "/optical-switch/port-connections/port-connection[port-number=99][slot-number=1]/config/peer-port-number",
+              "xpath": "/optical-switch/port-connections/port-connection[port-name=99N]/config/peer-port-name",
               "schema": {
                 "type": "object",
                 "required": [
-                  "openconfig-optical-switch:peer-port-number"
+                  "openconfig-optical-switch:peer-port-name"
                 ],
                 "properties": {
-                  "openconfig-optical-switch:peer-port-number": {
-                    "type": "integer",
+                  "openconfig-optical-switch:peer-port-name": {
+                    "type": "string",
                     "enum": [
-                      10090
+                      "90S"
                     ]
                   }
                 }
@@ -362,7 +334,7 @@
     {
       "title": "subscribe to /port-connections/port-connection[*,*]/config ON_CHANGE",
       "operation": "subscribe",
-      "operProto": "subscribe: { prefix: { origin:'openconfig' target:'OC_YANG' } encoding:PROTO subscription: { path: { elem: { name:'optical-switch'} elem: { name:'port-connections' } elem: { name:'port-connection' key: { key:'slot-number' value:'*' } key: { key:'port-number' value:'*' } } elem: { name: 'config' } } mode:ON_CHANGE } mode:STREAM }",
+      "operProto": "subscribe: { prefix: { origin:'openconfig' target:'OC_YANG' } encoding:PROTO subscription: { path: { elem: { name:'optical-switch'} elem: { name:'port-connections' } elem: { name:'port-connection' key: { key:'port-name' value:'*' } } elem: { name: 'config' } } mode:ON_CHANGE } mode:STREAM }",
       "returnCode": 0,
       "subOpers": [
         {
@@ -383,34 +355,27 @@
                     {
                       "required": [
                         "config",
-                        "port-number",
-                        "slot-number"
+                        "port-name"
                       ],
                       "properties": {
                         "config": {
                           "type": "object",
                           "required": [
-                            "peer-port-number"
+                            "peer-port-name"
                           ],
                           "properties": {
-                            "peer-port-number": {
-                              "type": "integer",
+                            "peer-port-name": {
+                              "type": "string",
                               "enum": [
-                                10099
+                                "99S"
                               ]
                             }
                           }
                         },
-                        "port-number": {
-                          "type": "integer",
+                        "port-name": {
+                          "type": "string",
                           "enum": [
-                            1
-                          ]
-                        },
-                        "slot-number": {
-                          "type": "integer",
-                          "enum": [
-                            1
+                            "1N"
                           ]
                         }
                       }
@@ -419,34 +384,27 @@
                     {
                       "required": [
                         "config",
-                        "port-number",
-                        "slot-number"
+                        "port-name"
                       ],
                       "properties": {
                         "config": {
                           "type": "object",
                           "required": [
-                            "peer-port-number"
+                            "peer-port-name"
                           ],
                           "properties": {
-                            "peer-port-number": {
-                              "type": "integer",
+                            "peer-port-name": {
+                              "type": "string",
                               "enum": [
-                                10090
+                                "90S"
                               ]
                             }
                           }
                         },
-                        "port-number": {
-                          "type": "integer",
+                        "port-name": {
+                          "type": "string",
                           "enum": [
-                            99
-                          ]
-                        },
-                        "slot-number": {
-                          "type": "integer",
-                          "enum": [
-                            1
+                            "99N"
                           ]
                         }
                       }
@@ -461,8 +419,8 @@
           "oper": "dbHSet",
           "db": "CONFIG_DB",
           "value": {
-            "OCS_XCONNECTS|1|99": {
-              "peer-port-number": 10040
+            "OCS_XCONNECTS|99N": {
+              "peer-port-name": "40S"
             }
           }
         },
@@ -471,17 +429,17 @@
           "timeout": 3000,
           "pathValidators": [
             {
-              "xpath": "/optical-switch/port-connections/port-connection[port-number=99][slot-number=1]/config/peer-port-number",
+              "xpath": "/optical-switch/port-connections/port-connection[port-name=99N]/config/peer-port-name",
               "schema": {
                 "type": "object",
                 "required": [
-                  "openconfig-optical-switch:peer-port-number"
+                  "openconfig-optical-switch:peer-port-name"
                 ],
                 "properties": {
-                  "openconfig-optical-switch:peer-port-number": {
-                    "type": "integer",
+                  "openconfig-optical-switch:peer-port-name": {
+                    "type": "string",
                     "enum": [
-                      10040
+                      "40S"
                     ]
                   }
                 }
@@ -493,8 +451,8 @@
           "oper": "dbHSet",
           "db": "CONFIG_DB",
           "value": {
-            "OCS_XCONNECTS|1|1": {
-              "peer-port-number": 10051
+            "OCS_XCONNECTS|1N": {
+              "peer-port-name": "51S"
             }
           }
         },
@@ -503,17 +461,17 @@
           "timeout": 3000,
           "pathValidators": [
             {
-              "xpath": "/optical-switch/port-connections/port-connection[port-number=1][slot-number=1]/config/peer-port-number",
+              "xpath": "/optical-switch/port-connections/port-connection[port-name=1N]/config/peer-port-name",
               "schema": {
                 "type": "object",
                 "required": [
-                  "openconfig-optical-switch:peer-port-number"
+                  "openconfig-optical-switch:peer-port-name"
                 ],
                 "properties": {
-                  "openconfig-optical-switch:peer-port-number": {
-                    "type": "integer",
+                  "openconfig-optical-switch:peer-port-name": {
+                    "type": "string",
                     "enum": [
-                      10051
+                      "51S"
                     ]
                   }
                 }

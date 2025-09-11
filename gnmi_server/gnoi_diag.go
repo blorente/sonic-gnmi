@@ -261,6 +261,11 @@ func prepareStartResp(req *dpb.StartBERTRequest) (*dpb.StartBERTResponse, error)
 
 // StartBERT implements corresponding gnoi.diag.StartBERT RPC.
 func (srv *Server) StartBERT(ctx context.Context, req *dpb.StartBERTRequest) (*dpb.StartBERTResponse, error) {
+	// Reject if the platform does not support PRBS link qualification.
+	if !srv.lqHelper.SupportsBert() {
+		log.V(lvl.ERROR).Info("gNOI diag StartBERT RPC is not supported!")
+		return nil, status.Errorf(codes.Unimplemented, "gNOI diag StartBERT RPC is not supported!")
+	}
 	// Reject while NSF Freeze is ongoing
 	if srv.WarmRestartHelper.FetchFreezeStatus() {
 		log.V(lvl.ERROR).Info("gNOI diag StartBERT RPC disabled since NSF is ongoing!")
@@ -352,6 +357,11 @@ func prepareStopResp(req *dpb.StopBERTRequest) (*dpb.StopBERTResponse, error) {
 
 // StopBERT implements corresponding gnoi.diag.StopBERT RPC.
 func (srv *Server) StopBERT(ctx context.Context, req *dpb.StopBERTRequest) (*dpb.StopBERTResponse, error) {
+	// Reject if the platform does not support PRBS link qualification.
+	if !srv.lqHelper.SupportsBert() {
+		log.V(lvl.ERROR).Info("gNOI diag StopBERT RPC is not supported!")
+		return nil, status.Errorf(codes.Unimplemented, "gNOI diag StopBERT RPC is not supported!")
+	}
 	// Reject while NSF Freeze is ongoing
 	if srv.WarmRestartHelper.FetchFreezeStatus() {
 		log.V(lvl.ERROR).Info("gNOI diag StopBERT RPC disabled since NSF is ongoing!")
@@ -480,6 +490,11 @@ func getResult(req *dpb.GetBERTResultRequest) (*dpb.GetBERTResultResponse, error
 
 // GetBERTResult implements corresponding gnoi.diag.GetBERTResult RPC.
 func (srv *Server) GetBERTResult(ctx context.Context, req *dpb.GetBERTResultRequest) (*dpb.GetBERTResultResponse, error) {
+	// Reject if the platform does not support PRBS link qualification.
+	if !srv.lqHelper.SupportsBert() {
+		log.V(lvl.ERROR).Info("gNOI diag GetBERTResult RPC is not supported!")
+		return nil, status.Errorf(codes.Unimplemented, "gNOI diag GetBERTResult RPC is not supported!")
+	}
 	// Reject while NSF Freeze is ongoing
 	if srv.WarmRestartHelper.FetchFreezeStatus() {
 		log.V(lvl.ERROR).Info("gNOI diag GetBERTResult RPC disabled since NSF is ongoing!")

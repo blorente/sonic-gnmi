@@ -1,0 +1,68 @@
+// OCS represents a list of APIs that are used for interacting with Optical
+// Circuit Switch (OCS).
+
+syntax = "proto3";
+
+package gpins.gnoi;
+option go_package = "proto/gnoi/ocs";
+
+import "google/rpc/status.proto";
+
+service Ocs {
+  // Sets, modifies, and/or deletes cross-connects.
+  rpc SetConnections(SetConnectionsRequest) returns (SetConnectionsResponse) {}
+
+  // Retrieves the status of cross-connects.
+  rpc GetConnections(GetConnectionsRequest) returns (GetConnectionsResponse) {}
+}
+
+// An individual connection.
+message Connection {
+  optional string north = 1;  // The North port of the connection.
+  optional string south = 2;  // The South port of the connection.
+}
+
+message Update {
+  enum Action {
+    UNSPECIFIED = 0;  // Invalid operation
+    CONNECT = 1;      // Create a new connection
+    DISCONNECT = 2;   // Delete an existing connection
+    REPLACE = 3;      // Forcefully create a new connection, replacing any
+                      // existing, conflicting connections.
+  }
+  optional Action action = 1;
+  optional Connection connection = 2;
+}
+
+// The request for a SetCrossConnects RPC call.
+message SetConnectionsRequest {
+  optional string target = 1;   // Optional target OCS device name.
+  repeated Update updates = 2;  // The list of updates to perform.
+}
+
+// The response for a SetCrossConnects RPC call.
+message SetConnectionsResponse {
+  // An indication of overall success.
+  // True if all operations succeeded, false otherwise.
+  optional bool success = 1;
+
+  // The result of an individual update operation.
+  message Result {
+    optional Update update = 1;
+    optional google.rpc.Status status = 2;
+  }
+
+  // A list of results for each requested update.
+  // The results are listed in the same order as the updates in the request.
+  repeated Result results = 2;
+}
+
+// The request for a GetConnections RPC call.
+message GetConnectionsRequest {
+  optional string target = 1;  // Optional target OCS device name.
+}
+
+// The response for a GetConnections RPC call.
+message GetConnectionsResponse {
+  repeated Connection connection = 1;
+}

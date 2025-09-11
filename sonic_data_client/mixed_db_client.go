@@ -2074,3 +2074,7 @@ func (c *MixedDbClient) SentOne(val *Value) {
 
 func (c *MixedDbClient) FailedSend() {
 }
+
+func (c *MixedDbClient) TickLatencyInfo() map[int]TickLatencyStats {
+	return nil
+}

@@ -194,6 +194,17 @@
           },
           {
             "oper": "dbHSet",
+            "title": "Create PORT_TABLE|Ethernet1/20/7 in STATE_DB",
+            "db": "STATE_DB",
+            "value": {
+              "PORT_TABLE|Ethernet1/20/7": {
+                "admin_status": "up",
+                "ref_count": "0"
+              }
+            }
+          },
+          {
+            "oper": "dbHSet",
             "db": "APPL_STATE_DB",
             "value": {
               "PORT_STATE:Ethernet1/20/1" : {

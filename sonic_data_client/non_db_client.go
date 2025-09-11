@@ -583,6 +583,11 @@ func (c *NonDbClient) Get(w *sync.WaitGroup) ([]*spb.Value, error) {
 	return values, nil
 }
 
+
+func (c *NonDbClient) TickLatencyInfo() map[int]TickLatencyStats {
+	return map[int]TickLatencyStats{}
+}
+
 // TODO: Log data related to this session
 func (c *NonDbClient) Close() error {
 	return nil

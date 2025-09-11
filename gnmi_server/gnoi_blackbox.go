@@ -31,11 +31,11 @@ const (
 	setHwLinkReqCh              = "SET_HARDWARE_LINK_STATE_REQ_CHANNEL"
 	setHwLinkRespCh             = "SET_HARDWARE_LINK_STATE_RESP_CHANNEL"
 	setHwLinkOp                 = "set_hardware_link_state"
-	notificationResponseTimeout = 5 * time.Second
+	notificationResponseTimeout = 20 * time.Second // TODO(427507175): Consider lowering after investigation
 )
 
 var (
-	verifyStateTimeout = 80 * time.Second
+	verifyStateTimeout = 200 * time.Second
 )
 
 type BBTransformerInterface interface {

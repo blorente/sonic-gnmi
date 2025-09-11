@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 
@@ -19,9 +20,12 @@ import (
 	"time"
 
 	"github.com/Azure/sonic-mgmt-common/translib/db"
-	log "github.com/golang/glog"
+	"github.com/sonic-net/sonic-gnmi/common_utils"
 	gnmi "github.com/sonic-net/sonic-gnmi/gnmi_server"
 	lvl "github.com/sonic-net/sonic-gnmi/gnmi_server/log"
+	"github.com/sonic-net/sonic-gnmi/swsscommon"
+
+	log "github.com/golang/glog"
 	/* The following imports are removed since we commented out the startGNMIServer
 	 * and iNotifyCertMonitoring functions which came from the community.
 	testcert "github.com/sonic-net/sonic-gnmi/testdata/tls"
@@ -29,9 +33,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/keepalive"
-	*/
-	"github.com/sonic-net/sonic-gnmi/swsscommon"
-)
+	*/)
 
 type ServerControlValue int
 
@@ -426,6 +428,7 @@ func startGNMIServerGoog(telemetryCfg *TelemetryConfig, cfg *gnmi.Config, server
 	if !s.WarmRestartHelper.CheckWarmStart(false) {
 		waitForPortInitDone()
 	}
+	checkForDPBPortUnlock()
 
 	go func() {
 		if err := s.Serve(); err != nil {
@@ -441,6 +444,26 @@ func startGNMIServerGoog(telemetryCfg *TelemetryConfig, cfg *gnmi.Config, server
 		stopSignalHandler <- true
 		log.Flush()
 		return
+	}
+}
+
+func checkForDPBPortUnlock() {
+	cfgDBClient, err := common_utils.NewConfigDBClient()
+	if err != nil {
+		log.V(lvl.ERROR).Infof("checkForDPBPortUnlock: Could not create Config DB Client, err %v", err)
+		return
+	}
+	defer db.CloseRedisClient(cfgDBClient)
+
+	if unlockKeys, err := cfgDBClient.Keys(context.Background(), "PORT_UNLOCK|*").Result(); err == nil && len(unlockKeys) > 0 {
+		if err := cfgDBClient.Del(context.Background(), "PORT_STATE|*").Err(); err != nil {
+			log.V(lvl.ERROR).Infof("Error in unlocking ports during telemetry init: %v", err.Error())
+			return
+		}
+		if err := cfgDBClient.Del(context.Background(), "PORT_UNLOCK|*").Err(); err != nil {
+			log.V(lvl.ERROR).Infof("Error in removing the port unlock required signal during telemetry init: %v", err.Error())
+			return
+		}
 	}
 }
 

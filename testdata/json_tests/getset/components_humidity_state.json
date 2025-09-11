@@ -1,0 +1,313 @@
+{
+  "title": "Get Humidity Sensor Component State paths",
+  "operations":[
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=humidity_ssd1]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "config", "state", "google-pins-platform:sensor"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": ["name"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": ["humidity_ssd1"]
+                  }
+                }
+              },
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "parent", "type"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "humidity_ssd1"
+                    ]
+                  },
+                  "parent": {
+                    "type": "string",
+                    "enum": [
+                      "ssd1"
+                    ]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-platform-types:SENSOR"
+                    ]
+                  }
+                }
+              },
+              "google-pins-platform:sensor": {
+                "type": "object",
+                "required": [
+                  "state"
+                ],
+                "properties": {
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "sensor-type", "instant"
+                    ],
+                    "properties": {
+                      "sensor-type": {
+                        "type": "string",
+                        "enum": [
+                          "google-pins-platform:HUMIDITY_SENSOR"
+                        ]
+                      },
+                      "instant": {
+                        "type": "string",
+                        "enum": [
+                          "27.234"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=humidity_controller_card]",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:component"
+      ],
+      "properties": {
+        "openconfig-platform:component": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "state", "google-pins-platform:sensor"
+            ],
+            "properties": {
+              "state": {
+                "type": "object",
+                "required": [
+                  "name", "parent", "type"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "enum": [
+                      "humidity_controller_card"
+                    ]
+                  },
+                  "parent": {
+                    "type": "string",
+                    "enum": [
+                      "controller_card"
+                    ]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "openconfig-platform-types:SENSOR"
+                    ]
+                  }
+                }
+              },
+              "google-pins-platform:sensor": {
+                "type": "object",
+                "required": [
+                  "state"
+                ],
+                "properties": {
+                  "state": {
+                    "type": "object",
+                    "required": [
+                      "sensor-type", "instant"
+                    ],
+                    "properties": {
+                      "sensor-type": {
+                        "type": "string",
+                        "enum": [
+                          "google-pins-platform:HUMIDITY_SENSOR"
+                        ]
+                      },
+                      "instant": {
+                        "type": "string",
+                        "enum": ["15.194"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=humidity_controller_card]/state/name",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:name"
+      ],
+      "properties": {
+        "openconfig-platform:name": {
+          "type": "string",
+          "enum": [
+            "humidity_controller_card"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=humidity_controller_card]/config/name",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:name"
+      ],
+      "properties": {
+        "openconfig-platform:name": {
+          "type": "string",
+          "enum": [
+            "humidity_controller_card"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=humidity_controller_card]/state/type",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:type"
+      ],
+      "properties": {
+        "openconfig-platform:type": {
+          "type": "string",
+          "enum": [
+            "openconfig-platform-types:SENSOR"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=humidity_controller_card]/state/parent",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "openconfig-platform:parent"
+      ],
+      "properties": {
+        "openconfig-platform:parent": {
+          "type": "string",
+          "enum": [
+            "controller_card"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=humidity_controller_card]/sensor",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-platform:sensor"
+      ],
+      "properties": {
+        "google-pins-platform:sensor": {
+          "type": "object",
+          "required": [
+            "state"
+          ],
+          "properties": {
+            "state": {
+              "type": "object",
+              "required": [
+                "sensor-type", "instant"
+              ],
+              "properties": {
+                "sensor-type": {
+                  "type": "string",
+                  "enum": [
+                    "google-pins-platform:HUMIDITY_SENSOR"
+                  ]
+                },
+                "instant": {
+                  "type": "string",
+                  "enum": ["15.194"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=humidity_controller_card]/sensor/state/sensor-type",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-platform:sensor-type"
+      ],
+      "properties": {
+        "google-pins-platform:sensor-type": {
+          "type": "string",
+          "enum": [
+            "google-pins-platform:HUMIDITY_SENSOR"
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get",
+      "returnCode": 0,
+      "xpath": "openconfig-platform:components/component[name=humidity_controller_card]/sensor/state/instant",
+      "target": "OC_YANG",
+      "type": "object",
+      "required": [
+        "google-pins-platform:instant"
+      ],
+      "properties": {
+        "google-pins-platform:instant": {
+          "type": "string",
+          "enum": [
+            "15.194"
+          ]
+        }
+      }
+    }
+  ]
+}

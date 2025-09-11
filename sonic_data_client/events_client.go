@@ -460,6 +460,9 @@ func (evtc *EventClient) Set(delete []*gnmipb.Path, replace []*gnmipb.Update, up
 func (evtc *EventClient) Capabilities() []gnmipb.ModelData {
 	return nil
 }
+func (evtc *EventClient) TickLatencyInfo() map[int]TickLatencyStats {
+	return nil
+}
 
 func (c *EventClient) SentOne(val *Value) {
 	var udiff uint64

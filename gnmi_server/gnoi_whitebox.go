@@ -38,6 +38,7 @@ func (srv *Server) SetControllerConnectionState(ctx context.Context, req *wbpb.S
 		return nil, err
 	}
 	log.V(lvl.INFO).Info("Whitebox Test: SetControllerConnectionState")
+	// DBUS client client takes a string and packages in an array for the backend.
 	reqStr, err := json.Marshal(req)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, err.Error())
@@ -47,6 +48,7 @@ func (srv *Server) SetControllerConnectionState(ctx context.Context, req *wbpb.S
 		return nil, err
 	}
 
+	// DBUS client client takes a string and packages in an array for the backend.
 	if _, err = sc.WhiteboxSet(string(reqStr)); err != nil {
 		return nil, status.Errorf(codes.Internal, err.Error())
 	}

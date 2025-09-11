@@ -2,13 +2,21 @@ package gnmi
 
 import (
 	"context"
+	"crypto/ecdsa"
+	"crypto/elliptic"
+	"crypto/rand"
+	"crypto/rsa"
+	"crypto/sha256"
 	"crypto/x509"
+	"crypto/x509/pkix"
+	"encoding/base64"
 	"encoding/json"
 	"encoding/pem"
 	"fmt"
 	"io"
 	"os"
 	"path/filepath"
+	"slices"
 	"strconv"
 	"strings"
 	"sync"
@@ -18,6 +26,7 @@ import (
 	lvl "github.com/sonic-net/sonic-gnmi/gnmi_server/log"
 
 	log "github.com/golang/glog"
+	"github.com/google/go-tpm/tpm2"
 	certz "github.com/openconfig/gnsi/certz"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -47,6 +56,7 @@ const (
 var (
 	certzMu               sync.Mutex
 	legacyCrlPath                = ""
+	csrPrefix             []byte = []byte("CSR1_")
 	integrityManifestFile string = "/mbm/boot_manifest.cbor"
 )
 
@@ -61,6 +71,7 @@ type profile struct {
 	ID             string      `json:"profile_id"`
 	ActiveEntities entityGroup `json:"active"`
 	LastEntities   entityGroup `json:"last_active"`
+	generatedKey   []byte      `json:"-"`
 }
 
 type entityGroup struct {
@@ -156,13 +167,15 @@ func (srv *GNSICertzServer) DeleteProfile(context.Context, *certz.DeleteProfileR
 func (srv *GNSICertzServer) GetProfileList(context.Context, *certz.GetProfileListRequest) (*certz.GetProfileListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProfileList not implemented")
 }
-func (srv *GNSICertzServer) CanGenerateCSR(context.Context, *certz.CanGenerateCSRRequest) (*certz.CanGenerateCSRResponse, error) {
-	// TODO(b/301177780) Enable once MBM Boot Attestation is ready to be turned on.
-	return nil, status.Errorf(codes.Unimplemented, "method CanGenerateCSR not implemented")
+func (srv *GNSICertzServer) CanGenerateCSR(ctx context.Context, req *certz.CanGenerateCSRRequest) (*certz.CanGenerateCSRResponse, error) {
+	if req.GetParams().GetCommonName() == "" {
+		return &certz.CanGenerateCSRResponse{CanGenerate: false}, nil
+	}
+	return &certz.CanGenerateCSRResponse{CanGenerate: true}, nil
 }
 
 func (srv *GNSICertzServer) GetIntegrityManifest(context.Context, *certz.GetIntegrityManifestRequest) (*certz.GetIntegrityManifestResponse, error) {
-	log.V(lvl.INFO).Info("gNSI: GetIntegrityManifest")
+	log.V(lvl.INFO).Infof("gNSI: GetIntegrityManifest: ", integrityManifestFile)
 	content, err := os.ReadFile(integrityManifestFile)
 	if err != nil {
 		log.V(lvl.ERROR).Infof("Failed to read manifest %s: %v", integrityManifestFile, err)
@@ -287,7 +300,7 @@ func (srv *GNSICertzServer) processRotateRequest(profileID string, req *certz.Ro
 	rotateResp := certz.RotateCertificateResponse{}
 	switch req.RotateRequest.(type) {
 	case *certz.RotateCertificateRequest_GenerateCsr:
-		resp, err := srv.doGenerateCsr(req.GetGenerateCsr())
+		resp, err := srv.doGenerateCsr(profileID, req.GetGenerateCsr())
 		if err != nil {
 			return nil, err
 		}
@@ -304,9 +317,192 @@ func (srv *GNSICertzServer) processRotateRequest(profileID string, req *certz.Ro
 	return &rotateResp, nil
 }
 
-func (srv *GNSICertzServer) doGenerateCsr(req *certz.GenerateCSRRequest) (*certz.GenerateCSRResponse, error) {
-	// TODO(b/301177780) Implement for attestation
-	return nil, status.Errorf(codes.Unimplemented, "Generate CSR is Unimplemented")
+func (srv *GNSICertzServer) doGenerateCsr(profileID string, req *certz.GenerateCSRRequest) (*certz.GenerateCSRResponse, error) {
+	log.V(lvl.INFO).Info("Generating Csr")
+
+	keySize, sigAlgo := parseCSRSuite(req.GetParams().GetCsrSuite())
+	csrTemplate := x509.CertificateRequest{
+		Subject: pkix.Name{
+			CommonName:         req.GetParams().CommonName,
+			Country:            []string{req.GetParams().Country},
+			Province:           []string{req.GetParams().State},
+			Locality:           []string{req.GetParams().City},
+			Organization:       []string{req.GetParams().Organization},
+			OrganizationalUnit: []string{req.GetParams().OrganizationalUnit},
+		},
+		SignatureAlgorithm: sigAlgo,
+	}
+
+	var privKey any
+	var err error
+	switch sigAlgo {
+	case x509.SHA256WithRSA, x509.SHA384WithRSA, x509.SHA512WithRSA:
+		log.V(lvl.INFO).Infof("Generating keys for RSA: %v", req.GetParams().GetCsrSuite().String())
+		privKey, err = rsa.GenerateKey(rand.Reader, keySize)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "GenerateKey failed: %v", err)
+		}
+	case x509.ECDSAWithSHA256, x509.ECDSAWithSHA384, x509.ECDSAWithSHA512:
+		log.V(lvl.INFO).Infof("Generating keys for ECDSA: %v", req.GetParams().GetCsrSuite().String())
+		var curve elliptic.Curve
+		switch keySize {
+		case 256:
+			curve = elliptic.P256()
+		case 384:
+			curve = elliptic.P384()
+		case 521:
+			curve = elliptic.P521()
+		default:
+			return nil, status.Errorf(codes.InvalidArgument, "Unsupported key size for ECDSA: %v", keySize)
+		}
+		privKey, err = ecdsa.GenerateKey(curve, rand.Reader)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "GenerateKey failed: %v", err)
+		}
+	case x509.PureEd25519:
+		fallthrough
+	case x509.UnknownSignatureAlgorithm:
+		fallthrough
+	default:
+		return nil, status.Errorf(codes.InvalidArgument, "Unsupported Algorithm: %v", sigAlgo.String())
+
+	}
+
+	csrCert, err := x509.CreateCertificateRequest(rand.Reader, &csrTemplate, privKey)
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "CreateCertificateRequest failed: %v", err)
+	}
+	csr := pem.EncodeToMemory(&pem.Block{
+		Type: "CERTIFICATE REQUEST", Bytes: csrCert,
+	})
+
+	tpmClient, err := startupTPM()
+	if err != nil {
+		log.V(lvl.WARNING).Infof("startupTPM likely already initialized: (%+v) %v", tpmClient, err)
+	}
+	if tpmClient != nil {
+		defer tpmClient.Close()
+	}
+
+	integrities := []*certz.ReferenceIntegrityData{}
+	for _, spec := range req.GetIntegrities() {
+		log.V(lvl.INFO).Infof("Attesting: %+v", spec.RotId)
+
+		ekCert, err := readEKCert(tpmClient)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "read EK leaf cert failed: %v", err)
+		}
+		ekChain, err := readEKChain(tpmClient)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "read EK Chain failed: %v", err)
+		}
+		ekTemplate, err := readEKTemp(tpmClient)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "read EK Template failed: %v", err)
+		}
+
+		// Create EK primary
+		ekPrimary, err := createEKPrimary(tpmClient, ekTemplate)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "create EK failed: %v", err)
+		}
+		defer flushHandle(tpmClient, ekPrimary.ObjectHandle)
+
+		// Create Primary(akTemplate, akNonce) -> ak
+		akPrimary, err := createAKPrimary(tpmClient, spec.GetMbm().GetAkTemplate())
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "create AK failed: %v", err)
+		}
+		defer flushHandle(tpmClient, akPrimary.ObjectHandle)
+
+		// Certify Creation(ak, ek, akNonce) -> akAttestation
+
+		akAttestation, err := tpm2.CertifyCreation{
+			SignHandle: tpm2.AuthHandle{
+				Handle: ekPrimary.ObjectHandle,
+				Name:   ekPrimary.Name,
+				Auth:   tpm2.HMAC(tpm2.TPMAlgSHA256, 16, tpm2.Auth([]byte{})),
+			},
+			ObjectHandle: tpm2.NamedHandle{
+				Handle: akPrimary.ObjectHandle,
+				Name:   akPrimary.Name,
+			},
+			QualifyingData: tpm2.TPM2BData{Buffer: spec.GetMbm().GetAkNonce()},
+			CreationHash:   akPrimary.CreationHash,
+			InScheme:       tpm2.TPMTSigScheme{Scheme: tpm2.TPMAlgNull},
+			CreationTicket: akPrimary.CreationTicket,
+		}.Execute(tpmClient)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "CertifyCreation failed: %v", err)
+		}
+
+		// Quote(AK, pcrSelect, sha256(csr + nonce) -> pcrDigest, pcrSignature
+		pcrSelect, err := tpm2.Unmarshal[tpm2.TPMLPCRSelection](spec.GetMbm().GetSelection())
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "unmarshal pcr selection failed: %v", err)
+		}
+
+		csrSum := sha256.Sum256(slices.Concat(csrPrefix, csr, spec.GetMbm().GetNonce()))
+
+		pcrDigest, err := tpm2.Quote{
+			SignHandle: tpm2.AuthHandle{
+				Handle: akPrimary.ObjectHandle,
+				Name:   akPrimary.Name,
+				Auth:   tpm2.HMAC(tpm2.TPMAlgSHA256, 16, tpm2.Auth([]byte{})),
+			},
+			QualifyingData: tpm2.TPM2BData{
+				Buffer: csrSum[:],
+			},
+			InScheme: tpm2.TPMTSigScheme{
+				Scheme:  tpm2.TPMAlgECDSA,
+				Details: tpm2.NewTPMUSigScheme(tpm2.TPMAlgECDSA, &tpm2.TPMSSchemeHash{HashAlg: tpm2.TPMAlgSHA256}),
+			},
+			PCRSelect: *pcrSelect,
+		}.Execute(tpmClient)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "quote failed: %v", err)
+		}
+
+		akPublic, err := akPrimary.OutPublic.Contents()
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "get ak public failed: %v", err)
+		}
+		quote, err := pcrDigest.Quoted.Contents()
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "unmarshal quote failed: %v", err)
+		}
+		attest, err := akAttestation.CertifyInfo.Contents()
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "unmarshal attestation failed: %v", err)
+		}
+
+		integrity := &certz.ReferenceIntegrityData{
+			RotId: "",
+			Type: &certz.ReferenceIntegrityData_Mbm{
+				Mbm: &certz.MBMData{
+					Quoted:        tpm2.Marshal(quote),
+					Signature:     tpm2.Marshal(pcrDigest.Signature),
+					EkLeafCert:    base64.StdEncoding.EncodeToString(ekCert.Data.Buffer),
+					EkCertChain:   base64.StdEncoding.EncodeToString(ekChain.Data.Buffer),
+					AkPubKey:      base64.StdEncoding.EncodeToString(tpm2.Marshal(akPublic)),
+					AkAttestation: tpm2.Marshal(attest),
+					AkSignature:   tpm2.Marshal(akAttestation.Signature),
+				}}}
+		integrities = append(integrities, integrity)
+	}
+
+	// Save the CSR Private Key
+	key, err := x509.MarshalPKCS8PrivateKey(privKey)
+	srv.profiles[profileID].generatedKey = pem.EncodeToMemory(&pem.Block{Type: "PRIVATE KEY", Bytes: key})
+
+	return &certz.GenerateCSRResponse{
+		CertificateSigningRequest: &certz.CertificateSigningRequest{
+			Type:                      certz.CertificateType_CERTIFICATE_TYPE_X509,
+			Encoding:                  certz.CertificateEncoding_CERTIFICATE_ENCODING_PEM,
+			CertificateSigningRequest: csr,
+		},
+		Integrities: integrities,
+	}, nil
 }
 
 func (srv *GNSICertzServer) doUpload(req *certz.UploadRequest, overwrite bool, profileID string) (*certz.UploadResponse, error) {
@@ -347,7 +543,7 @@ func (srv *GNSICertzServer) doUpload(req *certz.UploadRequest, overwrite bool, p
 				return nil, err
 			}
 		}
-		if err := saveEntities(entityMsg, expEntity); err != nil {
+		if err := srv.saveEntities(profileID, entityMsg, expEntity); err != nil {
 			return nil, status.Errorf(codes.Aborted, "Entity save err: %v", err)
 		}
 		if err := srv.activateEntity(profileID, expEntity); err != nil {
@@ -423,11 +619,11 @@ func (srv *GNSICertzServer) activateEntity(profileID string, entity *genericEnti
 	return nil
 }
 
-func saveEntities(entityMsg *certz.Entity, expEntity *genericEntity) error {
-	log.V(lvl.INFO).Infof("Saving entity: %s", expEntity.EType.String())
+func (srv *GNSICertzServer) saveEntities(profileID string, entityMsg *certz.Entity, expEntity *genericEntity) error {
+	log.V(lvl.INFO).Infof("Saving entity: %+v", expEntity)
 	switch expEntity.EType {
 	case certType:
-		cert, key, err := readCertChain(entityMsg.GetCertificateChain())
+		cert, key, err := srv.readCertChain(profileID, entityMsg.GetCertificateChain())
 		if err != nil {
 			return err
 		}
@@ -457,7 +653,7 @@ func saveEntities(entityMsg *certz.Entity, expEntity *genericEntity) error {
 	return status.Errorf(codes.Internal, "failed to find entity type: #+v", entityMsg)
 }
 
-func readCertChain(certChain *certz.CertificateChain) ( /*cert*/ []byte /*key*/, []byte, error) {
+func (srv *GNSICertzServer) readCertChain(profileID string, certChain *certz.CertificateChain) ( /*cert*/ []byte /*key*/, []byte, error) {
 	// step through the certificate chain and append each parent
 	if certChain.GetCertificate() == nil {
 		return nil, nil, status.Errorf(codes.InvalidArgument, "Missing Certificate")
@@ -471,11 +667,15 @@ func readCertChain(certChain *certz.CertificateChain) ( /*cert*/ []byte /*key*/,
 	if certChain.GetCertificate().Certificate == nil {
 		return nil, nil, status.Errorf(codes.InvalidArgument, "Missing Cert data")
 	}
-	if certChain.GetCertificate().PrivateKey == nil {
-		return nil, nil, status.Errorf(codes.InvalidArgument, "Missing Key")
-	}
 	cert := append(certChain.GetCertificate().Certificate, byte('\n'))
 	key := certChain.GetCertificate().PrivateKey
+	if certChain.GetCertificate().PrivateKey == nil {
+		if srv.profiles[profileID].generatedKey == nil {
+			return nil, nil, status.Errorf(codes.InvalidArgument, "Missing Key")
+		}
+		log.V(lvl.INFO).Info("No key provided; Using generated key.")
+		key = srv.profiles[profileID].generatedKey
+	}
 
 	certChain = certChain.GetParent()
 	for certChain != nil {
@@ -888,17 +1088,6 @@ func restoreFromFile(link string, file string) string {
 	return file
 }
 
-func attemptWrite(name string, data []byte, perm os.FileMode) error {
-	log.V(lvl.INFO).Infof("Writing: %s", name)
-	err := os.WriteFile(name, data, perm)
-	if err != nil {
-		if e := os.Remove(name); e != nil {
-			err = fmt.Errorf("Write %s failed: %w; Cleanup failed", name, err)
-		}
-	}
-	return err
-}
-
 func removeEntityFiles(e *genericEntity) {
 	switch e.EType {
 	case certType:
@@ -940,4 +1129,51 @@ func writeCredentialsMetadataToDB(tbl, key, fld, val string) error {
 	}
 	log.V(lvl.DEBUG).Infof("Successfully wrote credentials metadata to the DB. [path:'%v', fld:'%v', val:'%v']", path, fld, val)
 	return nil
+}
+
+func parseCSRSuite(suite certz.CSRSuite) (int, x509.SignatureAlgorithm) {
+	switch suite {
+	case certz.CSRSuite_CSRSUITE_X509_KEY_TYPE_RSA_2048_SIGNATURE_ALGORITHM_SHA_2_256:
+		return 2048, x509.SHA256WithRSA
+	case certz.CSRSuite_CSRSUITE_X509_KEY_TYPE_RSA_2048_SIGNATURE_ALGORITHM_SHA_2_384:
+		return 2048, x509.SHA384WithRSA
+	case certz.CSRSuite_CSRSUITE_X509_KEY_TYPE_RSA_2048_SIGNATURE_ALGORITHM_SHA_2_512:
+		return 2048, x509.SHA512WithRSA
+	case certz.CSRSuite_CSRSUITE_X509_KEY_TYPE_RSA_3072_SIGNATURE_ALGORITHM_SHA_2_256:
+		return 3072, x509.SHA512WithRSA
+	case certz.CSRSuite_CSRSUITE_X509_KEY_TYPE_RSA_3072_SIGNATURE_ALGORITHM_SHA_2_384:
+		return 3072, x509.SHA384WithRSA
+	case certz.CSRSuite_CSRSUITE_X509_KEY_TYPE_RSA_3072_SIGNATURE_ALGORITHM_SHA_2_512:
+		return 3072, x509.SHA512WithRSA
+	case certz.CSRSuite_CSRSUITE_X509_KEY_TYPE_RSA_4096_SIGNATURE_ALGORITHM_SHA_2_256:
+		return 4096, x509.SHA512WithRSA
+	case certz.CSRSuite_CSRSUITE_X509_KEY_TYPE_RSA_4096_SIGNATURE_ALGORITHM_SHA_2_384:
+		return 4096, x509.SHA384WithRSA
+	case certz.CSRSuite_CSRSUITE_X509_KEY_TYPE_RSA_4096_SIGNATURE_ALGORITHM_SHA_2_512:
+		return 4096, x509.SHA512WithRSA
+	case certz.CSRSuite_CSRSUITE_X509_KEY_TYPE_ECDSA_PRIME256V1_SIGNATURE_ALGORITHM_SHA_2_256:
+		return 256, x509.ECDSAWithSHA256
+	case certz.CSRSuite_CSRSUITE_X509_KEY_TYPE_ECDSA_PRIME256V1_SIGNATURE_ALGORITHM_SHA_2_384:
+		return 256, x509.ECDSAWithSHA384
+	case certz.CSRSuite_CSRSUITE_X509_KEY_TYPE_ECDSA_PRIME256V1_SIGNATURE_ALGORITHM_SHA_2_512:
+		return 256, x509.ECDSAWithSHA512
+	case certz.CSRSuite_CSRSUITE_X509_KEY_TYPE_ECDSA_SECP384R1_SIGNATURE_ALGORITHM_SHA_2_256:
+		return 384, x509.ECDSAWithSHA256
+	case certz.CSRSuite_CSRSUITE_X509_KEY_TYPE_ECDSA_SECP384R1_SIGNATURE_ALGORITHM_SHA_2_384:
+		return 384, x509.ECDSAWithSHA384
+	case certz.CSRSuite_CSRSUITE_X509_KEY_TYPE_ECDSA_SECP384R1_SIGNATURE_ALGORITHM_SHA_2_512:
+		return 384, x509.ECDSAWithSHA512
+	case certz.CSRSuite_CSRSUITE_X509_KEY_TYPE_ECDSA_SECP521R1_SIGNATURE_ALGORITHM_SHA_2_256:
+		return 521, x509.ECDSAWithSHA256
+	case certz.CSRSuite_CSRSUITE_X509_KEY_TYPE_ECDSA_SECP521R1_SIGNATURE_ALGORITHM_SHA_2_384:
+		return 521, x509.ECDSAWithSHA384
+	case certz.CSRSuite_CSRSUITE_X509_KEY_TYPE_ECDSA_SECP521R1_SIGNATURE_ALGORITHM_SHA_2_512:
+		return 521, x509.ECDSAWithSHA512
+	case certz.CSRSuite_CSRSUITE_X509_KEY_TYPE_EDDSA_ED25519:
+		return 256, x509.PureEd25519
+	case certz.CSRSuite_CSRSUITE_CIPHER_UNSPECIFIED:
+		fallthrough
+	default:
+		return 0, x509.UnknownSignatureAlgorithm
+	}
 }
