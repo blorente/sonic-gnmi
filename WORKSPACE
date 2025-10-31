@@ -421,7 +421,7 @@ cc_library(
 new_git_repository(
     name = "sonic-swss-common",
     build_file_content = swsscommonBUILD,
-    commit = "8e24cedf016c73112561eac4c7f6a6fe3b21faf3",
+    commit = "7a25b0754f8f29d179c45fd3df48ceb96d2bc849",
     remote = "https://github.com/sonic-net/sonic-swss-common",
 )
 
