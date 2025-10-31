@@ -33,6 +33,8 @@ go_library(
         "//sonic_service_client",
         "//swsscommon",
         "//transl_utils",
+        "//translib",
+        "//translib/db",
         "@com_github_c9s_goprocinfo//linux",
         "@com_github_golang_glog//:glog",
         "@com_github_golang_protobuf//proto",
@@ -44,8 +46,6 @@ go_library(
         "@in_gopkg_yaml_v2//:yaml_v2",
         "@org_golang_google_grpc//codes",
         "@org_golang_google_grpc//status",
-        "@sonic-mgmt-common//translib",
-        "@sonic-mgmt-common//translib/db",
     ],
 )
 
@@ -59,7 +59,7 @@ go_test(
     name = "sonic_data_client_test",
     srcs = [
         "client_test.go",
-        "super_subscription_test.go"
+        "super_subscription_test.go",
     ],
     embed = [":sonic_data_client"],
     visibility = ["//visibility:public"],

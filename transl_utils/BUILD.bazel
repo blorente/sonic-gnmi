@@ -11,14 +11,14 @@ go_library(
     deps = [
         "//common_utils",
         "//gnmi_server/log",
+        "//translib",
+        "//translib/ocbinds",
+        "//translib/path",
+        "//translib/tlerr",
         "@com_github_golang_glog//:glog",
         "@com_github_openconfig_gnmi//errlist",
         "@com_github_openconfig_gnmi//proto/gnmi",
         "@com_github_openconfig_ygot//ygot",
-        "@sonic-mgmt-common//translib",
-        "@sonic-mgmt-common//translib/ocbinds",
-        "@sonic-mgmt-common//translib/path",
-        "@sonic-mgmt-common//translib/tlerr",
     ],
 )
 
@@ -31,10 +31,10 @@ go_test(
     embed = [":transl_utils"],
     visibility = ["//visibility:public"],
     deps = [
+        "//translib/ocbinds",
         "@com_github_openconfig_gnmi//proto/gnmi",
         "@com_github_openconfig_ygot//ygot",
         "@com_github_openconfig_ygot//ytypes",
-        "@sonic-mgmt-common//translib/ocbinds",
     ],
 )
 

@@ -1,0 +1,218 @@
+module sonic-diag {
+    namespace "http://github.com/Azure/sonic-diag";
+    prefix prt;
+    yang-version 1.1;
+
+    import sonic-extension {
+        prefix sonic-ext;
+    }
+
+    organization
+        "SONiC";
+
+    contact
+        "SONiC";
+
+    description
+        "SONIC PORT";
+
+    revision 2024-03-12 {
+        description
+            "Initial revision.";
+    }
+
+    typedef fec-mode {
+        type enumeration {
+            enum FEC_DISABLED;
+            enum FEC_FC;
+            enum FEC_RS528;
+            enum FEC_RS544;
+            enum FEC_RS544_2X_INTERLEAVE;
+        }
+    }
+
+    typedef loopback-mode-type {
+        type enumeration {
+            enum none;
+            enum mac_local;
+            enum mac_remote;
+            enum phy_local;
+            enum phy_remote;
+        }
+    }
+
+    container sonic-diag {
+        container BLACKHOLE_MONITORING {
+            list BLACKHOLE_MONITORING_LIST {
+                key name;
+                leaf name {
+                    type string {
+                        pattern "GLOBAL" {
+                            error-message "Only single GLOBAL blackhole monitoring instance supported";
+                        }
+                    }
+                }
+                leaf state {
+                    default "disabled";
+                    type string {
+                        pattern 'disabled|enabled';
+                    }
+                }
+            }
+        }
+
+        container CONGESTION_MONITORING {
+            list CONGESTION_MONITORING_LIST {
+                key name;
+                leaf name {
+                    type string {
+                        pattern "GLOBAL" {
+                            error-message "Only single GLOBAL congestion monitoring instance supported";
+                        }
+                    }
+                }
+                leaf state {
+                    default "disabled";
+                    type string {
+                        pattern 'disabled|enabled';
+                    }
+                }
+            }
+        }
+
+        container BAD_INTERVALS_MONITORING {
+            list BAD_INTERVALS_MONITORING_LIST {
+                key name;
+                leaf name {
+                    type string {
+                        pattern "GLOBAL" {
+                            error-message "Only single GLOBAL bad interval monitoring instance supported";
+                        }
+                    }
+                }
+                leaf state {
+                    default "disabled";
+                    type string {
+                        pattern 'disabled|enabled';
+                    }
+                }
+            }
+        }
+
+        container BLACKHOLE_SWITCH_PROFILE {
+            list BLACKHOLE_SWITCH_PROFILE_LIST {
+                key name;
+                leaf name {
+                    type string {
+                        pattern "GLOBAL" {
+                            error-message "Only single GLOBAL switch level profile supported";
+                        }
+                    }
+                }
+                leaf blackhole_switch_lpm_misses_thresh {
+                    type int32;
+                }
+                leaf blackhole_switch_recovered_parity_errors_thresh {
+                    type int32;
+                }
+                leaf blackhole_switch_ecc_single_bit_errors_thresh {
+                    type int32;
+                }
+            }
+        }
+
+        container BLACKHOLE_PORT_PROFILE {
+            list BLACKHOLE_PORT_PROFILE_LIST {
+                key name;
+                leaf name {
+                    type string;
+                }
+                leaf blackhole_port_min_incoming_pkts_thresh {
+                    type int32;
+                }
+                leaf blackhole_port_min_outgoing_pkts_thresh {
+                    type int32;
+                }
+                leaf blackhole_port_fec_not_correctable_thresh {
+                    type int32;
+                }
+                leaf blackhole_port_in_discards_rate_thresh {
+                    type decimal64 {
+                        fraction-digits 3;
+                    }
+                }
+                leaf blackhole_port_out_discards_rate_thresh {
+                    type decimal64 {
+                        fraction-digits 3;
+                    }
+                }
+                leaf blackhole_port_in_errors_thresh {
+                    type int32;
+                }
+                leaf congestion_queue_min_outgoing_pkts_thresh {
+                    type int32;
+                }
+            }
+        }
+
+        container CONGESTION_PROFILE {
+            list CONGESTION_PROFILE_LIST {
+                key name;
+                leaf name {
+                    type string;
+                }
+                leaf congestion_queue_min_outgoing_pkts_thresh {
+                    type int32;
+                }
+            }
+        }
+
+        container CONGESTION_QUEUE_TO_DROPPED_PKTS_RATE_THRESH_MAP {
+
+            list CONGESTION_QUEUE_TO_DROPPED_PKTS_RATE_THRESH_MAP_LIST {
+                key "name";
+
+                leaf name {
+                    type string;
+                }
+
+                list CONGESTION_QUEUE_TO_DROPPED_PKTS_RATE_THRESH_MAP {
+                    key "qname";
+                    leaf qname {
+                        type string;
+                    }
+                    leaf dropped-rate-threshold {
+                        type decimal64 {
+                            fraction-digits 3;
+                        }
+                    }
+                }
+            }
+        }
+
+        container BLACKHOLE_PORT_TO_PROFILE_MAP {
+
+            list BLACKHOLE_PORT_TO_PROFILE_MAP_LIST {
+                key "name";
+
+                leaf name {
+                    type string {
+                        pattern "GLOBAL" {
+                            error-message "Only single GLOBAL blackhole port to profile map supported";
+                        }
+                    }
+                }
+
+                list BLACKHOLE_PORT_TO_PROFILE_MAP {
+                    key "intf-name";
+                    leaf intf-name {
+                        type string;
+                    }
+                    leaf port-profile-name {
+                        type string;
+                    }
+                }
+            }
+        }
+    }
+}

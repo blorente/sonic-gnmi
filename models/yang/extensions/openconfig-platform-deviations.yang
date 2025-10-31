@@ -1,0 +1,200 @@
+module openconfig-platform-deviation {
+
+  yang-version "1";
+
+  namespace "http://openconfig.net/yang/platform/deviation/extension";
+
+  prefix "oc-pfm-dev";
+
+  import openconfig-extensions { prefix oc-ext; }
+  import openconfig-platform { prefix oc-pf; }
+  //import openconfig-platform-ext { prefix oc-pf-ext; }
+  import openconfig-platform-psu { prefix oc-pf-psu; }
+  import openconfig-platform-pipeline-counters { prefix oc-pf-plc; }
+  import openconfig-platform-integrated-circuit { prefix oc-pf-ic; }
+  import openconfig-platform-transceiver { prefix oc-pf-xcvr; }
+
+  organization
+    "SONiC";
+
+  contact
+    "SONiC";
+
+  description
+    "This module describes a YANG model for openconfig-platform deviations.";
+
+  oc-ext:openconfig-version "0.1.0";
+
+  revision "2025-01-16" {
+    description
+      "Remove platform paths not used by Google";
+    reference "0.1.0";
+  }
+
+  /*
+   * Unsupported paths under /components/component/state
+   */
+  deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:id { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:install-position { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:install-component { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:clei-code { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:redundant-role { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:last-poweroff-reason { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:last-poweroff-time { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:last-switchover-reason { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:last-switchover-time { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:last-reboot-reason { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:last-reboot-time { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:switchover-ready { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:temperature/oc-pf:avg { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:temperature/oc-pf:min { deviate not-supported; }
+  //deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:temperature/oc-pf:interval { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:temperature/oc-pf:min-time { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:temperature/oc-pf:max-time { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:temperature/oc-pf:alarm-status { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:temperature/oc-pf:alarm-threshold { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:temperature/oc-pf:alarm-severity { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:memory { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:allocated-power { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:state/oc-pf:used-power { deviate not-supported; }
+
+  /*
+   * Unsupported paths under /components/component/properties
+   */
+  deviation /oc-pf:components/oc-pf:component/oc-pf:properties { deviate not-supported; }
+
+  /*
+   * Unsupported paths under /components/component/chassis
+   */
+  deviation /oc-pf:components/oc-pf:component/oc-pf:chassis/oc-pf:utilization { deviate not-supported; }
+
+  /*
+   * Unsupported paths under /components/component/power-supply
+   */
+  deviation /oc-pf:components/oc-pf:component/oc-pf:power-supply/oc-pf:config { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:power-supply/oc-pf:state/oc-pf-psu:enabled { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:power-supply/oc-pf:state/oc-pf-psu:capacity { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:power-supply/oc-pf:state/oc-pf-psu:input-current { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:power-supply/oc-pf:state/oc-pf-psu:input-voltage { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:power-supply/oc-pf:state/oc-pf-psu:output-current { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:power-supply/oc-pf:state/oc-pf-psu:output-voltage { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:power-supply/oc-pf:state/oc-pf-psu:output-power { deviate not-supported; }
+
+  /*
+   * Unsupported paths under /components/component/fabric
+   */
+  deviation /oc-pf:components/oc-pf:component/oc-pf:fabric { deviate not-supported; }
+
+  /*
+   * Unsupported paths under /components/component/cpu
+   */
+  deviation /oc-pf:components/oc-pf:component/oc-pf:cpu { deviate not-supported; }
+
+  /*
+   * Unsupported paths under /components/component/integrated-circuit
+   */
+  deviation /oc-pf:components/oc-pf:component/oc-pf:integrated-circuit/oc-pf:utilization { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:integrated-circuit/oc-pf-plc:pipeline-counters/oc-pf-plc:packet { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:integrated-circuit/oc-pf-plc:pipeline-counters/oc-pf-plc:drop/oc-pf-plc:state { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:integrated-circuit/oc-pf-plc:pipeline-counters/oc-pf-plc:drop/oc-pf-plc:interface-block { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:integrated-circuit/oc-pf-plc:pipeline-counters/oc-pf-plc:drop/oc-pf-plc:lookup-block/oc-pf-plc:state/oc-pf-plc:oversubscription { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:integrated-circuit/oc-pf-plc:pipeline-counters/oc-pf-plc:drop/oc-pf-plc:lookup-block/oc-pf-plc:state/oc-pf-plc:no-label { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:integrated-circuit/oc-pf-plc:pipeline-counters/oc-pf-plc:drop/oc-pf-plc:lookup-block/oc-pf-plc:state/oc-pf-plc:no-nexthop { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:integrated-circuit/oc-pf-plc:pipeline-counters/oc-pf-plc:drop/oc-pf-plc:lookup-block/oc-pf-plc:state/oc-pf-plc:invalid-packet { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:integrated-circuit/oc-pf-plc:pipeline-counters/oc-pf-plc:drop/oc-pf-plc:lookup-block/oc-pf-plc:state/oc-pf-plc:forwarding-policy { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:integrated-circuit/oc-pf-plc:pipeline-counters/oc-pf-plc:drop/oc-pf-plc:lookup-block/oc-pf-plc:state/oc-pf-plc:incorrect-software-state { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:integrated-circuit/oc-pf-plc:pipeline-counters/oc-pf-plc:drop/oc-pf-plc:lookup-block/oc-pf-plc:state/oc-pf-plc:rate-limit { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:integrated-circuit/oc-pf-plc:pipeline-counters/oc-pf-plc:drop/oc-pf-plc:lookup-block/oc-pf-plc:state/oc-pf-plc:fragment-total-drops { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:integrated-circuit/oc-pf-plc:pipeline-counters/oc-pf-plc:drop/oc-pf-plc:lookup-block/oc-pf-plc:state/oc-pf-plc:lookup-aggregate { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:integrated-circuit/oc-pf-plc:pipeline-counters/oc-pf-plc:drop/oc-pf-plc:lookup-block/oc-pf-plc:state/oc-pf-plc:acl-drops { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:integrated-circuit/oc-pf-plc:pipeline-counters/oc-pf-plc:drop/oc-pf-plc:queueing-block { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:integrated-circuit/oc-pf-plc:pipeline-counters/oc-pf-plc:drop/oc-pf-plc:fabric-block { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:integrated-circuit/oc-pf-plc:pipeline-counters/oc-pf-plc:drop/oc-pf-plc:host-interface-block { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:integrated-circuit/oc-pf-plc:pipeline-counters/oc-pf-plc:drop/oc-pf-plc:vendor { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:integrated-circuit/oc-pf-plc:pipeline-counters/oc-pf-plc:errors { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:integrated-circuit/oc-pf-plc:pipeline-counters/oc-pf-plc:control-plane-traffic { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:integrated-circuit/oc-pf-ic:backplane-facing-capacity { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf:integrated-circuit/oc-pf-ic:memory/oc-pf-ic:state/oc-pf-ic:uncorrected-parity-errors { deviate not-supported; }
+
+  /*
+   * Unsupported paths under /components/component/backplane
+   */
+  deviation /oc-pf:components/oc-pf:component/oc-pf:backplane { deviate not-supported; }
+
+  /*
+   * Unsupported paths under /components/component/controller-card
+   */
+  deviation /oc-pf:components/oc-pf:component/oc-pf:controller-card { deviate not-supported; }
+
+  /*
+   * Unsupported paths under /components/component/transceiver
+   */
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:config { deviate not-supported; }
+  //deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:config/oc-pf-xcvr:enabled { deviate not-supported; }
+  //deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:config/oc-pf-xcvr:fec-mode { deviate not-supported; }
+  //deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:config/oc-pf-xcvr:form-factor-preconf { deviate not-supported; }
+  //deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:config/oc-pf-xcvr:ethernet-pmd-preconf { deviate not-supported; }
+  //deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:config/oc-pf-xcvr:module-functional-type { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:enabled { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:form-factor-preconf { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:ethernet-pmd-preconf { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:fec-mode { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:module-functional-type { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:present { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:connector-type { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:vendor { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:vendor-part { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:vendor-rev { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:sonet-sdh-compliance-code { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:otn-compliance-code { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:serial-no { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:date-code { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:fault-condition { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:fec-status { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:fec-uncorrectable-blocks { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:fec-uncorrectable-words { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:fec-corrected-bytes { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:fec-corrected-bits { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:pre-fec-ber { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:post-fec-ber { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:supply-voltage { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:output-power { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:input-power { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:state/oc-pf-xcvr:laser-bias-current { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:config/oc-pf-xcvr:associated-optical-channel { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:config/oc-pf-xcvr:description { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:config/oc-pf-xcvr:tx-laser { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:config/oc-pf-xcvr:target-output-power { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:associated-optical-channel { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:description { deviate not-supported; }
+  //deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:tx-laser { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:target-output-power { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:laser-age { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:laser-temperature { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:target-frequency-deviation { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:tec-current { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:tx-failure { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:rx-los { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:rx-cdr-lol { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:output-frequency { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:output-power/oc-pf-xcvr:avg { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:output-power/oc-pf-xcvr:min { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:output-power/oc-pf-xcvr:max { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:output-power/oc-pf-xcvr:interval { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:output-power/oc-pf-xcvr:min-time { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:output-power/oc-pf-xcvr:max-time { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:input-power/oc-pf-xcvr:avg { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:input-power/oc-pf-xcvr:min { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:input-power/oc-pf-xcvr:max { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:input-power/oc-pf-xcvr:interval { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:input-power/oc-pf-xcvr:min-time { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:input-power/oc-pf-xcvr:max-time { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:laser-bias-current/oc-pf-xcvr:avg { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:laser-bias-current/oc-pf-xcvr:min { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:laser-bias-current/oc-pf-xcvr:max { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:laser-bias-current/oc-pf-xcvr:interval { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:laser-bias-current/oc-pf-xcvr:min-time { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:physical-channels/oc-pf-xcvr:channel/oc-pf-xcvr:state/oc-pf-xcvr:laser-bias-current/oc-pf-xcvr:max-time { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:host-lanes { deviate not-supported; }
+  deviation /oc-pf:components/oc-pf:component/oc-pf-xcvr:transceiver/oc-pf-xcvr:thresholds { deviate not-supported; }
+}

@@ -23,7 +23,7 @@ def go_dependencies():
         name = "com_github_antchfx_jsonquery",
         importpath = "github.com/antchfx/jsonquery",
         patch_args = ["-p1"],
-        patches = ["@sonic-mgmt-common//patches:jsonquery.patch"],
+        patches = ["//patches:jsonquery.patch"],
         sum = "h1:+OlFO3QS9wjU0MKx9MgHm5f6o6hdd4e9mUTp0wTjxlM=",
         version = "v1.1.4",
     )
@@ -31,7 +31,7 @@ def go_dependencies():
         name = "com_github_antchfx_xmlquery",
         importpath = "github.com/antchfx/xmlquery",
         patch_args = ["-p1"],
-        patches = ["@sonic-mgmt-common//patches:xmlquery.patch"],
+        patches = ["//patches:xmlquery.patch"],
         sum = "h1:nIKWdtnhrXtj0/IRUAAw2I7TfpHUa3zMnHvNmPXFg+w=",
         version = "v1.3.1",
     )
@@ -39,7 +39,7 @@ def go_dependencies():
         name = "com_github_antchfx_xpath",
         importpath = "github.com/antchfx/xpath",
         patch_args = ["-p1"],
-        patches = ["@sonic-mgmt-common//patches:xpath.patch"],
+        patches = ["//patches:xpath.patch"],
         sum = "h1:cJ0pOvEdN/WvYXxvRrzQH9x5QWKpzHacYO8qzCcDYAg=",
         version = "v1.1.10",
     )
@@ -219,7 +219,7 @@ def go_dependencies():
         name = "com_github_golang_glog",
         importpath = "github.com/golang/glog",
         patch_args = ["-p1"],
-        patches = ["@sonic-mgmt-common//patches:glog.patch"],
+        patches = ["//patches:glog.patch"],
         replace = "github.com/golang/glog",
         sum = "h1:VKtxabqXZkF25pY9ekfRL6a582T4P37/31XEstQ5p58=",
         version = "v0.0.0-20160126235308-23def4e6c14b",
@@ -451,7 +451,7 @@ def go_dependencies():
         name = "com_github_openconfig_goyang",
         importpath = "github.com/openconfig/goyang",
         patch_args = ["-p1"],
-        patches = ["@sonic-mgmt-common//patches/goyang:goyang.patch"],
+        patches = ["//patches/goyang:goyang.patch"],
         sum = "h1:Z95LskKYk6nBYOxHtmJCu3YEKlr3pJLWG1tYAaNh3yU=",
         version = "v0.2.9",
     )
@@ -482,7 +482,7 @@ def go_dependencies():
         patch_args = ["-p1"],
         patches = [
             "//patches:github.com-openconfig-ygot.patch",
-            "@sonic-mgmt-common//patches/ygot:ygot.patch",
+            "//patches/ygot:ygot.patch",
         ],
         sum = "h1:EKaeFhx1WwTZGsYeqipyh1mfF8y+z2StaXZtwVnXklk=",
         version = "v0.13.1",

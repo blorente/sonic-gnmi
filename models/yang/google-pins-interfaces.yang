@@ -1,0 +1,918 @@
+module google-pins-interfaces {
+  yang-version "1";
+
+  // namespace
+  namespace "http://openconfig.net/yang/google/interfaces";
+  prefix "google-pins-if";
+
+  // import some basic types
+  import openconfig-extensions { prefix oc-ext; }
+  import openconfig-if-ethernet { prefix oc-eth; }
+  import openconfig-interfaces { prefix oc-if; }
+  import openconfig-transport-types { prefix oc-opt-types; }
+  import openconfig-types { prefix "oc-types"; }
+  import openconfig-yang-types { prefix oc-yang; }
+  import google-pins-diag { prefix goog-diag; }
+  import openconfig-system { prefix oc-sys; }
+
+  // meta
+  organization
+      "Google Openconfig Working Group";
+
+  contact
+      "openconfig-dev@google.com";
+
+  description
+    "Google Specific extensions to OpenConfig interface model.";
+
+  oc-ext:openconfig-version "0.20.0";
+
+  revision 2025-04-21 {
+    description
+      "Adding new enum values for port-direction leaf.";
+    reference "0.21.0";
+  }
+
+  revision 2025-03-18 {
+    description
+      "Adding augments for per interface CSIG tag actions.";
+    reference "0.20.0";
+  }
+
+  revision 2025-02-26 {
+    description
+      "Adding bad-intervals.";
+    reference "0.19.0";
+  }
+
+  revision 2024-08-08 {
+    description
+      "Adding HST metrics.";
+    reference "0.18.0";
+  }
+
+  revision 2024-06-27 {
+    description
+      "Adding bridge-id leaf.";
+    reference "0.17.0";
+  }
+
+  revision 2024-06-11 {
+    description
+      "Adding pfc enable leaf.";
+    reference "0.16.0";
+  }
+
+  revision 2024-06-03 {
+    description
+      "Adding pfc enable leaf.";
+    reference "0.15.0";
+  }
+
+  revision 2024-04-15 {
+    description
+      "Adding insert ingress/egress tail timestamp leaf.";
+    reference "0.14.0";
+  }
+
+  revision 2024-01-30 {
+    description
+      "Adding encoded-id leaf.";
+    reference "0.13.0";
+  }
+
+  revision 2024-01-17 {
+    description
+      "Adding tunable ingress/egress delays";
+    reference "0.12.0";
+  }
+
+  revision 2023-12-27 {
+    description
+      "Adding new enum value for port-direction leaf.";
+    reference "0.11.0";
+  }
+
+  revision 2023-08-08 {
+    description
+      "Adding leaf for Vendor Hardware port ID.";
+    reference "0.10.0";
+  }
+
+  revision 2023-04-10 {
+    description
+      "Adding augments for per interface portOutEcnMarkedPkts: counter.";
+    reference "0.9.0";
+  }
+
+  revision 2023-02-21 {
+    description
+      "Adding augments for per interface port-direction.";
+    reference "0.8.0";
+  }
+
+  revision 2023-01-15 {
+    description
+      "Adding augments for per interface FDR counters.";
+    reference "0.7.0";
+  }
+
+  revision 2022-10-28 {
+    description
+      "Adding augments for per interface hashing parameters.";
+    reference "0.6.0";
+  }
+
+  revision 2021-12-06 {
+    description
+      "Adding augments for per interface sfec-mode.";
+    reference "0.5.0";
+  }
+
+  revision 2021-10-06 {
+    description
+      "Adding augments for per interface FEC counters.";
+    reference "0.4.0";
+  }
+
+  revision 2021-08-05 {
+    description
+      "Adding augments for indicating if the transceiver is qualified
+      for the configured ethernet speed of the interface.";
+    reference "0.3.0";
+  }
+
+  revision 2021-07-30 {
+    description
+      "Adding augments for interface state counters.";
+    reference "0.2.0";
+  }
+
+  revision 2020-08-17 {
+    description
+      "Initial version.";
+    reference "0.1.0";
+  }
+
+  // grouping statements
+  grouping pins-interface-eth-config {
+    description
+      "Configuration data for - Ethernet interfaces.";
+
+    leaf forwarding-viable {
+      type boolean;
+      default true;
+      description
+        "This value indicates whether the interface may be used
+        to route traffic or not.  If set to false, the
+        interface is not used for forwarding traffic, but as long as
+        it is up, the interface still maintains its layer-2
+        adjacencies and runs its configured layer-2 functions
+        (e.g., LLDP, etc.).
+        This is used by the controller to disable an interface
+        (usually part of an aggregate) for the purposes of forwarding
+        traffic. This allows a logical aggregate to continue to be
+        used with partial capacity, for example.  Note that setting
+        `forwarding-viable = false` is not equivalent to
+        administratively disabling the interface -- in particular, the
+        interface is expected to participate in L2 protocols such as
+        LLDP or LACP even if it blocked from forwarding traffic.";
+    }
+
+    leaf sfec-mode {
+      default AUTO;
+      type enumeration {
+        enum AUTO {
+          description
+            "SFEC is enabled.";
+        }
+        enum DISABLE {
+          description
+            "SFEC is disabled.";
+        }
+      }
+      description
+        "Software-decision FEC (SFEC) mode is a cGR4+ and CDGR4+ specific
+        FEC mode that is required to allow the optics to close links that
+        traverse OCS or circulators. SFEC is enabled by default on 200G
+        and 400G links. These modules must be able to interoperate with
+        GFR4 modules, which do not support SFEC. Due to this we need the
+        ability to disable SFEC on cGR4+ when they are interoperating
+        with GFR4.";
+    }
+
+    leaf ingress-delay {
+      type oc-types:ieeefloat32;
+      description
+        "Programmable module delay to be added to the ingress of an interface.
+        Units are in nanoseconds, tenths of nanoseconds supported.";
+    }
+
+    leaf egress-delay {
+      type oc-types:ieeefloat32;
+      description
+        "Programmable module delay to be added at the egress of an interface.
+        Units are in nanoseconds, tenths of nanoseconds supported.";
+    }
+
+    leaf insert-ingress-timestamp {
+      type boolean;
+      description
+        "Support ToR switch to insert ingress timestamp
+        to the tailer of the ethernet frame";
+    }
+
+    leaf insert-egress-timestamp {
+      type boolean;
+      description
+        "Support ToR switch to insert egress timestamp
+        to the tailer of the ethernet frame";
+    }
+
+    leaf enable-pfc-rx {
+      type boolean;
+      description
+        "This leaf indicates whether PFC pause frames can be enabled on
+        the interface.";
+    }
+  }
+
+  grouping google-pins-eth-pfc-counters {
+    description
+      "Google specific pfc interface subtree for state counters";
+    container counters {
+      description
+        "Google specific pfc interface state counters";
+
+      leaf rx-packets {
+        type oc-yang:counter64;
+        description
+          "The number of inbound packets that were chosen to be
+          discarded due to limits on buffer space in the queues.";
+      }
+
+      leaf on2off-rx-packets {
+        type oc-yang:counter64;
+        description
+          "The number of outbound packets that were chosen to be
+          discarded due to limits on buffer space in the queues.";
+      }
+    }
+  }
+
+  grouping google-pins-interface-eth-pfc {
+    description
+      "Top level grouping for the ethernet PFC data.";
+
+    container pfc {
+      description
+        "Google specific augments for ethernet pfc interfaces.";
+
+      list priority {
+        config false;
+        key "priority";
+        description
+          "List of priorities for the ethernet interface.";
+
+        leaf priority {
+          type leafref {
+            path "../state/priority";
+          }
+          description
+            "References the priority.";
+        }
+
+        container state {
+          description
+            "Operational state data for PFC priority counters.";
+          leaf priority {
+            type uint8;
+            description
+              "PFC priority.";
+          }
+          uses google-pins-eth-pfc-counters;
+        }
+      }
+    }
+  }
+
+  grouping pins-interface-eth-state {
+    description
+      "Operational data for Ethernet interfaces.";
+
+    leaf transceiver-qualified {
+      type boolean;
+      default true;
+      description
+        "If the transceiver is qualified for the speed settings on
+        the ethernet port then this leaf is exported as true.";
+    }
+
+    leaf sfec-oper-mode {
+      default UNKNOWN;
+      type enumeration {
+        enum UNKNOWN {
+          description
+            "The transceiver's SFEC configuration is not known.";
+        }
+        enum ENABLED {
+          description
+            "The transceiver reports that SFEC is enabled.";
+        }
+        enum DISABLED {
+          description
+            "The transceiver reports that SFEC is disabled.";
+        }
+      }
+      description
+        "Soft-decision FEC (SFEC) mode as reported by the transceiver.";
+    }
+
+    leaf ingress-delay-applied {
+      type oc-types:ieeefloat32;
+      description
+        "The applied programmable module delay added to the ingress of an
+        interface.
+
+        Units are in nanoseconds, tenths of nanoseconds supported.";
+    }
+
+    leaf egress-delay-applied {
+      type oc-types:ieeefloat32;
+      description
+        "The applied programmable module delay added at the egress of an
+        interface.
+
+        Units are in nanoseconds, tenths of nanoseconds supported.";
+    }
+  }
+
+  grouping pins-interface-eth-multi-stats {
+    description
+      "Multi-value statistics containers for ethernet interfaces.";
+
+    container pre-fec-ber {
+      description
+        "Bit error rate before forward error correction computed
+        value with 18 decimal precision. Note that decimal64
+        supports values as small as i x 10^-18 where i is an
+        integer. Values smaller than this should be reported as 0
+        to indicate error free or near error free performance.
+        Values include the instantaneous, average, minimum, and
+        maximum statistics. If avg/min/max statistics are not
+        supported, the target is expected to just supply the
+        instant value";
+
+      uses oc-opt-types:avg-min-max-instant-stats-precision18-ber;
+    }
+
+    container post-fec-ber {
+      description
+        "Bit error rate after forward error correction, computed
+        value with 18 decimal precision. Note that decimal64
+        supports values as small as i x 10^-18 where i is an
+        integer. Values smaller than this should be reported as 0
+        to indicate error free or near error free performance.
+        Values include the instantaneous, average, minimum, and
+        maximum statistics. If avg/min/max statistics are not
+        supported, the target is expected to just supply the
+        instant value";
+
+      uses oc-opt-types:avg-min-max-instant-stats-precision18-ber;
+    }
+  }
+
+  grouping pins-interface-eth-fec-codeword-counters {
+    description
+      "Interface FEC codeword with a particular number of symbol error counters.
+      This set of counters corresponds to FEC error correction
+      bins. These monitor how many codewords are observed with each error count.
+
+      The number of bins supported is dependent on the type of FEC in use.
+      For instance, RS-528 FEC supports detection of up to 7 errors, while
+      RS-544 FEC would support detection of up to 16 errors.";
+
+    leaf fec-codeword-without-symbol-errors-count {
+      type oc-yang:counter64;
+      description
+        "The number of FEC codewords without symbol errors.";
+    }
+
+    leaf fec-codeword-with-1-symbol-error-count {
+      type oc-yang:counter64;
+      description
+        "The number of FEC codewords with 1 symbol error.";
+    }
+
+    leaf fec-codeword-with-2-symbol-errors-count {
+      type oc-yang:counter64;
+      description
+        "The number of FEC codewords with 2 symbol errors.";
+    }
+
+    leaf fec-codeword-with-3-symbol-errors-count {
+      type oc-yang:counter64;
+      description
+        "The number of FEC codewords with 3 symbol errors.";
+    }
+
+    leaf fec-codeword-with-4-symbol-errors-count {
+      type oc-yang:counter64;
+      description
+        "The number of FEC codewords with 4 symbol errors.";
+    }
+
+    leaf fec-codeword-with-5-symbol-errors-count {
+      type oc-yang:counter64;
+      description
+        "The number of FEC codewords with 5 symbol errors.";
+    }
+
+    leaf fec-codeword-with-6-symbol-errors-count {
+      type oc-yang:counter64;
+      description
+        "The number of FEC codewords with 6 symbol errors.";
+    }
+
+    leaf fec-codeword-with-7-symbol-errors-count {
+      type oc-yang:counter64;
+      description
+        "The number of FEC codewords with 7 symbol errors.";
+    }
+
+    leaf fec-codeword-with-8-symbol-errors-count {
+      type oc-yang:counter64;
+      description
+        "The number of FEC codewords with 8 symbol errors.";
+    }
+
+    leaf fec-codeword-with-9-symbol-errors-count {
+      type oc-yang:counter64;
+      description
+        "The number of FEC codewords with 9 symbol errors.";
+    }
+
+    leaf fec-codeword-with-10-symbol-errors-count {
+      type oc-yang:counter64;
+      description
+        "The number of FEC codewords with 10 symbol errors.";
+    }
+
+    leaf fec-codeword-with-11-symbol-errors-count {
+      type oc-yang:counter64;
+      description
+        "The number of FEC codewords with 11 symbol errors.";
+    }
+
+    leaf fec-codeword-with-12-symbol-errors-count {
+      type oc-yang:counter64;
+      description
+        "The number of FEC codewords with 12 symbol errors.";
+    }
+
+    leaf fec-codeword-with-13-symbol-errors-count {
+      type oc-yang:counter64;
+      description
+        "The number of FEC codewords with 13 symbol errors.";
+    }
+
+    leaf fec-codeword-with-14-symbol-errors-count {
+      type oc-yang:counter64;
+      description
+        "The number of FEC codewords with 14 symbol errors.";
+    }
+
+    leaf fec-codeword-with-15-symbol-errors-count {
+      type oc-yang:counter64;
+      description
+        "The number of FEC codewords with 15 symbol errors.";
+    }
+
+    leaf fec-codeword-with-16-symbol-errors-count {
+      type oc-yang:counter64;
+      description
+        "The number of FEC codewords with 16 symbol errors.";
+    }
+  }
+
+  grouping pins-interface-eth-counters {
+    description
+      "Google specific state counters for ethernet interfaces.";
+
+    leaf fec-uncorrectable-blocks {
+      type oc-yang:counter64;
+      description
+        "Count of uncorrectable FEC blocks.";
+    }
+
+    leaf fec-correctable-blocks {
+      type oc-yang:counter64;
+      description
+        "Count of correctable FEC blocks.";
+    }
+
+    leaf fec-uncorrectable-words {
+      type oc-yang:counter64;
+      description
+        "Count of uncorrectable FEC words.";
+    }
+
+    leaf fec-correctable-words {
+      type oc-yang:counter64;
+      description
+        "Count of correctable FEC words.";
+    }
+
+    leaf fec-symbol-errors {
+      type oc-yang:counter64;
+      description
+        "Count of FEC symbol errors.";
+    }
+
+    leaf fec-corrected-bits {
+      type oc-yang:counter64;
+      description
+        "Count of FEC corrected bits.";
+    }
+
+    leaf fec-corrected-bytes {
+      type oc-yang:counter64;
+      description
+        "Count of FEC corrected bytes.";
+    }
+
+    uses pins-interface-eth-multi-stats;
+    uses pins-interface-eth-fec-codeword-counters;
+  }
+
+  grouping google-pins-interface-config {
+    description
+      "Configuration data for interfaces";
+
+    leaf fully-qualified-interface-name {
+      type string;
+      description
+        "The fully qualified interface name, it includes the chassis
+        name and the interface name. This is used by the switch when
+        exporting telemetry stats for the interface and by P4 runtime
+        channel for programming flows. Note: It does not replace the
+        unique name (path:interfaces/interface/config/name) assigned
+        to the interface.";
+    }
+
+    leaf ecmp-hash-offset {
+      type uint64;
+      description
+        "The offset used when calculating the hash algorithm";
+    }
+    leaf ecmp-hash-algorithm {
+      default CRC;
+      type enumeration {
+        enum CRC {
+          description
+            "CRC hashing algorithm.";
+        }
+        enum CRC_32LO {
+          description
+            "CRC_32LO hashing algorithm.";
+        }
+        enum CRC_32HI {
+          description
+            "CRC_32HI hashing algorithm.";
+        }
+        enum CRC_CCITT {
+          description
+            "CRC using CCITT polynomial based hash algorithm.";
+        }
+        enum CRC_XOR {
+          description
+            "Combination of CRC and XOR based hash algorithm.";
+        }
+        enum XOR {
+          description
+            "XOR-based hash algorithm.";
+        }
+        enum RANDOM {
+          description
+            "Random-based hash algorithm.";
+        }
+      }
+      description
+        "The algorithm used when calculating a hash based on packet headers";
+    }
+    leaf ecmp-hash-seed {
+      type uint64;
+      description
+        "The seed used to initialize the hash algorithm";
+    }
+    leaf port-direction {
+      type enumeration {
+        enum UNKNOWN {
+          description
+            "Port direction is unknown. This type should also be
+            used for directions other than host or fabric facing.";
+        }
+        enum HOST_FACING {
+          description
+            "Port direction is host-facing in a ToR link";
+        }
+        enum FABRIC_FACING {
+          description
+            "Port direction is fabric-facing in a ToR link";
+        }
+        enum VENDOR_HOST_FACING {
+          description
+            "Port direction is vendor host-facing";
+        }
+        enum FABRIC_DOWNLINK {
+          description
+            "Port direction is downlink in a fabric switch (non-ToR) link";
+        }
+        enum FABRIC_UPLINK {
+          description
+            "Port direction is uplink in a fabric switch (non-ToR) link";
+        }
+      }
+      description
+        "Describes whether the port is host-facing or fabric-facing";
+    }
+    leaf encoded-id {
+      type uint32;
+      description
+        "An ID generated by modelX that uniquely identifies a switch:port
+        combination.";
+    }
+    leaf diag-profile {
+      description
+        "Name of the diag port profile to apply to this interface";
+      type leafref {
+        path "/oc-sys:system/goog-diag:diag/goog-diag:port-profiles/goog-diag:port-profile/goog-diag:name";
+      }
+    }
+    leaf bridge-id {
+      type leafref {
+        path "/oc-if:interfaces/oc-if:interface/oc-if:name";
+      }
+      description
+        "Specify the logical bridge interface to which
+        this interface belongs.";
+    }
+    leaf csig-tag-action {
+      default STRIP_TAG;
+      type enumeration {
+        enum STRIP_TAG {
+          description
+            "Egress port strips CSIG tags on all outgoing packets.";
+        }
+        enum KEEP_TAG {
+          description
+            "Egress port keeps and conditionally updates CSIG tags on all outgoing packets.";
+        }
+      }
+      description
+        "Congestion Signaling (CSIG) tag action which decides if a port must
+        strip all congestion signaling tags on all packets egressing that port,
+        or if it must keep and conditionally update those tags.";
+    }
+  }
+
+  grouping google-pins-interface-state {
+    description
+      "Operational state for Google specific interface data";
+
+    leaf vendor-id {
+      type uint32;
+      description
+        "Vendor specific identifier for the interface";
+    }
+
+    container blackhole {
+      description
+        "Blackhole event counters";
+
+      leaf in-discard-events{
+        description
+          "The number of in-discard-events found by the diag blackhole feature";
+        type oc-yang:counter64;
+      }
+
+      leaf out-discard-events{
+        description
+          "The number of out-discard-events found by the diag blackhole feature";
+        type oc-yang:counter64;
+      }
+
+      leaf in-error-events{
+        description
+          "The number of in-error-events found by the diag blackhole feature";
+        type oc-yang:counter64;
+      }
+
+      leaf fec-not-correctable-events{
+        description
+          "The number of fec-not-correctable-events found by the diag blackhole
+          feature";
+        type oc-yang:counter64;
+      }
+      leaf bad-intervals {
+        description
+          "The number of bad intervals found by bad interval feature.";
+        type oc-yang:counter64;
+      }
+    }
+
+    container hst {
+      description
+        "Container for High resolution Switch Telemetry (HST) counters.
+        Each counter is a bucket from a histogram that tracks available
+        bandwidth (utilization)";
+
+      leaf abwc-digests-0 {
+        description
+          "Percent of time that micro-utilization was in the range [99%-100%]";
+        type oc-types:ieeefloat32;
+      }
+
+      leaf abwc-digests-1 {
+        description
+          "Percent of time that micro-utilization was in the range [95%-99%)";
+        type oc-types:ieeefloat32;
+      }
+
+      leaf abwc-digests-2 {
+        description
+          "Percent of time that micro-utilization was in the range [90%-95%)";
+        type oc-types:ieeefloat32;
+      }
+
+      leaf abwc-digests-3 {
+        description
+          "Percent of time that micro-utilization was in the range [80%-90%)";
+        type oc-types:ieeefloat32;
+      }
+
+      leaf abwc-digests-4 {
+        description
+          "Percent of time that micro-utilization was in the range [60%-80%)";
+        type oc-types:ieeefloat32;
+      }
+
+      leaf abwc-digests-5 {
+        description
+          "Percent of time that micro-utilization was in the range [40%-60%)";
+        type oc-types:ieeefloat32;
+      }
+
+      leaf abwc-digests-6 {
+        description
+          "Percent of time that micro-utilization was in the range [10%-40%)";
+        type oc-types:ieeefloat32;
+      }
+
+      leaf abwc-digests-7 {
+        description
+          "Percent of time that micro-utilization was in the range [0-10%)";
+        type oc-types:ieeefloat32;
+      }
+
+      leaf abwc-digests-cumulative-0 {
+        description
+          "Percent of time that micro-utilization was >99%";
+        type oc-types:ieeefloat32;
+      }
+
+      leaf abwc-digests-cumulative-1 {
+        description
+          "Percent of time that micro-utilization was >95%";
+        type oc-types:ieeefloat32;
+      }
+
+      leaf abwc-digests-cumulative-2 {
+        description
+          "Percent of time that micro-utilization was >90%";
+        type oc-types:ieeefloat32;
+      }
+
+      leaf abwc-digests-cumulative-3 {
+        description
+          "Percent of time that micro-utilization was >80%";
+        type oc-types:ieeefloat32;
+      }
+
+      leaf abwc-digests-cumulative-4 {
+        description
+          "Percent of time that micro-utilization was >60%";
+        type oc-types:ieeefloat32;
+      }
+
+      leaf abwc-digests-cumulative-5 {
+        description
+          "Percent of time that micro-utilization was >40%";
+        type oc-types:ieeefloat32;
+      }
+
+      leaf abwc-digests-cumulative-6 {
+        description
+          "Percent of time that micro-utilization was >10%";
+        type oc-types:ieeefloat32;
+      }
+    }
+  }
+
+  grouping google-pins-interface-counters {
+    description
+      "Google specific interface state counters";
+
+    leaf in-buffer-discards {
+      type oc-yang:counter64;
+      description
+        "The number of inbound packets that were chosen to be
+        discarded due to limits on buffer space in the queues.";
+    }
+
+    leaf out-buffer-discards {
+      type oc-yang:counter64;
+      description
+        "The number of outbound packets that were chosen to be
+        discarded due to limits on buffer space in the queues.";
+    }
+
+    leaf out-ecn-marked-pkts {
+      type oc-yang:counter64;
+      description
+        "The number of Explicit Congestion Notification (ECN) marked
+        packets.";
+    }
+  }
+
+  // data definition statements
+
+  // augment statements
+  augment "/oc-if:interfaces/oc-if:interface/oc-if:config" {
+
+    description
+      "Adds google specific configuration to the interface module";
+
+    uses google-pins-interface-config;
+  }
+
+  augment "/oc-if:interfaces/oc-if:interface/oc-if:state" {
+
+    description
+      "Adds google specific status information to the interface module";
+
+    uses google-pins-interface-config;
+    uses google-pins-interface-state;
+  }
+
+  augment "/oc-if:interfaces/oc-if:interface/oc-if:state/oc-if:counters" {
+
+    description
+      "Adds google specific interface state counters";
+
+    uses google-pins-interface-counters;
+  }
+
+  augment "/oc-if:interfaces/oc-if:interface/oc-eth:ethernet" {
+
+    description
+      "Augments Google specific PFC data for Ethernet
+      interfaces.";
+
+    uses google-pins-interface-eth-pfc;
+  }
+
+  augment "/oc-if:interfaces/oc-if:interface/oc-eth:ethernet/" +
+    "oc-eth:config" {
+
+    description
+      "Augments -specific configuration data for Ethernet
+      interfaces.";
+
+    uses pins-interface-eth-config;
+  }
+
+  augment "/oc-if:interfaces/oc-if:interface/oc-eth:ethernet/" +
+    "oc-eth:state" {
+
+    description
+      "Augments -specific operational state data for Ethernet
+      interfaces.";
+
+    uses pins-interface-eth-config;
+    uses pins-interface-eth-state;
+  }
+
+  augment "/oc-if:interfaces/oc-if:interface/oc-eth:ethernet/" +
+    "oc-eth:state/oc-eth:counters" {
+
+    description
+      "Adds google specific state counters for ethernet interfaces.";
+
+    uses pins-interface-eth-counters;
+  }
+
+  // rpc statements
+
+  // notification statements
+}

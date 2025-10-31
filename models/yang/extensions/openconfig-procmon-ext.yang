@@ -1,0 +1,62 @@
+module openconfig-procmon-ext {
+
+  yang-version "1.1";
+
+  // namespace
+  namespace "http://openconfig.net/yang/system/procmon/extension";
+
+  prefix "oc-proc-ext";
+
+  // import some basic types
+  import openconfig-extensions { prefix oc-ext; }
+  import openconfig-system { prefix oc-sys; }
+
+  // meta
+  organization "SONiC UMF Working Group";
+
+  contact
+    "SONiC UMF WG";
+
+  description
+    "This module provides additional data definitions for process health
+    monitoring of one or more processes running on the system.";
+
+  oc-ext:openconfig-version "0.1.0";
+
+  revision "2023-09-22" {
+    description
+      "Initial public release";
+    reference "0.1.0";
+  }
+
+  // OpenConfig specific extensions for module metadata.
+  oc-ext:regexp-posix;
+  oc-ext:catalog-organization "openconfig";
+  oc-ext:origin "openconfig";
+
+  // grouping statements
+
+  grouping procmon-process-attributes-state-ext {
+    description
+      "Additional attributes state definitions for a process.";
+
+    leaf memory-limit {
+      type uint64;
+      units "bytes";
+      description
+        "Bytes allocated for the container the process is part of.";
+    }
+  }
+
+  // augment statements
+  augment "/oc-sys:system/oc-sys:processes/oc-sys:process/oc-sys:state" {
+    description
+      "Additional attributes state definitions for a process.";
+
+      uses procmon-process-attributes-state-ext;
+  }
+
+  // rpc statements
+
+  // notification statements
+}

@@ -1,0 +1,30 @@
+module openconfig-platform-annot {
+
+    yang-version "1";
+    namespace "http://openconfig.net/yang/platform-annot";
+    prefix "oc-platform-annot";
+
+    import openconfig-platform { prefix oc-platform; }
+    import openconfig-platform-port { prefix oc-port; }
+    import sonic-extensions { prefix sonic-ext; }
+
+    deviation /oc-platform:components/oc-platform:component {
+      deviate add {
+        sonic-ext:subtree-transformer "pfm_components_xfmr";
+        sonic-ext:path-transformer "pfm_components_path_xfmr";
+      }
+    }
+
+    deviation /oc-platform:components/oc-platform:component/oc-platform:port/oc-port:breakout-mode {
+      deviate add {
+        sonic-ext:subtree-transformer "port_breakout_subtree_xfmr";
+      }
+    }
+
+    deviation /oc-platform:components/oc-platform:component/oc-platform:integrated-circuit/google-pins-platform:pins-csig {
+        deviate add {
+            sonic-ext:subtree-transformer "pfm_components_ic_csig_xfmr";
+            sonic-ext:table-name "HST_CONFIG";
+        }
+    }
+}

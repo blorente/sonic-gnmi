@@ -1,0 +1,37 @@
+module sonic-umf-queue {
+    namespace "http://github.com/Azure/sonic-umf-queue";
+    prefix suq;
+
+    import sonic-extension {
+        prefix sonic-ext;
+    }
+
+    organization
+        "SONiC";
+
+    contact
+        "SONiC";
+
+    description
+        "SONIC UMF_QUEUE";
+
+    revision 2025-01-09 {
+        description
+            "Initial revision.";
+    }
+
+    container sonic-umf-queue {
+
+        container UMF_QUEUE {
+            list UMF_QUEUE_LIST {
+                key "name";
+                description
+                  "List of queues";
+
+                leaf name {
+                    type string;
+                }
+            }
+        }
+    }
+}

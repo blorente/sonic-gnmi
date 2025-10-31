@@ -1,0 +1,35 @@
+module sonic-gnpsi {
+  namespace "http://github.com/Azure/sonic-gnpsi";
+  prefix sonic-gnpsi;
+  yang-version 1.1;
+
+  typedef gnpsi-admin-state {
+    type enumeration {
+      enum ENABLE;
+      enum DISABLE;
+    }
+  }
+
+  container sonic-gnpsi {
+    container GNPSI {
+      list GNPSI_LIST {
+        key "global";
+        leaf global {
+          type enumeration {
+            enum global;
+          }
+          description
+            "global db key.";
+        }
+
+        leaf admin_state {
+          type gnpsi-admin-state;
+        }
+
+        leaf port {
+          type string;
+        }
+      }
+    }
+  }
+}

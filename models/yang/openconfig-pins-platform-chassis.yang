@@ -1,0 +1,248 @@
+module openconfig-pins-platform-chassis {
+
+  yang-version "1";
+
+  // namespace
+  namespace "http://openconfig.net/yang/pins-platform-chassis";
+
+  prefix "pins-platform-chassis";
+
+  // import some basic types
+  import openconfig-platform { prefix oc-platform; }
+  import openconfig-alarm-types { prefix oc-alarm-types; }
+  import openconfig-yang-types { prefix oc-yang; }
+  import openconfig-types { prefix oc-types; }
+  import openconfig-extensions { prefix oc-ext; }
+
+  // meta
+  organization
+    "OpenConfig PINS Working Group";
+
+  contact
+    "www.openconfig.net";
+
+  description
+    "This module defines schema extensions to the
+    OpenConfig platform model for a chassis component in the
+    pins switch profile.";
+
+  oc-ext:openconfig-version "0.1.0";
+
+  revision 2020-04-09 {
+    description
+      "Initial version.";
+    reference "0.1.0";
+  }
+
+  // extension statements
+
+  // feature statements
+
+  // identity statements
+  identity PLATFORM_TYPE {
+    description
+      "Base identity for platform variants of the vendor-agnostic
+      switch";
+  }
+
+  identity GENERIC {
+    base PLATFORM_TYPE;
+    description
+      "Generic platform type";
+  }
+
+  identity CPU_TYPE {
+    description
+      "Base identity for cpu type variants of the vendor-agnostic
+      switch";
+  }
+
+  identity CPU_TYPE_UKNOWN {
+    base CPU_TYPE;
+    description
+      "Unknown cpu type";
+  }
+
+  identity CPU_TYPE_SEGUNDO {
+    base CPU_TYPE;
+    description
+      "Segundo cpu";
+  }
+
+  identity CPU_TYPE_CAPITAINE {
+    base CPU_TYPE;
+    description
+      "Capitaine cpu";
+  }
+
+  identity CPU_TYPE_VEGA {
+    base CPU_TYPE;
+    description
+      "Vega cpu";
+  }
+
+  identity CPU_TYPE_HURRICANE3 {
+    base CPU_TYPE;
+    description
+      "Hurricane3 cpu";
+  }
+
+  identity CPU_TYPE_P2041 {
+    base CPU_TYPE;
+    description
+      "P2041 cpu";
+  }
+
+  identity CPU_TYPE_P2020V2 {
+    base CPU_TYPE;
+    description
+      "p2020v2 cpu";
+  }
+
+  identity CPU_TYPE_P2020 {
+    base CPU_TYPE;
+    description
+      "P2020 cpu";
+  }
+
+  // typedef statements
+
+  // grouping statements
+
+  grouping pins-chassis-asic-config {
+    description
+      "Configuration data specific to a partcular vendor or ASIC";
+  }
+
+  grouping pins-chassis-alarms-state {
+    description
+      "Chassis-level alarm operational state data";
+
+    leaf status {
+      type boolean;
+      description
+        "The alarm status is false, until the alarm is raised or asserted,
+        at which point it is updated to true.";
+    }
+
+    leaf time-created {
+      type oc-types:timeticks64;
+      description
+        "The time at which the alarm was raised by the system.
+        This value is expressed as nanoseconds since the Unix Epoch";
+    }
+
+    leaf info {
+      type string;
+      description
+        "Text information accompanying the alarm to provide further
+        information.";
+    }
+
+    leaf severity {
+      type identityref {
+        base oc-alarm-types:OPENCONFIG_ALARM_SEVERITY;
+      }
+      description
+        "The severity level indicating the criticality and impact
+        of the alarm";
+    }
+  }
+
+  grouping pins-chassis-alarms-structure {
+    description
+      "Structural nodes for the list of switch alarms";
+
+    container alarms {
+      config false;
+
+      description
+        "Enclosing container for list of switch alarms.";
+
+      container state {
+        description
+          "This is an exception raised by the switch. For example if it
+          encounters an uncorrectable error or hardware flow programming
+          error it would raise alarm and set the serveity to CRITICAL, in
+          such instances the system may not be restored to a good state
+          without rebooting.";
+
+        uses pins-chassis-alarms-state;
+      }
+    }
+  }
+
+  grouping pins-chassis-config {
+    description
+      "Configuration data for vendor-agnostic switch chassis
+      components";
+
+    leaf platform {
+      type identityref {
+        base PLATFORM_TYPE;
+      }
+      description
+        "This identity specifies the type of pins chassis.";
+    }
+  }
+
+  grouping pins-chassis-state {
+    description
+      "Operational state data for vendor-agnostic switch chassis
+      components";
+
+    leaf base-mac-address {
+      type oc-yang:mac-address;
+      description
+        "Base MAC address of the chassis; allocated by the manufacturer.";
+    }
+
+    leaf mac-address-pool-size {
+      type uint32;
+      description
+        "Number of MAC addresses allocated to the chassis by the manufacturer.
+        MAC addresses in the pool are offset from the base-mac-address.";
+    }
+
+    leaf cpu-type {
+      type identityref {
+        base CPU_TYPE;
+      }
+      description
+        "This identity specifies the type of CPU.";
+    }
+  }
+
+  // data definition statements
+
+  // augment statements
+  augment "/oc-platform:components/oc-platform:component/" +
+          "oc-platform:chassis/oc-platform:config" {
+    description
+      "Configuration data for chassis";
+
+    uses pins-chassis-config;
+  }
+
+  augment "/oc-platform:components/oc-platform:component/" +
+          "oc-platform:chassis/oc-platform:state" {
+    description
+      "Operational state data for chassis";
+
+    uses pins-chassis-config;
+    uses pins-chassis-state;
+  }
+
+  augment "/oc-platform:components/oc-platform:component/" +
+          "oc-platform:chassis" {
+    description
+      "Augments alarms data in base chassis model.";
+
+    uses pins-chassis-alarms-structure;
+  }
+
+  // rpc statements
+
+  // notification statements
+
+}

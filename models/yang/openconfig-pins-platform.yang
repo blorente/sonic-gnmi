@@ -1,0 +1,68 @@
+module openconfig-pins-platform {
+
+  yang-version "1";
+
+  // namespace
+  namespace "http://openconfig.net/yang/pins-platform";
+
+  prefix "pins-platform";
+
+  // import some basic types
+  import openconfig-platform { prefix oc-platform; }
+  import openconfig-extensions { prefix oc-ext; }
+
+  // meta
+  organization
+    "OpenConfig PINS Working Group";
+
+  contact
+    "www.openconfig.net";
+
+  description
+    "This module defines schema extensions to the
+    OpenConfig platform model in the pins switch profile.";
+
+  oc-ext:openconfig-version "0.1.0";
+
+  revision 2021-01-19 {
+    description
+      "Initial version.";
+    reference "0.1.0";
+  }
+
+  // grouping statements
+  grouping pins-platform-config {
+    description
+      "Configuration data for pins components";
+
+    leaf fully-qualified-name {
+      type string;
+      description
+        "The fully qualified name of the component. For switches that
+        use non-configurable component names, the switch would create
+        a mapping between the fully-qualified-name and the device
+        component name and use the fully-qualified-name when exporting
+        telemetry stats for the compoent.
+
+        Note: It does not replace the device name of the component:
+        /components/components/config/name.";
+    }
+  }
+
+  // augment statements
+  augment "/oc-platform:components/oc-platform:component/oc-platform:config" {
+
+    description
+      "Adds PINS specific configuration to the platform module";
+
+    uses pins-platform-config;
+  }
+
+  augment "/oc-platform:components/oc-platform:component/oc-platform:state" {
+
+    description
+      "Adds PINS specific status information to the platform module";
+
+    uses pins-platform-config;
+  }
+}

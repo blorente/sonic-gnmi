@@ -1,0 +1,300 @@
+module google-pins-transceivers {
+  yang-version "1";
+
+  // namespace
+  namespace "http://openconfig.net/yang/google/transceivers";
+  prefix "google-pins-txcvr";
+
+  // import some basic types
+  import openconfig-extensions { prefix oc-ext; }
+  import openconfig-interfaces { prefix oc-interfaces; }
+  import openconfig-platform { prefix oc-platform; }
+  import openconfig-platform-transceiver { prefix oc-transceiver; }
+  import openconfig-transport-types { prefix oc-opt-types; }
+
+  // meta
+  organization
+      "Google Openconfig Working Group";
+
+  contact
+      "openconfig-dev@google.com";
+
+  description
+    "Google Specific extensions to OpenConfig transport model.";
+
+  oc-ext:openconfig-version "0.12.0";
+
+  revision 2025-05-05 {
+    description
+      "Adding ETH_800GBASE_VM8 PMD and ETH_2X400GBASE_AOC PMD type.";
+    reference "0.12.0";
+  }
+
+  revision 2025-04-15 {
+    description
+      "Adding low power mode support for transceivers.";
+    reference "0.11.0";
+  }
+
+  revision 2024-12-05 {
+    description
+      "Adding ETH_2X400GBASE_2PSM4 PMD type.";
+    reference "0.10.0";
+  }
+
+  revision 2024-10-03 {
+    description
+      "Adding module-status leaf.";
+    reference "0.9.0";
+  }
+
+  revision 2024-02-12 {
+    description
+      "Adding ETH_2X400GBASE_ENHANCED_CDGR4_PLUS PMD type.";
+    reference "0.8.0";
+  }
+
+  revision 2024-01-10 {
+    description
+      "Adding ETH_2X200GBASE_BGR4 PMD type.";
+    reference "0.7.0";
+  }
+
+  revision 2023-08-17 {
+    description
+      "Adding ETH_2X200GBASE_BGR4 PMD type.";
+    reference "0.6.0";
+  }
+
+  revision 2023-05-03 {
+    description
+      "Adding ETH_2X400GBASE_FR4 PMD type.";
+    reference "0.5.0";
+  }
+
+  revision 2023-04-21 {
+    description
+      "Adding ETH_200GBASE_BSM8 PMD type.";
+    reference "0.4.0";
+  }
+
+  revision 2023-03-16 {
+    description
+      "Adding ETH_400G_AOC PMD type.";
+    reference "0.3.0";
+  }
+
+  revision 2022-03-07 {
+    description
+      "Adding transceiver physical lanes leaf associated-interface.";
+    reference "0.2.0";
+  }
+
+  revision 2022-02-18 {
+    description
+      "Initial version.";
+    reference "0.1.0";
+  }
+
+  // identity statements
+  // LINT.IfChange
+  identity ETH_400GBASE_CR8 {
+    base oc-opt-types:ETHERNET_PMD_TYPE;
+    description
+      "Ethernet compliance code: 400GBASE_CR8";
+  }
+
+  identity ETH_2X400GBASE_CR4 {
+    base oc-opt-types:ETHERNET_PMD_TYPE;
+    description
+      "Ethernet compliance code: 2x400GBASE_CR4";
+  }
+
+  identity ETH_2X400GBASE_CDGR4_PLUS {
+    base oc-opt-types:ETHERNET_PMD_TYPE;
+    description
+      "Ethernet compliance code: 2x400GBASE_CDGR4+";
+  }
+
+  identity ETH_2X400GBASE_ENHANCED_CDGR4_PLUS {
+    base oc-opt-types:ETHERNET_PMD_TYPE;
+    description
+      "Ethernet compliance code: 2X400G_ENHANCED_CDGR4+";
+  }
+
+  identity ETH_2X200GBASE_CGR4_PLUS {
+    base oc-opt-types:ETHERNET_PMD_TYPE;
+    description
+      "Ethernet compliance code: 2x200GBASE_CGR4+";
+  }
+
+  identity ETH_2X400GBASE_DR4 {
+    base oc-opt-types:ETHERNET_PMD_TYPE;
+    description
+      "Ethernet compliance code: 2x400GBASE_DR4";
+  }
+
+  identity ETH_2X400GBASE_PSM4 {
+    base oc-opt-types:ETHERNET_PMD_TYPE;
+    description
+      "Ethernet compliance code: 2x400GBASE_PSM4";
+  }
+
+  identity ETH_400GBASE_PSM8 {
+    base oc-opt-types:ETHERNET_PMD_TYPE;
+    description
+      "Ethernet compliance code: 400GBASE_PSM8";
+  }
+
+  identity ETH_400GBASE_SR8 {
+    base oc-opt-types:ETHERNET_PMD_TYPE;
+    description
+      "Ethernet compliance code: 400GBASE_SR8";
+  }
+
+  identity ETH_400G_AOC {
+    base oc-opt-types:ETHERNET_PMD_TYPE;
+    description
+      "Ethernet compliance code: 400G_AOC";
+  }
+
+  identity ETH_200GBASE_BSM8 {
+    base oc-opt-types:ETHERNET_PMD_TYPE;
+    description
+      "Ethernet compliance code: 200GBASE_BSM8";
+  }
+
+  identity ETH_2X400GBASE_FR4 {
+    base oc-opt-types:ETHERNET_PMD_TYPE;
+    description
+      "Ethernet compliance code: 2X400GBASE_FR4";
+  }
+
+  identity ETH_2X200GBASE_BGR4 {
+    base oc-opt-types:ETHERNET_PMD_TYPE;
+    description
+      "Ethernet compliance code: 2X200GBASE_BGR4";
+  }
+
+  identity ETH_200GBASE_BSM8_PLUS {
+    base oc-opt-types:ETHERNET_PMD_TYPE;
+    description
+      "Ethernet compliance code: 200GBASE_BSM8_PLUS";
+  }
+
+  identity ETH_2X400GBASE_2PSM4 {
+    base oc-opt-types:ETHERNET_PMD_TYPE;
+    description
+      "Ethernet compliance code: 2X400GBASE_2PSM4";
+  }
+
+  identity ETH_800GBASE_VM8 {
+    base oc-opt-types:ETHERNET_PMD_TYPE;
+    description
+      "Ethernet compliance code: 800GBASE_VM8";
+  }
+
+  identity ETH_2X400GBASE_AOC {
+    base oc-opt-types:ETHERNET_PMD_TYPE;
+    description
+      "Ethernet compliance code: 2X400GBASE_AOC";
+  }
+  // LINT.ThenChange(
+
+  // grouping statements
+  grouping google-pins-transceiver-physical-channel-state {
+    description
+      "Operational state data for transceiver physical channels.";
+
+    leaf associated-interface {
+      type leafref {
+        path "/oc-interfaces:interfaces/oc-interfaces:interface/" +
+             "oc-interfaces:name";
+      }
+      description
+        "The interface associated with this physical channel.";
+    }
+  }
+
+  grouping google-pins-transceiver-state {
+    description
+      "Operational state data for transceiver.";
+
+    leaf module-status {
+      description
+        "Expanded operational status of the transceiver module.";
+      type enumeration {
+        enum MODULE_STATUS_READY {
+          description
+            "Module is ready.";
+        }
+        enum MODULE_STATUS_POWER_UP {
+          description
+            "Module is in the process of powering up to high power mode.";
+        }
+        enum MODULE_STATUS_POWER_LOW {
+          description
+            "Module is in low power mode.";
+        }
+        enum MODULE_STATUS_POWER_DOWN {
+          description
+            "Module is in the process of returning to low power mode.";
+        }
+        enum MODULE_STATUS_FAULT {
+          description
+            "Module encountered a fault condition.";
+        }
+        enum MODULE_STATUS_UNDEFINED {
+          description
+            "Module has entered an undefined state.";
+        }
+        enum MODULE_STATUS_UNKNOWN {
+          description
+            "Module has an unknown status.";
+        }
+      }
+    }
+  }
+
+  grouping google-pins-transceiver-config {
+    description
+      "Configuration data for transceiver.";
+
+    leaf force-low-power {
+      description
+        "Enable low power mode for the transceiver.";
+      type boolean;
+    }
+  }
+
+  // augment statements
+  augment "/oc-platform:components/oc-platform:component/" +
+          "oc-transceiver:transceiver/oc-transceiver:physical-channels/" +
+          "oc-transceiver:channel/oc-transceiver:state" {
+    description
+      "Augments transceiver physical channels with associated-interface";
+
+    uses google-pins-transceiver-physical-channel-state;
+  }
+
+  augment "/oc-platform:components/oc-platform:component/" +
+          "oc-transceiver:transceiver/oc-transceiver:state" {
+    description
+      "Augments transceiver state";
+
+    uses google-pins-transceiver-config;
+    uses google-pins-transceiver-state;
+  }
+
+  augment "/oc-platform:components/oc-platform:component/" +
+          "oc-transceiver:transceiver/oc-transceiver:config" {
+    description
+      "Augments transceiver config";
+
+    uses google-pins-transceiver-config;
+  }
+
+  // rpc statements
+
+  // notification statements
+}

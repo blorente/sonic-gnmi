@@ -1,0 +1,737 @@
+module openconfig-optical-switch {
+
+  yang-version "1";
+
+  // namespace
+  namespace "http://openconfig.net/yang/optical-switch";
+
+  prefix "oc-opt-sw";
+
+  import openconfig-types { prefix oc-types; }
+  import openconfig-extensions { prefix oc-ext; }
+
+  organization "Google LLC";
+
+  contact "brandonewalton@google.com, yanzhan@google.com";
+
+  description
+    "This module defines configuration and operational state for Optical
+    Circuit Switches (OCS) which consist of one or more 'optical switch modules'
+    under one controller.
+
+    Functionality is modelled for establishing port connections
+    (cross-connections), reporting port statuses, assigning metadata and a
+    variety of other features found in industry.
+
+    This model is not yet available publicly through OpenConfig.";
+
+  oc-ext:openconfig-version "0.2.0";
+
+  revision "2024-11-13" {
+    description "Revised to use named ports.";
+    reference "0.2.0";
+  }
+
+  revision "2023-08-31" {
+    description "Initial model.";
+    reference "0.1.0";
+  }
+
+  grouping port-name-config-reference {
+    description
+      "References to the config port name leaves for reuse.";
+
+    leaf port-name {
+      type leafref {
+        path "../config/port-name";
+      }
+      description "The port name.";
+    }
+  }
+
+  grouping port-name-state-reference {
+    description
+      "References to the state port name leaves for reuse.";
+
+    leaf port-name {
+      type leafref {
+        path "../state/port-name";
+      }
+      description "The port name.";
+    }
+  }
+
+  grouping port-name-reference {
+    description
+      "References a named port in the port config.";
+
+    leaf port-name {
+      type leafref {
+        path "/oc-opt-sw:optical-switch/ports/port/name";
+      }
+      description "The port name.";
+    }
+  }
+
+  // Port configuration
+  grouping port-config {
+    description "Configuration for OCS ports.";
+
+    leaf name {
+      type string;
+      description "The port name for this port.";
+    }
+    leaf slot-number {
+      type int32;
+      description "The slot number for this port.";
+    }
+    leaf port-number {
+      type int32;
+      description "The port number for this port.";
+    }
+  }
+
+  grouping ports-top {
+    description "Top-level grouping for port config.";
+
+    container ports {
+      description "Enclosing container for port configs.";
+
+      list port {
+        key "name";
+        description "List of all defined optical ports for the switch.";
+
+        leaf name {
+          type leafref {
+            path "../config/name";
+          }
+          description "The port name.";
+        }
+
+        container config {
+          uses port-config;
+          description "Configuration for optical ports.";
+        }
+
+        container state {
+          config false;
+          uses port-config;
+
+          description "Operational state data for optical ports.";
+        }
+      }
+    }
+  }
+
+  // Port Connection
+  grouping port-connection-config {
+    description
+      "Configuration for optical port connections (cross-connections).";
+
+    uses port-name-reference;
+
+    leaf peer-port-name {
+      type leafref {
+        path "/optical-switch/ports/port/name";
+      }
+      description "The peer port name to connect to.";
+    }
+
+    leaf peer-slot-number {
+      type int32;
+      description "The peer slot number to connect to.";
+    }
+  }
+
+  grouping port-connection-state {
+    description
+      "Operational state data for optical port connections.";
+  }
+
+  grouping port-connections-top {
+    description
+      "Top-level grouping for optical port connections.";
+
+    container port-connections {
+      description
+        "Enclosing container for optical port connections.";
+
+      list port-connection {
+        key "port-name";
+        description
+          "List of all defined optical port connections for the switch.";
+
+        uses port-name-config-reference;
+
+        container config {
+          uses port-connection-config;
+
+          description
+            "Configuration for optical port connections (cross-connections).";
+        }
+
+        container state {
+          config false;
+          uses port-connection-config;
+          uses port-connection-state;
+
+          description
+            "Operational state data for optical port connections.";
+        }
+      }
+    }
+  }
+
+  // Port Optical Blocking
+  grouping port-optical-blocking-config {
+    description
+      "Configuration for optical port blocking.";
+
+    uses port-name-reference;
+
+    leaf port-optical-blocking-enable {
+      type boolean;
+
+      description
+        "If true, the specified port is optically blocked while retaining any
+        defined port-connection configuration.";
+    }
+  }
+
+  grouping port-optical-blocking-state {
+    description "Operation state for optical port blocking.";
+  }
+
+  grouping port-optical-blocking-top {
+    description
+      "Top-level grouping for optical port blocking.";
+
+    container port-blockings {
+      description
+        "Enclosing container for optical port blocking.";
+
+      list port-blocking {
+        key "port-name";
+
+        description
+          "List of all optical port blocking configuration for the switch.";
+
+        uses port-name-config-reference;
+
+        container config {
+          uses port-optical-blocking-config;
+
+          description
+            "Configuration for optical port blocking.";
+        }
+
+        container state {
+          config false;
+          uses port-optical-blocking-config;
+          uses port-optical-blocking-state;
+
+          description
+            "Operational state data for optical port blocking.";
+        }
+      }
+    }
+  }
+
+  // Port Optical Power Measurement
+  grouping port-optical-power-measurement-config {
+    description
+      "Configuration for optical power measurement.";
+
+    uses port-name-reference;
+
+    leaf measurement-wavelength {
+      type oc-types:ieeefloat32;
+      units "nm";
+      description
+        "Target compensation wavelength for the optical power detector.";
+    }
+    leaf measurement-averaging-period {
+      type int32;
+      units "ms";
+      description
+        "Averaging period of the power measurement.";
+    }
+    leaf measurement-direction {
+      type enumeration {
+        enum DIRECTION_FORWARD {
+          description
+            "Power is measured in the forward direction from port to
+            peer-port.";
+        }
+        enum DIRECTION_REVERSE  {
+          description
+            "Power is measured in the reverse direction from peer-port to
+            port.";
+        }
+      }
+      default DIRECTION_FORWARD;
+      description "Direction the optical power measurement is made.";
+    }
+  }
+
+  grouping port-optical-power-measurement-state {
+    description
+      "Operational state data for optical power measurement.";
+
+    leaf port-optical-power {
+      type oc-types:ieeefloat32;
+      units "dBm";
+      description "Measured optical power.";
+    }
+  }
+
+  grouping port-optical-power-measurements-top {
+    description
+      "Top-level grouping for optical power measurement.";
+
+    container port-optical-power-measurements {
+      description
+        "Enclosing container for optical power measurement";
+
+      list port-optical-power-measurement {
+        key "port-name";
+
+        description
+          "List of all optical power measurements.";
+
+        uses port-name-config-reference;
+
+        container config {
+          uses port-optical-power-measurement-config;
+          description
+            "Configuration for optical power measurement.";
+        }
+
+        container state {
+          config false;
+          uses port-optical-power-measurement-config;
+          uses port-optical-power-measurement-state;
+          description
+            "Operational state data for optical power measurement.";
+        }
+      }
+    }
+  }
+
+  // Port Optical Attenuation
+  grouping port-optical-attenuation-config {
+    description
+      "Configuration for port optical attentuation.";
+
+    uses port-name-reference;
+
+    leaf attenuation-mode {
+      type enumeration {
+        enum NONE {
+          description "No optical attenuation.";
+        }
+        enum FIXED {
+          description
+            "Attenuates the optical power, freezing whatever control loop is
+            operating to maintain the attenuation level.";
+        }
+        enum ACTIVE {
+          description
+            "Attenuates the optical power, actively executing a control loop to
+            maintain a consistent attenuation level.";
+        }
+        enum CONVERGENCE {
+          description
+            "Performs ACTIVE mode attenuation until the control loop converges
+            at which point the control loop is frozen and the attenuation mode
+            acts like FIXED.";
+        }
+      }
+      description "The type of optical attenuation to perform.";
+    }
+    leaf attenuation-level {
+      type oc-types:ieeefloat32;
+      units "dBm";
+      description
+        "The amount of attentuation to apply to the input signal.";
+    }
+  }
+
+  grouping port-optical-attenuation-state {
+    description
+      "Operational state data for port optical attentuation.";
+  }
+
+  grouping port-optical-attenuation-top {
+    description
+      "Top-level grouping for port optical attenuation.";
+
+    container optical-attenuations {
+      description
+        "Enclosing container for port optical attenuation.";
+
+      list optical-attenuation {
+        key "port-name";
+
+        description
+          "List of all defined port optical attenuation settings.";
+
+        uses port-name-config-reference;
+
+        container config {
+          uses port-optical-attenuation-config;
+
+          description
+            "Configuration for port optical attenuation settings.";
+        }
+
+        container state {
+          config false;
+          uses port-optical-attenuation-config;
+          uses port-optical-attenuation-state;
+
+          description
+            "Operational state for port optical attentuation.";
+        }
+      }
+    }
+  }
+
+  // Port Metadata
+  grouping port-metadata-config {
+    description
+      "Configuration for port metadata.";
+
+    uses port-name-reference;
+
+    leaf metadata {
+      type binary;
+      description "Metadata associated with the port.";
+    }
+  }
+
+  grouping port-metadata-state {
+    description "Operational state data for port metadata.";
+  }
+
+  grouping port-metadatas-top {
+    description
+      "Top-level grouping for optical port metadata.";
+
+    container port-metadatas {
+      description
+        "Enclosing container for port metadata.";
+
+      list port-metadata {
+        key "port-name";
+
+        description
+          "List of all defined port metadata for the switch.";
+
+        uses port-name-config-reference;
+
+        container config {
+          uses port-metadata-config;
+
+          description
+            "Configuration for port metadata.";
+        }
+
+        container state {
+          config false;
+          uses port-metadata-config;
+          uses port-metadata-state;
+
+          description
+            "Operational state for port metadata.";
+        }
+      }
+    }
+  }
+
+  // Port Connection Recovery
+  grouping port-connection-recovery-config {
+    description
+      "Configuration for optical port connection recovery.";
+
+    leaf port-connection-recovery-behavior {
+      type enumeration {
+        enum RECOVER_PORT_CONNECTIONS_FROM_MEMORY {
+          description
+            "Recover and reconfigure port connections from memory when
+            available on switch boot";
+        }
+        enum RECOVER_PORT_CONNECTIONS_NEVER {
+          description
+            "Never recover port connections from memory, or switch doesn't
+            support NVM.";
+        }
+      }
+      default RECOVER_PORT_CONNECTIONS_NEVER;
+      description
+        "When, and if, port connections are stored in NVM, the recovery action
+        to take on switch boot.";
+    }
+  }
+
+  grouping port-connection-recovery-state {
+    description
+      "Operational state data for optical port connection recovery.";
+
+    leaf port-connection-recovery-capability {
+      type enumeration {
+        enum CONNECTIONS_PERSIST_INDEFINITELY {
+          description
+            "Port connections persist indefinitely from the underlying optical
+            switch implementation technology, even during switch power loss.";
+        }
+        enum CONNECTIONS_PERSIST_REBOOT_RECOVERABLE_BY_NVM {
+          description
+            "Port connections persist unchanged through software/warm reboot and
+            can be recovered on switch cold boot (power loss) from Non-Volatile
+            Memory (NVM).";
+        }
+        enum CONNECTIONS_RECOVERABLE_BY_NVM {
+          description
+            "Port connections can only be recovered on switch boot from
+            Non-Volatile Memory (NVM).";
+        }
+        enum CONNECTIONS_NOT_RECOVERABLE {
+          description
+            "Port connections can not be recovered automatically. Switch must be
+            reconfigured by config push after boot.";
+        }
+      }
+      description
+        "The switch's capability to recover configured port connections after
+        warm reboot and power loss.";
+    }
+  }
+
+  grouping port-connection-recovery-top {
+    description
+      "Top-level grouping for optical port connection recovery.";
+
+    container port-connection-recovery {
+      description
+        "Enclosing container for optical port connection recovery.";
+
+      container config {
+        uses port-connection-recovery-config;
+
+        description "Configuration for optical port connection recovery.";
+      }
+
+      container state {
+        config false;
+        uses port-connection-recovery-config;
+        uses port-connection-recovery-state;
+
+        description
+          "Operational state data for optical port connection recovery.";
+      }
+    }
+  }
+
+  // Switch Topology
+  grouping optical-switch-topology-config {
+    description
+      "Configuration for optical switch topology.";
+  }
+
+  grouping optical-switch-topology-state {
+    description
+      "Operational state for optical switch topology.";
+
+    leaf port-connectivity {
+      type enumeration {
+        enum INGRESS_EGRESS {
+          description
+            "Switch ports are divided into a set of ingress and a set of egress
+            ports. Connections can only be made between an ingress and egress
+            port.";
+        }
+        enum ANY_TO_ANY {
+          description
+            "Any switch port can be connected to any other port.";
+        }
+      }
+      mandatory true;
+      description
+        "The type of connectivity between ports for the switch and all optical
+        switch module.";
+    }
+    leaf total-port-count {
+      type int32;
+      mandatory true;
+      description "Total number of optical ports provided by the switch";
+    }
+    leaf total-optical-module-count {
+      type int32;
+      mandatory true;
+      description "Total number of connected optical switch modules.";
+    }
+    leaf ingress-port-count {
+      type int32;
+      mandatory true;
+      description "Total number of ingress ports provided by the switch.";
+    }
+    leaf egress-port-count {
+      type int32;
+      mandatory true;
+      description "Total number of egress ports provided by the switch.";
+    }
+    leaf ingress-start-index {
+      type int32;
+      mandatory true;
+      description "The port number start index for ingress ports.";
+    }
+    leaf egress-start-index {
+      type int32;
+      mandatory true;
+      description "The port number start index for egress ports.";
+    }
+    leaf inter-module-connection-support {
+      type boolean;
+      mandatory true;
+      description "If true, the switch supports establishing connections between optical switch modules in different slots.";
+    }
+  }
+
+  grouping optical-switch-topology-top {
+    description
+      "Top-level grouping for optical switch topology.";
+
+    container optical-switch-topology {
+      description
+        "Enclosing container for optical switch topology.";
+
+      container config {
+        uses optical-switch-topology-config;
+
+        description
+          "Configuration for optical switch topology.";
+      }
+
+      container state {
+        config false;
+        uses optical-switch-topology-config;
+        uses optical-switch-topology-state;
+
+        description
+          "Operational state data for optical switch topology.";
+      }
+    }
+  }
+
+  // Port Status
+  grouping port-status-state {
+    description
+      "Operational state data for port statuses.";
+
+    uses port-name-reference;
+
+    leaf port-status {
+      type enumeration {
+        enum STATUS_ENABLED {
+          description
+            "The port is enabled, functioning normally, and will participate in
+            normal port connections.";
+        }
+        enum STATUS_DISABLED {
+          description
+            "The port is optically blocked, preventing the propagation of light
+            through the switch. The port can still be configured in port
+            connections.";
+        }
+        enum STATUS_FAILED {
+          description
+            "An internal failure exists involving the port. See
+            port-status-message for details.";
+        }
+      }
+      default STATUS_ENABLED;
+      description
+        "The status of the port.";
+    }
+    leaf port-status-message {
+      type string;
+      description
+        "If port status is failed, contains a message explaining the port
+        failure.";
+    }
+  }
+
+  grouping port-statuses-top {
+    description
+      "Top-level grouping for port statuses.";
+
+    container port-statuses {
+      config false;
+      description
+        "Enclosing container for port statuses.";
+
+      list port-status {
+        key "port-name";
+
+        description
+          "List of port statuses for the switch.";
+
+        uses port-name-state-reference;
+
+        container state {
+          uses port-status-state;
+
+          description
+            "Operational state for port statuses.";
+        }
+      }
+    }
+  }
+
+  // Optical Switch
+  grouping optical-switch-config {
+    description "Global optical switch configuration.";
+  }
+
+  grouping optical-switch-state {
+    description "Global optical switch operation state.";
+  }
+
+  grouping optical-switch-top {
+    description
+      "Top-level grouping for all optical switch state and configuration.";
+
+    container optical-switch {
+      description
+        "Enclosing container for all optical switch state and configuration.";
+
+      container config {
+        uses optical-switch-config;
+
+        description
+          "Configuration for optical switch.";
+      }
+      container state {
+        config false;
+        uses optical-switch-config;
+        uses optical-switch-state;
+
+        description
+          "Operational state for optical switch.";
+      }
+
+      uses optical-switch-topology-top;
+      uses ports-top;
+      uses port-connection-recovery-top;
+      uses port-connections-top;
+      uses port-statuses-top;
+      uses port-metadatas-top;
+      uses port-optical-attenuation-top;
+      uses port-optical-power-measurements-top;
+      uses port-optical-blocking-top;
+    }
+  }
+
+  uses optical-switch-top;
+}

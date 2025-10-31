@@ -1,0 +1,250 @@
+module google-pins-diag {
+  yang-version "1";
+
+  // namespace
+  namespace "http://openconfig.net/yang/google/diag";
+  prefix "google-pins-diag";
+
+  // import some basic types
+  import openconfig-extensions { prefix oc-ext; }
+  import openconfig-system { prefix oc-system; }
+  import openconfig-types { prefix oc-types; }
+  import openconfig-yang-types { prefix oc-yang; }
+
+  // meta
+  organization
+      "Google Openconfig Working Group";
+
+  contact
+      "openconfig-dev@google.com";
+
+  description
+    "Google Specific extensions to OpenConfig system model to support additional
+    diagnosis features.";
+
+  oc-ext:openconfig-version "0.2.0";
+
+  revision 2025-07-29 {
+    description
+      "Add bad interval monitor.";
+    reference "0.2.0";
+  }
+
+  revision 2025-02-26 {
+    description
+      "Add bad interval monitor.";
+    reference "0.2.0";
+  }
+
+  revision 2024-02-09 {
+    description
+      "Initial draft.";
+    reference "0.1.0";
+  }
+
+  typedef milli-percentage {
+      type uint32 {
+      range "0..100000";
+      }
+      description
+      "Integer indicating a millipercentage value; ie: 1000=1%";
+  }
+
+  grouping diag-config {
+    description
+      "Switch level configuration for the blackhole/congestion features";
+
+    leaf blackhole-monitoring-enable {
+      type boolean;
+      default false;
+      description
+        "Enables the blackhole event collection feature";
+    }
+    leaf congestion-monitoring-enable {
+      type boolean;
+      default false;
+      description
+        "Enables the congestion event collection feature";
+    }
+    leaf bad-intervals-monitoring-enable {
+      type boolean;
+      default false;
+      description
+        "Enables the bad interval event collection feature";
+    }
+    leaf lpm-misses-threshold {
+      description
+        "The number of LPM misses required to trigger a switch-lpm-miss-event";
+      type uint32;
+    }
+    leaf recovered-parity-errors-threshold {
+      description
+        "The number of recovered parity errors required to trigger a
+        switch-memory-error-event";
+      type uint32;
+    }
+    leaf ecc-single-bit-errors-threshold {
+      description
+        "The number of ecc single bit errors required to trigger a
+        switch-fec-not-correctable-event";
+      type uint32;
+    }
+  }
+
+  grouping queue-config {
+    description
+      "Queue level configuration for the blackhole/congestion features";
+    leaf qname{
+      description
+        "The name of the queue";
+      type string;
+    }
+    leaf dropped-rate-threshold {
+      description
+        "The percentage of traffic drops required to raise a queue's
+        dropped-packet-event";
+      type milli-percentage;
+    }
+  }
+
+  grouping diag-state {
+    description
+      "Switch level operational state for the diag feature";
+    uses diag-config;
+  }
+
+  grouping port-profile-config {
+    description
+      "Set of thresholds defined as part of a blackhole port-profile.
+      The respective `events` track when these thresholds have been
+      crossed";
+
+    leaf name {
+      description
+        "The name of this port profile";
+      type string;
+    }
+    leaf min-incoming-pkt-threshold {
+      description
+        "Threshold to exceed for number of incoming packets to consider incrementing the corresponding blackhole counters.";
+      type uint32;
+    }
+    leaf min-outgoing-pkt-threshold {
+      description
+        "Threshold to exceed for incoming packets to consider incrementing the corresponding blackhole counters.";
+      type uint32;
+    }
+    leaf fec-not-correctable-threshold {
+      description
+        "Threshold to exceed for uncorrectable FEC packets to consider incrementing the corresponding blackhole counters.";
+      type uint32;
+    }
+    leaf in-discards-rate-threshold {
+      description
+        "Threshold to exceed for rate of IN_DISCARDs to consider incrementing the corresponding blackhole counters.";
+      type milli-percentage;
+    }
+    leaf out-discards-rate-threshold {
+      description
+        "Threshold to exceed for rate of OUT_DISCARDS to consider incrementing the corresponding blackhole counters.";
+      type milli-percentage;
+    }
+    leaf in-errors-threshold {
+      description
+        "Threshold to exceed for rate of IN_ERRORs to consider incrementing the corresponding blackhole counter.";
+      type uint32;
+    }
+    leaf queue-min-outgoing-pkt-threshold {
+      description
+        "Threshold to exceed for incoming packets to consider incrementing the corresponding congestion counters.";
+      type uint32;
+    }
+  }
+
+  grouping google-diag-top {
+    description
+        "Top-level grouping for Google Diagnosis feature";
+
+    container diag {
+      description
+          "Diagnosis root containing all diagnosis features.";
+
+      container config {
+        description
+          "Configuration for the diag feature";
+          uses diag-config;
+      }
+      container state {
+        description
+          "Operation state for the diag feature";
+        config false;
+        uses diag-state;
+      }
+
+      container port-profiles {
+        description
+          "List of port profiles";
+        list port-profile {
+          key "name";
+          description
+            "A port-profile defines a set of blackhole
+            configuration that can be assigned to an interface";
+          leaf name {
+            type leafref {
+              path "../config/name";
+            }
+            description
+              "Name of the port profile";
+          }
+          container config {
+            description
+              "Configuration for a port profile";
+            uses port-profile-config;
+          }
+          container state {
+            description
+              "Operation state for a port profile";
+            config false;
+            uses port-profile-config;
+          }
+
+          container queues {
+            description
+              "Collection of queue object for congestion event processing";
+            list queue {
+              description
+                "A queue object for congestion event processing";
+              key "qname";
+              leaf qname {
+                type leafref {
+                  path "../config/qname";
+                }
+                description
+                  "Reference to the unique name used as a key for each buffer pool.";
+              }
+
+              container config {
+                description
+                  "Configuration for the queue.";
+                uses queue-config;
+              }
+
+              container state {
+                description
+                  "Operational state for the queue.";
+                config false;
+                uses queue-config;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  augment /oc-system:system {
+    description
+      "Augment for Google blackhole and congestion diagnosis feature.";
+    uses google-diag-top;
+  }
+}

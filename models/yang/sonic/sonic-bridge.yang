@@ -1,0 +1,73 @@
+module sonic-bridge {
+    namespace "http://github.com/Azure/sonic-bridge";
+    prefix sbr;
+    yang-version 1.1;
+
+    import sonic-common {
+        prefix scommon;
+    }
+
+    import sonic-port {
+        prefix prt;
+    }
+
+    import sonic-mgmt-port {
+        prefix smgmtprt;
+    }
+
+    organization
+        "SONiC";
+
+    contact
+        "SONiC";
+
+    description
+        "SONIC BRIDGE";
+
+    revision 2024-05-01 {
+        description
+            "Adding bridge tables";
+    }
+
+    container sonic-bridge {
+        container BRIDGE {
+            list BRIDGE_LIST {
+                key "name";
+
+                leaf name {
+                    type string {
+                        pattern "(^br.*)";
+                    }
+                }
+
+                leaf admin_status {
+                    type scommon:admin-status;
+                }
+
+                leaf mtu {
+                    type uint32 {
+                        range "1500..9216" {
+                            error-message "Invalid Bridge interface MTU value";
+                            error-app-tag bridge-mtu-invalid;
+                        }
+                    }
+                }
+            }
+        }
+        container BRIDGE_MEMBER {
+            list BRIDGE_MEMBER_LIST {
+                key "name ifname";
+
+                leaf name {
+                    type string {
+                        pattern "(^br.*)";
+                    }
+                }
+
+                leaf ifname {
+                    type string;
+                }
+            }
+        }
+    }
+}

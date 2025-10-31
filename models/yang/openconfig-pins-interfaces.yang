@@ -1,0 +1,93 @@
+module openconfig-pins-interfaces {
+  yang-version "1";
+
+  // namespace
+  namespace "http://openconfig.net/yang/pins/interfaces";
+  prefix "pins-if";
+
+  // import some basic types
+  import openconfig-interfaces { prefix oc-if; }
+  import openconfig-extensions { prefix oc-ext; }
+
+  // meta
+  organization
+      "OpenConfig - Working Group";
+
+  contact
+      "www.openconfig.net";
+
+  description
+    "This module defines schema extensions to the openconfig
+     interfaces model in pins switch profile.";
+
+  oc-ext:openconfig-version "0.1.0";
+
+  revision 2020-04-09 {
+    description
+      "Initial version.";
+    reference "0.1.0";
+  }
+
+  // grouping statements
+
+  grouping pins-interface-config {
+    description
+      "Configuration data for  interfaces";
+
+    leaf health-indicator {
+      type enumeration {
+        enum GOOD {
+          description
+            "Sets the indicator to show the interface health, for
+            the purposes of protocol operations, is good / normal.";
+        }
+        enum BAD {
+          description
+            "Sets the indicator to show that the interface health,
+            for the purposes of protocol operations, is
+            bad / failed.";
+        }
+      }
+      description
+        "This allows a management or control system to set the health
+        state of an interface for the purposes of protocol
+        operations.  The state can be used to set indicators, such
+        as as a port LED, to visually indicate its health.  If the
+        interface is part of a channelized physical port, the device
+        should consider the health across all associated
+        interfaces, and set the port LED accordingly.  The health
+        indicator applies to physical interfaces such as Ethernet
+        interfaces, not logical interfaces such as routed VLANs or
+        loopbacks.
+
+        A switch implementation may map `GOOD` and `BAD`
+        values to appropriate LED colors, for example red and green,
+        respectively, on the physical port corresponding to the
+        interface.";
+
+    }
+  }
+
+  // data definition statements
+
+  // augment statements
+  augment "/oc-if:interfaces/oc-if:interface/oc-if:config" {
+
+    description
+      "Adds  specific configuration to the interface module";
+
+    uses pins-interface-config;
+  }
+
+  augment "/oc-if:interfaces/oc-if:interface/oc-if:state" {
+
+    description
+      "Adds -specific status information to the interface module";
+
+    uses pins-interface-config;
+  }
+
+  // rpc statements
+
+  // notification statements
+}

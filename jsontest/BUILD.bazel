@@ -13,6 +13,8 @@ go_library(
     deps = [
         "//sonic_db_config",
         "//transl_utils",
+        "//translib/ocbinds",
+        "//translib/path",
         "@com_github_golang_protobuf//proto",
         "@com_github_google_gnxi//utils/xpath",
         "@com_github_openconfig_gnmi//proto/gnmi",
@@ -25,8 +27,6 @@ go_library(
         "@org_golang_google_grpc//codes",
         "@org_golang_google_grpc//status",
         "@org_golang_x_net//context",
-        "@sonic-mgmt-common//translib/ocbinds",
-        "@sonic-mgmt-common//translib/path",
     ],
 )
 

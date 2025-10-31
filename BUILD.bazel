@@ -48,7 +48,7 @@ buildifier(
 # used by UMF.
 alias(
     name = "whole-yang-tree-txt",
-    actual = "@sonic-mgmt-common//models/yang:whole-tree",
+    actual = "//models/yang:whole-tree",
 )
 
 # A shortcut to build a Docker image that is used for component testing.

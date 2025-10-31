@@ -20,11 +20,6 @@ load("@rules_pkg//:deps.bzl", "rules_pkg_dependencies")
 
 rules_pkg_dependencies()
 
-local_repository(
-    name = "sonic-mgmt-common",
-    path = "../sonic-mgmt-common",
-)
-
 ### Python
 http_archive(
     name = "rules_python",

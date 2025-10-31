@@ -1,0 +1,71 @@
+module openconfig-system-deviation {
+
+  yang-version "1";
+
+  // namespace
+  namespace "http://openconfig.net/yang/system/deviation/extension";
+
+  prefix "oc-sys-dev";
+
+  // import some basic types
+  import openconfig-extensions { prefix oc-ext; }
+  import openconfig-system { prefix oc-sys; }
+
+  organization
+    "SONiC";
+
+  contact
+    "SONiC";
+
+  description
+    "This module describes a YANG model for openconfig-system deviations.";
+
+  oc-ext:openconfig-version "0.1.0";
+
+  revision "2024-07-15" {
+    description
+      "Add Yang deviations for unsupported attributes.";
+    reference "0.1.0";
+  }
+
+  deviation /oc-sys:system/oc-sys:logging/oc-sys:console {
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:logging/oc-sys:remote-servers/oc-sys:remote-server/oc-sys:selectors {
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:mount-points/oc-sys:mount-point/oc-sys:state/oc-sys:storage-component {
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:ntp/oc-sys:ntp-keys {
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:messages {
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:aaa/oc-sys:accounting {
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:aaa/oc-sys:authorization/oc-sys:events {
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:aaa/oc-sys:server-groups {
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:dns {
+    deviate not-supported;
+  }
+
+  deviation /oc-sys:system/oc-sys:license {
+    deviate not-supported;
+  }
+
+}

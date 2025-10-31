@@ -1,0 +1,313 @@
+module google-pins-qos {
+  yang-version "1";
+
+  // namespace
+  namespace "http://openconfig.net/yang/google/qos";
+  prefix "google-pins-qos";
+
+  // import some basic types
+
+  import openconfig-qos { prefix oc-qos; }
+  import openconfig-qos-types { prefix oc-qos-types; }
+  import openconfig-extensions { prefix oc-ext; }
+  import openconfig-types { prefix oc-types; }
+  import openconfig-yang-types { prefix oc-yang; }
+
+  // include sub-modules
+
+  // meta
+  organization
+    "Google LLC";
+
+  contact
+    "OpenConfig working group
+    netopenconfig@googlegroups.com";
+
+  description
+    "Defines Google specific augments for OpenConfig QoS model";
+
+  oc-ext:openconfig-version "0.5.0";
+
+  revision 2023-09-25 {
+    description
+      "Augments to get maximum periodic queue length";
+    reference "0.5.0";
+  }
+
+  revision 2023-09-01 {
+    description
+      "Augments to define shared-buffer-pools sub-tree";
+    reference "0.4.0";
+  }
+
+  revision 2021-09-22 {
+    description
+      "Augments to specify cir, pir in pps and bc, be in pkts.";
+    reference "0.3.0";
+  }
+
+  revision 2021-08-26 {
+    description
+      "Augments to specify cir and bc in pps and pkts.";
+    reference "0.2.0";
+  }
+
+  revision 2020-04-28 {
+    description
+      "Google Specific Qos config.";
+    reference "0.1.0";
+  }
+
+  // extension statements
+
+  // feature statements
+
+  // identity statements
+  identity PRIORITY {
+    base oc-qos-types:QOS_SCHEDULER_TYPE;
+    description
+    "Strict priority scheduler.";
+  }
+
+  identity ROUND_ROBIN {
+    base oc-qos-types:QOS_SCHEDULER_TYPE;
+    description
+    "Round Robin Scheduler.";
+  }
+
+  identity WEIGHTED_ROUND_ROBIN {
+    base oc-qos-types:QOS_SCHEDULER_TYPE;
+    description
+    "Weighted Round Robin Scheduler.";
+  }
+
+  // data definition statements
+
+  // grouping
+  grouping google-two-rate-three-color-pkts {
+    description
+      "Google specific augments to 2 rate, 3 color scheduler.";
+
+    leaf cir-pkts {
+      type uint64;
+      units pps;
+      description
+        "Committed information rate in packets per second.";
+    }
+
+    leaf bc-pkts {
+      type uint32;
+      units packets;
+      description
+        "Committed burst size expressed as packets.";
+    }
+
+    leaf pir-pkts {
+      type uint64;
+      units pps;
+      description
+        "Peak information rate in packets per second.";
+    }
+
+    leaf be-pkts {
+      type uint32;
+      units packets;
+      description
+        "Excess burst size expressed as packets.";
+    }
+  }
+
+  grouping google-one-rate-two-color-pkts {
+    description
+      "Google specific augments to 1 rate, 2 color scheduler.";
+
+    leaf cir-pkts {
+      type uint64;
+      units pps;
+      description
+        "Committed information rate in packets per second.";
+    }
+
+    leaf bc-pkts {
+      type uint32;
+      units packets;
+      description
+        "Committed burst size expressed as packets.";
+    }
+  }
+
+  grouping google-qos-shared-buffer-pools-top {
+    description
+      "Grouping containing buffer-pools structural definition";
+
+    container shared-buffer-pools {
+      description
+        "Surrounding container for buffer pools.";
+
+      list shared-buffer-pool {
+        key "name";
+
+        description
+          "A buffer pool describes a block of memory which can be shared across
+          ingress Priority groups and egress queues.";
+
+        leaf name {
+          type leafref {
+            path "../config/name";
+          }
+          description
+            "Reference to the unique name used as a key for each buffer pool.";
+        }
+
+        container config {
+          description
+            "Configuration parameters for a buffer-pool.";
+          uses shared-buffer-pool-config;
+        }
+
+        container state {
+          config false;
+          description
+            "Operational state parameters relating to a buffer-pool.";
+          uses shared-buffer-pool-config;
+        }
+      }
+    }
+  }
+
+  grouping shared-buffer-pool-config {
+    description
+      "Configuration parameters relating to a shared-buffer-pool.";
+
+    leaf name {
+      type string;
+      description
+        "Unique string identifying the shared buffer pool. Referenced from
+        from a buffer allocation profile queue config";
+    }
+
+    leaf size {
+      type uint64;
+      units bytes;
+      description
+        "This is the size of the pool in bytes";
+    }
+  }
+
+  grouping google-shared-buffer-pool-name {
+    description
+      "Google specific augments to buffer-allocation-profile, adds reference to
+      buffer-pool.";
+
+    leaf buffer-pool-name {
+      type leafref {
+        // /qos/buffer-allocation-profiles/buffer-allocation-profile/queues/queue/config
+        path "../../../../../../shared-buffer-pools/shared-buffer-pool/name";
+      }
+      description
+        "Reference to the unique name used as a key for each buffer pool.";
+    }
+  }
+
+  grouping google-queue-state-augments-top {
+    description
+      "Google specific augments for queue state.";
+    leaf max-periodic-queue-len {
+      type oc-yang:counter64;
+      units bytes;
+      description
+        "The max queue length, or watermark, observed over a sampling period.";
+    }
+
+    leaf pfc-deadlock-detected {
+      type oc-yang:counter64;
+      description
+        "Number of PFC deadlocks detected";
+    }
+
+    leaf pfc-deadlock-restored {
+      type oc-yang:counter64;
+      description
+        "Number of PFC deadlocks restored";
+    }
+
+    leaf pfc-tx-pkts {
+      type oc-yang:counter64;
+      units packets;
+      description
+        "Number of PFC transmit packets";
+    }
+
+    leaf pfc-tx-dropped-pkts {
+      type oc-yang:counter64;
+      units packets;
+      description
+        "Number of PFC transmit drops";
+    }
+
+    container diag {
+      description
+        "Contains diag congestion counters";
+
+      leaf dropped-packet-events{
+        description
+          "The number of dropped-packet-events found by the diag congestion
+          feature";
+        type oc-yang:counter64;
+      }
+    }
+  }
+
+  // augment statements
+  augment "/oc-qos:qos/oc-qos:scheduler-policies/oc-qos:scheduler-policy/oc-qos:schedulers/oc-qos:scheduler/oc-qos:one-rate-two-color/oc-qos:config" {
+    description
+      "Adds Google specific augments to configure cir and bc in pps and pkts.";
+    uses google-one-rate-two-color-pkts;
+  }
+
+  augment "/oc-qos:qos/oc-qos:scheduler-policies/oc-qos:scheduler-policy/oc-qos:schedulers/oc-qos:scheduler/oc-qos:one-rate-two-color/oc-qos:state" {
+    description
+      "Adds Google specific augments to get cir and bc status in pps and pkts.";
+    uses google-one-rate-two-color-pkts;
+  }
+
+  augment "/oc-qos:qos/oc-qos:scheduler-policies/oc-qos:scheduler-policy/oc-qos:schedulers/oc-qos:scheduler/oc-qos:two-rate-three-color/oc-qos:config" {
+    description
+      "Adds Google specific augments to configure cir, pir in pps and be, be in pkts.";
+    uses google-two-rate-three-color-pkts;
+  }
+
+  augment "/oc-qos:qos/oc-qos:scheduler-policies/oc-qos:scheduler-policy/oc-qos:schedulers/oc-qos:scheduler/oc-qos:two-rate-three-color/oc-qos:state" {
+    description
+      "Adds Google specific augments to get cir, pir in pps and be, be in pkts.";
+    uses google-two-rate-three-color-pkts;
+  }
+
+  augment "/oc-qos:qos" {
+    description
+      "Adds Google specific augments to include buffer pools subtree.";
+    uses google-qos-shared-buffer-pools-top;
+  }
+
+  augment "/oc-qos:qos/oc-qos:buffer-allocation-profiles/oc-qos:buffer-allocation-profile/oc-qos:queues/oc-qos:queue/oc-qos:config" {
+    description
+      "References the shared buffer pool utilized";
+    uses google-shared-buffer-pool-name;
+  }
+
+  augment "/oc-qos:qos/oc-qos:buffer-allocation-profiles/oc-qos:buffer-allocation-profile/oc-qos:queues/oc-qos:queue/oc-qos:state" {
+    description
+      "Adds Google specific augments to get assigned buffer pool.";
+    uses google-shared-buffer-pool-name;
+  }
+
+  augment "/oc-qos:qos/oc-qos:interfaces/oc-qos:interface/oc-qos:output/oc-qos:queues/oc-qos:queue/oc-qos:state" {
+    description
+      "Adds Google specific augments to get maximum periodic queue length .";
+    uses google-queue-state-augments-top;
+  }
+
+  // rpc statements
+
+  // notification statements
+}

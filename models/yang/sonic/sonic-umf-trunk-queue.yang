@@ -1,0 +1,41 @@
+module sonic-umf-trunk-queue {
+    namespace "http://github.com/Azure/sonic-umf-trunk-queue";
+    prefix suq;
+
+    import sonic-extension {
+        prefix sonic-ext;
+    }
+
+    organization
+        "SONiC";
+
+    contact
+        "SONiC";
+
+    description
+        "SONIC UMF_TRUNK_QUEUE";
+
+    revision 2025-03-10 {
+        description
+            "Initial revision.";
+    }
+
+    container sonic-umf-trunk-queue {
+
+        container UMF_TRUNK_QUEUE {
+            list UMF_TRUNK_QUEUE_LIST {
+                key "pcname qindex";
+                description
+                  "List of trunks and the queues realized by their members";
+
+                leaf pcname {
+                    type string;
+                }
+
+                leaf qindex {
+                    type string;
+                }
+            }
+        }
+    }
+}

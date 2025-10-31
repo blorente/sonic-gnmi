@@ -1,0 +1,518 @@
+diff --git a/glog.go b/glog.go
+index 718c34f..81b5617 100644
+--- a/glog.go
++++ b/glog.go
+@@ -41,11 +41,18 @@
+ //
+ //	-logtostderr=false
+ //		Logs are written to standard error instead of to files.
++//	-logtostdout=false
++//		Logs are written to standard output instead of to files.
+ //	-alsologtostderr=false
+ //		Logs are written to standard error as well as to files.
++//	-alsologtosyslog=false
++//		Logs are written to syslog as well as to other destinations
+ //	-stderrthreshold=ERROR
+ //		Log events at or above this severity are logged to standard
+ //		error as well as to files.
++//	-syslogthreshold=ERROR
++//		Log events at or above this severity are logged to standard
++//		error as well as to files.
+ //	-log_dir=""
+ //		Log files will be written to this directory instead of the
+ //		default temporary directory.
+@@ -68,16 +75,32 @@
+ //			-vmodule=gopher*=3
+ //		sets the V level to 3 in all Go files whose names begin "gopher".
+ //
++//	-logfirstn=0
++//		This flag controls the LOG_FIRST_N functionality. Only the first N
++//		identical messages will be logged. This constraint is reset
++//		periodically and the time to reset can be controlled by a flag.
++//		If set to 0, there is no constraint on the logging.
++//	-logresettime=300s
++//		This flag resets the log count map to allow more identical messages
++//		to be logged. The default is 300 seconds. If logfirstn is set to 0,
++//		this flag has no effect.
++//  -logmapsize=10000
++//		This flag sets the maximum number of entries that can be in the 
++//		LOG_FIRST_N map.
+ package glog
+ 
+ import (
+ 	"bufio"
+ 	"bytes"
++	"container/heap"
++	"crypto/md5"
+ 	"errors"
+ 	"flag"
+ 	"fmt"
++	"hash"
+ 	"io"
+ 	stdLog "log"
++	syslog "log/syslog"
+ 	"os"
+ 	"path/filepath"
+ 	"runtime"
+@@ -92,7 +115,8 @@ import (
+ // the flag.Value interface. The -stderrthreshold flag is of type severity and
+ // should be modified only through the flag.Value interface. The values match
+ // the corresponding constants in C++.
+-type severity int32 // sync/atomic int32
++type severity int32       // sync/atomic int32
++type syslogSeverity int32 // sync/atomic int32
+ 
+ // These constants identify the log levels in order of increasing severity.
+ // A message written to a high-severity log file is also written to each
+@@ -147,7 +171,7 @@ func (s *severity) Set(value string) error {
+ 		}
+ 		threshold = severity(v)
+ 	}
+-	logging.stderrThreshold.set(threshold)
++	s.set(threshold)
+ 	return nil
+ }
+ 
+@@ -161,6 +185,25 @@ func severityByName(s string) (severity, bool) {
+ 	return 0, false
+ }
+ 
++const (
++	// emergSyslog corresponds to EMERG_LOG
++	emergSyslog syslogSeverity = iota
++	// alertSyslog corresponds to ALERT_LOG
++	alertSyslog
++	// critSyslog corresponds to CRIT_LOG
++	critSyslog
++	// errSyslog corresponds to ERR_LOG
++	errSyslog
++	// warningSyslog corresponds to WARNING_LOG
++	warningSyslog
++	// noticeSyslog corresponds to NOTICE_LOG
++	noticeSyslog
++	// infoSyslog corresponds to INFO_LOG
++	infoSyslog
++	// debugSyslog corresponds to DEBUG_LOG
++	debugSyslog
++)
++
+ // OutputStats tracks the number of output lines and bytes written.
+ type OutputStats struct {
+ 	lines int64
+@@ -388,6 +431,117 @@ func (t *traceLocation) Set(value string) error {
+ 	return nil
+ }
+ 
++// Message holds the hashed value of a log message, the number of
++// times it has been seen, the time it was last seen at, and the
++// index of the message (used in priority queue).
++type Message struct {
++	hashedMsg string
++	count     int
++	timestamp time.Time
++	index     int
++}
++
++// A PriorityQueue implements a priority queue using the heap library
++type PriorityQueue []*Message
++
++// Len returns the length of the priority queue
++func (pq PriorityQueue) Len() int {
++	return len(pq)
++}
++
++// Less is used to compare the priority of a message in the priority queue
++func (pq PriorityQueue) Less(i, j int) bool {
++	return pq[i].timestamp.Before(pq[j].timestamp)
++}
++
++// Swap swaps two items in the priority queue
++func (pq PriorityQueue) Swap(i, j int) {
++	pq[i], pq[j] = pq[j], pq[i]
++	pq[i].index = i
++	pq[j].index = j
++}
++
++// Push pushes a message onto the priority queue
++func (pq *PriorityQueue) Push(x interface{}) {
++	n := len(*pq)
++	msg := x.(*Message)
++	msg.index = n
++	*pq = append(*pq, msg)
++}
++
++// Pop removes the oldest message from the queue and returns it
++func (pq *PriorityQueue) Pop() interface{} {
++	old := *pq
++	n := len(old)
++	msg := old[n-1]
++	old[n-1] = nil // avoid memory leak
++	msg.index = -1 // for safety
++	*pq = old[0 : n-1]
++	return msg
++}
++
++// update modifies the priority of a Message in the queue.
++func (pq *PriorityQueue) update(msg *Message, count int, time time.Time) {
++	msg.timestamp = time
++	msg.count = count
++	heap.Fix(pq, msg.index)
++}
++
++// counterMap implements a map to keep count of the times a string was seen.
++// The map has a limit on the size and rotates based off that size. It also
++// uses hashed strings in order to reduce the size of the map. The map resets
++// according to the logresettime flag.
++type counterMap struct {
++	counts     map[string]*Message
++	queue      PriorityQueue
++	h          hash.Hash
++	mu         sync.Mutex
++	resetTimer time.Time
++}
++
++// Get implements get on the counterMap
++func (cmap *counterMap) Get(msg string) int {
++	cmap.mu.Lock()
++	defer cmap.mu.Unlock()
++	hashedMsg := string(cmap.h.Sum([]byte(msg)))
++	if msg, ok := cmap.counts[hashedMsg]; ok {
++		return msg.count
++	}
++	return 0
++}
++
++// Increment adds one to the counterMap for the given string.
++func (cmap *counterMap) Increment(msg string) {
++	cmap.mu.Lock()
++	defer cmap.mu.Unlock()
++
++	// Reset the counts map if logResetTime has passed
++	if cmap.resetTimer.Before(time.Now()) {
++		cmap.counts = make(map[string]*Message)
++		cmap.queue = make(PriorityQueue, 0)
++		cmap.resetTimer = time.Now().Add(logging.logResetTime)
++	}
++
++	hashedMsg := string(cmap.h.Sum([]byte(msg)))
++	if msg, ok := cmap.counts[hashedMsg]; ok {
++		cmap.queue.update(msg, msg.count+1, time.Now())
++	} else {
++		// Rotate out the oldest message if the map exceeds the size limit
++		for len(cmap.counts) >= logging.logMapSize {
++			removeMsg := heap.Pop(&cmap.queue).(*Message)
++			delete(cmap.counts, removeMsg.hashedMsg)
++		}
++		newMsg := &Message{
++			hashedMsg: hashedMsg,
++			count:     1,
++			timestamp: time.Now(),
++			index:     -1,
++		}
++		heap.Push(&cmap.queue, newMsg)
++		cmap.counts[hashedMsg] = newMsg
++	}
++}
++
+ // flushSyncWriter is the interface satisfied by logging destinations.
+ type flushSyncWriter interface {
+ 	Flush() error
+@@ -402,9 +556,21 @@ func init() {
+ 	flag.Var(&logging.stderrThreshold, "stderrthreshold", "logs at or above this threshold go to stderr")
+ 	flag.Var(&logging.vmodule, "vmodule", "comma-separated list of pattern=N settings for file-filtered logging")
+ 	flag.Var(&logging.traceLocation, "log_backtrace_at", "when logging hits line file:N, emit a stack trace")
++	flag.BoolVar(&logging.toStdout, "logtostdout", false, "log to standard output instead of files")
++	flag.BoolVar(&logging.alsoToSyslog, "alsologtosyslog", false, "log to syslog")
++	flag.Var(&logging.syslogThreshold, "syslogthreshold", "logs at or above this threshold go to syslog")
++	flag.IntVar(&logging.logFirstN, "logfirstn", 0, "controls how many identical messages will be logged")
++	flag.DurationVar(&logging.logResetTime, "logresettime", 300*time.Second, "time between resetting the log count for LOG_FIRST_N")
++	flag.IntVar(&logging.logMapSize, "logmapsize", 10000, "maximum number of entries in LOG_FIRST_N map")
+ 
+ 	// Default stderrThreshold is ERROR.
+ 	logging.stderrThreshold = errorLog
++	// Default syslogThreshold is ERROR.
++	logging.syslogThreshold = infoLog
++	logging.connectedToSyslog = false
++	// Setup Syslog
++	SetupSysLog()
++	logging.logCounts.h = md5.New()
+ 
+ 	logging.setVState(0, nil, false)
+ 	go logging.flushDaemon()
+@@ -422,9 +588,14 @@ type loggingT struct {
+ 	// compatibility. TODO: does this matter enough to fix? Seems unlikely.
+ 	toStderr     bool // The -logtostderr flag.
+ 	alsoToStderr bool // The -alsologtostderr flag.
++	alsoToSyslog bool // The -alsologtosyslog flag.
++	toStdout     bool // The -tostdout
+ 
+ 	// Level flag. Handled atomically.
+-	stderrThreshold severity // The -stderrthreshold flag.
++	stderrThreshold   severity       // The -stderrthreshold flag.
++	syslogThreshold   severity       // The -syslogthreshold flag.
++	connectedToSyslog bool           // Flag which stores syslog connection status
++	sysLogWriter      *syslog.Writer // Writer to syslog
+ 
+ 	// freeList is a list of byte buffers, maintained under freeListMu.
+ 	freeList *buffer
+@@ -453,6 +624,19 @@ type loggingT struct {
+ 	// safely using atomic.LoadInt32.
+ 	vmodule   moduleSpec // The state of the -vmodule flag.
+ 	verbosity Level      // V logging level, the value of the -v flag/
++
++	// This flag controls the LOG_FIRST_N functionality. If the logfirstn flag is set
++	// to a non-zero value, only the first logFirstN identical log messages will be
++	// logged. If set to zero, there are no constraints on the logging.
++	logFirstN int
++	// This flag sets the time interval between resetting the map for logFirstN.
++	// After logResetTime, the map will reset and new messages will be logged
++	// again.
++	logResetTime time.Duration
++	// This flag controls the maximum number of entries that logCounts can hold.
++	logMapSize int
++	// logCounts holds the count of how many times a log message was seen
++	logCounts counterMap
+ }
+ 
+ // buffer holds a byte Buffer for reuse. The zero value is ready for use.
+@@ -521,8 +705,11 @@ It returns a buffer containing the formatted header and the user's file and line
+ The depth specifies how many stack frames above lives the source line to be identified in the log message.
+ 
+ Log lines have this form:
++
+ 	Lmmdd hh:mm:ss.uuuuuu threadid file:line] msg...
++
+ where the fields are defined as follows:
++
+ 	L                A single character, representing the log level (eg 'I' for INFO)
+ 	mm               The month (zero padded; ie May is '05')
+ 	dd               The day (zero padded)
+@@ -630,7 +817,7 @@ func (buf *buffer) someDigits(i, d int) int {
+ func (l *loggingT) println(s severity, args ...interface{}) {
+ 	buf, file, line := l.header(s, 0)
+ 	fmt.Fprintln(buf, args...)
+-	l.output(s, buf, file, line, false)
++	l.output(s, buf, file, line, false, nil, args...)
+ }
+ 
+ func (l *loggingT) print(s severity, args ...interface{}) {
+@@ -643,7 +830,7 @@ func (l *loggingT) printDepth(s severity, depth int, args ...interface{}) {
+ 	if buf.Bytes()[buf.Len()-1] != '\n' {
+ 		buf.WriteByte('\n')
+ 	}
+-	l.output(s, buf, file, line, false)
++	l.output(s, buf, file, line, false, nil, args...)
+ }
+ 
+ func (l *loggingT) printf(s severity, format string, args ...interface{}) {
+@@ -652,7 +839,7 @@ func (l *loggingT) printf(s severity, format string, args ...interface{}) {
+ 	if buf.Bytes()[buf.Len()-1] != '\n' {
+ 		buf.WriteByte('\n')
+ 	}
+-	l.output(s, buf, file, line, false)
++	l.output(s, buf, file, line, false, format, args...)
+ }
+ 
+ // printWithFileLine behaves like print but uses the provided file and line number.  If
+@@ -664,11 +851,12 @@ func (l *loggingT) printWithFileLine(s severity, file string, line int, alsoToSt
+ 	if buf.Bytes()[buf.Len()-1] != '\n' {
+ 		buf.WriteByte('\n')
+ 	}
+-	l.output(s, buf, file, line, alsoToStderr)
++	l.output(s, buf, file, line, alsoToStderr, nil, args...)
+ }
+ 
+ // output writes the data to the log files and releases the buffer.
+-func (l *loggingT) output(s severity, buf *buffer, file string, line int, alsoToStderr bool) {
++func (l *loggingT) output(s severity, buf *buffer, file string,
++	line int, alsoToStderr bool, format interface{}, args ...interface{}) {
+ 	l.mu.Lock()
+ 	if l.traceLocation.isSet() {
+ 		if l.traceLocation.match(file, line) {
+@@ -676,33 +864,60 @@ func (l *loggingT) output(s severity, buf *buffer, file string, line int, alsoTo
+ 		}
+ 	}
+ 	data := buf.Bytes()
+-	if !flag.Parsed() {
+-		os.Stderr.Write([]byte("ERROR: logging before flag.Parse: "))
+-		os.Stderr.Write(data)
+-	} else if l.toStderr {
+-		os.Stderr.Write(data)
++	msg := ""
++	if format != nil {
++		msg = fmt.Sprintf(format.(string), args...)
+ 	} else {
+-		if alsoToStderr || l.alsoToStderr || s >= l.stderrThreshold.get() {
++		msg = fmt.Sprint(args...)
++	}
++	if l.logFirstN > 0 && s == infoLog {
++		l.logCounts.Increment(msg)
++	}
++	if l.logCounts.Get(msg) <= l.logFirstN {
++		if !flag.Parsed() || l.toStdout {
++			//os.Stderr.Write([]byte("ERROR: logging before flag.Parse: "))
++			//os.Stderr.Write(data)
++			os.Stdout.Write(data)
++		} else if l.toStderr {
+ 			os.Stderr.Write(data)
+-		}
+-		if l.file[s] == nil {
+-			if err := l.createFiles(s); err != nil {
+-				os.Stderr.Write(data) // Make sure the message appears somewhere.
+-				l.exit(err)
++		} else {
++			if alsoToStderr || l.alsoToStderr || s >= l.stderrThreshold.get() {
++				os.Stderr.Write(data)
++			}
++			if l.file[s] == nil {
++				if err := l.createFiles(s); err != nil {
++					os.Stderr.Write(data) // Make sure the message appears somewhere.
++					l.exit(err)
++				}
++			}
++			switch s {
++			case fatalLog:
++				l.file[fatalLog].Write(data)
++				fallthrough
++			case errorLog:
++				l.file[errorLog].Write(data)
++				fallthrough
++			case warningLog:
++				l.file[warningLog].Write(data)
++				fallthrough
++			case infoLog:
++				l.file[infoLog].Write(data)
+ 			}
+ 		}
+-		switch s {
+-		case fatalLog:
+-			l.file[fatalLog].Write(data)
+-			fallthrough
+-		case errorLog:
+-			l.file[errorLog].Write(data)
+-			fallthrough
+-		case warningLog:
+-			l.file[warningLog].Write(data)
+-			fallthrough
+-		case infoLog:
+-			l.file[infoLog].Write(data)
++	}
++	if l.alsoToSyslog && s >= l.syslogThreshold.get() {
++		if l.logCounts.Get(msg) <= l.logFirstN {
++			msg = string(data)
++			switch s {
++			case fatalLog:
++				sendToSyslog(critSyslog, msg)
++			case errorLog:
++				sendToSyslog(errSyslog, msg)
++			case warningLog:
++				sendToSyslog(warningSyslog, msg)
++			case infoLog:
++				sendToSyslog(infoSyslog, msg)
++			}
+ 		}
+ 	}
+ 	if s == fatalLog {
+@@ -716,7 +931,9 @@ func (l *loggingT) output(s severity, buf *buffer, file string, line int, alsoTo
+ 		// First, make sure we see the trace for the current goroutine on standard error.
+ 		// If -logtostderr has been specified, the loop below will do that anyway
+ 		// as the first stack in the full dump.
+-		if !l.toStderr {
++		if l.toStdout {
++			os.Stdout.Write(stacks(true))
++		} else if !l.toStderr {
+ 			os.Stderr.Write(stacks(false))
+ 		}
+ 		// Write the stack trace for all goroutines to the files.
+@@ -986,9 +1203,13 @@ type Verbose bool
+ // The returned value is a boolean of type Verbose, which implements Info, Infoln
+ // and Infof. These methods will write to the Info log if called.
+ // Thus, one may write either
++//
+ //	if glog.V(2) { glog.Info("log this") }
++//
+ // or
++//
+ //	glog.V(2).Info("log this")
++//
+ // The second form is shorter but the first is cheaper if logging is off because it does
+ // not evaluate its arguments.
+ //
+@@ -1178,3 +1399,64 @@ func Exitf(format string, args ...interface{}) {
+ 	atomic.StoreUint32(&fatalNoStacks, 1)
+ 	logging.printf(fatalLog, format, args...)
+ }
++
++func addFileLineToMessage(file string, line int, msg string) string {
++	pattern := "%s:%d %s" //file:line msg
++	return fmt.Sprintf(pattern, file, line, msg)
++}
++
++// SetupSysLog connects to local rsyslogd
++func SetupSysLog() {
++	// Connect to syslog
++	sysLogL, err := syslog.Dial("udp", "127.0.0.1:514",
++		syslog.LOG_WARNING|syslog.LOG_USER, "telemetry")
++	if err != nil {
++		os.Stderr.WriteString("Unable to connect to syslogD\n")
++	} else {
++		logging.connectedToSyslog = true
++		logging.sysLogWriter = sysLogL
++	}
++}
++
++// IsConnectedToSyslogD returns Syslog connection status
++func IsConnectedToSyslogD() bool {
++	return logging.connectedToSyslog
++}
++
++// sendToSyslog sends a syslog message
++func sendToSyslog(sev syslogSeverity, msg string) {
++	if IsConnectedToSyslogD() {
++		if sev == alertSyslog {
++			logging.sysLogWriter.Alert(msg)
++		} else if sev == critSyslog {
++			logging.sysLogWriter.Crit(msg)
++		} else if sev == debugSyslog {
++			logging.sysLogWriter.Debug(msg)
++		} else if sev == emergSyslog {
++			logging.sysLogWriter.Emerg(msg)
++		} else if sev == errSyslog {
++			logging.sysLogWriter.Err(msg)
++		} else if sev == infoSyslog {
++			logging.sysLogWriter.Info(msg)
++		} else if sev == noticeSyslog {
++			logging.sysLogWriter.Notice(msg)
++		} else if sev == warningSyslog {
++			logging.sysLogWriter.Warning(msg)
++		} else {
++			msg = fmt.Sprintf("Invalid severity: %d, Message: %s\n", sev, msg)
++			os.Stderr.WriteString(msg)
++		}
++	} else {
++		// send it to stdout instead
++		os.Stdout.WriteString(msg)
++		os.Stdout.WriteString("\n")
++	}
++}
++
++// GetLogCount returns the number of times msg was logged, regardless if it was
++// actually logged or supressed by LOG_FIRST_N.
++func GetLogCount(msg string) int {
++	logging.mu.Lock()
++	defer logging.mu.Unlock()
++	return logging.logCounts.Get(msg)
++}
+diff --git a/glog_defaults.go b/glog_defaults.go
+new file mode 100644
+index 0000000..67968c1
+--- /dev/null
++++ b/glog_defaults.go
+@@ -0,0 +1,7 @@
++// +build glog_defaults
++
++package glog
++
++func init() {
++	logging.alsoToSyslog = true
++}

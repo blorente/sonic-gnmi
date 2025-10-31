@@ -69,8 +69,8 @@ go_library(
         "//gnmi_server",
         "//gnmi_server/log",
         "//swsscommon",
+        "//translib/db",
         "@com_github_golang_glog//:glog",
-        "@sonic-mgmt-common//translib/db",
     ],
 )
 
@@ -116,8 +116,8 @@ container_image(
     tars = [
         "//testdata:testdata_tar",
         "@sonic-buildimage//:sonic-cfggen.tar",
-        "@sonic-mgmt-common//cvl:cvl_tar",
-        "@sonic-mgmt-common//models/yang:models_tar",
+        "//cvl:cvl_tar",
+        "//models/yang:models_tar",
     ],
     visibility = ["//visibility:public"],
 )

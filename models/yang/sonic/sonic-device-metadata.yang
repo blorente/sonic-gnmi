@@ -1,0 +1,114 @@
+module sonic-device-metadata {
+	yang-version 1.1;
+	namespace "http://github.com/Azure/sonic-device-metadata";
+	prefix sdm;
+
+	import ietf-yang-types {
+		prefix yang;
+	}
+
+	organization
+		"SONiC";
+
+	contact
+		"SONiC";
+
+	description
+		"SONIC DEVICE METADATA";
+
+	revision 2019-07-02 {
+		description
+			"Initial revision.";
+	}
+
+	container sonic-device-metadata {
+
+		container DEVICE_METADATA {
+
+			list DEVICE_METADATA_LIST {
+				key "name";
+				max-elements 1;
+
+				leaf name{
+					type string;
+				}
+
+				leaf vrf_name {
+					type enumeration {
+						enum default;
+					}
+					default default;
+				}
+
+				leaf hwsku {
+					type string;
+				}
+
+				leaf hostname {
+					type string;
+				}
+
+				leaf config-meta-data {
+					type string;
+				}
+
+				leaf platform {
+					type string;
+				}
+
+				leaf mac {
+					type yang:mac-address;
+				}
+
+				leaf default_pfcwd_status {
+					type enumeration {
+						enum enable;
+						enum disable;
+					}
+				}
+
+				leaf docker_routing_config_mode {
+					type enumeration {
+						enum unified;
+						enum separated;
+						enum split;
+					}
+				}
+
+				leaf deployment_id {
+					type uint8 {
+						range "0..255";
+					}
+				}
+
+				leaf type {
+					type enumeration {
+						enum ToRRouter;
+						enum LeafRouter;
+					}
+				}
+
+				leaf synchronous_mode {
+					type string;
+				}
+
+				leaf zmq_mode {
+					type string;
+				}
+
+				leaf intf_naming_mode {
+					type enumeration {
+						enum standard;
+						enum native;
+					}
+					default "native";
+				}
+
+				leaf default_config_profile {
+						type string;
+						description "Configuration profile being used as the factory default configuration";
+				}
+			}
+		}
+	}
+}

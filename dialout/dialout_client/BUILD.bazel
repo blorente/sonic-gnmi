@@ -9,6 +9,7 @@ go_library(
         "//proto/gnmi_sonic",
         "//sonic_data_client",
         "//sonic_db_config",
+        "//translib/db",
         "@com_github_golang_glog//:glog",
         "@com_github_openconfig_gnmi//proto/gnmi",
         "@com_github_openconfig_ygot//ygot",
@@ -16,7 +17,6 @@ go_library(
         "@com_github_workiva_go_datastructures//queue",
         "@org_golang_google_grpc//:grpc",
         "@org_golang_google_grpc//credentials",
-        "@sonic-mgmt-common//translib/db",
     ],
 )
 
@@ -30,13 +30,13 @@ go_test(
         "//sonic_data_client",
         "//sonic_db_config",
         "//testdata/tls",
+        "//translib/db",
         "@com_github_openconfig_gnmi//client/gnmi",
         "@com_github_openconfig_gnmi//proto/gnmi",
         "@com_github_openconfig_gnmi//value",
         "@com_github_redis_go_redis_v9//:go-redis",
         "@org_golang_google_grpc//:grpc",
         "@org_golang_google_grpc//credentials",
-        "@sonic-mgmt-common//translib/db",
     ],
 )
 

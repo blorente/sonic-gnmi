@@ -1,0 +1,372 @@
+module google-pins-system {
+  yang-version "1";
+
+  // namespace
+  namespace "http://openconfig.net/yang/google/system";
+  prefix "google-pins-system";
+
+  // import some basic types
+  import openconfig-inet-types { prefix oc-inet; }
+  import openconfig-alarm-types { prefix oc-alarm-types; }
+  import openconfig-system { prefix oc-system; }
+  import openconfig-extensions { prefix oc-ext; }
+  import openconfig-types { prefix oc-types; }
+
+  // meta
+  organization
+      "Google Openconfig Working Group";
+
+  contact
+      "openconfig-dev@google.com";
+
+  description
+    "Google Specific extensions to OpenConfig System model.";
+
+  oc-ext:openconfig-version "0.10.0";
+
+  revision 2024-03-07 {
+    description
+      "Remove uptime.";
+    reference "0.9.0";
+  }
+
+  revision 2024-01-24 {
+    description
+      "Add boot-type, warmboot-count, last-coldboot-timestamp,
+      and last-coldboot-version.";
+    reference "0.8.0";
+  }
+
+  revision 2023-10-30 {
+    description
+      "Add verification-status.";
+    reference "0.7.0";
+  }
+
+  revision 2023-10-24 {
+    description
+      "Add uptime.";
+    reference "0.6.0";
+  }
+
+  revision 2023-01-10 {
+    description
+      "Adding filesystem type leaf to mount-point state.";
+    reference "0.5.0";
+  }
+
+  revision 2022-02-10 {
+    description
+      "Adding ntp leaves reach and refid.";
+    reference "0.4.0";
+  }
+
+  revision 2021-12-06 {
+    description
+      "Adding feature labels to system model.";
+    reference "0.3.0";
+  }
+
+  revision 2021-08-03 {
+    description
+      "Adding an alarm type for alarms raised by software.";
+    reference "0.2.0";
+  }
+
+  revision 2020-09-23 {
+    description
+      "Initial version.";
+    reference "0.1.0";
+  }
+
+  // identity statements
+  identity SOFTWARE {
+    base oc-alarm-types:OPENCONFIG_ALARM_TYPE_ID;
+    description
+      "Defines alarms raised by the network operating
+      system or user space software module.";
+  }
+
+  identity FILESYSTEM_TYPE {
+    description
+      "Base identity for filesystem types.";
+  }
+
+  identity CGROUP_FS {
+    base FILESYSTEM_TYPE;
+    description
+      "cgroup filesystem type.";
+  }
+
+  identity DEBUGFS_FS {
+    base FILESYSTEM_TYPE;
+    description
+      "debugfs filesystem type.";
+  }
+
+  identity DEVPTS_FS {
+    base FILESYSTEM_TYPE;
+    description
+      "devpts filesystem type.";
+  }
+
+  identity DEVTMPFS_FS {
+    base FILESYSTEM_TYPE;
+    description
+      "devtmpfs filesystem type.";
+  }
+
+  identity EXT4_FS {
+    base FILESYSTEM_TYPE;
+    description
+      "ext4 filesystem type.";
+  }
+
+  identity PROC_FS {
+    base FILESYSTEM_TYPE;
+    description
+      "proc filesystem type.";
+  }
+
+  identity RAMFS_FS {
+    base FILESYSTEM_TYPE;
+    description
+      "ramfs filesystem type.";
+  }
+
+  identity SYSFS_FS {
+    base FILESYSTEM_TYPE;
+    description
+      "sysfs filesystem type.";
+  }
+
+  identity TMPFS_FS {
+    base FILESYSTEM_TYPE;
+    description
+      "tmpfs filesystem type.";
+  }
+
+  identity VFAT_FS {
+    base FILESYSTEM_TYPE;
+    description
+      "vfat filesystem type.";
+  }
+
+  identity OVERLAY_FS {
+    base FILESYSTEM_TYPE;
+    description
+      "overlay filesystem type.";
+  }
+
+  // grouping statements
+  grouping google-pins-system-config {
+    description
+      "Google specific system configuration.";
+
+    leaf config-meta-data {
+      type string;
+      description
+        "SMA generates a new config metadata for every new version
+        of config that is pushed to the switch. The switch stores
+        the meta data. When SMA wants to check if there is a need
+        to re-push the configuration to the switch, it does a gNMI
+        GET on the metadata from the switch and compares it with
+        the meta data for the configuration returned by the config
+        generator and if there is mismatch it initiates a new
+        config push to the switch.";
+      reference
+        "TextProto representation of ConfigVersionMeta defined
+        in config_meta.proto file:
+          message ConfigVersionMeta {
+            // The ModelSetId used to generate the config.
+            optional platforms_model.ModelSetId msid = 1;
+            // The config generator mpm version used to generate the config.
+            optional GeneratorMpmVersion generator_mpm_version = 2;
+          }";
+    }
+  }
+
+  grouping google-pins-feature-label-config {
+    description
+      "Top level grouping for feature label config.";
+
+    leaf label{
+      type uint32;
+      description
+        "feature label.";
+    }
+  }
+
+  grouping google-pins-feature-labels {
+    description
+      "Top level grouping for feature labels.";
+
+    container feature-labels {
+      description
+        "Top level container for feature labels.";
+
+      list feature-label {
+        key "label";
+        description
+          "List of feature labels.";
+
+        leaf label {
+          type leafref {
+            path "../config/label";
+          }
+          description
+            "References the feature label.";
+        }
+
+        container config {
+          description
+            "Config state data for feature label.";
+          uses google-pins-feature-label-config;
+        }
+
+        container state {
+          config false;
+          description
+            "Operational state data for feature label.";
+          uses google-pins-feature-label-config;
+        }
+      }
+    }
+  }
+
+ grouping google-pins-ntp-server-state {
+    description
+      "Operational state data for NTP servers";
+
+    leaf reach {
+      type string;
+      description
+       "A bitmap of size 8 bits in octal string indicates the status of the last
+       eight NTP messages.";
+      reference
+        "RFC 5905 - Network Time Protocol Version 4: Protocol and
+        Algorithms Specification";
+    }
+
+    leaf refid {
+      type oc-inet:host;
+      description
+        "32-bit code identifying the particular server or reference clock.";
+      reference
+        "RFC 5905 - Network Time Protocol Version 4: Protocol and
+        Algorithms Specification";
+    }
+  }
+
+  grouping google-pins-mount-point-state {
+    description
+      "Operational state data for mount-points";
+
+    leaf type {
+      type identityref {
+        base FILESYSTEM_TYPE;
+      }
+      description
+        "File System Type.";
+    }
+  }
+
+  grouping google-pins-system-state {
+    description
+    "Extensions to the global operational state data for the system";
+
+    leaf verification-status {
+      type enumeration {
+        enum NOT_OK {
+          description
+            "Verification status is not OK.";
+        }
+        enum OK {
+          description
+            "Verification status is OK.";
+        }
+      }
+      description
+        "The status of state verification on the switch.";
+    }
+
+    leaf boot-type {
+      type enumeration {
+        enum COLDBOOT {
+          description
+            "Boot-type is COLDBOOT.";
+        }
+        enum WARMBOOT {
+          description
+            "Boot-type is WARMBOOT.";
+        }
+        enum UNKNOWN {
+          description
+            "Boot-type is UNKNOWN.";
+        }
+      }
+      description
+        "The boot-type of the most recent system boot.";
+    }
+
+    leaf warmboot-count {
+      type uint32;
+      description
+        "The number of times the switch performed warm reboot consecutively.";
+    }
+
+    leaf last-coldboot-timestamp {
+      type oc-types:timeticks64;
+      units "nanoseconds";
+      description
+        "The boot time when the switch last performed a cold reboot.";
+    }
+
+    leaf last-coldboot-version {
+      type string;
+      description
+        "The image version when the switch last performed a cold reboot.";
+    }
+  }
+
+  augment "/oc-system:system" {
+    description
+      "Augments openconfig system model with google-specific feature labels.";
+
+    uses google-pins-feature-labels;
+  }
+
+  augment "/oc-system:system/oc-system:config" {
+    description
+      "Augments openconfig system model with google-specific
+      configuration parameters.";
+    uses google-pins-system-config;
+  }
+
+  augment "/oc-system:system/oc-system:state" {
+    description
+      "Augments openconfig system model with google-specific
+      telemetry parameters.";
+    uses google-pins-system-state;
+    uses google-pins-system-config;
+  }
+
+  augment "/oc-system:system/oc-system:ntp/oc-system:servers/oc-system:server/oc-system:state" {
+
+    description
+      "Augments NTP servers with reach and refid";
+
+    uses google-pins-ntp-server-state;
+  }
+
+  augment "/oc-system:system/oc-system:mount-points/oc-system:mount-point/oc-system:state" {
+
+    description
+      "Augments mount-points with type";
+
+    uses google-pins-mount-point-state;
+  }
+
+  // rpc statements
+  // notification statements
+}
