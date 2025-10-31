@@ -19,8 +19,6 @@ vendor/
 
 # Source directories
 src/
-cvl/
-translib/
 
 # SWSS common generated files
 swsscommon/swsscommon.go

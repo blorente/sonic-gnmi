@@ -1,0 +1,68 @@
+# load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
+#
+# go_test(
+#     name = "arloIssue29_test",
+#     srcs = ["arloIssue29.go"],
+#     visibility = ["//visibility:private"],
+#     deps = [
+#         "//translib/db",
+#         "//translib/tlerr",
+#         "@com_github_golang_glog//:go_default_library",
+#     ],
+# )
+#
+# go_test(
+#     name = "testdb_test",
+#     srcs = ["testdb.go"],
+#     visibility = ["//visibility:private"],
+#     deps = [
+#         "//translib/db",
+#         "//translib/tlerr",
+#         "@com_github_golang_glog//:go_default_library",
+#     ],
+# )
+#
+# go_test(
+#     name = "testmap_test",
+#     srcs = ["testmap.go"],
+#     visibility = ["//visibility:private"],
+#     deps = [
+#         "//translib/db",
+#         "//translib/tlerr",
+#         "@com_github_golang_glog//:go_default_library",
+#     ],
+# )
+#
+# go_test(
+#     name = "testsubscribe_test",
+#     srcs = ["testsubscribe.go"],
+#     visibility = ["//visibility:private"],
+#     deps = [
+#         "//translib/db",
+#         "//translib/tlerr",
+#         "@com_github_golang_glog//:go_default_library",
+#     ],
+# )
+#
+# go_library(
+#     name = "test_lib",
+#     srcs = [
+#         "arloIssue29.go",
+#         "testdb.go",
+#         "testmap.go",
+#         "testsubscribe.go",
+#     ],
+#     importpath = "github.com/Azure/sonic-mgmt-common/translib/db/test",
+#     visibility = ["//visibility:private"],
+#     deps = [
+#         "//translib/db",
+#         "//translib/tlerr",
+#         "@com_github_golang_glog//:glog",
+#     ],
+# )
+#
+# go_binary(
+#     name = "test",
+#     embed = [":test_lib"],
+#     visibility = ["//visibility:public"],
+# )
