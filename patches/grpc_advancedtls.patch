@@ -1,0 +1,24 @@
+diff --git a/security/advancedtls/go.mod b/security/advancedtls/go.mod
+index 1234567..0000000 100644
+--- a/security/advancedtls/go.mod
++++ b/security/advancedtls/go.mod
+@@ -1,18 +1 @@
+-module google.golang.org/grpc/security/advancedtls
+-
+-go 1.19
+-
+-require (
+-	github.com/google/go-cmp v0.6.0
+-	github.com/hashicorp/golang-lru v0.5.4
+-	golang.org/x/crypto v0.24.0
+-	google.golang.org/grpc v1.62.1
+-	google.golang.org/grpc/examples v0.0.0-20201112215255-90f1b3ee835b
+-	google.golang.org/protobuf v1.34.2
+-)
+-
+-replace google.golang.org/grpc => ../../
+-
+-replace google.golang.org/grpc/examples => ../../examples
+-
+-// This module is experimental.
++# This file has been emptied to allow Gazelle to treat advancedtls as part of the main grpc module

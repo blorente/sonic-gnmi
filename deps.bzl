@@ -713,10 +713,19 @@ def _ext_impl(m):
     )
     go_repository(
         name = "org_golang_google_grpc",
+        build_directives = [
+            "gazelle:proto disable",
+        ],
+        build_file_generation = "on",
         build_file_proto_mode = "disable",
         importpath = "google.golang.org/grpc",
-        sum = "h1:LKtvyfbX3UGVPFcGqJ9ItpVWW6oN/2XqTxfAnwRRXiA=",
-        version = "v1.64.1",
+        patch_args = ["-p1"],
+        patches = ["//patches:grpc_advancedtls.patch"],
+        sha256 = "3bb7c227e3a8bfffcf4be37c1d45c0c8f6b76e8620c1e62401c23c41d1c8562d",
+        strip_prefix = "grpc-go-1.64.1",
+        urls = [
+            "https://github.com/grpc/grpc-go/archive/refs/tags/v1.64.1.tar.gz",
+        ],
     )
     go_repository(
         name = "org_golang_google_grpc_cmd_protoc_gen_go_grpc",
@@ -730,12 +739,14 @@ def _ext_impl(m):
         sum = "h1:QtNVh8LWmDMgiHn8C7m+LjPcXyqQVEX30uuOGwl778A=",
         version = "v0.0.0-20230120001647-bc9728f98bdc",
     )
-    go_repository(
-        name = "org_golang_google_grpc_security_advancedtls",
-        importpath = "google.golang.org/grpc/security/advancedtls",
-        sum = "h1:/KQ7VP/1bs53/aopk9QhuPyFAp9Dm9Ejix3lzYkCrDA=",
-        version = "v1.0.0",
-    )
+    # advancedtls - Now included in main grpc repository via patch
+    # Commented out - use @org_golang_google_grpc//security/advancedtls instead
+    # go_repository(
+    #     name = "org_golang_google_grpc_security_advancedtls",
+    #     importpath = "google.golang.org/grpc/security/advancedtls",
+    #     sum = "h1:/KQ7VP/1bs53/aopk9QhuPyFAp9Dm9Ejix3lzYkCrDA=",
+    #     version = "v1.0.0",
+    # )
     go_repository(
         name = "org_golang_google_protobuf",
         build_file_proto_mode = "disable_global",  # Manually added to fix build. See https://github.com/golang/protobuf/issues/1611

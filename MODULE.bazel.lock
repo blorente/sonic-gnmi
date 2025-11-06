@@ -74,7 +74,8 @@
     "https://bcr.bazel.build/modules/nlohmann_json/3.6.1/MODULE.bazel": "6f7b417dcc794d9add9e556673ad25cb3ba835224290f4f848f8e2db1e1fca74",
     "https://bcr.bazel.build/modules/nlohmann_json/3.6.1/source.json": "f448c6e8963fdfa7eb831457df83ad63d3d6355018f6574fb017e8169deb43a9",
     "https://bcr.bazel.build/modules/package_metadata/0.0.5/MODULE.bazel": "ef4f9439e3270fdd6b9fd4dbc3d2f29d13888e44c529a1b243f7a31dfbc2e8e4",
-    "https://bcr.bazel.build/modules/package_metadata/0.0.5/source.json": "2326db2f6592578177751c3e1f74786b79382cd6008834c9d01ec865b9126a85",
+    "https://bcr.bazel.build/modules/package_metadata/0.0.6/MODULE.bazel": "341dab6f417197494517d54c8e557c0baee1de7aec83543a4fbefe57900acb7e",
+    "https://bcr.bazel.build/modules/package_metadata/0.0.6/source.json": "9581d8b22db43550ac75ecc314ee4fa0a33400bfdc77d1317d8af6b18dca7756",
     "https://bcr.bazel.build/modules/platforms/0.0.10/MODULE.bazel": "8cb8efaf200bdeb2150d93e162c40f388529a25852b332cec879373771e48ed5",
     "https://bcr.bazel.build/modules/platforms/0.0.11/MODULE.bazel": "0daefc49732e227caa8bfa834d65dc52e8cc18a2faf80df25e8caea151a9413f",
     "https://bcr.bazel.build/modules/platforms/0.0.11/source.json": "f7e188b79ebedebfe75e9e1d098b8845226c7992b307e28e1496f23112e8fc29",
@@ -202,7 +203,7 @@
   "moduleExtensions": {
     "//:deps.bzl%deps": {
       "general": {
-        "bzlTransitiveDigest": "4R2X9CFP7vN98FeM97VFdRwmHyvAdeU/BhKJ4lR351g=",
+        "bzlTransitiveDigest": "tXsRmovQbeQZA+OvPr8dNmOMGhhTY/u1Pph2Nd2DAvY=",
         "usagesDigest": "ma93qxKKdopo5lhoxRHoyxjv6GhovRbrhBI5ENq1e+4=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -1264,10 +1265,23 @@
             "bzlFile": "@@gazelle~//internal:go_repository.bzl",
             "ruleClassName": "go_repository",
             "attributes": {
+              "build_directives": [
+                "gazelle:proto disable"
+              ],
+              "build_file_generation": "on",
               "build_file_proto_mode": "disable",
               "importpath": "google.golang.org/grpc",
-              "sum": "h1:LKtvyfbX3UGVPFcGqJ9ItpVWW6oN/2XqTxfAnwRRXiA=",
-              "version": "v1.64.1"
+              "patch_args": [
+                "-p1"
+              ],
+              "patches": [
+                "@@//patches:grpc_advancedtls.patch"
+              ],
+              "sha256": "3bb7c227e3a8bfffcf4be37c1d45c0c8f6b76e8620c1e62401c23c41d1c8562d",
+              "strip_prefix": "grpc-go-1.64.1",
+              "urls": [
+                "https://github.com/grpc/grpc-go/archive/refs/tags/v1.64.1.tar.gz"
+              ]
             }
           },
           "org_golang_google_grpc_cmd_protoc_gen_go_grpc": {
@@ -1286,15 +1300,6 @@
               "importpath": "google.golang.org/grpc/examples",
               "sum": "h1:QtNVh8LWmDMgiHn8C7m+LjPcXyqQVEX30uuOGwl778A=",
               "version": "v0.0.0-20230120001647-bc9728f98bdc"
-            }
-          },
-          "org_golang_google_grpc_security_advancedtls": {
-            "bzlFile": "@@gazelle~//internal:go_repository.bzl",
-            "ruleClassName": "go_repository",
-            "attributes": {
-              "importpath": "google.golang.org/grpc/security/advancedtls",
-              "sum": "h1:/KQ7VP/1bs53/aopk9QhuPyFAp9Dm9Ejix3lzYkCrDA=",
-              "version": "v1.0.0"
             }
           },
           "org_golang_google_protobuf": {

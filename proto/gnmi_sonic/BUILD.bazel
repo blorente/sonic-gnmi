@@ -1,6 +1,6 @@
 load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@rules_go//proto:def.bzl", "go_proto_library")
-load("@rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 #gazelle:ignore
 
@@ -53,7 +53,7 @@ proto_library(
 
 go_proto_library(
     name = "gnmi_sonic_go_proto",
-    compilers = ["@rules_go//proto:go_grpc"],
+    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
     proto = ":gnmi_sonic_proto",
     deps = [
         "@com_github_openconfig_gnmi//proto/gnmi",
