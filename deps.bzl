@@ -441,6 +441,7 @@ def _ext_impl(m):
     )
     go_repository(
         name = "com_github_openconfig_gnsi",
+        build_file_proto_mode = "disable",
         importpath = "github.com/openconfig/gnsi",
         patch_args = ["-p1"],
         # This patch is working around an import issue with pathz and gnmi proto

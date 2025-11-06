@@ -1,7 +1,68 @@
+diff --git a/acctz/BUILD.bazel b/acctz/BUILD.bazel
+index 1234567..0000000 100644
+--- a/acctz/BUILD.bazel
++++ b/acctz/BUILD.bazel
+@@ -1,7 +1,7 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library")
+ load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+ load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_proto_grpc//cpp:defs.bzl", "cpp_grpc_library")
++load("@rules_proto_grpc_cpp//:defs.bzl", "cpp_grpc_library")
+ load("//:common.bzl", "use_new_compilers")
+
+ package(default_visibility = ["//visibility:public"])
+diff --git a/authz/BUILD.bazel b/authz/BUILD.bazel
+index 1234567..0000000 100644
+--- a/authz/BUILD.bazel
++++ b/authz/BUILD.bazel
+@@ -1,7 +1,7 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library")
+ load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+ load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_proto_grpc//cpp:defs.bzl", "cpp_grpc_library")
++load("@rules_proto_grpc_cpp//:defs.bzl", "cpp_grpc_library")
+ load("//:common.bzl", "use_new_compilers")
+
+ package(default_visibility = ["//visibility:public"])
+diff --git a/certz/BUILD.bazel b/certz/BUILD.bazel
+index 1234567..0000000 100644
+--- a/certz/BUILD.bazel
++++ b/certz/BUILD.bazel
+@@ -1,7 +1,7 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library")
+ load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+ load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_proto_grpc//cpp:defs.bzl", "cpp_grpc_library")
++load("@rules_proto_grpc_cpp//:defs.bzl", "cpp_grpc_library")
+ load("//:common.bzl", "use_new_compilers")
+
+ package(default_visibility = ["//visibility:public"])
+diff --git a/credentialz/BUILD.bazel b/credentialz/BUILD.bazel
+index 1234567..0000000 100644
+--- a/credentialz/BUILD.bazel
++++ b/credentialz/BUILD.bazel
+@@ -1,7 +1,7 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library")
+ load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+ load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_proto_grpc//cpp:defs.bzl", "cpp_grpc_library")
++load("@rules_proto_grpc_cpp//:defs.bzl", "cpp_grpc_library")
+ load("//:common.bzl", "use_new_compilers")
+
+ package(default_visibility = ["//visibility:public"])
 diff --git a/pathz/BUILD.bazel b/pathz/BUILD.bazel
 index 18a9561..e48ca42 100644
 --- a/pathz/BUILD.bazel
 +++ b/pathz/BUILD.bazel
+@@ -1,7 +1,7 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library")
+ load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+ load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_proto_grpc//cpp:defs.bzl", "cpp_grpc_library")
++load("@rules_proto_grpc_cpp//:defs.bzl", "cpp_grpc_library")
+ load("//:common.bzl", "use_new_compilers")
+
+ package(default_visibility = ["//visibility:public"])
 @@ -50,7 +50,10 @@ go_proto_library(
 
  go_library(
