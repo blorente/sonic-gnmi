@@ -1,0 +1,41 @@
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
+
+filegroup(
+    name = "exported_yangs",
+    srcs = glob(["src/sonic-yang-models/yang-models/*.yang"]),
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "exported_yang_templates",
+    srcs = glob(["src/sonic-yang-models/yang-templates/*.yang.j2"]),
+    visibility = ["//visibility:public"],
+)
+
+genrule(
+    name = "yang-file-export",
+    srcs = [
+        ":exported_yangs",
+        ":exported_yang_templates",
+    ],
+    outs = [
+        "sonic-yangs-export.tar",
+        "sonic-yang-templates-export.tar",
+    ],
+    cmd = "for f in $(locations :exported_yangs); do " +
+          "  tar -r -f $(@D)/sonic-yangs-export.tar -C $$(dirname $$f) `basename $$f`;" +
+          "done; " +
+          "for f in $(locations :exported_yang_templates); do " +
+          "  tar -r -f $(@D)/sonic-yang-templates-export.tar -C $$(dirname $$f) `basename $$f`;" +
+          "done;",
+    visibility = ["//visibility:public"],
+)
+
+pkg_tar(
+    name = "sonic-cfggen",
+    srcs = glob(["src/sonic-config-engine/*"]),
+    mode = "0644",
+    package_dir = "/sonic-config-engine",
+    # strip_prefix = "/testdata",
+    visibility = ["//visibility:public"],
+)

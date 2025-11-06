@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
+load("@rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
 
 go_library(
     name = "gnoi_client_lib",
@@ -13,7 +13,7 @@ go_library(
         "ocs.go",
         "qual.go",
         "system.go",
-        ],
+    ],
     importpath = "github.com/sonic-net/sonic-gnmi/gnoi_client",
     visibility = ["//visibility:private"],
     deps = [
@@ -23,6 +23,7 @@ go_library(
         "//proto/gnoi/qualification",
         "//proto/sonic_gnoi",
         "//proto/sonic_gnoi/jwt",
+        "@com_github_golang_protobuf//proto:go_default_library",
         "@com_github_google_gnxi//utils/credentials",
         "@com_github_openconfig_gnoi//diag",
         "@com_github_openconfig_gnoi//factory_reset",
@@ -34,7 +35,6 @@ go_library(
         "@org_golang_google_grpc//metadata",
         "@org_golang_google_protobuf//encoding/protojson",
         "@org_golang_google_protobuf//encoding/prototext",
-        "@com_github_golang_protobuf//proto:go_default_library",
     ],
 )
 

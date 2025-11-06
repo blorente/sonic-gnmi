@@ -1,0 +1,38 @@
+load("@rules_foreign_cc//foreign_cc:defs.bzl", "configure_make")
+
+filegroup(
+    name = "all_srcs",
+    srcs = glob(
+        include = ["**"],
+        exclude = ["*.bazel"],
+    ),
+)
+
+configure_make(
+    name = "pam",
+    configure_in_place = True,
+    configure_options = [
+        "--disable-db",
+        "--disable-selinux",
+        "--disable-nls",
+        "--disable-regenerate-docu",
+        "--disable-doc",
+        "--enable-static",
+        "--disable-shared",
+    ],
+    env = {
+        "AR": "$$AR$$",
+        "CC": "$$CC$$",
+        "CXX": "$$CXX$$",
+        "LD": "$$LD$$",
+        "CFLAGS": "$$CFLAGS$$",
+        "LDFLAGS": "$$LDFLAGS$$",
+    },
+    lib_source = ":all_srcs",
+    out_include_dir = "include/security",
+    out_static_libs = ["libpam.a"],
+    targets = [
+        "install",
+    ],
+    visibility = ["//visibility:public"],
+)

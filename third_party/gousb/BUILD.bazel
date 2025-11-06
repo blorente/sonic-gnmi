@@ -1,0 +1,26 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "gousb",
+    srcs = [
+        "config.go",
+        "constants.go",
+        "debug.go",
+        "device.go",
+        "endpoint.go",
+        "endpoint_stream.go",
+        "error.go",
+        "interface.go",
+        "libusb.go",
+        "misc.go",
+        "transfer.c",
+        "transfer.go",
+        "transfer_stream.go",
+        "usb.c",
+        "usb.go",
+    ],
+    cdeps = ["@libusb//:libusb"],
+    cgo = True,
+    importpath = "github.com/google/gousb",
+    visibility = ["//visibility:public"],
+)

@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "pam",
+    srcs = [
+        "transaction.c",
+        "transaction.go",
+    ],
+    # Link to Linux-PAM built from source
+    cdeps = ["@linux_pam//:pam"],
+    cgo = True,
+    importpath = "github.com/msteinert/pam",
+    visibility = ["//visibility:public"],
+)

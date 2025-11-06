@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("@rules_go//go:def.bzl", "go_library", "go_test")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 package(default_visibility = ["//visibility:public"])
@@ -24,9 +24,9 @@ go_library(
         "@com_github_antchfx_jsonquery//:jsonquery",
         "@com_github_antchfx_xmlquery//:xmlquery",
         "@com_github_antchfx_xpath//:xpath",
-        "@com_github_redis_go_redis_v9//:go-redis",
         "@com_github_google_go_cmp//cmp",
         "@com_github_philopon_go_toposort//:go-toposort",
+        "@com_github_redis_go_redis_v9//:go-redis",
     ],
 )
 

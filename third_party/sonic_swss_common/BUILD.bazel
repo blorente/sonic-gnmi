@@ -1,0 +1,65 @@
+filegroup(
+    name = "all_srcs",
+    srcs = glob(
+        ["common/*.cpp"],
+        exclude = [
+            "common/loglevel.cpp",
+            "common/loglevel_util.cpp",
+        ],
+    ),
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "all_hdrs",
+    srcs = glob([
+        "common/*.h",
+        "common/*.hpp",
+    ]),
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "all_luas",
+    srcs = glob(["common/*.lua"]),
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "swig_template",
+    srcs = ["pyext/swsscommon.i"],
+    visibility = ["//visibility:public"],
+)
+
+# cc_shared_library(
+#     name = "swsscommon_shared",
+#     shared_lib_name = "libswsscommon.so",
+#     deps = [
+#         ":swsscommon_base",
+#     ],
+#     visibility = ["//visibility:public"],
+# )
+cc_library(
+    name = "swsscommon_base",
+    srcs = [
+        ":all_srcs",
+    ],
+    hdrs = [":all_hdrs"],
+    # include_prefix = "swss",
+    # strip_include_prefix = "common",
+    copts = [
+        "-std=c++14",
+        "-I/usr/include/libnl3",  # Expected location in the SONiC build container"
+    ],
+    includes = [
+        "sonic-swss-common",
+        "sonic-swss-common/common",
+    ],
+    linkopts = ["-lpthread -lhiredis -lnl-genl-3 -lnl-nf-3 -lnl-route-3 -lnl-3 -lzmq -lboost_serialization -luuid"],
+    visibility = ["//visibility:public"],
+    # implementation_deps = ["@com_github_cesnet_libyang//:libyang"],
+    deps = [
+        "@com_github_cesnet_libyang//:libyang",
+        "@com_github_nlohmann_json//:json",
+    ],
+)

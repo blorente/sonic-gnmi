@@ -34,3 +34,6 @@ bazel-testlogs
 
 # Editor Temp Files
 *.swp
+
+#IDE folders
+.idea

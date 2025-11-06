@@ -1,0 +1,36 @@
+load("@rules_foreign_cc//foreign_cc:defs.bzl", "cmake")
+
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "all_srcs",
+    srcs = glob(["**"]),
+    visibility = ["//visibility:public"],
+)
+
+cmake(
+    name = "libyang",
+    cache_entries = {},
+    data = ["@pcre_archive//:pcre_shared"],
+    lib_source = ":all_srcs",
+    out_data_dirs = [
+        "lib/libyang1/extensions/",
+        "lib/libyang1/user_types/",
+    ],
+    # Using shared libs here.  When using static libs the libyang.a archive
+    # contains undefined references to "extension" libraries which libyang
+    # builds but does not install.  This results in linker errors later on
+    # complaining that libyang.a does not define: nacm, metadata, yangdata,
+    # user_yang_types, and user_inet_types.  These are all defined in .a
+    # archives but are abandond in the libyang build directory when the
+    # ENABLE_STATIC option is used.
+    out_shared_libs = [
+        "libyang.so",
+        "libyang.so.1",
+        "libyang.so.1.10.17",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@pcre_archive//:pcre_shared",
+    ],
+)

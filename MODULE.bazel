@@ -1,0 +1,185 @@
+###############################################################################
+# Bazel now uses Bzlmod by default to manage external dependencies.
+# Please consider migrating your external dependencies from WORKSPACE to MODULE.bazel.
+#
+# For more details, please check https://github.com/bazelbuild/bazel/issues/18958
+###############################################################################
+module(
+    name = "gnmi",
+    version = "0.0.0",
+)
+
+# Hermetic C/C++ toolchain for reproducible builds
+bazel_dep(name = "hermetic_cc_toolchain", version = "3.1.0")
+
+# Rules for building foreign (non-Bazel) projects like CMake
+bazel_dep(name = "rules_foreign_cc", version = "0.12.0")
+
+# Platform rules for target configuration
+bazel_dep(name = "platforms", version = "0.0.11")
+bazel_dep(name = "rules_go", version = "0.50.1")
+bazel_dep(name = "rules_pkg", version = "1.1.0")
+bazel_dep(name = "gazelle", version = "0.46.0")
+bazel_dep(name = "protobuf", version = "33.0")
+bazel_dep(name = "rules_proto", version = "7.1.0")
+bazel_dep(name = "googleapis", version = "0.0.0-20251104-53af3b72")
+bazel_dep(name = "googleapis-go", version = "1.0.0")
+
+go_sdk = use_extension("@rules_go//go:extensions.bzl", "go_sdk")
+go_sdk.download(version = "1.21.5")
+
+legacy = use_extension("//:deps.bzl", "deps")
+use_repo(
+    legacy,
+    "com_github_antchfx_jsonquery",
+    "com_github_antchfx_xmlquery",
+    "com_github_antchfx_xpath",
+    "com_github_c9s_goprocinfo",
+    "com_github_dgrijalva_jwt_go",
+    "com_github_godbus_dbus_v5",
+    "com_github_gogo_protobuf",
+    "com_github_golang_glog",
+    "com_github_golang_groupcache",
+    "com_github_golang_protobuf",
+    "com_github_google_go_cmp",
+    "com_github_google_go_tpm",
+    "com_github_grpc_ecosystem_go_grpc_middleware_v2",
+    "com_github_hashicorp_golang_lru",
+    "com_github_kylelemons_godebug",
+    "com_github_maruel_natural",
+    "com_github_nxadm_tail",
+    "com_github_openconfig_gnmi",
+    "com_github_openconfig_gnoi",
+    "com_github_openconfig_gnsi",
+    "com_github_openconfig_goyang",
+    "com_github_openconfig_ygot",
+    "com_github_philopon_go_toposort",
+    "com_github_pkg_errors",
+    "com_github_redis_go_redis_v9",
+    "com_github_tredoe_osutil",
+    "com_github_workiva_go_datastructures",
+    "in_gopkg_yaml_v2",
+    "org_golang_google_genproto_googleapis_rpc",
+    "org_golang_google_grpc",
+    "org_golang_google_grpc_security_advancedtls",
+    "org_golang_google_protobuf",
+    "org_golang_x_crypto",
+    "org_golang_x_net",
+    "org_golang_x_text",
+)
+
+bazel_dep(name = "rules_python", version = "1.6.3")
+
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(
+    python_version = "3.9",
+)
+
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+pip.parse(
+    hub_name = "pip",
+    python_version = "3.9",
+    requirements_lock = "//third_party/pip:requirements.txt",
+)
+use_repo(pip, "pip")
+
+# HTTP archive for fetching libyang
+bazel_dep(name = "bazel_skylib", version = "1.7.1")
+
+# Register the hermetic toolchain
+register_toolchains("@hermetic_cc_toolchain//toolchain:all")
+
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "pcre_archive",
+    build_file = "//third_party/pcre:BUILD.bazel",
+    sha256 = "4dae6fdcd2bb0bb6c37b5f97c33c2be954da743985369cddac3546e3218bffb8",
+    urls = [
+        "https://sourceforge.net/projects/pcre/files/pcre/8.45/pcre-8.45.tar.bz2",
+    ],
+)
+
+http_archive(
+    name = "com_github_cesnet_libyang",
+    build_file = "//third_party/libyang:BUILD.bazel",
+    patch_args = ["-p1"],
+    patches = [
+        #"//patches:libyang-repo.patch",
+        "//patches:libyang.patch",
+    ],
+    sha256 = "1b736443d2c69b5d7a71ac412655e6edab0647b18f35f7bf504b0a24e06cb046",
+    strip_prefix = "libyang-1.0.225",
+    urls = [
+        "https://github.com/CESNET/libyang/archive/refs/tags/v1.0.225.tar.gz",
+    ],
+)
+
+http_archive(
+    name = "libusb",
+    build_file = "//third_party/libusb:BUILD.bazel",
+    sha256 = "ffaa41d741a8a3bee244ac8e54a72ea05bf2879663c098c82fc5757853441575",
+    strip_prefix = "libusb-1.0.27",
+    urls = [
+        "https://github.com/libusb/libusb/releases/download/v1.0.27/libusb-1.0.27.tar.bz2",
+    ],
+)
+
+http_archive(
+    name = "linux_pam",
+    build_file = "//third_party/pam:BUILD.bazel",
+    sha256 = "7ac4b50feee004a9fa88f1dfd2d2fa738a82896763050cd773b3c54b0a818283",
+    strip_prefix = "Linux-PAM-1.5.3",
+    urls = [
+        "https://github.com/linux-pam/linux-pam/releases/download/v1.5.3/Linux-PAM-1.5.3.tar.xz",
+    ],
+)
+
+# gousb (with custom BUILD to link libusb)
+http_archive(
+    name = "com_github_google_gousb",
+    build_file = "//third_party/gousb:BUILD.bazel",
+    sha256 = "c50544ad2bd81a431ff26f3df6cfdd93042e8a70effc808c63a43a0a8c07ea68",
+    strip_prefix = "gousb-1.1.3",
+    urls = [
+        "https://github.com/google/gousb/archive/refs/tags/v1.1.3.tar.gz",
+    ],
+)
+
+# msteinert/pam (with custom BUILD to link PAM library)
+http_archive(
+    name = "com_github_msteinert_pam",
+    build_file = "//third_party/pam:BUILD.bazel",
+    sha256 = "7533c93ad659e16c3abd8b2cf807a61b035fd282f1c10a039bcd1aad837f4228",
+    strip_prefix = "pam-1.2.0",
+    urls = [
+        "https://github.com/msteinert/pam/archive/refs/tags/v1.2.0.tar.gz",
+    ],
+)
+
+git_repository = use_repo_rule(
+    "@bazel_tools//tools/build_defs/repo:git.bzl",
+    "git_repository",
+)
+
+git_repository(
+    name = "sonic-swss-common",
+    build_file = "//third_party/sonic_swss_common:BUILD.bazel",
+    commit = "7a25b0754f8f29d179c45fd3df48ceb96d2bc849",
+    remote = "https://github.com/sonic-net/sonic-swss-common",
+)
+
+git_repository(
+    name = "sonic-buildimage",
+    branch = "master",
+    build_file = "//third_party/sonic_build_image:BUILD.bazel",
+    remote = "https://github.com/sonic-net/sonic-buildimage",
+)
+
+git_repository(
+    name = "com_github_nlohmann_json",
+    # Current tip of "develop" branch as of Nov-2023.  Using this commit since
+    # the last release is quite old and does not contain bazel support.
+    commit = "6eab7a2b187b10b2494e39c1961750bfd1bda500",
+    remote = "https://github.com/nlohmann/json",
+)

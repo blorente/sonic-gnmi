@@ -1,5 +1,5 @@
-load("@io_bazel_rules_docker//container:container.bzl", "container_bundle", "container_image")
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test", "nogo")
+# load("@io_bazel_rules_docker//container:container.bzl", "container_bundle", "container_image")
+load("@rules_go//go:def.bzl", "go_binary", "go_library", "go_test", "nogo")
 load("@rules_pkg//:pkg.bzl", "pkg_deb", "pkg_tar")
 
 #No working tests in telemetry_test
@@ -84,68 +84,68 @@ go_binary(
     visibility = ["//visibility:public"],
 )
 
-container_image(
-    name = "telemetry_image",
-    base = "@telemetry_image//image",
-    entrypoint = ["/entrypoint-prod.sh"],
-    files = [
-        ":telemetry",
-        "//tools/docker:entrypoint-prod.sh",
-        "//tools/docker:supervisord.conf",
-        "//tools/docker:telemetry.sh",
-        "//tools/docker:database_config.json",
-        "@sonic-buildimage//:dockers/docker-base-bullseye/etc/rsyslog.conf",
-        "@sonic-buildimage//:dockers/docker-base-bullseye/etc/rsyslog.d/supervisor.conf",
-        "@sonic-buildimage//:dockers/docker-sonic-gnmi/critical_processes",
-        "@sonic-buildimage//:files/scripts/supervisor-proc-exit-listener",
-        "@sonic-buildimage//:dockers/docker-sonic-gnmi/start.sh",
-        # "@sonic-buildimage//:dockers/docker-sonic-gnmi/supervisord.conf",
-        # "@sonic-buildimage//:dockers/docker-sonic-gnmi/telemetry.sh",
-        "@sonic-buildimage//:dockers/docker-sonic-gnmi/telemetry_vars.j2",
-        # Uncomnent after solving the issue with local libyang compilation.
-        #"@com_github_cesnet_libyang//:libyang",
-    ],
-    symlinks = {
-        # Uncomnent after solving the issue with local libyang compilation.
-        #"/lib/x86_64-linux-gnu/libyang.so": "/libyang.so",
-        #"/lib/x86_64-linux-gnu/libyang.so.1": "/libyang.so.1",
-        "/usr/share/sonic/hwsku/qos_queue_map.json": "/testdata/qos_queue_map.json",
-        "/usr/share/sonic/hwsku/platform.json": "/testdata/platform.json",
-        "/etc/ntp.conf": "/testdata/ntp.conf",
-    },
-    tars = [
-        "//testdata:testdata_tar",
-        "@sonic-buildimage//:sonic-cfggen.tar",
-        "//cvl:cvl_tar",
-        "//models/yang:models_tar",
-    ],
-    visibility = ["//visibility:public"],
-)
+# container_image(
+#     name = "telemetry_image",
+#     base = "@telemetry_image//image",
+#     entrypoint = ["/entrypoint-prod.sh"],
+#     files = [
+#         ":telemetry",
+#         "//tools/docker:entrypoint-prod.sh",
+#         "//tools/docker:supervisord.conf",
+#         "//tools/docker:telemetry.sh",
+#         "//tools/docker:database_config.json",
+#         "@sonic-buildimage//:dockers/docker-base-bullseye/etc/rsyslog.conf",
+#         "@sonic-buildimage//:dockers/docker-base-bullseye/etc/rsyslog.d/supervisor.conf",
+#         "@sonic-buildimage//:dockers/docker-sonic-gnmi/critical_processes",
+#         "@sonic-buildimage//:files/scripts/supervisor-proc-exit-listener",
+#         "@sonic-buildimage//:dockers/docker-sonic-gnmi/start.sh",
+#         # "@sonic-buildimage//:dockers/docker-sonic-gnmi/supervisord.conf",
+#         # "@sonic-buildimage//:dockers/docker-sonic-gnmi/telemetry.sh",
+#         "@sonic-buildimage//:dockers/docker-sonic-gnmi/telemetry_vars.j2",
+#         # Uncomnent after solving the issue with local libyang compilation.
+#         #"@com_github_cesnet_libyang//:libyang",
+#     ],
+#     symlinks = {
+#         # Uncomnent after solving the issue with local libyang compilation.
+#         #"/lib/x86_64-linux-gnu/libyang.so": "/libyang.so",
+#         #"/lib/x86_64-linux-gnu/libyang.so.1": "/libyang.so.1",
+#         "/usr/share/sonic/hwsku/qos_queue_map.json": "/testdata/qos_queue_map.json",
+#         "/usr/share/sonic/hwsku/platform.json": "/testdata/platform.json",
+#         "/etc/ntp.conf": "/testdata/ntp.conf",
+#     },
+#     tars = [
+#         "//testdata:testdata_tar",
+#         "@sonic-buildimage//:sonic-cfggen.tar",
+#         "//cvl:cvl_tar",
+#         "//models/yang:models_tar",
+#     ],
+#     visibility = ["//visibility:public"],
+# )
 
-container_bundle(
-    name = "telemetry_bundle",
-    images = {
-        "bazel/telemetry_image:latest": ":telemetry_image",
-    },
-)
-
-container_image(
-    name = "host_image",
-    base = "@host_image//image",
-    entrypoint = ["/entrypoint-host.sh"],
-    files = [
-        ":telemetry_bundle.tar",
-        "//tools/docker:entrypoint-host.sh",
-        "//tools/docker:rsyslog.host",
-    ],
-    symlinks = {
-        "/etc/ntp.conf": "/testdata/ntp.conf",
-    },
-    tars = [
-        "//testdata:testdata_tar",
-    ],
-    visibility = ["//visibility:public"],
-)
+# container_bundle(
+#     name = "telemetry_bundle",
+#     images = {
+#         "bazel/telemetry_image:latest": ":telemetry_image",
+#     },
+# )
+#
+# container_image(
+#     name = "host_image",
+#     base = "@host_image//image",
+#     entrypoint = ["/entrypoint-host.sh"],
+#     files = [
+#         ":telemetry_bundle.tar",
+#         "//tools/docker:entrypoint-host.sh",
+#         "//tools/docker:rsyslog.host",
+#     ],
+#     symlinks = {
+#         "/etc/ntp.conf": "/testdata/ntp.conf",
+#     },
+#     tars = [
+#         "//testdata:testdata_tar",
+#     ],
+#     visibility = ["//visibility:public"],
+# )
 
 pkg_tar(
     name = "telemetry-bin",

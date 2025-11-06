@@ -1,6 +1,6 @@
-load("@bazel_gazelle//:deps.bzl", "go_repository")
+load("@gazelle//:deps.bzl", "go_repository")
 
-def go_dependencies():
+def _ext_impl(m):
     go_repository(
         name = "build_buf_gen_go_bufbuild_protovalidate_protocolbuffers_go",
         importpath = "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go",
@@ -280,14 +280,15 @@ def go_dependencies():
         sum = "h1:xRy4A+RhZaiKjJ1bPfwQ8sedCA+YS2YcCHW6ec7JMi0=",
         version = "v1.2.0",
     )
-    go_repository(
-        name = "com_github_google_gousb",
-        importpath = "github.com/google/gousb",
-        patch_args = ["-p1"],
-        patches = ["//patches:github.com-google-gousb.patch"],
-        sum = "h1:xt6M5TDsGSZ+rlomz5Si5Hmd/Fvbmo2YCJHN+yGaK4o=",
-        version = "v1.1.3",
-    )
+
+    #     go_repository(
+    #         name = "com_github_google_gousb",
+    #         importpath = "github.com/google/gousb",
+    #         patch_args = ["-p1"],
+    #         patches = ["//patches:github.com-google-gousb.patch"],
+    #         sum = "h1:xt6M5TDsGSZ+rlomz5Si5Hmd/Fvbmo2YCJHN+yGaK4o=",
+    #         version = "v1.1.3",
+    #     )
     go_repository(
         name = "com_github_google_pprof",
         importpath = "github.com/google/pprof",
@@ -397,12 +398,13 @@ def go_dependencies():
         sum = "h1:TLuKupo69TCn6TQSyGxwI1EblZZEsQ0vMlAFQflz0v0=",
         version = "v1.0.1",
     )
-    go_repository(
-        name = "com_github_msteinert_pam",
-        importpath = "github.com/msteinert/pam",
-        sum = "h1:ZivaaKmjs9q90zi6I4gTLW6tbVGtlBjellr3hMYaly0=",
-        version = "v0.0.0-20190215180659-f29b9f28d6f9",
-    )
+
+    #     go_repository(
+    #         name = "com_github_msteinert_pam",
+    #         importpath = "github.com/msteinert/pam",
+    #         sum = "h1:ZivaaKmjs9q90zi6I4gTLW6tbVGtlBjellr3hMYaly0=",
+    #         version = "v0.0.0-20190215180659-f29b9f28d6f9",
+    #     )
     go_repository(
         name = "com_github_nxadm_tail",
         importpath = "github.com/nxadm/tail",
@@ -813,3 +815,5 @@ def go_dependencies():
         sum = "h1:go1bK/D/BFZV2I8cIQd1NKEZ+0owSTG1fDTci4IqFcE=",
         version = "v0.0.0-20200804184101-5ec99f83aff1",
     )
+
+deps = module_extension(implementation = _ext_impl)

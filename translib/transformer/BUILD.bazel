@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("@rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "transformer",
@@ -12,8 +12,8 @@ go_library(
         "xconst.go",
         "xfmr_dbtbl_cbk_interface.go",
         "xfmr_interface.go",
-        "xfmr_intf_unnumbered.go",
         "xfmr_intf.go",
+        "xfmr_intf_unnumbered.go",
         "xfmr_lacp.go",
         "xfmr_optical_sw.go",
         "xfmr_path_utils.go",
@@ -79,24 +79,24 @@ go_test(
         "transformer_test.go",
         "utils_test.go",
         "xfmr_intf_test.go",
+        "xfmr_optical_sw_test.go",
         "xfmr_platform_test.go",
         "xfmr_port_breakout_test.go",
         "xfmr_qos_test.go",
         "xfmr_sflow_test.go",
         "xfmr_system_test.go",
-        "xfmr_optical_sw_test.go",
     ],
     data = glob(["testdata/**"]),
     embed = [":transformer"],
     visibility = ["//visibility:public"],
     deps = [
-        "@com_github_google_go_cmp//cmp",
-        "@com_github_google_go_cmp//cmp/cmpopts",
         "//translib",
         "//translib/db",
         "//translib/ocbinds",
-        "@com_github_redis_go_redis_v9//:go-redis",
+        "@com_github_google_go_cmp//cmp",
+        "@com_github_google_go_cmp//cmp/cmpopts",
         "@com_github_openconfig_ygot//ytypes",
+        "@com_github_redis_go_redis_v9//:go-redis",
     ],
 )
 
