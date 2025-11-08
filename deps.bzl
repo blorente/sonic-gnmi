@@ -399,12 +399,14 @@ def _ext_impl(m):
         version = "v1.0.1",
     )
 
-    #     go_repository(
-    #         name = "com_github_msteinert_pam",
-    #         importpath = "github.com/msteinert/pam",
-    #         sum = "h1:ZivaaKmjs9q90zi6I4gTLW6tbVGtlBjellr3hMYaly0=",
-    #         version = "v0.0.0-20190215180659-f29b9f28d6f9",
-    #     )
+    go_repository(
+        name = "com_github_msteinert_pam",
+        importpath = "github.com/msteinert/pam",
+        patch_args = ["-p1"],
+        patches = ["//patches:github.com-msteinert-pam.patch"],
+        sum = "h1:ZivaaKmjs9q90zi6I4gTLW6tbVGtlBjellr3hMYaly0=",
+        version = "v0.0.0-20190215180659-f29b9f28d6f9",
+    )
     go_repository(
         name = "com_github_nxadm_tail",
         importpath = "github.com/nxadm/tail",
@@ -722,7 +724,7 @@ def _ext_impl(m):
         importpath = "google.golang.org/grpc",
         patch_args = ["-p1"],
         patches = ["//patches:grpc_advancedtls.patch"],
-        sha256 = "3bb7c227e3a8bfffcf4be37c1d45c0c8f6b76e8620c1e62401c23c41d1c8562d",
+        sha256 = "bf577a99fabadfc60df58882719c6e545891ecbca93d1a2261d6ad073e5f187e",
         strip_prefix = "grpc-go-1.64.1",
         urls = [
             "https://github.com/grpc/grpc-go/archive/refs/tags/v1.64.1.tar.gz",

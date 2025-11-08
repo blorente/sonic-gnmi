@@ -10,7 +10,6 @@ filegroup(
 
 configure_make(
     name = "pam",
-    configure_in_place = True,
     configure_options = [
         "--disable-db",
         "--disable-selinux",
@@ -20,15 +19,7 @@ configure_make(
         "--enable-static",
         "--disable-shared",
     ],
-    env = {
-        "AR": "$$AR$$",
-        "CC": "$$CC$$",
-        "CXX": "$$CXX$$",
-        "LD": "$$LD$$",
-        "CFLAGS": "$$CFLAGS$$",
-        "LDFLAGS": "$$LDFLAGS$$",
-    },
-    lib_source = ":all_srcs",
+    lib_source = "@linux_pam//:all",
     out_include_dir = "include/security",
     out_static_libs = ["libpam.a"],
     targets = [

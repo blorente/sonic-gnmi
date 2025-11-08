@@ -1,0 +1,11 @@
+diff --git a/BUILD.bazel b/BUILD.bazel
+index 1234567..0000000 100644
+--- a/BUILD.bazel
++++ b/BUILD.bazel
+@@ -9,5 +9,6 @@ go_library(
+     cgo = True,
+     clinkopts = ["-lpam"],
+     copts = ["-Wall -std=c99"],
+     importpath = "github.com/msteinert/pam",
+     visibility = ["//visibility:public"],
++    tags = ["requires-network"],

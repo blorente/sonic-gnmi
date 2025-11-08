@@ -6,7 +6,7 @@ proto_library(
     name = "burnin_proto",
     srcs = ["burnin.proto"],
     visibility = ["//visibility:public"],
-    deps = ["@protobuf//:any_proto"],
+    deps = ["@com_google_protobuf//:any_proto"],
 )
 
 go_proto_library(
