@@ -401,9 +401,37 @@ def _ext_impl(m):
 
     go_repository(
         name = "com_github_msteinert_pam",
+        build_file_generation = "off",
         importpath = "github.com/msteinert/pam",
-        patch_args = ["-p1"],
-        patches = ["//patches:github.com-msteinert-pam.patch"],
+        patch_cmds = [
+            """cat > BUILD.bazel << 'EOF'
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "pam",
+    srcs = [
+        "callback.go",
+        "transaction.c",
+        "transaction.go",
+    ],
+    cgo = True,
+    cdeps = [
+        "@//:third_party_pam",
+    ],
+    copts = ["-Wall", "-std=c99"],
+    clinkopts = ["-ldl"],
+    importpath = "github.com/msteinert/pam",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":pam",
+    visibility = ["//visibility:public"],
+)
+EOF
+""",
+        ],
         sum = "h1:ZivaaKmjs9q90zi6I4gTLW6tbVGtlBjellr3hMYaly0=",
         version = "v0.0.0-20190215180659-f29b9f28d6f9",
     )

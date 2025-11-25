@@ -1,5 +1,7 @@
-load("@bazel_gazelle//:def.bzl", "gazelle")
-load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
+load("@gazelle//:def.bzl", "gazelle")
+
+# TODO: Add buildtools to MODULE.bazel bazel_dep
+# load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
 
 # gazelle:prefix github.com/sonic-net/sonic-gnmi
 # gazelle:exclude patches
@@ -40,9 +42,10 @@ gazelle(
     command = "update-repos",
 )
 
-buildifier(
-    name = "buildifier",
-)
+# TODO: Add buildtools to MODULE.bazel bazel_dep
+# buildifier(
+#     name = "buildifier",
+# )
 
 # Use this to generate a text file with a tree diagram of all YANG models
 # used by UMF.
@@ -61,4 +64,11 @@ alias(
 alias(
     name = "gnmi_server_debug_image",
     actual = "//gnmi_server:gnmi_server_debug_image",
+)
+
+# Alias for hermetic PAM library (used by external repositories)
+alias(
+    name = "third_party_pam",
+    actual = "//third_party/pam:pam",
+    visibility = ["//visibility:public"],
 )

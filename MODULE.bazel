@@ -134,6 +134,8 @@ http_archive(
 http_archive(
     name = "linux_pam",
     build_file = "//third_party/pam:linux_pam.BUILD",
+    patch_args = ["-p1"],
+    patches = ["//patches:linux_pam_opasswd.patch"],
     sha256 = "7ac4b50feee004a9fa88f1dfd2d2fa738a82896763050cd773b3c54b0a818283",
     strip_prefix = "Linux-PAM-1.5.3",
     urls = [

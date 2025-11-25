@@ -20,10 +20,16 @@ configure_make(
         "--disable-shared",
     ],
     lib_source = "@linux_pam//:all",
-    out_include_dir = "include/security",
+    out_include_dir = "include",
     out_static_libs = ["libpam.a"],
+    # Post-install step to move headers to security/ subdirectory for CGo to find them
+    postfix_script = """
+        mkdir -p $INSTALLDIR/include/security
+        mv $INSTALLDIR/include/*.h $INSTALLDIR/include/security/ 2>/dev/null || true
+    """,
+    # Only build and install libpam (library + headers), not the modules (which require libcrypt)
     targets = [
-        "install",
+        "-C libpam install",
     ],
     visibility = ["//visibility:public"],
 )

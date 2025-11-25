@@ -247,7 +247,7 @@
   "moduleExtensions": {
     "//:deps.bzl%deps": {
       "general": {
-        "bzlTransitiveDigest": "DKM5xQjTku5m04WG9ALmOSiVHJgTdCDt2htjH6e9cr8=",
+        "bzlTransitiveDigest": "DfgxHMjMxkgrKpWZmlDLhkWIet1YAgrxIl5ulpz88x0=",
         "usagesDigest": "ma93qxKKdopo5lhoxRHoyxjv6GhovRbrhBI5ENq1e+4=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -850,12 +850,10 @@
             "bzlFile": "@@gazelle~//internal:go_repository.bzl",
             "ruleClassName": "go_repository",
             "attributes": {
+              "build_file_generation": "off",
               "importpath": "github.com/msteinert/pam",
-              "patch_args": [
-                "-p1"
-              ],
-              "patches": [
-                "@@//patches:github.com-msteinert-pam.patch"
+              "patch_cmds": [
+                "cat > BUILD.bazel << 'EOF'\nload(\"@io_bazel_rules_go//go:def.bzl\", \"go_library\")\n\ngo_library(\n    name = \"pam\",\n    srcs = [\n        \"callback.go\",\n        \"transaction.c\",\n        \"transaction.go\",\n    ],\n    cgo = True,\n    cdeps = [\n        \"@//:third_party_pam\",\n    ],\n    copts = [\"-Wall\", \"-std=c99\"],\n    clinkopts = [\"-ldl\"],\n    importpath = \"github.com/msteinert/pam\",\n    visibility = [\"//visibility:public\"],\n)\n\nalias(\n    name = \"go_default_library\",\n    actual = \":pam\",\n    visibility = [\"//visibility:public\"],\n)\nEOF\n"
               ],
               "sum": "h1:ZivaaKmjs9q90zi6I4gTLW6tbVGtlBjellr3hMYaly0=",
               "version": "v0.0.0-20190215180659-f29b9f28d6f9"
