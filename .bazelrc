@@ -75,6 +75,10 @@ build:remote --experimental_cc_shared_library
 
 build --cxxopt=-std=c++17 --host_cxxopt=-std=c++17
 
+# Use system C/C++ toolchain for non-hermetic dependencies (sonic-swss-common, gousb, etc.)
+# This is needed when building outside the SONiC Docker container which has libnl3, libusb, etc.
+build --noincompatible_enable_cc_toolchain_resolution
+
 build:asan --strip=never
 build:asan --copt -fsanitize=address -fsanitize=leak
 build:asan --copt -DADDRESS_SANITIZER

@@ -46,7 +46,7 @@ go_library(
         ":swsscommon_go_cpp",
     ],
     cgo = True,  #keep
-    cppopts = ["-Iexternal/sonic-swss-common/common"],  #keep
+    # cppopts removed - includes are propagated from swsscommon_base cdeps
     importpath = "github.com/sonic-net/sonic-gnmi/swsscommon",
     visibility = ["//visibility:public"],
 )
@@ -57,7 +57,7 @@ cc_library(
         "swsscommon_wrap.cxx",
     ],
     hdrs = ["swsscommon_wrap.h"],
-    copts = ["-Iexternal/sonic-swss-common/common"],
+    # copts removed - includes are propagated from swsscommon_base dependency
     deps = [
         "@com_github_cesnet_libyang//:libyang",
         "@sonic-swss-common//:swsscommon_base",
