@@ -113,6 +113,7 @@ http_archive(
     patches = [
         #"//patches:libyang-repo.patch",
         "//patches:libyang.patch",
+        "//patches:libyang_pcre_cache.patch",
     ],
     sha256 = "1b736443d2c69b5d7a71ac412655e6edab0647b18f35f7bf504b0a24e06cb046",
     strip_prefix = "libyang-1.0.225",

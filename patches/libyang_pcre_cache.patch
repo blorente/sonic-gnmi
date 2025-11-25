@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -238,7 +238,8 @@ find_package(Threads REQUIRED)
+ target_link_libraries(yang ${CMAKE_THREAD_LIBS_INIT})
+
+ # find PCRE library
+-unset(PCRE_LIBRARY CACHE)
++# Removed unset() to allow pre-set PCRE_LIBRARY cache variable from Bazel build
++# unset(PCRE_LIBRARY CACHE)
+ find_package(PCRE REQUIRED)
+ include_directories(${PCRE_INCLUDE_DIRS})
+ target_link_libraries(yang ${PCRE_LIBRARIES})

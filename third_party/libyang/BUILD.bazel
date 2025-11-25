@@ -11,11 +11,11 @@ filegroup(
 cmake(
     name = "libyang",
     cache_entries = {
-        "PCRE_LIBRARY": "$$EXT_BUILD_DEPS$$/lib/libpcre.so",
-        "PCRE_INCLUDE_DIR": "$$EXT_BUILD_DEPS$$/include",
-        "CMAKE_FIND_ROOT_PATH": "$$EXT_BUILD_DEPS$$",
+        # Force PCRE to be found - these must be CACHE FILEPATH/PATH to override find_*
+        # Note: pcre_shared subdirectory is created by rules_foreign_cc from the pcre_shared target
+        "PCRE_LIBRARY:FILEPATH": "$$EXT_BUILD_DEPS$$/pcre_shared/lib/libpcre.so",
+        "PCRE_INCLUDE_DIR:PATH": "$$EXT_BUILD_DEPS$$/pcre_shared/include",
     },
-    data = ["@pcre_archive//:pcre_shared"],
     env = {
         "PKG_CONFIG_PATH": "$$EXT_BUILD_DEPS$$/lib/pkgconfig",
     },
