@@ -41,10 +41,6 @@ go_deps.from_file(go_mod = "//:go.mod")
 
 # Module overrides for repositories requiring patches or special build settings
 
-# sonic-mgmt-common - local path override (uses go.mod replace directive)
-# The go.mod has: replace github.com/Azure/sonic-mgmt-common => ../sonic-mgmt-common
-# This is handled automatically by go_deps when reading go.mod
-
 # gousb - use archive_override with custom BUILD that links libusb
 # We use inject_repo to make @libusb visible to go_deps
 go_deps.archive_override(
@@ -186,7 +182,7 @@ use_repo(
     "com_github_antchfx_jsonquery",
     "com_github_antchfx_xmlquery",
     "com_github_antchfx_xpath",
-    "com_github_azure_sonic_mgmt_common",
+    # sonic-mgmt-common is vendored locally in cvl/ and translib/ directories
     "com_github_c9s_goprocinfo",
     "com_github_cenkalti_backoff_v4",
     "com_github_cespare_xxhash_v2",

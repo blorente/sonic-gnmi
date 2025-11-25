@@ -3,7 +3,6 @@ module github.com/sonic-net/sonic-gnmi
 go 1.22
 
 require (
-	github.com/Azure/sonic-mgmt-common v0.0.0-20240124151252-99052691c3aa
 	github.com/Workiva/go-datastructures v1.0.52
 	github.com/agiledragon/gomonkey/v2 v2.12.0
 	github.com/c9s/goprocinfo v0.0.0-20191125144613-4acdd056c72d
@@ -67,5 +66,4 @@ require (
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 )
 
-replace github.com/Azure/sonic-mgmt-common => ../sonic-mgmt-common
 replace github.com/golang/glog => github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
