@@ -15,7 +15,7 @@ proto_library(
 
 go_proto_library(
     name = "blackbox_go_proto",
-    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
+    compilers = ["@io_bazel_rules_go//proto:go_grpc_v2"],
     importpath = "github.com/sonic-net/sonic-gnmi/proto/gnoi/blackbox",
     proto = ":blackbox_proto",
     visibility = ["//visibility:public"],

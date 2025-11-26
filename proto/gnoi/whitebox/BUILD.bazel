@@ -10,8 +10,8 @@ proto_library(
 
 go_proto_library(
     name = "whitebox_go_proto",
-    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
-    importpath = "github.com/sonic-net/sonic-gnmi/proto/gnoi/whitebox",
+    compilers = ["@io_bazel_rules_go//proto:go_grpc_v2"],
+    importpath = "proto/gnoi/whitebox",
     proto = ":whitebox_proto",
     visibility = ["//visibility:public"],
 )
@@ -19,7 +19,7 @@ go_proto_library(
 go_library(
     name = "whitebox",
     embed = [":whitebox_go_proto"],
-    importpath = "github.com/sonic-net/sonic-gnmi/proto/gnoi/whitebox",
+    importpath = "proto/gnoi/whitebox",
     visibility = ["//visibility:public"],
 )
 

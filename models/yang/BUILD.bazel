@@ -189,7 +189,10 @@ filegroup(
 
 filegroup(
     name = "yang_ietf_mod_ext_files",
-    srcs = glob(["extensions/ietf-*.yang"], allow_empty = True),
+    srcs = glob(
+        ["extensions/ietf-*.yang"],
+        allow_empty = True,
+    ),
 )
 
 filegroup(
@@ -242,7 +245,10 @@ filegroup(
 
 filegroup(
     name = "_models_test",
-    srcs = glob(["testdata/*.yang"], allow_empty = True),
+    srcs = glob(
+        ["testdata/*.yang"],
+        allow_empty = True,
+    ),
 )
 
 pkg_tar(

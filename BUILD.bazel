@@ -7,23 +7,23 @@ load("@gazelle//:def.bzl", "gazelle")
 # gazelle:exclude patches
 # gazelle:go_naming_convention import_alias
 
-### Help Gazelle resolve sonic-mgmt-common imports to local vendored packages
-# gazelle:resolve go github.com/Azure/sonic-mgmt-common/cvl //cvl
-# gazelle:resolve go github.com/Azure/sonic-mgmt-common/cvl/common //cvl/common
-# gazelle:resolve go github.com/Azure/sonic-mgmt-common/cvl/custom_validation //cvl/custom_validation
-# gazelle:resolve go github.com/Azure/sonic-mgmt-common/cvl/internal/util //cvl/internal/util
-# gazelle:resolve go github.com/Azure/sonic-mgmt-common/cvl/internal/yparser //cvl/internal/yparser
-# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib //translib
-# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/cs //translib/cs
-# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/db //translib/db
-# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/internal/apis //translib/internal/apis
-# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/log //translib/log
-# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/ocbinds //translib/ocbinds
-# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/path //translib/path
-# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/platform //translib/platform
-# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/tlerr //translib/tlerr
-# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/transformer //translib/transformer
-# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/utils //translib/utils
+### Help Gazelle resolve sonic-mgmt-common imports to external module
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/cvl @sonic_mgmt_common//cvl
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/cvl/common @sonic_mgmt_common//cvl/common
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/cvl/custom_validation @sonic_mgmt_common//cvl/custom_validation
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/cvl/internal/util @sonic_mgmt_common//cvl/internal/util
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/cvl/internal/yparser @sonic_mgmt_common//cvl/internal/yparser
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib @sonic_mgmt_common//translib
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/cs @sonic_mgmt_common//translib/cs
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/db @sonic_mgmt_common//translib/db
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/internal/apis @sonic_mgmt_common//translib/internal/apis
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/log @sonic_mgmt_common//translib/log
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/ocbinds @sonic_mgmt_common//translib/ocbinds
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/path @sonic_mgmt_common//translib/path
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/platform @sonic_mgmt_common//translib/platform
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/tlerr @sonic_mgmt_common//translib/tlerr
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/transformer @sonic_mgmt_common//translib/transformer
+# gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/utils @sonic_mgmt_common//translib/utils
 
 ### Help Gazelle resolve external proto files
 

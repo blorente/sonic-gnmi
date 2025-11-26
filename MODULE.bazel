@@ -17,6 +17,12 @@ local_path_override(
     path = "../sonic-swss-common",
 )
 
+bazel_dep(name = "sonic_mgmt_common", version = "1.0.0")
+local_path_override(
+    module_name = "sonic_mgmt_common",
+    path = "../sonic-mgmt-common",
+)
+
 bazel_dep(name = "rules_distroless", version = "0.0.0")
 local_path_override(
     module_name = "rules_distroless",

@@ -20,12 +20,12 @@ go_library(
     deps = [
         "//gnmi_server/log",
         "//sonic_db_config",
-        "//translib/db",
         "@com_github_golang_glog//:glog",
         "@com_github_redis_go_redis_v9//:go-redis",
         "@org_golang_google_grpc//codes",
         "@org_golang_google_grpc//status",
         "@org_golang_x_net//context",
+        "@sonic_mgmt_common//translib/db",
     ],
 )
 
@@ -51,8 +51,9 @@ go_test(
     deps = [
         "//gnmi_server/log",
         "//sonic_db_config",
-        "//translib/db",
         "@com_github_golang_glog//:glog",
         "@com_github_redis_go_redis_v9//:go-redis",
+        "@org_golang_x_net//context",
+        "@sonic_mgmt_common//translib/db",
     ],
 )
