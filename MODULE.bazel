@@ -9,11 +9,21 @@ module(
     version = "0.0.0",
 )
 
-# Hermetic C/C++ toolchain for reproducible builds
-bazel_dep(name = "hermetic_cc_toolchain", version = "3.1.0")
 
 # Rules for building foreign (non-Bazel) projects like CMake
 bazel_dep(name = "rules_foreign_cc", version = "0.12.0")
+
+bazel_dep(name = "sonic-swss-common", version = "0.0.0")
+local_path_override(
+    module_name = "sonic-swss-common",
+    path = "../sonic-swss-common",
+)
+
+bazel_dep(name = "rules_distroless", version = "0.0.0")
+local_path_override(
+    module_name = "rules_distroless",
+    path = "../rules_distroless",
+)
 
 # Platform rules for target configuration
 bazel_dep(name = "platforms", version = "0.0.11")
@@ -275,8 +285,6 @@ use_repo(
 # HTTP archive for fetching libyang
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
 
-# Register the hermetic toolchain
-register_toolchains("@hermetic_cc_toolchain//toolchain:all")
 
 http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
@@ -335,12 +343,6 @@ git_repository = use_repo_rule(
     "git_repository",
 )
 
-git_repository(
-    name = "sonic-swss-common",
-    build_file = "//third_party/sonic_swss_common:BUILD.bazel",
-    commit = "7a25b0754f8f29d179c45fd3df48ceb96d2bc849",
-    remote = "https://github.com/sonic-net/sonic-swss-common",
-)
 
 git_repository(
     name = "sonic-buildimage",

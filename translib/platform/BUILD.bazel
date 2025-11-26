@@ -21,7 +21,7 @@ go_test(
     srcs = [
         "platform_test.go",
     ],
-    data = glob(["testdata/**"]),
+    data = glob(["testdata/**"], allow_empty = True),
     embed = [":platform"],
     visibility = ["//visibility:public"],
     deps = [

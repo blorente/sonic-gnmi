@@ -58,7 +58,6 @@ build:remote --spawn_strategy=docker --strategy=Javac=docker --genrule_strategy=
 build:remote --experimental_docker_verbose
 build:remote --experimental_enable_docker_sandbox
 
-build:remote --experimental_cc_shared_library
 
 # # Enforce stricter environment rules, which eliminates some non-hermetic
 # # behavior and therefore improves both the remote cache hit rate and the
@@ -75,9 +74,6 @@ build:remote --experimental_cc_shared_library
 
 build --cxxopt=-std=c++17 --host_cxxopt=-std=c++17
 
-# Use system C/C++ toolchain for non-hermetic dependencies (sonic-swss-common, gousb, etc.)
-# This is needed when building outside the SONiC Docker container which has libnl3, libusb, etc.
-build --noincompatible_enable_cc_toolchain_resolution
 
 build:asan --strip=never
 build:asan --copt -fsanitize=address -fsanitize=leak

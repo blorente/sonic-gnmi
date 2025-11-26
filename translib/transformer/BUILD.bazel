@@ -86,7 +86,7 @@ go_test(
         "xfmr_sflow_test.go",
         "xfmr_system_test.go",
     ],
-    data = glob(["testdata/**"]),
+    data = glob(["testdata/**"], allow_empty = True),
     embed = [":transformer"],
     visibility = ["//visibility:public"],
     deps = [

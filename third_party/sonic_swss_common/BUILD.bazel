@@ -12,10 +12,13 @@ filegroup(
 
 filegroup(
     name = "all_hdrs",
-    srcs = glob([
-        "common/*.h",
-        "common/*.hpp",
-    ]),
+    srcs = glob(
+        [
+            "common/*.h",
+            "common/*.hpp",
+        ],
+        allow_empty = True,
+    ),
     visibility = ["//visibility:public"],
 )
 
@@ -49,7 +52,6 @@ cc_library(
     # strip_include_prefix = "common",
     copts = [
         "-std=c++14",
-        "-I/usr/include/libnl3",  # Expected location in the SONiC build container"
     ],
     includes = [
         ".",
@@ -61,5 +63,7 @@ cc_library(
     deps = [
         "@com_github_cesnet_libyang//:libyang",
         "@com_github_nlohmann_json//:json",
+        "@libnl3//:headers",  # System libnl3 headers
+        "@system_includes//:all",  # System headers (boost, hiredis, zmq)
     ],
 )
