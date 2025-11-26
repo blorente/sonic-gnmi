@@ -247,7 +247,7 @@
   "moduleExtensions": {
     "//:deps.bzl%deps": {
       "general": {
-        "bzlTransitiveDigest": "I7+fyaD1tKNzQxJCHVSMHYh77Pc99xRAFyioRczQ2OE=",
+        "bzlTransitiveDigest": "nN4s0yGcdyIluBU0TzkvlkY2t3yApudNxLVFgJxqop0=",
         "usagesDigest": "ma93qxKKdopo5lhoxRHoyxjv6GhovRbrhBI5ENq1e+4=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
