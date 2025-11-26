@@ -6,8 +6,8 @@ go_library(
         "transaction.c",
         "transaction.go",
     ],
-    # Link to Linux-PAM built from source
-    cdeps = ["@linux_pam//:pam"],
+    # Link to Linux-PAM built from source via configure_make
+    cdeps = ["//third_party/pam:pam"],
     cgo = True,
     importpath = "github.com/msteinert/pam",
     visibility = ["//visibility:public"],
