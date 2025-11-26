@@ -39,8 +39,8 @@ go_proto_library(
 
 go_proto_library(
     name = "gpins_gnoi_go_proto",
-    compilers = ["@io_bazel_rules_go//proto:go_grpc_v2"],
-    importpath = "proto/gnoi/qualification",
+    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
+    importpath = "github.com/sonic-net/sonic-gnmi/proto/gnoi/qualification",
     proto = ":gpins_gnoi_proto",
     visibility = ["//visibility:public"],
     deps = [

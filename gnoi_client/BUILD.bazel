@@ -20,6 +20,7 @@ go_library(
         "//proto/gnoi/blackbox",
         "//proto/gnoi/burnin",
         "//proto/gnoi/ocs",
+        "//proto/gnoi/qualification",
         "//proto/sonic_gnoi",
         "//proto/sonic_gnoi/jwt",
         "@com_github_golang_protobuf//proto",
@@ -57,6 +58,7 @@ go_test(
     deps = [
         "//proto/gnoi/blackbox",
         "//proto/gnoi/ocs",
+        "//proto/gnoi/qualification",
         "@com_github_openconfig_gnoi//diag",
         "@com_github_openconfig_gnoi//healthz",
         "@com_github_openconfig_gnoi//types",

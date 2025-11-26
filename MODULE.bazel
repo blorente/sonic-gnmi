@@ -188,65 +188,64 @@ go_deps.gazelle_override(
     path = "github.com/envoyproxy/protoc-gen-validate",
 )
 
+# protocolbuffers/txtpbfmt - needed by openconfig/gnmi cli
+go_deps.module(
+    path = "github.com/protocolbuffers/txtpbfmt",
+    sum = "h1:AKJY61V2SQtJ2a2PdeswKk0NM1qF77X+julRNYRxPOk=",
+    version = "v0.0.0-20220608084003-fc78c767cd6a",
+)
+
+# golang.org/x/term - needed by crypto/ssh
+go_deps.module(
+    path = "golang.org/x/term",
+    sum = "h1:WP60Sv1nlK1T6SupCHbXzSaN0b9wUmsPoRS9b61A23Q=",
+    version = "v0.27.0",
+)
+
+# mitchellh/go-wordwrap - needed by txtpbfmt
+go_deps.module(
+    path = "github.com/mitchellh/go-wordwrap",
+    sum = "h1:TLuKupo69TCn6TQSyGxwI1EblZZEsQ0vMlAFQflz0v0=",
+    version = "v1.0.1",
+)
+
 # Export all Go dependencies
 # Note: Run 'bazel mod tidy' to automatically update this list
 use_repo(
     go_deps,
     "com_github_agiledragon_gomonkey_v2",
-    "com_github_antchfx_jsonquery",
-    "com_github_antchfx_xmlquery",
-    "com_github_antchfx_xpath",
     "com_github_c9s_goprocinfo",
-    "com_github_cenkalti_backoff_v4",
-    "com_github_cespare_xxhash_v2",
-    "com_github_cncf_xds_go",
     "com_github_dgrijalva_jwt_go",
-    "com_github_dgryski_go_rendezvous",
-    "com_github_envoyproxy_go_control_plane",
-    "com_github_envoyproxy_protoc_gen_validate",
     "com_github_fsnotify_fsnotify",
     "com_github_godbus_dbus_v5",
     "com_github_gogo_protobuf",
     "com_github_golang_glog",
-    "com_github_golang_groupcache",
     "com_github_golang_protobuf",
     "com_github_google_gnxi",
-    "com_github_google_go_cmp",
     "com_github_google_go_tpm",
     "com_github_google_gofuzz",
     "com_github_google_gousb",  # via archive_override with custom BUILD linking libusb
     "com_github_grpc_ecosystem_go_grpc_middleware_v2",
     "com_github_hashicorp_golang_lru",
     "com_github_kylelemons_godebug",
-    "com_github_maruel_natural",
-    # msteinert/pam is in deps.bzl - needs @//:third_party_pam from main repo
+    "com_github_mitchellh_go_wordwrap",  # For txtpbfmt
+    # msteinert/pam, gnoi, gnsi are in deps.bzl - need custom BUILD files
     "com_github_nxadm_tail",
     "com_github_openconfig_gnmi",
-    # gnoi is in deps.bzl due to cross-repo dependency on @com_github_grpc_grpc
-    # gnsi is in deps.bzl due to cross-repo dependency on @rules_proto_grpc
-    "com_github_openconfig_goyang",
-    "com_github_openconfig_grpctunnel",
     "com_github_openconfig_ygot",
-    "com_github_philopon_go_toposort",
     "com_github_pkg_errors",
+    "com_github_protocolbuffers_txtpbfmt",  # For openconfig/gnmi cli
     "com_github_redis_go_redis_v9",
-    "com_github_stretchr_testify",
-    "com_github_tredoe_osutil",
     "com_github_workiva_go_datastructures",
-    "com_github_xeipuuv_gojsonpointer",
-    "com_github_xeipuuv_gojsonreference",
     "com_github_xeipuuv_gojsonschema",
-    "in_gopkg_tomb_v1",
     "in_gopkg_yaml_v2",
-    "org_golang_google_genproto_googleapis_api",
     "org_golang_google_genproto_googleapis_rpc",
     "org_golang_google_grpc",
     "org_golang_google_grpc_security_advancedtls",  # separate grpc module for advancedtls
     "org_golang_google_protobuf",
     "org_golang_x_crypto",
     "org_golang_x_net",
-    "org_golang_x_sys",
-    "org_golang_x_text",
+    "org_golang_x_term",  # For crypto/ssh
 )
 
 # Inject repos into go_deps extension to make them visible to its repos
