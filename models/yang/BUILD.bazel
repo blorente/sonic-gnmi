@@ -1,321 +1,114 @@
-load("@bazel_skylib//lib:paths.bzl", "paths")
-load("@bazel_skylib//rules:write_file.bzl", "write_file")
-load("@rules_pkg//:pkg.bzl", "pkg_tar")
-
 package(default_visibility = ["//visibility:public"])
 
-exports_files(["BUILD.bazel"])
+# All yang models are now sourced from sonic-mgmt-common.
+# These aliases maintain backwards compatibility for targets that reference //models/yang:*
 
-filegroup(
+alias(
     name = "standard-yang",
-    srcs = glob(["*.yang"]),
+    actual = "@sonic_mgmt_common//models/yang:standard-yang",
 )
 
-filegroup(
+alias(
     name = "common-yang",
-    srcs = glob(["common/*.yang"]),
+    actual = "@sonic_mgmt_common//models/yang:common-yang",
 )
 
-filegroup(
+alias(
     name = "extensions-yang",
-    srcs = glob(["extensions/*.yang"]),
+    actual = "@sonic_mgmt_common//models/yang:extensions-yang",
 )
 
-filegroup(
+alias(
     name = "annotation-yang",
-    srcs = glob(["annotations/*.yang"]),
+    actual = "@sonic_mgmt_common//models/yang:annotation-yang",
 )
 
-filegroup(
+alias(
     name = "sonic-yang",
-    srcs = glob(["sonic/*.yang"]),
+    actual = "@sonic_mgmt_common//models/yang:sonic-yang",
 )
 
-filegroup(
+alias(
     name = "sonic-common-yang",
-    srcs = glob(["sonic/common/*.yang"]),
+    actual = "@sonic_mgmt_common//models/yang:sonic-common-yang",
 )
 
-genrule(
-    name = "generate-yangs",
-    srcs = [
-        "@sonic-buildimage//:sonic-yangs-export.tar",
-        "@sonic-buildimage//:sonic-yang-templates-export.tar",
-        ":standard-yang",
-        ":common-yang",
-        ":extensions-yang",
-        ":annotation-yang",
-        ":sonic-yang",
-        ":sonic-common-yang",
-    ],
-    outs = [
-        "yangs.tar",
-    ],
-    cmd = """
-          SONICYANG_IMPORTS=""
-
-          # Bring in the yang files from sonic-buildimage to a scratch space.
-          # Also bring in the templates and generate yangs for them.
-          mkdir temp_imported_sonic_yangs
-          tar xf $(location @sonic-buildimage//:sonic-yangs-export.tar) -C ./temp_imported_sonic_yangs
-          mkdir temp_yang_templates
-          tar xf $(location @sonic-buildimage//:sonic-yang-templates-export.tar) -C ./temp_yang_templates
-
-          # Duplicate the sonic-buildimage yangs to a normal yang and CVL yang
-          # scratch space.
-          cp -r temp_imported_sonic_yangs temp_imported_sonic_cvlyangs
-
-          # Generate yang and cvl-yang files from the templates
-          ./$(location //tools/pyang:generate_yang) --out-yang-dir temp_imported_sonic_yangs --out-cvlyang-dir temp_imported_sonic_cvlyangs --templates ./temp_yang_templates
-
-          # Build the list of yang file names to import
-          if [ -z $$SONICYANG_IMPORTS ]; then
-              IMPORTS=""
-          else
-              pushd temp_imported_sonic_cvlyangs; IMPORTS=`ls $$SONICYANG_IMPORTS`; popd
-          fi
-          mkdir imported_sonic_yangs
-          cp  temp_imported_sonic_cvlyangs/*.yang imported_sonic_yangs/
-
-          # Bring in the common yang files
-          mkdir yang
-          for f in $(locations :standard-yang); do
-              cp $$f yang/
-          done
-          mkdir yang/common
-          for f in $(locations :common-yang); do
-              cp $$f yang/common
-          done
-
-          # Bring in any extensions
-          mkdir yang/extensions
-          for f in $(locations :extensions-yang); do
-              cp $$f yang/extensions
-          done
-
-          # Bring in any annotations
-          mkdir yang/annotations
-          for f in $(locations :annotation-yang); do
-              cp $$f yang/annotations/
-          done
-
-          if [ -z "$$IMPORTS" ]; then
-              # Not importing anything from sonic-buildimage, blindly copy all
-              # the sonic yangs
-              mkdir yang/sonic
-              mkdir yang/sonic/common
-              for f in $(locations :sonic-yang); do
-                  cp $$f yang/sonic
-              done
-              for f in $(locations :sonic-common-yang); do
-                  cp $$f yang/sonic/common
-              done
-          else
-              # Make note if we are importing sonic-port.yang from sonic-buildimage
-              IMPORT_SONIC_PORT='n';
-              for f in $$IMPORTS; do
-                  if [ sonic-port.yang = $$f ]; then
-                      IMPORT_SONIC_PORT='y'
-                  fi
-              done
-
-              # Copy the local sonic yangs to a scratch space.
-              # Keep track of any overlaps between the local files and the imported
-              # sonic yangs.
-              SONIC_YANG_OVERLAPS=""
-              LOCAL_SONIC_YANGS=""
-              mkdir temp_sonic_yangs
-              mkdir temp_sonic_yangs/common
-              for f in $(locations :sonic-yang); do
-                  bname=`basename $$f`
-                  cp $$f temp_sonic_yangs/
-                  LOCAL_SONIC_YANGS="$$LOCAL_SONIC_YANGS $$bname"
-                  for i in $$IMPORTS; do
-                      if [ $$i = $$bname ]; then
-                          SONIC_YANG_OVERLAPS="$$SONIC_YANG_OVERLAPS $$bname"
-                          echo "Local sonic-yang $$bname overlaps w/ imported sonic-yang"
-                      fi
-                  done
-              done
-              for f in $(locations :sonic-common-yang); do
-                  cp $$f temp_sonic_yangs/common
-              done
-
-              # Copy in the local sonic yangs with the import tool
-              mkdir yang/sonic
-              EXCLUDE_STR=""
-              for excluded in $$SONIC_YANG_OVERLAPS; do
-                  EXCLUDE_STR="$$EXCLUDE_STR --exclude=$$excluded"
-              done
-              SUB=""
-              if [ $$IMPORT_SONIC_PORT = "y" ]; then
-                  SUB='--subst-port-ref=ifname:name'
-              fi
-              echo "Importing local sonic yangs:"
-              echo "  Port sub str: $$SUB"
-              echo "  Exclude List: $$EXCLUDE_STR"
-              ./$(location //tools/pyang:import_yang) --from=temp_sonic_yangs --from=yang/common --to=yang/sonic $$SUB --keep-comments $$EXCLUDE_STR $$LOCAL_SONIC_YANGS 
-
-              # Next import the sonic yangs from sonic-buildimage
-              SUB=""
-              if [ $$IMPORT_SONIC_PORT = "n" ]; then
-                  SUB='--subst-port-ref=name:ifname'
-              fi
-              echo "Importing buildimage sonic yangs:"
-              echo "  Por sub str: $$SUB"
-              echo "  Imports: $$IMPORTS"
-              ./$(location //tools/pyang:import_yang) --from=imported_sonic_yangs --from=yang/common --to=yang/sonic $$SUB $$IMPORTS
-          fi
-
-          # Create the output tar
-          tar cf $(@D)/yangs.tar yang/
-          """,
-    tools = [
-        "//tools/pyang:generate_yang",
-        "//tools/pyang:import_yang",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-filegroup(
+alias(
     name = "yang_mod_files",
-    srcs = glob(["*.yang"]),
+    actual = "@sonic_mgmt_common//models/yang:yang_mod_files",
 )
 
-filegroup(
+alias(
     name = "yang_mod_ext_files",
-    srcs = glob(["extensions/*.yang"]),
+    actual = "@sonic_mgmt_common//models/yang:yang_mod_ext_files",
 )
 
-filegroup(
+alias(
     name = "yang_ietf_mod_ext_files",
-    srcs = glob(
-        ["extensions/ietf-*.yang"],
-        allow_empty = True,
-    ),
+    actual = "@sonic_mgmt_common//models/yang:yang_ietf_mod_ext_files",
 )
 
-filegroup(
+alias(
     name = "yang_annotation_files",
-    srcs = glob(["annotations/*.yang"]),
+    actual = "@sonic_mgmt_common//models/yang:yang_annotation_files",
 )
 
-filegroup(
+alias(
     name = "yang_common_files",
-    srcs = glob(
-        [
-            "common/*.yang",
-            "sonic/common/ietf/*yang",
-        ],
-        allow_empty = True,
-    ),
+    actual = "@sonic_mgmt_common//models/yang:yang_common_files",
 )
 
-filegroup(
+alias(
     name = "yang",
-    srcs = glob(
-        ["**/*.yang"],
-        exclude = glob(["**/*-annot.yang"]),
-    ),
+    actual = "@sonic_mgmt_common//models/yang:yang",
 )
 
-write_file(
-    name = "yang_annotations",
-    out = "api_ignore",
-    content = [
-        "# Yangs ignored",
-    ] + [
-        "{0}".format(paths.basename(v))
-        for v in glob(
-            ["**/*-annot.yang"],
-            exclude = ["testdata/**"],
-        )
-    ] + ["\n"],
-    newline = "unix",
-    # TODO(b/239426591) maybe include sonic-extensions.yang too?
-)
-
-filegroup(
+alias(
     name = "_models",
-    srcs = glob(
-        ["**/*.yang"],
-        exclude = ["testdata/**"],
-    ),
+    actual = "@sonic_mgmt_common//models/yang:_models",
 )
 
-filegroup(
+alias(
     name = "_models_test",
-    srcs = glob(
-        ["testdata/*.yang"],
-        allow_empty = True,
-    ),
+    actual = "@sonic_mgmt_common//models/yang:_models_test",
 )
 
-pkg_tar(
-    name = "models_tar",
-    srcs = [
-        "version.xml",
-        ":_models",
-        "//config/transformer:files",
-    ],
-    mode = "0755",
-    package_dir = "/usr/models/yang",
-)
-
-pkg_tar(
-    name = "models_test_tar",
-    srcs = [":_models_test"],
-    mode = "0755",
-    package_dir = "/usr/models/yang",
-)
-
-filegroup(
+alias(
     name = "all-yang",
-    srcs = glob(["**/*"]),
+    actual = "@sonic_mgmt_common//models/yang:all-yang",
 )
 
-genrule(
+alias(
+    name = "generate-yangs",
+    actual = "@sonic_mgmt_common//models/yang:generate-yangs",
+)
+
+alias(
+    name = "yangs.tar",
+    actual = "@sonic_mgmt_common//models/yang:yangs.tar",
+)
+
+alias(
     name = "sonic-yang-tree",
-    srcs = [
-        "yangs.tar",
-    ],
-    outs = [
-        "sonic_allyangs_tree.txt",
-        "sonic_allyangs_tree.html",
-    ],
-    cmd_bash = "tar xf $(location yangs.tar) && " +
-               "cp yang/common/* yang/sonic/common/ && " +
-               "./$(location //tools/pyang:tree) " +
-               "    --text=sonic_allyangs_tree.txt " +
-               "    --html=sonic_allyangs_tree.html " +
-               "    -p ./yang/sonic " +
-               "    -c ./yang/sonic/common " +
-               "    --annotpath=./yang/annotations && " +
-               "cp sonic_allyangs_tree.txt  $(location sonic_allyangs_tree.txt) && " +
-               "cp sonic_allyangs_tree.html $(location sonic_allyangs_tree.html)",
-    tools = ["//tools/pyang:tree"],
-    visibility = ["//visibility:public"],
+    actual = "@sonic_mgmt_common//models/yang:sonic-yang-tree",
 )
 
-genrule(
+alias(
     name = "yang-tree",
-    srcs = [
-        "yangs.tar",
-    ],
-    outs = [
-        "oc_yang_tree.txt",
-        "oc_yang_tree.html",
-    ],
-    cmd_bash = "tar xf $(location yangs.tar) && " +
-               "rm -rf yang/sonic && " +
-               "./$(location //tools/pyang:tree) " +
-               "    --text=oc_yang_tree.txt " +
-               "    --html=oc_yang_tree.html " +
-               "    -p ./yang/ " +
-               "    -c ./yang/common " +
-               "    --annotpath=./yang/annotations && " +
-               "cp oc_yang_tree.txt  $(location oc_yang_tree.txt) && " +
-               "cp oc_yang_tree.html $(location oc_yang_tree.html)",
-    tools = ["//tools/pyang:tree"],
-    visibility = ["//visibility:public"],
+    actual = "@sonic_mgmt_common//models/yang:yang-tree",
+)
+
+alias(
+    name = "yang_annotations",
+    actual = "@sonic_mgmt_common//models/yang:yang_annotations",
+)
+
+alias(
+    name = "models_tar",
+    actual = "@sonic_mgmt_common//models/yang:models_tar",
+)
+
+alias(
+    name = "models_test_tar",
+    actual = "@sonic_mgmt_common//models/yang:models_test_tar",
 )
