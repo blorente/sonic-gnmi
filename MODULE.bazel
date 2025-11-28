@@ -29,6 +29,36 @@ local_path_override(
     path = "../rules_distroless",
 )
 
+# APT packages from Debian bookworm
+apt = use_extension("@rules_distroless//apt:extensions.bzl", "apt")
+apt.sources_list(
+    architectures = ["amd64"],
+    components = ["main"],
+    suites = [
+        "bookworm",
+        "bookworm-updates",
+    ],
+    uris = ["https://snapshot.debian.org/archive/debian/20251001T023456Z"],
+)
+apt.sources_list(
+    architectures = ["amd64"],
+    components = ["main"],
+    suites = ["bookworm-security"],
+    uris = ["https://snapshot.debian.org/archive/debian-security/20251001T023456Z"],
+)
+apt.install(
+    dependency_set = "bookworm",
+    packages = [
+        "libpcre3",
+        "libpcre3-dev",
+        "libusb-1.0-0",
+        "libusb-1.0-0-dev",
+    ],
+    target_release = "bookworm",
+)
+apt.lock(into = ":packages.lock")
+use_repo(apt, "bookworm")
+
 # Platform rules for target configuration
 bazel_dep(name = "platforms", version = "0.0.11")
 bazel_dep(name = "rules_go", version = "0.50.1", repo_name = "io_bazel_rules_go")
@@ -55,8 +85,8 @@ go_deps.from_file(go_mod = "//:go.mod")
 
 # Module overrides for repositories requiring patches or special build settings
 
-# gousb - use archive_override with custom BUILD that links libusb
-# We use inject_repo to make @libusb visible to go_deps
+# gousb - uses system libusb (from apt packages in container, or host system)
+# Custom BUILD file with cgo linking to system libusb
 go_deps.archive_override(
     patch_strip = 1,
     patches = ["//patches:gousb_build.patch"],
@@ -224,7 +254,7 @@ use_repo(
     "com_github_google_gnxi",
     "com_github_google_go_tpm",
     "com_github_google_gofuzz",
-    "com_github_google_gousb",  # via archive_override with custom BUILD linking libusb
+    "com_github_google_gousb",  # uses system libusb from apt
     "com_github_grpc_ecosystem_go_grpc_middleware_v2",
     "com_github_hashicorp_golang_lru",
     "com_github_kylelemons_godebug",
@@ -251,8 +281,6 @@ use_repo(
 # Inject repos into go_deps extension to make them visible to its repos
 # This solves cross-repo visibility issues (https://github.com/bazelbuild/bazel/issues/19301)
 # inject_repo makes the specified repos available to repos created by go_deps
-inject_repo(go_deps, "libusb")  # For gousb's cdeps = ["@libusb//:libusb"]
-
 inject_repo(go_deps, "com_github_grpc_grpc")  # For openconfig/gnmi's cc_grpc_library.bzl
 
 inject_repo(go_deps, "rules_proto_grpc_cpp")  # For openconfig/gnsi's cpp_grpc_library
@@ -290,38 +318,18 @@ bazel_dep(name = "bazel_skylib", version = "1.7.1")
 
 http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-http_archive(
-    name = "pcre_archive",
-    build_file = "//third_party/pcre:BUILD.bazel",
-    sha256 = "4dae6fdcd2bb0bb6c37b5f97c33c2be954da743985369cddac3546e3218bffb8",
-    urls = [
-        "https://sourceforge.net/projects/pcre/files/pcre/8.45/pcre-8.45.tar.bz2",
-    ],
-)
-
+# libyang - uses pcre from apt packages (@bookworm)
 http_archive(
     name = "com_github_cesnet_libyang",
     build_file = "//third_party/libyang:BUILD.bazel",
     patch_args = ["-p1"],
     patches = [
-        #"//patches:libyang-repo.patch",
         "//patches:libyang.patch",
-        "//patches:libyang_pcre_cache.patch",
     ],
     sha256 = "1b736443d2c69b5d7a71ac412655e6edab0647b18f35f7bf504b0a24e06cb046",
     strip_prefix = "libyang-1.0.225",
     urls = [
         "https://github.com/CESNET/libyang/archive/refs/tags/v1.0.225.tar.gz",
-    ],
-)
-
-http_archive(
-    name = "libusb",
-    build_file = "//third_party/libusb:BUILD.bazel",
-    sha256 = "ffaa41d741a8a3bee244ac8e54a72ea05bf2879663c098c82fc5757853441575",
-    strip_prefix = "libusb-1.0.27",
-    urls = [
-        "https://github.com/libusb/libusb/releases/download/v1.0.27/libusb-1.0.27.tar.bz2",
     ],
 )
 

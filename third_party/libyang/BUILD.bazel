@@ -11,13 +11,10 @@ filegroup(
 cmake(
     name = "libyang",
     cache_entries = {
-        # Force PCRE to be found - these must be CACHE FILEPATH/PATH to override find_*
-        # Note: pcre_shared subdirectory is created by rules_foreign_cc from the pcre_shared target
-        "PCRE_LIBRARY:FILEPATH": "$$EXT_BUILD_DEPS$$/pcre_shared/lib/libpcre.so",
-        "PCRE_INCLUDE_DIR:PATH": "$$EXT_BUILD_DEPS$$/pcre_shared/include",
-    },
-    env = {
-        "PKG_CONFIG_PATH": "$$EXT_BUILD_DEPS$$/lib/pkgconfig",
+        # Use pcre from apt packages (@bookworm)
+        # The apt data targets extract to their package directory
+        "PCRE_LIBRARY:FILEPATH": "$$EXT_BUILD_DEPS$$/libpcre3/libpcre3/usr/lib/x86_64-linux-gnu/libpcre.so.3",
+        "PCRE_INCLUDE_DIR:PATH": "$$EXT_BUILD_DEPS$$/libpcre3-dev/libpcre3-dev/usr/include",
     },
     lib_source = ":all_srcs",
     out_data_dirs = [
@@ -37,7 +34,8 @@ cmake(
         "libyang.so.1.10.17",
     ],
     visibility = ["//visibility:public"],
-    deps = [
-        "@pcre_archive//:pcre_shared",
+    build_data = [
+        "@bookworm//libpcre3:data",
+        "@bookworm//libpcre3-dev:data",
     ],
 )
