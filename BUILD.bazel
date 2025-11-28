@@ -60,7 +60,7 @@ gazelle(
 # used by UMF.
 alias(
     name = "whole-yang-tree-txt",
-    actual = "//models/yang:yang-tree",
+    actual = "@sonic-mgmt-common//models/yang:yang-tree",
 )
 
 # A shortcut to build a Docker image that is used for component testing.
