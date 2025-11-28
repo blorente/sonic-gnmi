@@ -15,10 +15,10 @@ go_library(
         "@com_github_openconfig_gnmi//errlist",
         "@com_github_openconfig_gnmi//proto/gnmi",
         "@com_github_openconfig_ygot//ygot",
-        "@sonic_mgmt_common//translib",
-        "@sonic_mgmt_common//translib/ocbinds",
-        "@sonic_mgmt_common//translib/path",
-        "@sonic_mgmt_common//translib/tlerr",
+        "@sonic-mgmt-common//translib",
+        "@sonic-mgmt-common//translib/ocbinds",
+        "@sonic-mgmt-common//translib/path",
+        "@sonic-mgmt-common//translib/tlerr",
     ],
 )
 
@@ -34,7 +34,7 @@ go_test(
         "@com_github_openconfig_gnmi//proto/gnmi",
         "@com_github_openconfig_ygot//ygot",
         "@com_github_openconfig_ygot//ytypes",
-        "@sonic_mgmt_common//translib/ocbinds",
+        "@sonic-mgmt-common//translib/ocbinds",
     ],
 )
 

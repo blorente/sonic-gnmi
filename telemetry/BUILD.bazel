@@ -69,7 +69,7 @@ go_library(
         "//gnmi_server",
         "//gnmi_server/log",
         "//swsscommon",
-        "@sonic_mgmt_common//translib/db",
+        "@sonic-mgmt-common//translib/db",
         "@com_github_golang_glog//:glog",
     ],
 )

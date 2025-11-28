@@ -13,7 +13,7 @@ go_library(
         "@com_github_golang_glog//:glog",
         "@com_github_golang_protobuf//proto",
         "@com_github_openconfig_gnmi//proto/gnmi",
-        "@sonic_mgmt_common//translib/transformer",
+        "@sonic-mgmt-common//translib/transformer",
     ],
 )
 

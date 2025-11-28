@@ -332,11 +332,11 @@
     "@@rules_distroless+//apt:extensions.bzl%apt": {
       "general": {
         "bzlTransitiveDigest": "R/xcqTjGz8Si0WOSwdfSzViaBCrbWuLxKTN44EkdGDA=",
-        "usagesDigest": "s2S7RjtN+dXpE66eYcYcBhzjBO4tW7ArVSUWlIWpf+o=",
+        "usagesDigest": "Y5M9SFY7XshZxGGVrC2elyAK13LmhhafUx6F/+OATm4=",
         "recordedFileInputs": {
           "@@//packages.lock": "d0e26288fa3a189f6b8c719f8197a993124ce8b285c183d8ff9eb8c212f166ed",
-          "@@sonic-swss-common+//packages.lock": "ce71cdcde97af104c5f8f8f8b7eddea599e01038bd5b45bbed6b61a3e4727327",
-          "@@sonic_mgmt_common+//packages.lock": "c3012392521eeb23d21660ac981119fb5011ac1cca9d766ef91c5f77b8c1c297"
+          "@@sonic-mgmt-common+//packages.lock": "c3012392521eeb23d21660ac981119fb5011ac1cca9d766ef91c5f77b8c1c297",
+          "@@sonic-swss-common+//packages.lock": "ce71cdcde97af104c5f8f8f8b7eddea599e01038bd5b45bbed6b61a3e4727327"
         },
         "recordedDirentsInputs": {},
         "envVariables": {},

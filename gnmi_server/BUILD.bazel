@@ -107,10 +107,10 @@ go_library(
         "@org_golang_x_net//context",
         "@org_golang_x_net//ipv4",
         "@org_golang_x_net//ipv6",
-        "@sonic_mgmt_common//cvl/custom_validation",
-        "@sonic_mgmt_common//translib",
-        "@sonic_mgmt_common//translib/db",
-        "@sonic_mgmt_common//translib/path",
+        "@sonic-mgmt-common//cvl/custom_validation",
+        "@sonic-mgmt-common//translib",
+        "@sonic-mgmt-common//translib/db",
+        "@sonic-mgmt-common//translib/path",
     ],
 )
 
@@ -199,9 +199,9 @@ go_test(
         "@org_golang_x_net//context",
         "@org_golang_x_net//ipv4",  #keep
         "@org_golang_x_net//ipv6",  #keep
-        "@sonic_mgmt_common//translib/db",
-        "@sonic_mgmt_common//translib/ocbinds",
-        "@sonic_mgmt_common//translib/transformer",
+        "@sonic-mgmt-common//translib/db",
+        "@sonic-mgmt-common//translib/ocbinds",
+        "@sonic-mgmt-common//translib/transformer",
     ],
     # race = "on",
     # msan = "on",

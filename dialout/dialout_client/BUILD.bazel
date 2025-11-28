@@ -16,7 +16,7 @@ go_library(
         "@com_github_workiva_go_datastructures//queue",
         "@org_golang_google_grpc//:grpc",
         "@org_golang_google_grpc//credentials",
-        "@sonic_mgmt_common//translib/db",
+        "@sonic-mgmt-common//translib/db",
     ],
 )
 
@@ -36,7 +36,7 @@ go_test(
         "@com_github_redis_go_redis_v9//:go-redis",
         "@org_golang_google_grpc//:grpc",
         "@org_golang_google_grpc//credentials",
-        "@sonic_mgmt_common//translib/db",
+        "@sonic-mgmt-common//translib/db",
     ],
 )
 
