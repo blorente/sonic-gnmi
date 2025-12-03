@@ -2,13 +2,13 @@ load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 filegroup(
     name = "exported_yangs",
-    srcs = glob(["src/sonic-yang-models/yang-models/*.yang"]),
+    srcs = glob(["src/sonic-yang-models/yang-models/*.yang"], allow_empty = True),
     visibility = ["//visibility:public"],
 )
 
 filegroup(
     name = "exported_yang_templates",
-    srcs = glob(["src/sonic-yang-models/yang-templates/*.yang.j2"]),
+    srcs = glob(["src/sonic-yang-models/yang-templates/*.yang.j2"], allow_empty = True),
     visibility = ["//visibility:public"],
 )
 
@@ -33,7 +33,7 @@ genrule(
 
 pkg_tar(
     name = "sonic-cfggen",
-    srcs = glob(["src/sonic-config-engine/*"]),
+    srcs = glob(["src/sonic-config-engine/*"], allow_empty = True),
     mode = "0644",
     package_dir = "/sonic-config-engine",
     # strip_prefix = "/testdata",

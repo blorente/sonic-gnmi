@@ -1,0 +1,294 @@
+diff -Nur a/acctz/BUILD.bazel b/acctz/BUILD.bazel
+--- a/acctz/BUILD.bazel	2025-12-03 20:35:11.556443681 +0200
++++ b/acctz/BUILD.bazel	2025-12-03 20:35:11.560443641 +0200
+@@ -1,48 +1,12 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library")
+-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_proto_grpc//cpp:defs.bzl", "cpp_grpc_library")
+-load("//:common.bzl", "use_new_compilers")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-use_new_compilers()
+-
+-proto_library(
+-    name = "acctz_proto",
+-    srcs = ["acctz.proto"],
+-    import_prefix = "github.com/openconfig/gnsi",
+-    deps = [
+-        "@com_google_protobuf//:any_proto",
+-        "@com_google_protobuf//:timestamp_proto",
+-    ],
+-)
+-
+-##############################################################################
+-# C++
+-##############################################################################
+-cpp_grpc_library(
+-    name = "acctz_cc_proto",
+-    protos = [
+-        ":acctz_proto",
+-    ],
+-)
+-
+-##############################################################################
+-# Go
+-##############################################################################
+-go_proto_library(
+-    name = "acctz_go_proto",
+-    compilers = [
+-        "go_protoc_gen_go",
+-        "go_protoc_gen_go_grpc",
+-    ],
+-    importpath = "github.com/openconfig/gnsi/acctz",
+-    proto = ":acctz_proto",
+-)
+-
+ go_library(
+     name = "acctz",
+-    embed = [":acctz_go_proto"],
++    srcs = ["acctz.pb.go", "acctz_grpc.pb.go"],
+     importpath = "github.com/openconfig/gnsi/acctz",
++    deps = ["@org_golang_google_grpc//:grpc", "@org_golang_google_grpc//codes", "@org_golang_google_grpc//status",
++            "@org_golang_google_protobuf//reflect/protoreflect", "@org_golang_google_protobuf//runtime/protoimpl",
++            "@org_golang_google_protobuf//types/known/anypb", "@org_golang_google_protobuf//types/known/timestamppb"],
+ )
+diff -Nur a/authz/BUILD.bazel b/authz/BUILD.bazel
+--- a/authz/BUILD.bazel	2025-12-03 20:35:11.553443710 +0200
++++ b/authz/BUILD.bazel	2025-12-03 20:35:11.557443671 +0200
+@@ -1,44 +1,11 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library")
+-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_proto_grpc//cpp:defs.bzl", "cpp_grpc_library")
+-load("//:common.bzl", "use_new_compilers")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-use_new_compilers()
+-
+-proto_library(
+-    name = "authz_proto",
+-    srcs = ["authz.proto"],
+-    import_prefix = "github.com/openconfig/gnsi",
+-)
+-
+-##############################################################################
+-# C++
+-##############################################################################
+-cpp_grpc_library(
+-    name = "authz_cc_proto",
+-    protos = [
+-        ":authz_proto",
+-    ],
+-)
+-
+-##############################################################################
+-# Go
+-##############################################################################
+-go_proto_library(
+-    name = "authz_go_proto",
+-    compilers = [
+-        "go_protoc_gen_go",
+-        "go_protoc_gen_go_grpc",
+-    ],
+-    importpath = "github.com/openconfig/gnsi/authz",
+-    proto = ":authz_proto",
+-)
+-
+ go_library(
+     name = "authz",
+-    embed = [":authz_go_proto"],
++    srcs = ["authz.pb.go", "authz_grpc.pb.go"],
+     importpath = "github.com/openconfig/gnsi/authz",
++    deps = ["@org_golang_google_grpc//:grpc", "@org_golang_google_grpc//codes", "@org_golang_google_grpc//status",
++            "@org_golang_google_protobuf//reflect/protoreflect", "@org_golang_google_protobuf//runtime/protoimpl"],
+ )
+diff -Nur a/certz/BUILD.bazel b/certz/BUILD.bazel
+--- a/certz/BUILD.bazel	2025-12-03 20:35:11.554443700 +0200
++++ b/certz/BUILD.bazel	2025-12-03 20:35:11.558443661 +0200
+@@ -1,49 +1,12 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library")
+-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_proto_grpc//cpp:defs.bzl", "cpp_grpc_library")
+-load("//:common.bzl", "use_new_compilers")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-use_new_compilers()
+-
+-proto_library(
+-    name = "certz_proto",
+-    srcs = ["certz.proto"],
+-    deps = [
+-        "@com_google_protobuf//:any_proto",
+-    ],
+-    import_prefix = "github.com/openconfig/gnsi",
+-)
+-
+-##############################################################################
+-# C++
+-##############################################################################
+-
+-cpp_grpc_library(
+-    name = "certz_cc_proto",
+-    protos = [
+-        ":certz_proto",
+-    ],
+-)
+-
+-##############################################################################
+-# Go
+-##############################################################################
+-
+-go_proto_library(
+-    name = "certz_go_proto",
+-    compilers = [
+-        "go_protoc_gen_go",
+-        "go_protoc_gen_go_grpc",
+-    ],
+-    importpath = "github.com/openconfig/gnsi/certz",
+-    proto = ":certz_proto",
+-)
+-
+ go_library(
+     name = "certz",
+-    embed = [":certz_go_proto"],
++    srcs = ["certz.pb.go", "certz_grpc.pb.go"],
+     importpath = "github.com/openconfig/gnsi/certz",
++    deps = ["@org_golang_google_grpc//:grpc", "@org_golang_google_grpc//codes", "@org_golang_google_grpc//status",
++            "@org_golang_google_protobuf//reflect/protoreflect", "@org_golang_google_protobuf//runtime/protoimpl",
++            "@org_golang_google_protobuf//types/known/anypb"],
+ )
+diff -Nur a/credentialz/BUILD.bazel b/credentialz/BUILD.bazel
+--- a/credentialz/BUILD.bazel	2025-12-03 20:35:11.555443691 +0200
++++ b/credentialz/BUILD.bazel	2025-12-03 20:35:11.558443661 +0200
+@@ -1,52 +1,11 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library")
+-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_proto_grpc//cpp:defs.bzl", "cpp_grpc_library")
+-load("//:common.bzl", "use_new_compilers")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-use_new_compilers()
+-
+-filegroup(
+-    name = "yang",
+-    srcs = glob(["*.yang"]),
+-)
+-
+-proto_library(
+-    name = "credentialz_proto",
+-    srcs = ["credentialz.proto"],
+-    import_prefix = "github.com/openconfig/gnsi",
+-)
+-
+-##############################################################################
+-# C++
+-##############################################################################
+-
+-cpp_grpc_library(
+-    name = "credentialz_cc_proto",
+-    protos = [
+-        ":credentialz_proto",
+-        "@go_googleapis//google/rpc:status_proto",
+-    ],
+-)
+-
+-##############################################################################
+-# Go
+-##############################################################################
+-
+-go_proto_library(
+-    name = "credentialz_go_proto",
+-    compilers = [
+-        "go_protoc_gen_go",
+-        "go_protoc_gen_go_grpc",
+-    ],
+-    importpath = "github.com/openconfig/gnsi/credentialz",
+-    proto = ":credentialz_proto",
+-)
+-
+ go_library(
+     name = "credentialz",
+-    embed = [":credentialz_go_proto"],
++    srcs = ["credentialz.pb.go", "credentialz_grpc.pb.go"],
+     importpath = "github.com/openconfig/gnsi/credentialz",
++    deps = ["@org_golang_google_grpc//:grpc", "@org_golang_google_grpc//codes", "@org_golang_google_grpc//status",
++            "@org_golang_google_protobuf//reflect/protoreflect", "@org_golang_google_protobuf//runtime/protoimpl"],
+ )
+diff -Nur a/pathz/BUILD.bazel b/pathz/BUILD.bazel
+--- a/pathz/BUILD.bazel	2025-12-03 20:35:11.555443691 +0200
++++ b/pathz/BUILD.bazel	2025-12-03 20:35:11.559443651 +0200
+@@ -1,63 +1,12 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library")
+-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+-load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("@rules_proto_grpc//cpp:defs.bzl", "cpp_grpc_library")
+-load("//:common.bzl", "use_new_compilers")
+ 
+ package(default_visibility = ["//visibility:public"])
+ 
+-use_new_compilers()
+-
+-proto_library(
+-    name = "pathz_proto",
+-    srcs = [
+-        "pathz.proto",
+-    ],
+-    import_prefix = "github.com/openconfig/gnsi",
+-    deps = [
+-        "@com_github_openconfig_gnmi//proto/gnmi:gnmi_proto",
+-    ],
+-)
+-
+-##############################################################################
+-# C++
+-##############################################################################
+-cpp_grpc_library(
+-    name = "pathz_cc_proto",
+-    protos = [
+-        ":pathz_proto",
+-    ],
+-    deps = [
+-        "@com_github_openconfig_gnmi//proto/gnmi:gnmi_cc_proto",
+-    ],
+-)
+-
+-##############################################################################
+-# Go
+-##############################################################################
+-go_proto_library(
+-    name = "pathz_go_proto",
+-    compilers = [
+-        "go_protoc_gen_go",
+-        "go_protoc_gen_go_grpc",
+-    ],
+-    importpath = "github.com/openconfig/gnsi/pathz",
+-    proto = ":pathz_proto",
+-    deps = [
+-        "@com_github_openconfig_gnmi//proto/gnmi:gnmi_go_proto",
+-    ],
+-)
+-
+ go_library(
+     name = "pathz",
+-    embed = [":pathz_go_proto"],
++    srcs = ["pathz.pb.go", "pathz_grpc.pb.go"],
+     importpath = "github.com/openconfig/gnsi/pathz",
+-    deps = [
+-        "@com_github_openconfig_gnmi//proto/gnmi:go_default_library",
+-        "@org_golang_google_grpc//:go_default_library",
+-        "@org_golang_google_grpc//codes:go_default_library",
+-        "@org_golang_google_grpc//status:go_default_library",
+-        "@org_golang_google_protobuf//reflect/protoreflect:go_default_library",
+-        "@org_golang_google_protobuf//runtime/protoimpl:go_default_library",
+-    ],
++    deps = ["@com_github_openconfig_gnmi//proto/gnmi:go_default_library",
++            "@org_golang_google_grpc//:grpc", "@org_golang_google_grpc//codes", "@org_golang_google_grpc//status",
++            "@org_golang_google_protobuf//reflect/protoreflect", "@org_golang_google_protobuf//runtime/protoimpl"],
+ )

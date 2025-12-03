@@ -2,8 +2,26 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test", "nogo")
 load("@rules_pkg//:pkg.bzl", "pkg_deb", "pkg_tar")
 
-#No working tests in telemetry_test
 #gazelle:ignore */telemetry_test.go
+
+go_test(
+    name = "telemetry_test",
+    srcs = ["telemetry_test.go"],
+    embed = [":telemetry_lib"],
+    # Tests reference startGNMIServer which is commented out in telemetry.go
+    # The production code uses startGNMIServerGoog instead
+    # TODO: Update tests to work with startGNMIServerGoog or uncomment startGNMIServer
+    tags = ["manual"],
+    deps = [
+        "//gnmi_server",
+        "//test_utils",
+        "//testdata/tls",
+        "@com_github_agiledragon_gomonkey_v2//:gomonkey",
+        "@com_github_fsnotify_fsnotify//:fsnotify",
+        "@org_golang_google_grpc//:grpc",
+        "@org_golang_google_grpc//credentials",
+    ],
+)
 
 nogo(
     name = "gnmi_nogo",
@@ -69,8 +87,8 @@ go_library(
         "//gnmi_server",
         "//gnmi_server/log",
         "//swsscommon",
-        "@sonic-mgmt-common//translib/db",
         "@com_github_golang_glog//:glog",
+        "@sonic-mgmt-common//translib/db",
     ],
 )
 
