@@ -49,6 +49,8 @@ apt.sources_list(
 apt.install(
     dependency_set = "bookworm",
     packages = [
+        "libpam0g",
+        "libpam0g-dev",
         "libpcre3",
         "libpcre3-dev",
         "libusb-1.0-0",
@@ -141,8 +143,17 @@ go_deps.module_override(
     path = "github.com/google/gnxi",
 )
 
-# msteinert/pam - in deps.bzl due to dependency on @//:third_party_pam from main repo
-# This cannot be moved to go_deps because inject_repo cannot inject the root module
+# msteinert/pam - CGO dependency on PAM library from distroless
+# Custom BUILD file links against @bookworm//libpam0g-dev:libpam0g
+go_deps.gazelle_override(
+    build_file_generation = "off",
+    path = "github.com/msteinert/pam",
+)
+go_deps.module_override(
+    patch_strip = 1,
+    patches = ["//patches:msteinert_pam.patch"],
+    path = "github.com/msteinert/pam",
+)
 
 # openconfig/gnmi - disable proto, needs patch
 go_deps.gazelle_override(
@@ -259,7 +270,8 @@ use_repo(
     "com_github_hashicorp_golang_lru",
     "com_github_kylelemons_godebug",
     "com_github_mitchellh_go_wordwrap",  # For txtpbfmt
-    # msteinert/pam, gnoi, gnsi are in deps.bzl - need custom BUILD files
+    "com_github_msteinert_pam",  # CGO wrapper for PAM
+    # gnoi, gnsi are in deps.bzl - need custom BUILD files
     "com_github_nxadm_tail",
     "com_github_openconfig_gnmi",
     "com_github_openconfig_ygot",
@@ -287,6 +299,8 @@ inject_repo(go_deps, "rules_proto_grpc_cpp")  # For openconfig/gnsi's cpp_grpc_l
 
 inject_repo(go_deps, "rules_java")  # For envoyproxy/protoc-gen-validate
 
+inject_repo(go_deps, "bookworm")  # For msteinert/pam's libpam0g dependency
+
 bazel_dep(name = "rules_python", version = "1.6.3")
 
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
@@ -299,46 +313,26 @@ python.toolchain(
 legacy = use_extension("//:deps.bzl", "deps")
 use_repo(
     legacy,
-    # grpc/grpc is now via bazel_dep with repo_name = "com_github_grpc_grpc"
-    "com_github_msteinert_pam",
     "com_github_openconfig_gnoi",
     "com_github_openconfig_gnsi",
 )
 
-# HTTP archive for fetching libyang
+# SONiC-built libyang 1.0.73 for bookworm
+# libyang 1.x API is required for CGO bindings compatibility
+# Using the same version as sonic-mgmt-common for consistency
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
 
 http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-# libyang - uses pcre from apt packages (@bookworm)
-http_archive(
+sonic_libyang = use_repo_rule("//third_party/libyang:libyang.bzl", "sonic_libyang")
+
+sonic_libyang(
     name = "com_github_cesnet_libyang",
-    build_file = "//third_party/libyang:BUILD.bazel",
-    patch_args = ["-p1"],
-    patches = [
-        "//patches:libyang.patch",
-    ],
-    sha256 = "1b736443d2c69b5d7a71ac412655e6edab0647b18f35f7bf504b0a24e06cb046",
-    strip_prefix = "libyang-1.0.225",
-    urls = [
-        "https://github.com/CESNET/libyang/archive/refs/tags/v1.0.225.tar.gz",
-    ],
+    dev_sha256 = "f34fe596c453d7b422e181a11f5897acefcee8d9dc2dfcdc29c91c64873f7fd0",
+    dev_url = "https://sonic-build.azurewebsites.net/api/sonic/artifacts?branchName=202505&platform=vs&target=target%2Fdebs%2Fbookworm%2Flibyang-dev_1.0.73_amd64.deb",
+    runtime_sha256 = "f389aaa244292f5d24d91b97320c28d4d59b4db2db4b76c59e5f66dfd4efb524",
+    runtime_url = "https://sonic-build.azurewebsites.net/api/sonic/artifacts?branchName=202505&platform=vs&target=target%2Fdebs%2Fbookworm%2Flibyang_1.0.73_amd64.deb",
 )
-
-http_archive(
-    name = "linux_pam",
-    build_file = "//third_party/pam:linux_pam.BUILD",
-    patch_args = ["-p1"],
-    patches = ["//patches:linux_pam_opasswd.patch"],
-    sha256 = "7ac4b50feee004a9fa88f1dfd2d2fa738a82896763050cd773b3c54b0a818283",
-    strip_prefix = "Linux-PAM-1.5.3",
-    urls = [
-        "https://github.com/linux-pam/linux-pam/releases/download/v1.5.3/Linux-PAM-1.5.3.tar.xz",
-    ],
-)
-
-# msteinert/pam Go wrapper now uses go_repository from deps.bzl with custom BUILD
-# The PAM C library is built hermetically below
 
 git_repository = use_repo_rule(
     "@bazel_tools//tools/build_defs/repo:git.bzl",

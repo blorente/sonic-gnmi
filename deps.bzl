@@ -1,8 +1,7 @@
 """Legacy Go dependencies that cannot be migrated to go_deps due to cross-repo visibility issues.
 
-These repositories reference other Bazel repos (like @linux_pam from the main repo)
-that aren't visible in the go_deps module extension namespace. This is a known bzlmod limitation:
-https://github.com/bazelbuild/bazel/issues/19301
+These repositories need custom BUILD files with complex patch_cmds that reference external repos.
+This is a known bzlmod limitation: https://github.com/bazelbuild/bazel/issues/19301
 """
 
 load("@gazelle//:deps.bzl", "go_repository")
@@ -15,39 +14,6 @@ def _ext_impl(m):
         importpath = "github.com/openconfig/gnoi",
         sum = "h1:7u+4jc9kEuaXMYHCLLW2eRO0WC3mElx+0/t/xqRtYJ4=",
         version = "v0.4.1-0.20240320162840-dbdca7782474",
-    )
-
-    # msteinert/pam - needs @//:third_party_pam which isn't visible in go_deps
-    # Using custom BUILD file with cgo linking to hermetic PAM library
-    go_repository(
-        name = "com_github_msteinert_pam",
-        build_file_generation = "off",
-        importpath = "github.com/msteinert/pam",
-        patch_cmds = [
-            """cat > BUILD.bazel << 'EOF'
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
-
-go_library(
-    name = "pam",
-    srcs = [
-        "callback.go",
-        "transaction.c",
-        "transaction.go",
-    ],
-    cgo = True,
-    cdeps = [
-        "@//:third_party_pam",
-    ],
-    copts = ["-Wall", "-std=c99"],
-    clinkopts = ["-ldl"],
-    importpath = "github.com/msteinert/pam",
-    visibility = ["//visibility:public"],
-)
-EOF
-""",
-        ],
-        sum = "h1:ZivaaKmjs9q90zi6I4gTLW6tbVGtlBjellr3hMYaly0=",
-        version = "v0.0.0-20190215180659-f29b9f28d6f9",
     )
 
     # openconfig/gnsi - uses pre-generated .pb.go files instead of proto compilation

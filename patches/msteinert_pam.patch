@@ -1,0 +1,23 @@
+diff --git a/BUILD.bazel b/BUILD.bazel
+new file mode 100644
+--- /dev/null
++++ b/BUILD.bazel
+@@ -0,0 +1,18 @@
++load("@io_bazel_rules_go//go:def.bzl", "go_library")
++
++go_library(
++    name = "pam",
++    srcs = [
++        "callback.go",
++        "transaction.c",
++        "transaction.go",
++    ],
++    cgo = True,
++    cdeps = [
++        "@bookworm//libpam0g-dev:libpam0g",
++    ],
++    copts = ["-Wall", "-std=c99"],
++    clinkopts = ["-ldl"],
++    importpath = "github.com/msteinert/pam",
++    visibility = ["//visibility:public"],
++)

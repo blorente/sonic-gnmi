@@ -75,9 +75,3 @@ alias(
     actual = "//gnmi_server:gnmi_server_debug_image",
 )
 
-# Alias for hermetic PAM library (used by external repositories)
-alias(
-    name = "third_party_pam",
-    actual = "//third_party/pam:pam",
-    visibility = ["//visibility:public"],
-)
