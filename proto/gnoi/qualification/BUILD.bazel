@@ -26,18 +26,6 @@ proto_library(
 )
 
 go_proto_library(
-    name = "qualification_go_proto",
-    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
-    importpath = "github.com/sonic-net/sonic-gnmi/proto/gnoi/qualification",  #keep
-    proto = ":gpins_gnoi_proto",
-    visibility = ["//visibility:public"],
-    deps = [
-        "@com_github_openconfig_gnoi//types",
-        "@org_golang_google_genproto_googleapis_rpc//status",
-    ],
-)
-
-go_proto_library(
     name = "gpins_gnoi_go_proto",
     compilers = ["@io_bazel_rules_go//proto:go_grpc"],
     importpath = "github.com/sonic-net/sonic-gnmi/proto/gnoi/qualification",
