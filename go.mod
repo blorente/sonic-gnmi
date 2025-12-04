@@ -31,6 +31,7 @@ require (
 	github.com/xeipuuv/gojsonschema v1.2.0
 	golang.org/x/crypto v0.31.0
 	golang.org/x/net v0.26.0
+	golang.org/x/tools v0.21.0
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240711142825-46eb208f015d
 	google.golang.org/grpc v1.64.1
 	google.golang.org/grpc/security/advancedtls v1.0.0

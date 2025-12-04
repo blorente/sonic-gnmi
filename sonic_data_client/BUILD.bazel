@@ -62,6 +62,8 @@ go_test(
         "super_subscription_test.go",
     ],
     embed = [":sonic_data_client"],
+    # Integration test - requires database_config.json and schema/ directory
+    tags = ["manual"],
     visibility = ["//visibility:public"],
     deps = [
         "//proto/gnmi_sonic",

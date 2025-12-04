@@ -1,12 +1,8 @@
 package(default_visibility = ["//visibility:public"])
 
 exports_files(glob([
-    "*yang*",
     "*.sh",
     "*.conf",
     "*.json",
     "*.host",
-]) + [
-    "supervisor-proc-exit-listener",
-    "supervisord_dependent_startup",
-])
+]))

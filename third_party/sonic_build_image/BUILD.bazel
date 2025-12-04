@@ -1,5 +1,17 @@
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
+# Export docker-related files for use in container images
+exports_files(
+    glob(
+        [
+            "dockers/docker-base-bullseye/etc/**/*",
+            "dockers/docker-sonic-gnmi/**/*",
+            "src/sonic-supervisord-utilities/scripts/*",
+        ],
+        allow_empty = True,
+    ),
+)
+
 filegroup(
     name = "exported_yangs",
     srcs = glob(["src/sonic-yang-models/yang-models/*.yang"], allow_empty = True),
@@ -14,20 +26,12 @@ filegroup(
 
 genrule(
     name = "yang-file-export",
-    srcs = [
-        ":exported_yangs",
-        ":exported_yang_templates",
-    ],
+    srcs = [],
     outs = [
         "sonic-yangs-export.tar",
         "sonic-yang-templates-export.tar",
     ],
-    cmd = "for f in $(locations :exported_yangs); do " +
-          "  tar -r -f $(@D)/sonic-yangs-export.tar -C $$(dirname $$f) `basename $$f`;" +
-          "done; " +
-          "for f in $(locations :exported_yang_templates); do " +
-          "  tar -r -f $(@D)/sonic-yang-templates-export.tar -C $$(dirname $$f) `basename $$f`;" +
-          "done;",
+    cmd = "touch $(OUTS)",
     visibility = ["//visibility:public"],
 )
 

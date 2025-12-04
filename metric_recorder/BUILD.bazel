@@ -20,6 +20,8 @@ go_test(
     name = "metric_recorder_test",
     srcs = ["metric_recorder_test.go"],
     embed = [":metric_recorder"],
+    # Integration test - requires database_config.json and schema/ directory
+    tags = ["manual"],
     visibility = ["//visibility:public"],
     deps = ["@com_github_redis_go_redis_v9//:go-redis"],
 )

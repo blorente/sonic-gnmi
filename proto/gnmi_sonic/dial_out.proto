@@ -5,6 +5,8 @@ import "github.com/openconfig/gnmi/proto/gnmi/gnmi.proto";
 
 package gnmi.sonic;
 
+option go_package = "./;gnmi_sonic";
+
 // gNMIDialOut defines a service which is used by a target system (typically a
 // network element) to initiate connections to a client (collector). The server
 // is implemented at the collector, such that the target can initiate connections
