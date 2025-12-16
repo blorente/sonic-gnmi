@@ -98,6 +98,10 @@ go_binary(
         "@com_github_cesnet_libyang//:libyang",
     ],
     cgo = True,  #keep
+    clinkopts = [
+        "-static-libstdc++",
+        "-static-libgcc",
+    ],
     embed = [":telemetry_lib"],
     visibility = ["//visibility:public"],
 )

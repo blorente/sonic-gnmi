@@ -1,10 +1,16 @@
-FROM marketplace.gcr.io/google/rbe-ubuntu18-04:latest
+FROM debian:bookworm
 
-RUN apt update
-RUN apt install -y apt-utils
-RUN apt install -y sudo vim
+# Make apt-get non-interactive
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt install -y \
+RUN apt-get update && apt-get install -y eatmydata
+
+RUN eatmydata apt-get install -y \
+    apt-utils \
+    sudo \
+    vim
+
+RUN eatmydata apt-get install -y \
     libpam0g-dev \
     libpam-dev
     #
@@ -19,7 +25,8 @@ RUN apt install -y \
     # libpcre3
 
 # Needed for sonic-swss-common
-RUN apt install -y make \
+RUN eatmydata apt-get install -y \
+    make                \
     libtool             \
     m4                  \
     autoconf            \
@@ -32,14 +39,15 @@ RUN apt install -y make \
     libnl-route-3-dev   \
     libnl-nf-3-dev      \
     libgtest-dev        \
+    libgmock-dev        \
     uuid-dev            \
     libzmq3-dev
 
-# Needed for cyrpta_client (attestation)
-RUN apt install -y libusb-1.0-0-dev
+# Needed for crypta_client (attestation)
+RUN eatmydata apt-get install -y libusb-1.0-0-dev
 
 # Moved into bazel WORKSPACE to build from source
-#    nlohmann-json-dev
+#    nlohmann-json3-dev
 
 # Boost is being installed below from source, we are not using the package
 # manager because we want to specify exact versions.
@@ -54,13 +62,10 @@ RUN apt install -y libusb-1.0-0-dev
 
 # Swig may be needed once we are generating files from sonic-swss-common in
 # sonic-gnmi/swsscommon/
-RUN apt install -y swig
+RUN eatmydata apt-get install -y swig
 
 # Removed:
 #    libpython2.7-dev    \
-
-# Cannot find this package
-#RUN apt install -y libgmock-dev
 
 # Bazel is now building and installling libyang, these debs are not longer needed.
 # COPY tools/docker/libyang*.deb /
@@ -68,7 +73,7 @@ RUN apt install -y swig
 
 # Setup the specific version of boost which is also used in the containers to
 # run the executables this build container will create.
-RUN apt install -y wget
+RUN eatmydata apt-get install -y wget
 RUN mkdir /workspace_libs
 RUN set -eux; \
     wget -q -O /workspace_libs/boost_1_74_0.tar.gz https://archives.boost.io/release/1.74.0/source/boost_1_74_0.tar.gz; \
@@ -80,13 +85,13 @@ RUN set -eux; \
     cd /workspace_libs; \
     rm -rf /workspace_libs/boost_1_74_0;
 
-# Download and install redis client library.
+# Download and install redis client library for Debian Bookworm
 RUN set -eux; \
     cd /workspace_libs; \
-    wget -q http://ftp.us.debian.org/debian/pool/main/h/hiredis/libhiredis0.14_0.14.1-1_amd64.deb; \
-    wget -q http://ftp.us.debian.org/debian/pool/main/h/hiredis/libhiredis-dev_0.14.1-1_amd64.deb; \
-    dpkg -i libhiredis0.14_0.14.1-1_amd64.deb; \
-    dpkg -i libhiredis-dev_0.14.1-1_amd64.deb;
+    wget -q http://ftp.us.debian.org/debian/pool/main/h/hiredis/libhiredis0.14_0.14.1-3_amd64.deb; \
+    wget -q http://ftp.us.debian.org/debian/pool/main/h/hiredis/libhiredis-dev_0.14.1-3_amd64.deb; \
+    dpkg -i libhiredis0.14_0.14.1-3_amd64.deb; \
+    dpkg -i libhiredis-dev_0.14.1-3_amd64.deb;
 
 # Download and build libpcre, this is a dependency of libyang.
 RUN set -eux; \
@@ -101,18 +106,18 @@ RUN set -eux; \
     cd /workspace_libs; \
     rm -rf pcre-8.45;
 
-# Download and build Python 3.9.2, this is a dependency of sonic-gnmi/sonic_data_client
-RUN apt install -y libssl-dev
+# Download and build Python 3.11 (default in Bookworm), dependency of sonic-gnmi/sonic_data_client
+RUN eatmydata apt-get install -y libssl-dev zlib1g-dev
 RUN set -eux; \
     cd /workspace_libs; \
-    wget -q https://github.com/python/cpython/archive/refs/tags/v3.9.2.tar.gz; \
-    tar xzf v3.9.2.tar.gz; \
-    cd cpython-3.9.2; \
+    wget -q https://github.com/python/cpython/archive/refs/tags/v3.11.2.tar.gz; \
+    tar xzf v3.11.2.tar.gz; \
+    cd cpython-3.11.2; \
     ./configure ; \
     make -j`nproc`; \
     make install; \
     cd /workspace_libs; \
-    rm -rf cpython-3.9.2;
+    rm -rf cpython-3.11.2;
 
 # Needed for Kokoro builds, the environment there is a bit different...
 RUN mkdir -p /tmpfs/tmp

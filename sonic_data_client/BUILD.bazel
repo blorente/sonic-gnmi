@@ -16,13 +16,13 @@ go_library(
     ],
     cdeps = [
         "@com_github_cesnet_libyang//:libyang",
-        "@sonic-swss-common//:swsscommon_base",
+        "//swsscommon:swsscommon_consolidated_wrapper",
     ],
     cgo = True,
     # This rule needs some work. gazelle forces copts but I don't know why.
     clinkopts = ["-L/usr/lib -lpthread -lboost_thread -lboost_system -lzmq -lboost_serialization -luuid -lpython3.9 -ldl -lutil"],  #keep
-    copts = ["-g -Wall -Iexternal/sonic-swss-common/common -I/usr/local/include/python3.9 -I/usr/include/python3.9 -Wformat -Werror=format-security -fPIE"],  #keep
-    cppopts = ["-g -Wall -Iexternal/sonic-swss-common/common -I/usr/local/include/python3.9 -I/usr/include/python3.9 -Wformat -Werror=format-security -fPIE"],  #keep
+    copts = ["-g -Wall -Iexternal/sonic-swss-common+/common -I/usr/local/include/python3.9 -I/usr/include/python3.9 -Wformat -Werror=format-security -fPIE"],  #keep
+    cppopts = ["-g -Wall -Iexternal/sonic-swss-common+/common -I/usr/local/include/python3.9 -I/usr/include/python3.9 -Wformat -Werror=format-security -fPIE"],  #keep
     importpath = "github.com/sonic-net/sonic-gnmi/sonic_data_client",
     visibility = ["//visibility:public"],
     deps = [

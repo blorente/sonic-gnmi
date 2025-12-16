@@ -276,12 +276,28 @@
   "moduleExtensions": {
     "//:deps.bzl%deps": {
       "general": {
-        "bzlTransitiveDigest": "QBd0q4Udce4unujTZGEznL+X53KxC/83o0DN/2xSpJE=",
+        "bzlTransitiveDigest": "p+6xLpDuHHvya+9rb7iP83RuADgr6qSWppVxGXOM6ok=",
         "usagesDigest": "jNEO3ehQ54P5WHJyF33j5ncxuJXA0QT+2pPkP27DBCE=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
         "generatedRepoSpecs": {
+          "com_github_msteinert_pam": {
+            "repoRuleId": "@@gazelle+//internal:go_repository.bzl%go_repository",
+            "attributes": {
+              "importpath": "github.com/msteinert/pam",
+              "sum": "h1:4XoXKtMCH3+e6GIkW41uxm6B37eYqci/DH3gzSq7ocg=",
+              "version": "v1.0.0",
+              "build_file_proto_mode": "disable",
+              "build_file_generation": "off",
+              "patches": [
+                "@@//patches:msteinert_pam.patch"
+              ],
+              "patch_args": [
+                "-p1"
+              ]
+            }
+          },
           "com_github_openconfig_gnoi": {
             "repoRuleId": "@@gazelle+//internal:go_repository.bzl%go_repository",
             "attributes": {
@@ -575,7 +591,7 @@
     },
     "@@rules_distroless+//apt:extensions.bzl%apt": {
       "general": {
-        "bzlTransitiveDigest": "R/xcqTjGz8Si0WOSwdfSzViaBCrbWuLxKTN44EkdGDA=",
+        "bzlTransitiveDigest": "emijw6ODwYeGD88xCRCSaq0ZfuKCARKCBd+fqLCL+Oo=",
         "usagesDigest": "+ErSklTqFDWi3A/JFd3ZoFAk1zPGU9XCT2lK82PPirM=",
         "recordedFileInputs": {
           "@@//packages.lock": "264af85872e4b9d8447a908d50dad7ed794e043caf1e9ff3dcb71a7a149d065f",

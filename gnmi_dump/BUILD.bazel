@@ -10,6 +10,11 @@ go_library(
 
 go_binary(
     name = "gnmi_dump",
+    cgo = True,
+    clinkopts = [
+        "-static-libstdc++",
+        "-static-libgcc",
+    ],
     embed = [":gnmi_dump_lib"],
     visibility = ["//visibility:public"],
 )

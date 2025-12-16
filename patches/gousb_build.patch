@@ -3,7 +3,7 @@ new file mode 100644
 index 0000000..abcdef1
 --- /dev/null
 +++ b/BUILD.bazel
-@@ -0,0 +1,27 @@
+@@ -0,0 +1,30 @@
 +load("@io_bazel_rules_go//go:def.bzl", "go_library")
 +
 +go_library(
@@ -26,8 +26,11 @@ index 0000000..abcdef1
 +        "usb.go",
 +    ],
 +    cgo = True,
-+    copts = ["-I/usr/include/libusb-1.0"],
-+    clinkopts = ["-lusb-1.0"],
++    cdeps = [
++        "@bookworm//libusb-1.0-0-dev:libusb-1.0-0",
++    ],
++    copts = [],
++    clinkopts = [],
 +    importpath = "github.com/google/gousb",
 +    visibility = ["//visibility:public"],
 +)

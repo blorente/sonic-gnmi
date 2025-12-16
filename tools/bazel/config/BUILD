@@ -40,7 +40,7 @@ platform(
         "@bazel_tools//tools/cpp:clang",
     ],
     exec_properties = {
-        "container-image": "docker://gcr.io/gpins-sonic-swss/sonic-rbe-umf@sha256:835fb2080b9d51af8a2ca399b54601a978deba9d0cc27b9e83ce732a40c0da0e",
+        "container-image": "docker://gcr.io/gpins-sonic-swss/sonic-rbe-bookworm:latest",
         "OSFamily": "Linux",
     },
     parents = ["@local_config_platform//:host"],

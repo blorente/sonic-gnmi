@@ -39,15 +39,37 @@ go_library(
         "swsscommon.go",
         "swsscommon_wrap.cxx",  #keep
         "swsscommon_wrap.h",
-    ],
-    cdeps = [
-        "@com_github_cesnet_libyang//:libyang",
-        "@sonic-swss-common//:swsscommon_base",
-        ":swsscommon_go_cpp",
-    ],
+    ] + ["@sonic-swss-common//:all_hdrs"],
+    cdeps = [":swsscommon_consolidated_wrapper"],
     cgo = True,  #keep
-    # cppopts removed - includes are propagated from swsscommon_base cdeps
+    clinkopts = ["-fuse-ld=bfd"],
+    cppopts = [
+        "-I.",
+        "-Iexternal/sonic-swss-common+/common",
+        "-I$(GENDIR)/external/sonic-swss-common/common",
+    ],
     importpath = "github.com/sonic-net/sonic-gnmi/swsscommon",
+    visibility = ["//visibility:public"],
+)
+
+# Wrapper cc_library that references the consolidated shared library
+# The consolidated .so already contains everything needed (libbsd, libmd statically linked)
+# We only need the headers and the .so itself - no deps on @bookworm// packages
+# This prevents CGO from trying to link transitive .so files that aren't in the sandbox
+# We use linkopts to specify the runtime dependencies instead of deps to avoid the transitive dependency issue
+cc_library(
+    name = "swsscommon_consolidated_wrapper",
+    srcs = ["@sonic-swss-common//:libswsscommon_consolidated.so"],
+    hdrs = ["@sonic-swss-common//:all_hdrs"],
+    linkopts = [
+        "-lhiredis",
+        "-lnl-3",
+        "-lnl-route-3",
+        "-lnl-nf-3",
+        "-lzmq",
+        "-luuid",
+        "-lboost_serialization",
+    ],
     visibility = ["//visibility:public"],
 )
 
@@ -57,9 +79,11 @@ cc_library(
         "swsscommon_wrap.cxx",
     ],
     hdrs = ["swsscommon_wrap.h"],
-    # copts removed - includes are propagated from swsscommon_base dependency
-    deps = [
-        "@com_github_cesnet_libyang//:libyang",
+    copts = [
+        "-I$(GENDIR)/external/sonic-swss-common/common",
+        "-Iexternal/sonic-swss-common/common",
+    ],
+    implementation_deps = [
         "@sonic-swss-common//:swsscommon_base",
     ],
 )
