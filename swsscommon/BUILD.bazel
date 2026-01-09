@@ -40,35 +40,51 @@ go_library(
         "swsscommon_wrap.cxx",  #keep
         "swsscommon_wrap.h",
     ] + ["@sonic-swss-common//:all_hdrs"],
-    cdeps = [":swsscommon_consolidated_wrapper"],
+    cdeps = [
+        ":swsscommon_consolidated_wrapper",
+        # Use _wodeps variants to avoid "argument list too long" from transitive deps
+        # The actual linking is handled by swsscommon_consolidated_wrapper
+        "@@rules_distroless++apt+bookworm_libboost1.74-dev-amd64_1.74.0-ds1-21//:libboost1.74_wodeps",
+        "@@rules_distroless++apt+bookworm_libhiredis-dev-amd64_0.14.1-3//:libhiredis_wodeps",
+    ],
     cgo = True,  #keep
     clinkopts = ["-fuse-ld=bfd"],
     cppopts = [
         "-I.",
         "-Iexternal/sonic-swss-common+/common",
         "-I$(GENDIR)/external/sonic-swss-common/common",
+        # rules_go CGO uses -iquote for cdeps which doesn't work for angle bracket includes
+        # The apt packages use strip_include_prefix but CGO doesn't honor it
+        # Add explicit -isystem paths to headers (extracted to genfiles during build)
+        "-isystem",
+        "$(GENDIR)/external/rules_distroless++apt+bookworm_libboost1.74-dev-amd64_1.74.0-ds1-21/usr/include",
+        "-isystem",
+        "$(GENDIR)/external/rules_distroless++apt+bookworm_libhiredis-dev-amd64_0.14.1-3/usr/include",
     ],
     importpath = "github.com/sonic-net/sonic-gnmi/swsscommon",
     visibility = ["//visibility:public"],
 )
 
 # Wrapper cc_library that references the consolidated shared library
-# The consolidated .so already contains everything needed (libbsd, libmd statically linked)
-# We only need the headers and the .so itself - no deps on @bookworm// packages
-# This prevents CGO from trying to link transitive .so files that aren't in the sandbox
-# We use linkopts to specify the runtime dependencies instead of deps to avoid the transitive dependency issue
+# The consolidated .so statically links libbsd and libmd
+# We include runtime deps .so files directly to avoid transitive dep explosion
 cc_library(
     name = "swsscommon_consolidated_wrapper",
     srcs = ["@sonic-swss-common//:libswsscommon_consolidated.so"],
     hdrs = ["@sonic-swss-common//:all_hdrs"],
+    # Use _wodeps variants to get .so files without full transitive dep explosion
+    deps = [
+        "@@rules_distroless++apt+bookworm_libhiredis-dev-amd64_0.14.1-3//:libhiredis_wodeps",
+        "@@rules_distroless++apt+bookworm_libnl-3-dev-amd64_3.7.0-0.2-b1//:libnl-3_wodeps",
+        "@@rules_distroless++apt+bookworm_libnl-route-3-dev-amd64_3.7.0-0.2-b1//:libnl-route-3_wodeps",
+        "@@rules_distroless++apt+bookworm_libnl-nf-3-dev-amd64_3.7.0-0.2-b1//:libnl-nf-3_wodeps",
+        "@@rules_distroless++apt+bookworm_libzmq3-dev-amd64_4.3.4-6//:libzmq3_wodeps",
+        "@@rules_distroless++apt+bookworm_uuid-dev-amd64_2.38.1-5-deb12u3//:uuid_wodeps",
+        "@@rules_distroless++apt+bookworm_libboost-serialization-dev-amd64_1.74.0.3//:libboost-serialization_wodeps",
+    ],
     linkopts = [
-        "-lhiredis",
-        "-lnl-3",
-        "-lnl-route-3",
-        "-lnl-nf-3",
-        "-lzmq",
-        "-luuid",
-        "-lboost_serialization",
+        # Allow undefined symbols - they'll be resolved at runtime
+        "-Wl,--allow-shlib-undefined",
     ],
     visibility = ["//visibility:public"],
 )

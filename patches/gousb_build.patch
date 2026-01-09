@@ -1,11 +1,35 @@
 diff --git a/BUILD.bazel b/BUILD.bazel
 new file mode 100644
-index 0000000..abcdef1
 --- /dev/null
 +++ b/BUILD.bazel
-@@ -0,0 +1,30 @@
+@@ -0,0 +1,63 @@
 +load("@io_bazel_rules_go//go:def.bzl", "go_library")
++load("@rules_cc//cc:cc_library.bzl", "cc_library")
 +
++# Extract libudev.so.1 from the libudev1 package tarball and create libudev.so symlink
++# This avoids the "argument list too long" issue that occurs when using
++# libudev-dev cc_library directly due to transitive include dependencies
++genrule(
++    name = "extract_libudev",
++    srcs = ["@bookworm//libudev1:data"],
++    outs = ["libudev.so.1", "libudev.so"],
++    cmd = """
++        tar -xzf $(SRCS) -O ./usr/lib/x86_64-linux-gnu/libudev.so.1 > $(location libudev.so.1)
++        cp $(location libudev.so.1) $(location libudev.so)
++    """,
++)
++
++# Wrapper cc_library that provides libudev.so for linking
++cc_library(
++    name = "libudev_linker",
++    srcs = [":libudev.so.1", ":libudev.so"],
++    linkopts = [
++        "-Wl,-rpath,/usr/lib/x86_64-linux-gnu",
++    ],
++)
++
++# gousb with hermetic libusb from rules_distroless apt packages
++# Uses the modern @bookworm// package naming convention
 +go_library(
 +    name = "gousb",
 +    srcs = [
@@ -28,9 +52,17 @@ index 0000000..abcdef1
 +    cgo = True,
 +    cdeps = [
 +        "@bookworm//libusb-1.0-0-dev:libusb-1.0-0",
++        ":libudev_linker",
 +    ],
-+    copts = [],
-+    clinkopts = [],
++    clinkopts = [
++        "-lpthread",
++    ],
++    copts = [
++        "-I$(BINDIR)/external/rules_distroless++apt+bookworm_libusb-1.0-0-dev-amd64_2-1.0.26-1/usr/include/libusb-1.0",
++    ],
++    cppopts = [
++        "-I$(BINDIR)/external/rules_distroless++apt+bookworm_libusb-1.0-0-dev-amd64_2-1.0.26-1/usr/include/libusb-1.0",
++    ],
 +    importpath = "github.com/google/gousb",
 +    visibility = ["//visibility:public"],
 +)

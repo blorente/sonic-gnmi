@@ -2,7 +2,7 @@ diff --git a/BUILD.bazel b/BUILD.bazel
 new file mode 100644
 --- /dev/null
 +++ b/BUILD.bazel
-@@ -0,0 +1,18 @@
+@@ -0,0 +1,22 @@
 +load("@io_bazel_rules_go//go:def.bzl", "go_library")
 +
 +go_library(
@@ -15,6 +15,10 @@ new file mode 100644
 +    cgo = True,
 +    cdeps = [
 +        "@bookworm//libpam0g-dev:libpam0g",
++    ],
++    cppopts = [
++        "-I$(BINDIR)/external/rules_distroless++apt+bookworm_libpam0g-dev-amd64_1.5.2-6-deb12u1/usr/include/security",
++        "-I$(BINDIR)/external/rules_distroless++apt+bookworm_libpam0g-dev-amd64_1.5.2-6-deb12u1/usr/include",
 +    ],
 +    copts = ["-Wall", "-std=c99"],
 +    clinkopts = ["-ldl"],

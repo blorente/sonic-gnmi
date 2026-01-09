@@ -5,4 +5,4 @@ exports_files(glob([
     "*.conf",
     "*.json",
     "*.host",
-]))
+], allow_empty = True) )

@@ -5,7 +5,7 @@
 # For more details, please check https://github.com/bazelbuild/bazel/issues/18958
 ###############################################################################
 module(
-    name = "gnmi",
+    name = "sonic-gnmi",
     version = "0.0.0",
 )
 
@@ -29,6 +29,12 @@ local_path_override(
     path = "../rules_distroless",
 )
 
+bazel_dep(name = "sonic-build-infra", version = "0.0.0")
+local_path_override(
+    module_name = "sonic-build-infra",
+    path = "../sonic-build-infra",
+)
+
 # APT packages from Debian bookworm
 apt = use_extension("@rules_distroless//apt:extensions.bzl", "apt")
 apt.sources_list(
@@ -49,12 +55,42 @@ apt.sources_list(
 apt.install(
     dependency_set = "bookworm",
     packages = [
+        # sonic-gnmi specific packages
         "libpam0g",
         "libpam0g-dev",
         "libpcre3",
         "libpcre3-dev",
         "libusb-1.0-0",
         "libusb-1.0-0-dev",
+        # libudev is needed by libusb
+        "libudev1",
+        "libudev-dev",
+        # Additional Boost libraries specific to sonic-gnmi (thread and system)
+        "libboost-thread-dev",
+        "libboost-system-dev",
+        # Python 3.11 for sonic_data_client
+        "libpython3.11-dev",
+        "python3.11-dev",
+        # crypt.h needed by Python headers
+        "libcrypt-dev",
+        # Dependencies for sonic-swss-common (root module provides @bookworm repo)
+        "libhiredis-dev",
+        "libnl-3-dev",
+        "libnl-genl-3-dev",
+        "libnl-route-3-dev",
+        "libnl-nf-3-dev",
+        "nlohmann-json3-dev",
+        "libyang2-dev",
+        "libzmq3-dev",
+        "uuid-dev",
+        "libboost-dev",
+        "libboost-serialization-dev",
+        # Core C/C++ runtime libraries (needed by gcc toolchain)
+        "libstdc++-12-dev",
+        "libstdc++6",
+        "linux-libc-dev",
+        "libc6-dev",
+        "libgcc-12-dev",
     ],
     target_release = "bookworm",
 )
@@ -86,149 +122,13 @@ go_sdk.download(version = "1.22.4")
 go_deps = use_extension("@gazelle//:extensions.bzl", "go_deps")
 go_deps.from_file(go_mod = "//:go.mod")
 
-# Module overrides for repositories requiring patches or special build settings
-
-# gousb - uses system libusb (from apt packages in container, or host system)
-# Custom BUILD file with cgo linking to system libusb
-go_deps.archive_override(
-    patch_strip = 1,
-    patches = ["//patches:gousb_build.patch"],
-    path = "github.com/google/gousb",
-    sha256 = "c50544ad2bd81a431ff26f3df6cfdd93042e8a70effc808c63a43a0a8c07ea68",
-    strip_prefix = "gousb-1.1.3",
-    urls = [
-        "https://github.com/google/gousb/archive/refs/tags/v1.1.3.tar.gz",
-    ],
-)
-go_deps.gazelle_override(
-    build_file_generation = "off",
-    path = "github.com/google/gousb",
-)
-
-# antchfx packages need patches
-go_deps.module_override(
-    patch_strip = 1,
-    patches = ["//patches:jsonquery.patch"],
-    path = "github.com/antchfx/jsonquery",
-)
-go_deps.module_override(
-    patch_strip = 1,
-    patches = ["//patches:xmlquery.patch"],
-    path = "github.com/antchfx/xmlquery",
-)
-go_deps.module_override(
-    patch_strip = 1,
-    patches = ["//patches:xpath.patch"],
-    path = "github.com/antchfx/xpath",
-)
-
-# gogo/protobuf - disable proto file generation
-go_deps.gazelle_override(
-    directives = [
-        "gazelle:proto disable",
-    ],
-    path = "github.com/gogo/protobuf",
-)
-
-# golang/glog - needs patch and version replacement (handled via go.mod replace)
-go_deps.module_override(
-    patch_strip = 1,
-    patches = ["//patches:glog.patch"],
-    path = "github.com/golang/glog",
-)
-
-# google/gnxi - needs patch
-go_deps.module_override(
-    patch_strip = 1,
-    patches = ["//patches:github.com-google-gnxi.patch"],
-    path = "github.com/google/gnxi",
-)
-
-# msteinert/pam - CGO dependency on PAM library from distroless
-# Custom BUILD file links against @bookworm//libpam0g-dev:libpam0g
-go_deps.gazelle_override(
-    build_file_generation = "off",
-    path = "github.com/msteinert/pam",
-)
-go_deps.module_override(
-    patch_strip = 1,
-    patches = ["//patches:msteinert_pam.patch"],
-    path = "github.com/msteinert/pam",
-)
-
-# openconfig/gnmi - disable proto, needs patch
-go_deps.gazelle_override(
-    directives = [
-        "gazelle:proto disable",
-    ],
-    path = "github.com/openconfig/gnmi",
-)
-go_deps.module_override(
-    patch_strip = 1,
-    patches = ["//patches:github.com-openconfig-gnmi.patch"],
-    path = "github.com/openconfig/gnmi",
-)
+# NOTE: All go_deps.module_override and go_deps.archive_override tags have been moved
+# to sonic-buildimage/MODULE.bazel because these override types are forbidden in
+# non-root Bazel modules. The overrides are applied when building from sonic-buildimage
+# as the root module.
+# This includes the openconfig/gnmi patch for errlist BUILD.bazel.
 
 # openconfig/gnsi is in deps.bzl due to cross-repo dependency on @rules_proto_grpc
-
-# openconfig/goyang - needs patch
-go_deps.module_override(
-    patch_strip = 1,
-    patches = ["//patches/goyang:goyang.patch"],
-    path = "github.com/openconfig/goyang",
-)
-
-# openconfig/grpctunnel - disable proto, custom gazelle directives
-go_deps.gazelle_override(
-    directives = [
-        "gazelle:proto disable",
-        "gazelle:proto_import_prefix github.com/openconfig/grpctunnel",
-        "gazelle:prefix github.com/openconfig/grpctunnel",
-        "gazelle:resolve go github.com/openconfig/grpctunnel/proto/tunnel //proto/tunnel:go_default_library",
-    ],
-    path = "github.com/openconfig/grpctunnel",
-)
-
-# openconfig/ygot - needs patches and gazelle directives
-go_deps.gazelle_override(
-    directives = [
-        "gazelle:proto_import_prefix github.com/openconfig/ygot",
-    ],
-    path = "github.com/openconfig/ygot",
-)
-go_deps.module_override(
-    patch_strip = 1,
-    patches = [
-        "//patches:github.com-openconfig-ygot.patch",
-        "//patches/ygot:ygot.patch",
-    ],
-    path = "github.com/openconfig/ygot",
-)
-
-# google.golang.org/grpc - disable proto
-# Note: grpc_advancedtls.patch removed - newer grpc versions have different structure
-go_deps.gazelle_override(
-    directives = [
-        "gazelle:proto disable",
-    ],
-    path = "google.golang.org/grpc",
-)
-
-# google.golang.org/protobuf - disable global proto mode
-go_deps.gazelle_override(
-    directives = [
-        "gazelle:proto disable",
-    ],
-    path = "google.golang.org/protobuf",
-)
-
-# envoyproxy/protoc-gen-validate - custom naming convention
-go_deps.gazelle_override(
-    directives = [
-        "gazelle:go_naming_convention import_alias",
-    ],
-    path = "github.com/envoyproxy/protoc-gen-validate",
-)
 
 # protocolbuffers/txtpbfmt - needed by openconfig/gnmi cli
 go_deps.module(
@@ -305,9 +205,16 @@ inject_repo(go_deps, "bookworm")  # For msteinert/pam's libpam0g dependency
 
 bazel_dep(name = "rules_python", version = "1.6.3")
 
+# Pin rules_python to 1.6.3 for stability. With protoc-gen-validate@1.3.0 pinned above,
+# newer versions of rules_python may now be compatible - this can be tested later.
+single_version_override(
+    module_name = "rules_python",
+    version = "1.6.3",
+)
+
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
-    python_version = "3.9",
+    python_version = "3.11",
 )
 
 # OCI (Docker) base images for test and debug containers

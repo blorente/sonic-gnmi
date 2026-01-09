@@ -17,12 +17,30 @@ go_library(
     cdeps = [
         "@com_github_cesnet_libyang//:libyang",
         "//swsscommon:swsscommon_consolidated_wrapper",
+        # Headers and libraries from apt packages (use _wodeps to avoid transitive dep explosion)
+        "@@rules_distroless++apt+bookworm_libcrypt-dev-amd64_1-4.4.33-2//:libcrypt_wodeps",
+        "@@rules_distroless++apt+bookworm_libboost-thread-dev-amd64_1.74.0.3//:libboost-thread_wodeps",
+        "@@rules_distroless++apt+bookworm_libboost-system-dev-amd64_1.74.0.3//:libboost-system_wodeps",
+        "@@rules_distroless++apt+bookworm_libpython3.11-dev-amd64_3.11.2-6-deb12u6//:libpython3.11_wodeps",
     ],
     cgo = True,
-    # This rule needs some work. gazelle forces copts but I don't know why.
-    clinkopts = ["-L/usr/lib -lpthread -lboost_thread -lboost_system -lzmq -lboost_serialization -luuid -lpython3.9 -ldl -lutil"],  #keep
+    # System libraries only - boost/python/zmq/uuid are provided via cdeps
+    clinkopts = ["-lpthread", "-ldl", "-lutil", "-Wl,--allow-shlib-undefined"],  #keep
     copts = ["-g -Wall -Iexternal/sonic-swss-common+/common -I/usr/local/include/python3.9 -I/usr/include/python3.9 -Wformat -Werror=format-security -fPIE"],  #keep
-    cppopts = ["-g -Wall -Iexternal/sonic-swss-common+/common -I/usr/local/include/python3.9 -I/usr/include/python3.9 -Wformat -Werror=format-security -fPIE"],  #keep
+    cppopts = [
+        "-g",
+        "-Wall",
+        "-Iexternal/sonic-swss-common+/common",
+        # Python 3.11 includes from apt package
+        "-isystem",
+        "$(GENDIR)/external/rules_distroless++apt+bookworm_libpython3.11-dev-amd64_3.11.2-6-deb12u6/usr/include/python3.11",
+        # crypt.h is needed by Python.h
+        "-isystem",
+        "$(GENDIR)/external/rules_distroless++apt+bookworm_libcrypt-dev-amd64_1-4.4.33-2/usr/include",
+        "-Wformat",
+        "-Werror=format-security",
+        "-fPIE",
+    ],  #keep
     importpath = "github.com/sonic-net/sonic-gnmi/sonic_data_client",
     visibility = ["//visibility:public"],
     deps = [

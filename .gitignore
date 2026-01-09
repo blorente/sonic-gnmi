@@ -27,10 +27,7 @@ swsscommon/swsscommon_wrap.cxx
 swsscommon/swsscommon_wrap.h
 
 # Bazel Directories
-bazel-bin
-bazel-out
-bazel-sonic-gnmi
-bazel-testlogs
+bazel-*
 
 # Editor Temp Files
 *.swp

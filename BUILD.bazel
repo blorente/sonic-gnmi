@@ -1,4 +1,5 @@
 load("@gazelle//:def.bzl", "gazelle")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 # TODO: Add buildtools to MODULE.bazel bazel_dep
 # load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
@@ -73,5 +74,39 @@ alias(
 alias(
     name = "gnmi_server_debug_image",
     actual = "//gnmi_server:gnmi_server_debug_image",
+)
+
+# Consolidated package containing all gNMI binaries
+pkg_tar(
+    name = "gnmi_binaries",
+    srcs = [
+        "//telemetry:telemetry",
+        "//gnmi_dump:gnmi_dump",
+        "//gnoi_client:gnoi_client",
+        "//dialout/dialout_client_cli:dialout_client_cli",
+    ],
+    mode = "0755",
+    package_dir = "/usr/sbin",
+    visibility = ["//visibility:public"],
+)
+
+# Export libyang runtime libraries for container packaging
+# These need to be packaged into OCI containers that run gNMI binaries
+filegroup(
+    name = "libyang_shared_libs",
+    srcs = ["@com_github_cesnet_libyang//:shared_libs"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "libyang_extension_plugins",
+    srcs = ["@com_github_cesnet_libyang//:extension_plugins"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "libyang_user_type_plugins",
+    srcs = ["@com_github_cesnet_libyang//:user_type_plugins"],
+    visibility = ["//visibility:public"],
 )
 
