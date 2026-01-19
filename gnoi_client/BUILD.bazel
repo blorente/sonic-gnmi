@@ -13,7 +13,7 @@ go_library(
         "ocs.go",
         "qual.go",
         "system.go",
-    ],
+        ],
     importpath = "github.com/sonic-net/sonic-gnmi/gnoi_client",
     visibility = ["//visibility:private"],
     deps = [
@@ -23,7 +23,6 @@ go_library(
         "//proto/gnoi/qualification",
         "//proto/sonic_gnoi",
         "//proto/sonic_gnoi/jwt",
-        "@com_github_golang_protobuf//proto",
         "@com_github_google_gnxi//utils/credentials",
         "@com_github_openconfig_gnoi//diag",
         "@com_github_openconfig_gnoi//factory_reset",
@@ -35,6 +34,7 @@ go_library(
         "@org_golang_google_grpc//metadata",
         "@org_golang_google_protobuf//encoding/protojson",
         "@org_golang_google_protobuf//encoding/prototext",
+        "@com_github_golang_protobuf//proto:go_default_library",
     ],
 )
 
@@ -62,7 +62,7 @@ go_test(
         "@com_github_openconfig_gnoi//diag",
         "@com_github_openconfig_gnoi//healthz",
         "@com_github_openconfig_gnoi//types",
-        "@org_golang_google_grpc//:grpc",
+        "@org_golang_google_grpc//:go_default_library",
         "@org_golang_google_grpc//credentials",
     ],
 )
