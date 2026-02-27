@@ -291,13 +291,6 @@ git_repository(
     name = "sonic-buildimage",
     branch = "master",
     build_file = "//third_party/sonic_build_image:BUILD.bazel",
-    remote = "https://github.com/sonic-net/sonic-buildimage",
+    remote = "https://github.com/thesayyn/sonic-buildimage",
 )
 
-git_repository(
-    name = "com_github_nlohmann_json",
-    # Current tip of "develop" branch as of Nov-2023.  Using this commit since
-    # the last release is quite old and does not contain bazel support.
-    commit = "6eab7a2b187b10b2494e39c1961750bfd1bda500",
-    remote = "https://github.com/nlohmann/json",
-)
