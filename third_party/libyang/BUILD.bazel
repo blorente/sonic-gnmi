@@ -1,4 +1,0 @@
-# This directory contains the repository rule for SONiC-built libyang packages.
-# The actual library targets are in the @sonic_libyang external repository.
-
-exports_files(["libyang.bzl"])

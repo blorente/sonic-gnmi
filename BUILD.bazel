@@ -64,18 +64,6 @@ alias(
     actual = "@sonic-mgmt-common//models/yang:yang-tree",
 )
 
-# A shortcut to build a Docker image that is used for component testing.
-alias(
-    name = "gnmi_server_test_image",
-    actual = "//gnmi_server:gnmi_server_test_image",
-)
-
-# A shortcut to build a Docker image that is used for debugging UMF.
-alias(
-    name = "gnmi_server_debug_image",
-    actual = "//gnmi_server:gnmi_server_debug_image",
-)
-
 # Consolidated package containing all gNMI binaries
 pkg_tar(
     name = "gnmi_binaries",
@@ -87,26 +75,6 @@ pkg_tar(
     ],
     mode = "0755",
     package_dir = "/usr/sbin",
-    visibility = ["//visibility:public"],
-)
-
-# Export libyang runtime libraries for container packaging
-# These need to be packaged into OCI containers that run gNMI binaries
-filegroup(
-    name = "libyang_shared_libs",
-    srcs = ["@com_github_cesnet_libyang//:shared_libs"],
-    visibility = ["//visibility:public"],
-)
-
-filegroup(
-    name = "libyang_extension_plugins",
-    srcs = ["@com_github_cesnet_libyang//:extension_plugins"],
-    visibility = ["//visibility:public"],
-)
-
-filegroup(
-    name = "libyang_user_type_plugins",
-    srcs = ["@com_github_cesnet_libyang//:user_type_plugins"],
     visibility = ["//visibility:public"],
 )
 

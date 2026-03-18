@@ -1,7 +1,5 @@
-diff --git a/BUILD.bazel b/BUILD.bazel
-new file mode 100644
 --- /dev/null
-+++ b/BUILD.bazel
++++ BUILD.bazel
 @@ -0,0 +1,22 @@
 +load("@io_bazel_rules_go//go:def.bzl", "go_library")
 +
