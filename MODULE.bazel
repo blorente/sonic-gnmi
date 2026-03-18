@@ -100,19 +100,6 @@ apt.install(
         "python3.11-dev",
         # crypt.h needed by Python headers
         "libcrypt-dev",
-        # Core C/C++ runtime libraries (needed by gcc toolchain)
-        "libstdc++-12-dev",
-        "libstdc++6",
-        "linux-libc-dev",
-        "libc6-dev",
-        "libgcc-12-dev",
-        # sonic-swss-common dependencies
-        "nlohmann-json3-dev",
-        "libhiredis-dev",
-        "uuid-dev",
-        "libzmq3-dev",
-        "libyang2-dev",
-        "swig",
     ],
     suites = ["bookworm"],
 )
