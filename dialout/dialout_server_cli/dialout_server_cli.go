@@ -36,11 +36,7 @@ func main() {
 	var err error
 
 	if *insecure {
-		certBuf, keyBuf, err := testcert.NewCert()
-		if err != nil {
-			log.Exitf("could not generate test certificate: %s", err)
-		}
-		certificate, err = tls.X509KeyPair(certBuf.Bytes(), keyBuf.Bytes())
+		certificate, err = testcert.NewCert()
 		if err != nil {
 			log.Exitf("could not load server key pair: %s", err)
 		}
