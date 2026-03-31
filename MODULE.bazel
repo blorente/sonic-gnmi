@@ -101,7 +101,11 @@ apt.install(
         # crypt.h needed by Python headers
         "libcrypt-dev",
     ],
-    suites = ["bookworm"],
+    suites = [
+        "bookworm",
+        "bookworm-updates",
+        "bookworm-security",
+    ],
 )
 apt.lock(into = ":packages.lock")
 use_repo(apt, "bookworm")
