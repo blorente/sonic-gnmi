@@ -161,6 +161,15 @@ use_repo(
     # "org_golang_x_term",  # For crypto/ssh
 )
 
+# Inject repos into go_deps extension to make them visible to its repos
+# This solves cross-repo visibility issues (https://github.com/bazelbuild/bazel/issues/19301)
+# inject_repo makes the specified repos available to repos created by go_deps
+inject_repo(go_deps, "com_github_grpc_grpc")  # For openconfig/gnmi's cc_grpc_library.bzl
+# TODO BL: will probably need to inject more
+# inject_repo(go_deps, "rules_proto_grpc_cpp")  # For openconfig/gnsi's cpp_grpc_library
+# inject_repo(go_deps, "rules_java")  # For envoyproxy/protoc-gen-validate
+inject_repo(go_deps, "bookworm")  # For msteinert/pam's libpam0g dependency
+
 # SONiC-patched ygot/goyang/gnmi from sonic-mgmt-common's extension. The extension is not
 # root-only, so consumers of sonic-gnmi get these repos without any extra boilerplate.
 sonic_go_repos = use_extension("@sonic-mgmt-common//:go_repos.bzl", "sonic_go_repos")
