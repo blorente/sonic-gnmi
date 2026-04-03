@@ -113,7 +113,7 @@ use_repo(apt, "bookworm")
 bazel_dep(name = "gazelle", version = "0.46.0")
 
 go_sdk = use_extension("@io_bazel_rules_go//go:extensions.bzl", "go_sdk")
-go_sdk.download(version = "1.24.5") # TODO BL: Was 1.22.4, needed to update because googleapis_grpc needs a newer version.
+go_sdk.download(version = "1.25.0")  # TODO BL: Was 1.22.4, needed to update because googleapis_grpc needs a newer version.
 
 # Go dependencies via gazelle's go_deps extension
 go_deps = use_extension("@gazelle//:extensions.bzl", "go_deps")
@@ -153,7 +153,6 @@ use_repo(
     "org_golang_google_protobuf",
     "org_golang_x_crypto",
     "org_golang_x_net",
-    "org_golang_x_tools",  # For nogo static analysis
 
     # TODO BL: Imported, but not in deps
     # "com_github_mitchellh_go_wordwrap",  # For txtpbfmt
@@ -165,6 +164,7 @@ use_repo(
 # This solves cross-repo visibility issues (https://github.com/bazelbuild/bazel/issues/19301)
 # inject_repo makes the specified repos available to repos created by go_deps
 inject_repo(go_deps, "com_github_grpc_grpc")  # For openconfig/gnmi's cc_grpc_library.bzl
+
 # TODO BL: will probably need to inject more
 # inject_repo(go_deps, "rules_proto_grpc_cpp")  # For openconfig/gnsi's cpp_grpc_library
 # inject_repo(go_deps, "rules_java")  # For envoyproxy/protoc-gen-validate
@@ -183,6 +183,8 @@ use_repo(
 inject_repo(sonic_go_repos, "rules_proto")
 
 inject_repo(sonic_go_repos, "org_golang_google_protobuf")
+
+inject_repo(sonic_go_repos, "org_golang_x_crypto")
 # inject_repo(sonic_go_repos, "com_google_protobuf")
 
 # TODO BL: Not migrated yet:
