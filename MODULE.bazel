@@ -117,7 +117,7 @@ use_repo(apt, "bookworm")
 bazel_dep(name = "gazelle", version = "0.46.0")
 
 go_sdk = use_extension("@io_bazel_rules_go//go:extensions.bzl", "go_sdk")
-go_sdk.download(version = "1.22.4")  # TODO BL: We may need to upgrade, the PR has a newer version, 1.24.5
+go_sdk.download(version = "1.24.5") # TODO BL: Was 1.22.4, needed to update because googleapis_grpc needs a newer version.
 
 # Go dependencies via gazelle's go_deps extension
 go_deps = use_extension("@gazelle//:extensions.bzl", "go_deps")
