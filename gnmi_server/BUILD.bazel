@@ -141,6 +141,8 @@ go_test(
     ],
     embed = [":gnmi_server"],
     gotags = ["gnmi_translib_write"],
+    # TODO(bazel-ready): Integration test - requires database_config.json and schema/ directory
+    tags = ["manual"],
     deps = [
         "//common_utils",
         "//gnmi_server/log",

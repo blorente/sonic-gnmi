@@ -47,6 +47,8 @@ go_test(
         "warm_restart_test.go",
     ],
     embed = [":common_utils"],
+    # TODO(bazel-ready): Integration test - requires database_config.json and schema/ directory
+    tags = ["manual"],
     visibility = ["//visibility:public"],
     deps = [
         "//gnmi_server/log",

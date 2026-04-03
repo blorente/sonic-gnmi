@@ -24,6 +24,8 @@ go_test(
     name = "dialout_client_test",
     srcs = ["dialout_client_test.go"],
     embed = [":dialout_client"],
+    # TODO(bazel-ready): Integration test - requires database_config.json and schema/ directory
+    tags = ["manual"],
     visibility = ["//visibility:public"],
     deps = [
         "//dialout/dialout_server",
