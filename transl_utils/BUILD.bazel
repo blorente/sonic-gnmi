@@ -29,9 +29,9 @@ go_test(
         "ygot_diff_test.go",
     ],
     embed = [":transl_utils"],
-    visibility = ["//visibility:public"],
     # TODO(bazel-ready): Integration test - requires database_config.json and schema/ directory
     tags = ["manual"],
+    visibility = ["//visibility:public"],
     deps = [
         "@com_github_openconfig_gnmi//proto/gnmi",
         "@com_github_openconfig_ygot//ygot",

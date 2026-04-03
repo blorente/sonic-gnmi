@@ -59,7 +59,7 @@ go_test(
     name = "sonic_data_client_test",
     srcs = [
         "client_test.go",
-        "super_subscription_test.go"
+        "super_subscription_test.go",
     ],
     embed = [":sonic_data_client"],
     visibility = ["//visibility:public"],

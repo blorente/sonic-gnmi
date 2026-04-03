@@ -13,12 +13,12 @@ go_library(
     deps = [
         "@com_github_gogo_protobuf//gogoproto",
         "@com_github_golang_protobuf//proto",
+        "@com_github_openconfig_gnmi//proto/gnmi",
         "@org_golang_google_grpc//:grpc",
         "@org_golang_google_grpc//codes",
         "@org_golang_google_grpc//status",
-        "@org_golang_x_net//context",
         "@org_golang_google_protobuf//reflect/protoreflect",
         "@org_golang_google_protobuf//runtime/protoimpl",
-        "@com_github_openconfig_gnmi//proto/gnmi",
+        "@org_golang_x_net//context",
     ],
 )

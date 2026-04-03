@@ -13,9 +13,9 @@ def test_tar_file(name, src, visibility = None):
            ("../$(location //testdata/json_tests/json-testsuite-gen:json-testsuite-gen) " +
             "-in " + (" ".join(srcs[:])) +
             " ; ") +
-           "tar  --transform 's,^,./testdata/json_tests/generated/,' -cvf "+name+".tar gentest_*.json &> /dev/null;" +
+           "tar  --transform 's,^,./testdata/json_tests/generated/,' -cvf " + name + ".tar gentest_*.json &> /dev/null;" +
            "cd .. ; " +
-           "cp $$$$.tmp/"+name+".tar $(@D)/;" +
+           "cp $$$$.tmp/" + name + ".tar $(@D)/;" +
            "rm -rf $$$$.tmp")
     native.genrule(
         name = name,
