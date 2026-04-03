@@ -1,28 +1,17 @@
-# load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 #gazelle:exclude empty.go
 
-# TODO BL: This has been moved to sonic-swss-common, I don't think we need this.
-#          Remove this directory if we don't need it.
-#
-# go_library(
-#     name = "swsscommon",
-#     srcs = [
-#         "swsscommon.go",
-#         "swsscommon_wrap.cxx",  #keep
-#         "swsscommon_wrap.h",
-#     ],
-#     cdeps = [
-#         "@com_github_cesnet_libyang//:libyang",
-#         "@sonic-swss-common//:swsscommon_base",
-#         ":swsscommon_go_cpp",
-#     ],
-#     cgo = True,  #keep
-#     cppopts = ["-Iexternal/sonic-swss-common/common"],  #keep
-#     importpath = "github.com/sonic-net/sonic-gnmi/swsscommon",
-#     visibility = ["//visibility:public"],
-# )
-#
+go_library(
+    name = "swsscommon",
+    srcs = [
+        "empty.go",
+    ],
+    importpath = "github.com/sonic-net/sonic-gnmi/swsscommon",
+    embed = ["@sonic-swss-common//goext:swsscommon"],
+    visibility = ["//visibility:public"],
+)
+
 # cc_library(
 #     name = "swsscommon_go_cpp",
 #     srcs = [

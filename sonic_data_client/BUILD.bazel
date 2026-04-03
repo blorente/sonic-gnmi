@@ -16,7 +16,8 @@ go_library(
     ],
     cdeps = [
         "@com_github_cesnet_libyang//:libyang",
-        "@sonic-swss-common//:swsscommon_base",
+        # TODO BL: We probably don't need this, it should be imporetd through "@sonic-swss-common//goext:swsscommon".
+        # "@sonic-swss-common//goext:swsscommon_cgo_wrapper",
     ],
     cgo = True,
     # This rule needs some work. gazelle forces copts but I don't know why.
