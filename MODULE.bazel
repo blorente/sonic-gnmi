@@ -12,20 +12,26 @@ bazel_dep(name = "buildifier_prebuilt", version = "8.5.1")
 bazel_dep(name = "rules_proto_grpc", version = "5.0.0")  # TODO BL: Check if this version works. Original uses 4.6.0, but it's not in the BCR
 bazel_dep(name = "rules_go", version = "0.60.0", repo_name = "io_bazel_rules_go")
 bazel_dep(name = "googleapis", version = "0.0.0-20251104-53af3b72")  # TODO BL: Originally this is commit fe771208f21a28e11507352faf03098244d42f0c, check if we need to change
-bazel_dep(name = "sonic-build-infra", version = "0.0.0")
-
-register_toolchains("@sonic-build-infra//toolchains/gcc:host_gcc_toolchain")
-
-# TODO BL: We may need this
-# bazel_dep(name = "googleapis-go", version = "1.0.0")
-#
-bazel_dep(name = "sonic-mgmt-common", version = "1.0.0", repo_name = "sonic_mgmt_common")
+bazel_dep(name = "grpc", version = "1.56.3.bcr.1", repo_name = "com_github_grpc_grpc")
+bazel_dep(name = "protobuf", version = "23.1", repo_name = "com_google_protobuf") # TODO BL: was v1.36.5 in go.mod
 bazel_dep(name = "rules_distroless", version = "0.0.0")
 git_override(
     module_name = "rules_distroless",
     commit = "ebfd74a2e07b83235e064bb63ace98a1a5223e02",
     remote = "https://github.com/bazel-contrib/rules_distroless",
 )
+
+# SONiC dependencies (resolved through sonic-buildimage's repository)
+bazel_dep(name = "sonic-build-infra", version = "0.0.0")
+bazel_dep(name = "sonic-swss-common", version = "0.0.0")
+bazel_dep(name = "sonic-mgmt-common", version = "1.0.0")
+bazel_dep(name = "libyang", version = "1.0.73", repo_name = "com_github_cesnet_libyang")
+
+register_toolchains("@sonic-build-infra//toolchains/gcc:host_gcc_toolchain")
+
+# TODO BL: We may need this
+# bazel_dep(name = "googleapis-go", version = "1.0.0")
+
 
 # TODO BL: we may need to upgrade, the branch has a newer version
 # bazel_dep(name = "rules_python", version = "1.6.3")
@@ -54,7 +60,6 @@ python.toolchain(
 # )
 #
 
-bazel_dep(name = "libyang", version = "1.0.73")
 # TODO BL: adjust dependencies to libyang
 # TODO BL: We oariginally depend on libyang v1.0.255, not sure if it's relevant.
 
@@ -162,7 +167,7 @@ use_repo(
 
 # SONiC-patched ygot/goyang/gnmi from sonic-mgmt-common's extension. The extension is not
 # root-only, so consumers of sonic-gnmi get these repos without any extra boilerplate.
-sonic_go_repos = use_extension("@sonic_mgmt_common//:go_repos.bzl", "sonic_go_repos")
+sonic_go_repos = use_extension("@sonic-mgmt-common//:go_repos.bzl", "sonic_go_repos")
 use_repo(
     sonic_go_repos,
     "com_github_openconfig_gnmi",

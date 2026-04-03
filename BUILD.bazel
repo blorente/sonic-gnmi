@@ -56,14 +56,15 @@ buildifier(
 #     actual = "@sonic-mgmt-common//models/yang:sonic-yang-tree",
 # )
 
-# A shortcut to build a Docker image that is used for component testing.
-alias(
-    name = "gnmi_server_test_image",
-    actual = "//gnmi_server:gnmi_server_test_image",
-)
-
-# A shortcut to build a Docker image that is used for debugging UMF.
-alias(
-    name = "gnmi_server_debug_image",
-    actual = "//gnmi_server:gnmi_server_debug_image",
-)
+# TODO BL: See if we need them for anything
+# # A shortcut to build a Docker image that is used for component testing.
+# alias(
+#     name = "gnmi_server_test_image",
+#     actual = "//gnmi_server:gnmi_server_test_image",
+# )
+#
+# # A shortcut to build a Docker image that is used for debugging UMF.
+# alias(
+#     name = "gnmi_server_debug_image",
+#     actual = "//gnmi_server:gnmi_server_debug_image",
+# )
