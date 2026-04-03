@@ -1,5 +1,5 @@
-load("@bazel_gazelle//:def.bzl", "gazelle")
 load("@buildifier_prebuilt//:rules.bzl", "buildifier")
+load("@gazelle//:def.bzl", "gazelle")
 
 # gazelle:prefix github.com/sonic-net/sonic-gnmi
 # gazelle:exclude patches
@@ -42,7 +42,7 @@ gazelle(
 
 buildifier(
     name = "buildifier",
-     exclude_patterns = [
+    exclude_patterns = [
         "./.git/*",
     ],
     lint_mode = "warn",
