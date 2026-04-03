@@ -26,20 +26,22 @@ clean:
 	$(RM) -r build
 	echo '***END CLEANUP PHASE***'
 
-install:
-	echo '***BEGIN INSTALLATION PHASE***'
-	install -D bazel-bin/telemetry/telemetry_/telemetry $(DESTDIR)/usr/sbin/telemetry
-	install -D bazel-bin/dialout/dialout_client_cli/dialout_client_cli_/dialout_client_cli $(DESTDIR)/usr/sbin/dialout_client_cli
-	install -D bazel-bin/gnoi_client/gnoi_client_/gnoi_client $(DESTDIR)/usr/sbin/gnoi_client
-	install -D bazel-bin/external/com_github_google_gnxi/gnmi_get/gnmi_get_/gnmi_get $(DESTDIR)/usr/sbin/gnmi_get
-	install -D bazel-bin/external/com_github_google_gnxi/gnmi_set/gnmi_set_/gnmi_set $(DESTDIR)/usr/sbin/gnmi_set
-	install -D bazel-bin/external/com_github_openconfig_gnmi/cmd/gnmi_cli/gnmi_cli_/gnmi_cli $(DESTDIR)/usr/sbin/gnmi_cli
-#	install -D $(DESTDIR)/usr/sbin/grpc_cli
-	install -D bazel-bin/external/pcre_archive/pcre_shared/lib/libpcre.so      $(DESTDIR)/usr/lib/x86_64/libpcre.so
-	install -D bazel-bin/external/pcre_archive/pcre_shared/lib/libpcrecpp.so   $(DESTDIR)/usr/lib/x86_64/libpcrecpp.so
-	install -D bazel-bin/external/pcre_archive/pcre_shared/lib/libpcreposix.so $(DESTDIR)/usr/lib/x86_64/libpcreposix.so
-	mkdir -p $(DESTDIR)/usr/bin/
-	echo '***END INSTALLATION PHASE***'
+# TODO BL: ask if not having install targets is fine.
+# TODO(bazel-ready): Create bazel run target for installation.
+# install:
+# 	echo '***BEGIN INSTALLATION PHASE***'
+# 	install -D bazel-bin/telemetry/telemetry_/telemetry $(DESTDIR)/usr/sbin/telemetry
+# 	install -D bazel-bin/dialout/dialout_client_cli/dialout_client_cli_/dialout_client_cli $(DESTDIR)/usr/sbin/dialout_client_cli
+# 	install -D bazel-bin/gnoi_client/gnoi_client_/gnoi_client $(DESTDIR)/usr/sbin/gnoi_client
+# 	install -D bazel-bin/external/com_github_google_gnxi/gnmi_get/gnmi_get_/gnmi_get $(DESTDIR)/usr/sbin/gnmi_get
+# 	install -D bazel-bin/external/com_github_google_gnxi/gnmi_set/gnmi_set_/gnmi_set $(DESTDIR)/usr/sbin/gnmi_set
+# 	install -D bazel-bin/external/com_github_openconfig_gnmi/cmd/gnmi_cli/gnmi_cli_/gnmi_cli $(DESTDIR)/usr/sbin/gnmi_cli
+# #	install -D $(DESTDIR)/usr/sbin/grpc_cli
+# 	install -D bazel-bin/external/pcre_archive/pcre_shared/lib/libpcre.so      $(DESTDIR)/usr/lib/x86_64/libpcre.so
+# 	install -D bazel-bin/external/pcre_archive/pcre_shared/lib/libpcrecpp.so   $(DESTDIR)/usr/lib/x86_64/libpcrecpp.so
+# 	install -D bazel-bin/external/pcre_archive/pcre_shared/lib/libpcreposix.so $(DESTDIR)/usr/lib/x86_64/libpcreposix.so
+# 	mkdir -p $(DESTDIR)/usr/bin/
+	# echo '***END INSTALLATION PHASE***'
 
 
 uninstall:
