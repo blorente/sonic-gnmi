@@ -7,10 +7,11 @@ exports_files(
         "*.conf",
         "*.json",
         "*.host",
-    ]) + [
+    ],
+        # TODO(bazel-ready): Clean up to remove missing blobs if that's the intention.
+        allow_empty = True,
+    ) + [
         "supervisor-proc-exit-listener",
         "supervisord_dependent_startup",
     ],
-    # TODO(bazel-ready): Clean up to remove missing blobs if that's the intention.
-    allow_empty = True,
 )
