@@ -9,4 +9,7 @@ exports_files(glob([
 ]) + [
     "supervisor-proc-exit-listener",
     "supervisord_dependent_startup",
-])
+],
+    # TODO(bazel-ready): Clean up to remove missing blobs if that's the intention.
+    allow_empty = True,
+)
