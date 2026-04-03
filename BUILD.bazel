@@ -46,10 +46,11 @@ buildifier(
 
 # Use this to generate a text file with a tree diagram of all YANG models
 # used by UMF.
-alias(
-    name = "whole-yang-tree-txt",
-    actual = "@sonic-mgmt-common//models/yang:whole-tree",
-)
+# TODO BL: Uncomment if we need to, we may need to extract the txt file from the outputs
+# alias(
+#     name = "whole-yang-tree-txt",
+#     actual = "@sonic-mgmt-common//models/yang:sonic-yang-tree",
+# )
 
 # A shortcut to build a Docker image that is used for component testing.
 alias(
