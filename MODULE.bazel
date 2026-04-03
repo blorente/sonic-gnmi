@@ -42,13 +42,9 @@ register_toolchains("@sonic-build-infra//toolchains/gcc:host_gcc_toolchain")
 #     module_name = "rules_python",
 #     version = "1.6.3",
 # )
-# python = use_extension("@rules_python//python/extensions:python.bzl", "python")
-# python.toolchain(
-#     python_version = "3.11",
-# )
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
-    python_version = "3.9",
+    python_version = "3.11", # TODO BL: Had to upgrade, originally 3.9
 )
 
 # TODO BL: install pip requirements from //third_party/pip:requirements.txt
