@@ -1,5 +1,5 @@
 load("@bazel_gazelle//:def.bzl", "gazelle")
-load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
+load("@buildifier_prebuilt//:rules.bzl", "buildifier")
 
 # gazelle:prefix github.com/sonic-net/sonic-gnmi
 # gazelle:exclude patches
@@ -42,6 +42,10 @@ gazelle(
 
 buildifier(
     name = "buildifier",
+     exclude_patterns = [
+        "./.git/*",
+    ],
+    lint_mode = "warn",
 )
 
 # Use this to generate a text file with a tree diagram of all YANG models
