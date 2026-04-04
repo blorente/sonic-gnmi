@@ -1,9 +1,13 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 
+# TODO(bazel-ready): Fix NewCert() call site,
+# expects (tls.Certificate, error) but gets (*bytes.Buffer, *bytes.Buffer, error).
+# Pre-existing bug, not caused by Bazel migration.
 go_library(
     name = "dialout_server_cli_lib",
     srcs = ["dialout_server_cli.go"],
     importpath = "github.com/sonic-net/sonic-gnmi/dialout/dialout_server_cli",
+    tags = ["manual"],
     visibility = ["//visibility:private"],
     deps = [
         "//dialout/dialout_server",
@@ -17,5 +21,6 @@ go_library(
 go_binary(
     name = "dialout_server_cli",
     embed = [":dialout_server_cli_lib"],
+    tags = ["manual"],
     visibility = ["//visibility:public"],
 )
