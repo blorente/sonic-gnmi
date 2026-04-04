@@ -27,7 +27,7 @@ git_override(
 # gnsi's BUILD files reference @openconfig_gnmi (BCR v0.14.1).
 # This coexists with the patched com_github_openconfig_gnmi (v0.11.0) from sonic_go_repos.
 # Upgrading the patched gnmi to v0.14.1+ would allow removing this.
-bazel_dep(name = "openconfig_gnmi", version = "0.14.1")
+# bazel_dep(name = "openconfig_gnmi", version = "0.14.1")
 
 # SONiC dependencies (resolved through sonic-buildimage's repository)
 bazel_dep(name = "sonic-build-infra", version = "0.0.0")
@@ -181,7 +181,7 @@ inject_repo(go_deps, "rules_proto_grpc")  # For openconfig/gnsi's proto rules
 inject_repo(go_deps, "rules_proto_grpc_cpp")  # For openconfig/gnsi's cpp_grpc_library
 inject_repo(go_deps, "rules_java")  # For envoyproxy/protoc-gen-validate
 inject_repo(go_deps, "bookworm")  # For msteinert/pam's libpam0g dependency
-inject_repo(go_deps, "openconfig_gnmi")  # For openconfig/gnsi's @openconfig_gnmi refs
+# inject_repo(go_deps, "openconfig_gnmi")  # For openconfig/gnsi's @openconfig_gnmi refs
 
 # TODO BL: If this is the right way to do it, we may need to add this to sonic_go_repos
 # gRPC Go v1.71.0 ships checked-in BUILD files that reference @@xds+//udpa/type/v1:type,
