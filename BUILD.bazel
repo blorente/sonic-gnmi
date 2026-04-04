@@ -14,8 +14,18 @@ load("@gazelle//:def.bzl", "gazelle")
 # gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/tlerr @sonic-mgmt-common//translib/tlerr
 # gazelle:resolve go github.com/Azure/sonic-mgmt-common/translib/transformer @sonic-mgmt-common//translib/transformer
 
-### Help Gazelle resolve external proto files
+### Help Gazelle resolve openconfig/gnmi Go imports to our patched repo, not the BCR module
+### we need for gnsi.
+#
+# gazelle:resolve go github.com/openconfig/gnmi/client @com_github_openconfig_gnmi//client
+# gazelle:resolve go github.com/openconfig/gnmi/client/gnmi @com_github_openconfig_gnmi//client/gnmi
+# gazelle:resolve go github.com/openconfig/gnmi/errlist @com_github_openconfig_gnmi//errlist
+# gazelle:resolve go github.com/openconfig/gnmi/path @com_github_openconfig_gnmi//path
+# gazelle:resolve go github.com/openconfig/gnmi/proto/gnmi @com_github_openconfig_gnmi//proto/gnmi
+# gazelle:resolve go github.com/openconfig/gnmi/proto/gnmi_ext @com_github_openconfig_gnmi//proto/gnmi_ext
+# gazelle:resolve go github.com/openconfig/gnmi/value @com_github_openconfig_gnmi//value
 
+### Help Gazelle resolve external proto files
 # gazelle:resolve go          google.golang.org/genproto/googleapis/rpc/status @org_golang_google_genproto_googleapis_rpc//status
 # gazelle:resolve proto go    google/rpc/status.proto                          @org_golang_google_genproto_googleapis_rpc//status
 # gazelle:resolve proto proto google/rpc/status.proto                          @googleapis//google/rpc:status_proto

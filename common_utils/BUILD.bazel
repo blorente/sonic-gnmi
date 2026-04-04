@@ -55,6 +55,7 @@ go_test(
         "//sonic_db_config",
         "@com_github_golang_glog//:glog",
         "@com_github_redis_go_redis_v9//:go-redis",
+        "@org_golang_x_net//context",
         "@sonic-mgmt-common//translib/db",
     ],
 )

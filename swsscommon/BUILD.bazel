@@ -2,11 +2,12 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 #gazelle:exclude empty.go
 
+# This target looks to gazelle like it's not imported from anywhere,
+# but we need it to include the swsscommon C library.
+#keep
 go_library(
     name = "swsscommon",
-    srcs = [
-        "empty.go",
-    ],
+    srcs = ["empty.go"],
     embed = ["@sonic-swss-common//goext:swsscommon"],
     importpath = "github.com/sonic-net/sonic-gnmi/swsscommon",
     visibility = ["//visibility:public"],
