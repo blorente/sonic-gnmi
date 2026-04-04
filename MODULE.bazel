@@ -128,7 +128,12 @@ go_deps = use_extension("@gazelle//:extensions.bzl", "go_deps")
 go_deps.from_file(go_mod = "//:go.mod")
 
 # Export all Go dependencies
-# Note: Run 'bazel mod tidy' to automatically update this list
+# Note: This list must _not_ be updated manually with `bazel mod tidy`.
+# we have intentionally excluded some repositories that do appear in go.mod,
+# because we need to patch them in the build.
+#
+# Running `bazel mod tidy` adds the to this list, whereas
+# we instead want to load them from `sonic_go_repos`.
 use_repo(
     go_deps,
     "com_github_agiledragon_gomonkey_v2",
@@ -149,7 +154,6 @@ use_repo(
     "com_github_msteinert_pam",
     "com_github_nxadm_tail",
     "com_github_openconfig_gnoi",
-    "com_github_openconfig_gnsi",
     "com_github_openconfig_grpctunnel",
     "com_github_pkg_errors",
     "com_github_redis_go_redis_v9",
@@ -187,15 +191,8 @@ use_repo(
     "com_github_openconfig_gnmi",
     "com_github_openconfig_goyang",
     "com_github_openconfig_ygot",
+    "com_github_openconfig_gnsi",
 )
-
-# inject_repo(sonic_go_repos, "rules_proto")
-#
-# inject_repo(sonic_go_repos, "org_golang_google_protobuf")
-#
-# inject_repo(sonic_go_repos, "org_golang_x_crypto")
-# inject_repo(sonic_go_repos, "com_github_openconfig_grpctunnel")
-# inject_repo(sonic_go_repos, "com_google_protobuf")
 
 # TODO BL: Not migrated yet:
 # - Buildimage, for the yang models, which I'm not sure we need beacuse nothing depends on that one target at the root.
