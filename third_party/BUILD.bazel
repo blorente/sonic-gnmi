@@ -13,6 +13,7 @@ alias(
 alias(
     name = "gnmi_cli",
     actual = "@com_github_openconfig_gnmi//cmd/gnmi_cli",
+    visibility = ["//visibility:public"],
 )
 
 alias(

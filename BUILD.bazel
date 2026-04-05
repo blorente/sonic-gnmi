@@ -1,5 +1,7 @@
 load("@buildifier_prebuilt//:rules.bzl", "buildifier")
 load("@gazelle//:def.bzl", "gazelle")
+load("@rules_distroless//distroless:defs.bzl", "flatten")
+load("@tar.bzl", "tar")
 
 # gazelle:prefix github.com/sonic-net/sonic-gnmi
 # gazelle:exclude patches
@@ -56,6 +58,43 @@ buildifier(
 alias(
     name = "whole-yang-tree-txt",
     actual = "@sonic-mgmt-common//models/yang:yang-tree",
+)
+
+# Consolidated package containing all gNMI binaries and libraries.
+# Mirrors the install target from the Makefile.
+tar(
+    name = "sonic-gnmi_files",
+    srcs = [
+        "//telemetry",
+        "//dialout/dialout_client_cli",
+        "//gnoi_client",
+        "//gnmi_dump",
+        "//third_party:gnmi_get",
+        "//third_party:gnmi_set",
+        "//third_party:gnmi_cli",
+    ],
+    mtree = [
+        "./usr/sbin/telemetry type=file mode=0755 content=$(location //telemetry)",
+        "./usr/sbin/dialout_client_cli type=file mode=0755 content=$(location //dialout/dialout_client_cli)",
+        "./usr/sbin/gnoi_client type=file mode=0755 content=$(location //gnoi_client)",
+        "./usr/sbin/gnmi_dump type=file mode=0755 content=$(location //gnmi_dump)",
+        "./usr/sbin/gnmi_get type=file mode=0755 content=$(location //third_party:gnmi_get)",
+        "./usr/sbin/gnmi_set type=file mode=0755 content=$(location //third_party:gnmi_set)",
+        "./usr/sbin/gnmi_cli type=file mode=0755 content=$(location //third_party:gnmi_cli)",
+    ],
+)
+
+flatten(
+    name = "sonic-gnmi_pkg",
+    tars = [
+        # Note: It's possible that we need to symlink here,
+        # as the makefile places the pcre libs under ./usr/lib/x86_64,
+        # and the bookworm package is under ./lib/x86_64-linux-gnu or ./usr/lib/x86_64-linux-gnu.
+        "@bookworm//libpcre3:data",
+        ":sonic-gnmi_files",
+    ],
+    deduplicate = True,
+    visibility = ["//visibility:public"],
 )
 
 # TODO(bazel-ready): Re-enable test images or move them to sonic-buildimage.
