@@ -15,7 +15,8 @@ proto_library(
 
 go_proto_library(
     name = "debug_go_proto",
-    compilers = ["@io_bazel_rules_go//proto:go_grpc_v2"],
+    # Note: go_grpc_v2 only generates stubs, not message types.
+    compilers = ["@io_bazel_rules_go//proto:go_grpc"],  # keep
     importpath = "github.com/sonic-net/sonic-gnmi/proto/gnoi/debug",
     proto = ":debug_proto",
     visibility = ["//visibility:public"],
