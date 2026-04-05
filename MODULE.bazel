@@ -12,13 +12,7 @@ bazel_dep(name = "buildifier_prebuilt", version = "8.5.1")
 bazel_dep(name = "rules_proto_grpc", version = "5.0.0")  # TODO BL: Check if this version works. Original uses 4.6.0, but it's not in the BCR
 bazel_dep(name = "rules_proto_grpc_cpp", version = "5.0.0")
 bazel_dep(name = "rules_java", version = "8.14.0")
-bazel_dep(name = "rules_go", version = "0.60.0", repo_name = "io_bazel_rules_go")
-# TODO BL: move to the sonic-buildimage registry
-git_override(
-    module_name = "rules_go",
-    remote = "https://github.com/thesayyn/rules_go",
-    commit = "4b87b3417fdc604ebce13f41c3042abbdcd2c56f",
-)
+bazel_dep(name = "rules_go", version = "0.60.0.patched", repo_name = "io_bazel_rules_go") # Resolves from the local Bazel repository at @sonic-buildimage/tools/bazel/repository
 bazel_dep(name = "googleapis", version = "0.0.0-20251104-53af3b72")  # TODO BL: Originally this is commit fe771208f21a28e11507352faf03098244d42f0c, check if we need to change
 bazel_dep(name = "grpc", version = "1.56.3.bcr.1", repo_name = "com_github_grpc_grpc")
 bazel_dep(name = "protobuf", version = "23.1", repo_name = "com_google_protobuf")  # TODO BL: was v1.36.5 in go.mod
