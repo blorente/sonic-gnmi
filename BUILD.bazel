@@ -37,18 +37,8 @@ load("@gazelle//:def.bzl", "gazelle")
 # gazelle:resolve proto proto github.com/openconfig/gnmi/proto/gnmi/gnmi.proto @com_github_openconfig_gnmi//proto/gnmi:gnmi_proto
 # gazelle:resolve proto go    github.com/gogo/protobuf/gogoproto/gogo.proto    @com_github_gogo_protobuf//gogoproto
 
-gazelle(name = "gazelle")
-
-#bazel build :gazelle-update-repos
-gazelle(
-    name = "gazelle-update-repos",
-    args = [
-        "-from_file=go.mod",
-        "-to_macro=deps.bzl%go_dependencies",
-        "-prune",
-    ],
-    command = "update-repos",
-)
+# TODO BL: Re-enable when it doesn't completely break everything
+# gazelle(name = "gazelle")
 
 buildifier(
     name = "buildifier",
