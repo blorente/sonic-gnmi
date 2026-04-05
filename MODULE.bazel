@@ -28,7 +28,7 @@ bazel_dep(name = "sonic-build-infra", version = "0.0.0")
 bazel_dep(name = "sonic-swss-common", version = "0.0.0")
 bazel_dep(name = "sonic-mgmt-common", version = "1.0.0")
 bazel_dep(name = "libyang", version = "1.0.73", repo_name = "com_github_cesnet_libyang")
-bazel_dep(name = "rules_go", version = "0.60.0.patched", repo_name = "io_bazel_rules_go") # Resolves from the local Bazel repository at @sonic-buildimage/tools/bazel/repository
+bazel_dep(name = "rules_go", version = "0.60.0.sonic-patched", repo_name = "io_bazel_rules_go") # Resolves from the local Bazel repository at @sonic-buildimage/tools/bazel/repository
 
 register_toolchains("@sonic-build-infra//toolchains/gcc:host_gcc_toolchain")
 

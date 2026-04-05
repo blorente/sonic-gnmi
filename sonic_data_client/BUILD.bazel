@@ -45,20 +45,12 @@ go_library(
         "@bookworm//libpython3.11-dev:libpython3.11",
     ],
     cgo = True,
-    # TODO BL: This rule needs some work. gazelle forces copts but I don't know why.
-    # TODO(bazel-ready): the -isystem paths use canonical repo names which are
-    # version-specific. Once rules_go propagates CcInfo.system_includes into
-    # CGO preprocessing, these can be removed and cdeps alone will suffice.
     copts = [  #keep
         "-g",
         "-Wall",
         "-Wformat",
         "-Werror=format-security",
         "-fPIE",
-        "-isystem $(BINDIR)/external/rules_distroless++apt+bookworm_libpython3.11-dev-amd64_3.11.2-6-deb12u6/usr/include/python3.11",
-        "-isystem $(BINDIR)/external/rules_distroless++apt+bookworm_libpython3.11-dev-amd64_3.11.2-6-deb12u6/usr/include",
-        "-isystem $(BINDIR)/external/rules_distroless++apt+bookworm_libcrypt-dev-amd64_1-4.4.33-2/usr/include",
-        "-Iexternal/sonic-swss-common+/common",
     ],
     cppopts = [  #keep
         "-g",
@@ -66,10 +58,6 @@ go_library(
         "-Wformat",
         "-Werror=format-security",
         "-fPIE",
-        "-isystem $(BINDIR)/external/rules_distroless++apt+bookworm_libpython3.11-dev-amd64_3.11.2-6-deb12u6/usr/include/python3.11",
-        "-isystem $(BINDIR)/external/rules_distroless++apt+bookworm_libpython3.11-dev-amd64_3.11.2-6-deb12u6/usr/include",
-        "-isystem $(BINDIR)/external/rules_distroless++apt+bookworm_libcrypt-dev-amd64_1-4.4.33-2/usr/include",
-        "-Iexternal/sonic-swss-common+/common",
     ],
     importpath = "github.com/sonic-net/sonic-gnmi/sonic_data_client",
     visibility = ["//visibility:public"],
