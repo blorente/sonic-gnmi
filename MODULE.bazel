@@ -176,7 +176,6 @@ use_repo(
     "com_github_godbus_dbus_v5",
     "com_github_gogo_protobuf",
     "com_github_golang_protobuf",
-    "com_github_google_gnxi",
     "com_github_google_go_tpm",
     "com_github_google_gofuzz",
     "com_github_grpc_ecosystem_go_grpc_middleware_v2",
@@ -184,7 +183,6 @@ use_repo(
     "com_github_kylelemons_godebug",
     "com_github_nxadm_tail",
     "com_github_openconfig_gnoi",
-    "com_github_openconfig_grpctunnel",
     "com_github_pkg_errors",
     "com_github_redis_go_redis_v9",
     "com_github_workiva_go_datastructures",
@@ -230,6 +228,7 @@ sonic_go_repos = use_extension("@sonic-mgmt-common//:go_repos.bzl", "sonic_go_re
 use_repo(
     sonic_go_repos,
     "com_github_golang_glog",
+    "com_github_google_gnxi",
     "com_github_google_gousb",
     "com_github_msteinert_pam",
     "com_github_openconfig_gnmi",
