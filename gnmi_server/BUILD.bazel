@@ -206,7 +206,7 @@ go_test(
         "@sonic-mgmt-common//translib/ocbinds",
         "@sonic-mgmt-common//translib/transformer",
     ],
-    # TODO BL: Why is this commented out instead of removed?
+    # TODO(bazel-ready): Support race condition detector and asan
     # race = "on",
     # msan = "on",
 )

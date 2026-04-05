@@ -4,18 +4,17 @@ module(
 )
 
 bazel_dep(name = "platforms", version = "1.0.0")
-bazel_dep(name = "rules_pkg", version = "1.1.0")  # TODO BL: was 1.0.1, got upgraded in resolution
-bazel_dep(name = "rules_cc", version = "0.2.14")  # TODO BL: was 0.1.1, got upgraded in resolution
+bazel_dep(name = "rules_pkg", version = "1.1.0")
+bazel_dep(name = "rules_cc", version = "0.2.14")
 bazel_dep(name = "rules_proto", version = "7.1.0")
-bazel_dep(name = "rules_python", version = "1.7.0")  # TODO BL: was 0.10.2, got upgraded in resolution
+bazel_dep(name = "rules_python", version = "1.7.0")
 bazel_dep(name = "buildifier_prebuilt", version = "8.5.1")
-bazel_dep(name = "rules_proto_grpc", version = "5.0.0")  # TODO BL: Check if this version works. Original uses 4.6.0, but it's not in the BCR
+bazel_dep(name = "rules_proto_grpc", version = "5.0.0")
 bazel_dep(name = "rules_proto_grpc_cpp", version = "5.0.0")
 bazel_dep(name = "rules_java", version = "8.14.0")
-bazel_dep(name = "rules_go", version = "0.60.0.patched", repo_name = "io_bazel_rules_go") # Resolves from the local Bazel repository at @sonic-buildimage/tools/bazel/repository
-bazel_dep(name = "googleapis", version = "0.0.0-20251104-53af3b72")  # TODO BL: Originally this is commit fe771208f21a28e11507352faf03098244d42f0c, check if we need to change
+bazel_dep(name = "googleapis", version = "0.0.0-20251104-53af3b72")
 bazel_dep(name = "grpc", version = "1.56.3.bcr.1", repo_name = "com_github_grpc_grpc")
-bazel_dep(name = "protobuf", version = "23.1", repo_name = "com_google_protobuf")  # TODO BL: was v1.36.5 in go.mod
+bazel_dep(name = "protobuf", version = "23.1", repo_name = "com_google_protobuf")
 bazel_dep(name = "gazelle", version = "0.46.0")
 bazel_dep(name = "rules_distroless", version = "0.0.0")
 git_override(
@@ -24,49 +23,19 @@ git_override(
     remote = "https://github.com/bazel-contrib/rules_distroless",
 )
 
-# TODO BL: Clean up if not needed.
-# TODO(bazel-ready): Upgrade the patched gnmi to v0.14.1+.
-# gnsi's BUILD files reference @openconfig_gnmi (BCR v0.14.1).
-# This coexists with the patched com_github_openconfig_gnmi (v0.11.0) from sonic_go_repos.
-# Upgrading the patched gnmi to v0.14.1+ would allow removing this.
-# bazel_dep(name = "openconfig_gnmi", version = "0.14.1")
-
 # SONiC dependencies (resolved through sonic-buildimage's repository)
 bazel_dep(name = "sonic-build-infra", version = "0.0.0")
 bazel_dep(name = "sonic-swss-common", version = "0.0.0")
 bazel_dep(name = "sonic-mgmt-common", version = "1.0.0")
 bazel_dep(name = "libyang", version = "1.0.73", repo_name = "com_github_cesnet_libyang")
+bazel_dep(name = "rules_go", version = "0.60.0.patched", repo_name = "io_bazel_rules_go") # Resolves from the local Bazel repository at @sonic-buildimage/tools/bazel/repository
 
 register_toolchains("@sonic-build-infra//toolchains/gcc:host_gcc_toolchain")
 
-# TODO BL: We may need this
-# bazel_dep(name = "googleapis-go", version = "1.0.0")
-
-# TODO BL: we may need to upgrade, the branch has a newer version
-# bazel_dep(name = "rules_python", version = "1.6.3")
-# # Pin rules_python to 1.6.3 for stability. With protoc-gen-validate@1.3.0 pinned above,
-# # newer versions of rules_python may now be compatible - this can be tested later.
-# # TODO BL: If we do end up pinning, we need to find a way to propagate this.
-# single_version_override(
-#     module_name = "rules_python",
-#     version = "1.6.3",
-# )
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
-    python_version = "3.11",  # TODO BL: Had to upgrade, originally 3.9
+    python_version = "3.11",
 )
-
-# TODO BL: install pip requirements from //third_party/pip:requirements.txt
-# From WORKSPACE
-# pip_install(
-#     name = "pip",
-#     python_interpreter_target = interpreter,
-#     requirements = "//third_party/pip:requirements.txt",
-# )
-#
-
-# TODO BL: adjust dependencies to libyang
-# TODO BL: We oariginally depend on libyang v1.0.255, not sure if it's relevant.
 
 apt = use_extension("@rules_distroless//apt:extensions.bzl", "apt")
 apt.sources_list(
@@ -87,27 +56,16 @@ apt.sources_list(
 apt.install(
     dependency_set = "bookworm",
     packages = [
-        # sonic-gnmi specific packages
-
-        # TODO BL: Adjust dpeendnecies on @pcre_archive to point to @bookworm//:libpcre3 or -dev
         "libpcre3",
         "libpcre3-dev",
-        # "libpam0g",
-        # "libpam0g-dev",
-        # "libusb-1.0-0",
-        # "libusb-1.0-0-dev",
-        # # libudev is needed by libusb
-        # "libudev1",
-        # "libudev-dev",
         "libbsd-dev",
-        # # Boost libraries (thread and system for sonic-gnmi, base + serialization for sonic-swss-common)
         # Boost libraries for sonic_data_client CGO
         "libboost-thread-dev",
         "libboost-system-dev",
-        # # Python 3.11 for sonic_data_client
+        # Python 3.11 for sonic_data_client
         "libpython3.11-dev",
-        # "python3.11-dev",
         # crypt.h needed by Python headers
+        # TODO BL: we may not need this, it may be a transitive dep
         "libcrypt-dev",
     ],
     suites = [
@@ -128,19 +86,19 @@ git_override(
 )
 
 go_sdk = use_extension("@io_bazel_rules_go//go:extensions.bzl", "go_sdk")
-go_sdk.download(version = "1.25.0")  # TODO BL: Was 1.22.4, needed to update because googleapis_grpc needs a newer version.
+go_sdk.download(version = "1.25.0")
 
 # Go dependencies via gazelle's go_deps extension
 go_deps = use_extension("@gazelle//:extensions.bzl", "go_deps")
 go_deps.from_file(go_mod = "//:go.mod")
 
-# Bazel-only deps: not transitive Go deps of sonic-gnmi,
-# so they don't appear in go.mod.
+# Bazel-only deps: not transitive Go deps of sonic-gnmi, so they don't appear in go.mod
+# (because of module pruning).
+#
 # However, Bazel fetches entire repos and their BUILD files reference these packages.
 # go_deps.module() makes them available without polluting go.mod.
-# golang.org/x/term - needed by crypto/ssh
 go_deps.module(
-    path = "golang.org/x/term",
+    path = "golang.org/x/term", # needed by x/crypto
     sum = "h1:WP60Sv1nlK1T6SupCHbXzSaN0b9wUmsPoRS9b61A23Q=",
     version = "v0.27.0",
 )
@@ -174,8 +132,8 @@ use_repo(
     "com_github_xeipuuv_gojsonschema",
     "in_gopkg_yaml_v2",
     "org_golang_google_genproto_googleapis_rpc",
-    "org_golang_google_grpc",
-    "org_golang_google_grpc_security_advancedtls",  # separate grpc module for advancedtls
+    "org_golang_google_grpc", # Note that this is different from `com_github_grpc_grpc`.
+    "org_golang_google_grpc_security_advancedtls",
     "org_golang_google_protobuf",
     "org_golang_x_crypto",
     "org_golang_x_net",
@@ -193,9 +151,6 @@ inject_repo(go_deps, "rules_proto_grpc_cpp")  # For openconfig/gnsi's cpp_grpc_l
 inject_repo(go_deps, "rules_java")  # For envoyproxy/protoc-gen-validate
 
 inject_repo(go_deps, "bookworm")  # For msteinert/pam's libpam0g dependency
-
-# TODO BL: CLean up, we don't need this anymore.
-# inject_repo(go_deps, "openconfig_gnmi")  # For openconfig/gnsi's @openconfig_gnmi refs
 
 # TODO BL: If this is the right way to do it, we may need to add this to sonic_go_repos
 # because only roots can override gazelle

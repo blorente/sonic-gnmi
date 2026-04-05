@@ -55,8 +55,8 @@ alias(
     actual = "@sonic-mgmt-common//models/yang:yang-tree",
 )
 
-# TODO BL: See if we need them for anything
-# # A shortcut to build a Docker image that is used for component testing.
+# TODO(bazel-ready): Re-enable test images or move them to sonic-buildimage.
+# A shortcut to build a Docker image that is used for component testing.
 # alias(
 #     name = "gnmi_server_test_image",
 #     actual = "//gnmi_server:gnmi_server_test_image",

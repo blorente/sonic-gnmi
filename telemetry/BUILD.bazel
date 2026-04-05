@@ -168,7 +168,6 @@ pkg_tar(
 
 #bazel build :telemetry_deb_pkg
 #bazel cquery --output=files :telemetry_deb_pkg
-# TODO BL: Migrate to tar.bzl
 pkg_deb(
     name = "telemetry_deb_pkg",
     architecture = "amd64",
