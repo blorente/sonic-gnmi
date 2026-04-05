@@ -122,7 +122,6 @@ use_repo(
     "com_github_hashicorp_golang_lru",
     "com_github_kylelemons_godebug",
     "com_github_nxadm_tail",
-    "com_github_openconfig_gnoi",
     "com_github_pkg_errors",
     "com_github_redis_go_redis_v9",
     "com_github_workiva_go_datastructures",
@@ -149,23 +148,6 @@ inject_repo(go_deps, "rules_java")  # For envoyproxy/protoc-gen-validate
 
 inject_repo(go_deps, "bookworm")  # For msteinert/pam's libpam0g dependency
 
-# gRPC Go v1.71.0 ships checked-in BUILD files that reference @@xds+//udpa/type/v1:type,
-# pointing at the BCR's C++ xds module. Under bzlmod the Go bindings for xds live in
-# com_github_cncf_xds_go, so the checked-in label is invalid. Regenerating the BUILD
-# files lets gazelle resolve the xds Go import to the correct module.
-go_deps.gazelle_override(
-    build_file_generation = "clean",
-    path = "google.golang.org/grpc",
-)
-
-# gnoi's checked-in BUILD files reference gnmi's C++ targets,
-# which fail under bzlmod. Turn off BUILD generation so those targets
-# are never built — sonic-gnmi only uses gnoi's Go libraries.
-go_deps.gazelle_override(
-    build_file_generation = "off",
-    path = "github.com/openconfig/gnoi",
-)
-
 # SONiC-patched ygot/goyang/gnmi from sonic-mgmt-common's extension. The extension is not
 # root-only, so consumers of sonic-gnmi get these repos without any extra boilerplate.
 sonic_go_repos = use_extension("@sonic-mgmt-common//:go_repos.bzl", "sonic_go_repos")
@@ -177,6 +159,7 @@ use_repo(
     "com_github_mitchellh_go_wordwrap",
     "com_github_msteinert_pam",
     "com_github_openconfig_gnmi",
+    "com_github_openconfig_gnoi",
     "com_github_openconfig_gnsi",
     "com_github_openconfig_goyang",
     "com_github_openconfig_grpctunnel",
