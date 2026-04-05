@@ -1,5 +1,24 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
+# Collects system library deps needed by the CGO code in this package.
+# Using a cc_library ensures Bazel resolves .so files from @bookworm
+# packages through the cc dependency graph rather than raw -l flags.
+cc_library(
+    name = "sonic_data_client_cdeps",
+    deps = [
+        "@bookworm//libbsd-dev:libbsd",
+        "@bookworm//libboost-thread-dev:libboost-thread",
+        "@bookworm//libboost-system-dev:libboost-system",
+        "@bookworm//libzmq3-dev:libzmq3",
+        "@bookworm//uuid-dev:uuid",
+        "@bookworm//libpython3.11-dev:libpython3.11",
+        "@bookworm//libcrypt-dev:libcrypt",
+    ],
+    linkopts = [
+        "-Wl,--allow-shlib-undefined",
+    ],
+)
+
 go_library(
     name = "sonic_data_client",
     srcs = [
@@ -16,14 +35,41 @@ go_library(
     ],
     cdeps = [
         "@com_github_cesnet_libyang//:libyang",
-        # TODO BL: We probably don't need this, it should be imporetd through "@sonic-swss-common//goext:swsscommon".
-        # "@sonic-swss-common//goext:swsscommon_cgo_wrapper",
+        # Provides events_wrap.h and other swsscommon headers
+        "@sonic-swss-common//goext:swsscommon_cgo_wrapper",
+        "@bookworm//libbsd-dev:libbsd",
+        "@bookworm//libboost-thread-dev:libboost-thread",
+        "@bookworm//libboost-system-dev:libboost-system",
+        "@bookworm//libzmq3-dev:libzmq3",
+        "@bookworm//uuid-dev:uuid",
+        "@bookworm//libpython3.11-dev:libpython3.11",
     ],
     cgo = True,
-    # This rule needs some work. gazelle forces copts but I don't know why.
-    clinkopts = ["-L/usr/lib -lpthread -lboost_thread -lboost_system -lzmq -lboost_serialization -luuid -lpython3.9 -ldl -lutil"],  #keep
-    copts = ["-g -Wall -Iexternal/sonic-swss-common/common -I/usr/local/include/python3.9 -I/usr/include/python3.9 -Wformat -Werror=format-security -fPIE"],  #keep
-    cppopts = ["-g -Wall -Iexternal/sonic-swss-common/common -I/usr/local/include/python3.9 -I/usr/include/python3.9 -Wformat -Werror=format-security -fPIE"],  #keep
+    # TODO BL: This rule needs some work. gazelle forces copts but I don't know why.
+    copts = [  #keep
+        "-g",
+        "-Wall",
+        "-Wformat",
+        "-Werror=format-security",
+        "-fPIE",
+        # TODO BL: clean uyp
+        "-Iexternal/sonic-swss-common+/common",
+        "-isystem $(BINDIR)/external/rules_distroless++apt+bookworm_libpython3.11-dev-amd64_3.11.2-6-deb12u6/usr/include/python3.11",
+        "-isystem $(BINDIR)/external/rules_distroless++apt+bookworm_libpython3.11-dev-amd64_3.11.2-6-deb12u6/usr/include",
+        "-isystem $(BINDIR)/external/rules_distroless++apt+bookworm_libcrypt-dev-amd64_1-4.4.33-2/usr/include",
+    ],
+    cppopts = [  #keep
+        "-g",
+        "-Wall",
+        "-Wformat",
+        "-Werror=format-security",
+        "-fPIE",
+        # TODO BL: clean up
+        "-Iexternal/sonic-swss-common+/common",
+        "-isystem $(BINDIR)/external/rules_distroless++apt+bookworm_libpython3.11-dev-amd64_3.11.2-6-deb12u6/usr/include/python3.11",
+        "-isystem $(BINDIR)/external/rules_distroless++apt+bookworm_libpython3.11-dev-amd64_3.11.2-6-deb12u6/usr/include",
+        "-isystem $(BINDIR)/external/rules_distroless++apt+bookworm_libcrypt-dev-amd64_1-4.4.33-2/usr/include",
+    ],
     importpath = "github.com/sonic-net/sonic-gnmi/sonic_data_client",
     visibility = ["//visibility:public"],
     deps = [
@@ -63,6 +109,8 @@ go_test(
         "super_subscription_test.go",
     ],
     embed = [":sonic_data_client"],
+    # TODO(bazel-ready): Integration test - requires database_config.json and schema/ directory
+    tags = ["manual"],
     visibility = ["//visibility:public"],
     deps = [
         "//swsscommon",
