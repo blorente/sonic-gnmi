@@ -26,7 +26,6 @@ clean:
 	$(RM) -r build
 	echo '***END CLEANUP PHASE***'
 
-# TODO BL: ask if not having install targets is fine.
 # TODO(bazel-ready): Create bazel run target for installation.
 # install:
 # 	echo '***BEGIN INSTALLATION PHASE***'

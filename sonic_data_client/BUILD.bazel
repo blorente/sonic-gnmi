@@ -1,24 +1,5 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
-# Collects system library deps needed by the CGO code in this package.
-# Using a cc_library ensures Bazel resolves .so files from @bookworm
-# packages through the cc dependency graph rather than raw -l flags.
-cc_library(
-    name = "sonic_data_client_cdeps",
-    deps = [
-        "@bookworm//libbsd-dev:libbsd",
-        "@bookworm//libboost-thread-dev:libboost-thread",
-        "@bookworm//libboost-system-dev:libboost-system",
-        "@bookworm//libzmq3-dev:libzmq3",
-        "@bookworm//uuid-dev:uuid",
-        "@bookworm//libpython3.11-dev:libpython3.11",
-        "@bookworm//libcrypt-dev:libcrypt",
-    ],
-    linkopts = [
-        "-Wl,--allow-shlib-undefined",
-    ],
-)
-
 go_library(
     name = "sonic_data_client",
     srcs = [

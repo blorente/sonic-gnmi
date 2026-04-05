@@ -18,8 +18,6 @@ alias(
 alias(
     name = "grpc_cli",
     actual = "@com_github_grpc_grpc//test/cpp/util:grpc_cli",
-    # TODO BL: Figure out why this doesn't work with newer versions of grpc and protobuf.
-    # In newer versions, `@protobuf` have made one of the required targets not visible.
-    # We may need to patch protobuf.
+    # TODO(bazel-ready): Figure out why this doesn't work with newer versions of grpc and protobuf.
     tags = ["manual"],
 )

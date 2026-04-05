@@ -64,9 +64,6 @@ apt.install(
         "libboost-system-dev",
         # Python 3.11 for sonic_data_client
         "libpython3.11-dev",
-        # crypt.h needed by Python headers
-        # TODO BL: we may not need this, it may be a transitive dep
-        "libcrypt-dev",
     ],
     suites = [
         "bookworm",
@@ -152,9 +149,6 @@ inject_repo(go_deps, "rules_java")  # For envoyproxy/protoc-gen-validate
 
 inject_repo(go_deps, "bookworm")  # For msteinert/pam's libpam0g dependency
 
-# TODO BL: If this is the right way to do it, we may need to add this to sonic_go_repos
-# because only roots can override gazelle
-
 # gRPC Go v1.71.0 ships checked-in BUILD files that reference @@xds+//udpa/type/v1:type,
 # pointing at the BCR's C++ xds module. Under bzlmod the Go bindings for xds live in
 # com_github_cncf_xds_go, so the checked-in label is invalid. Regenerating the BUILD
@@ -189,14 +183,3 @@ use_repo(
     "com_github_openconfig_ygot",
     "com_github_protocolbuffers_txtpbfmt",
 )
-
-# TODO BL: Not migrated yet:
-# - Buildimage, for the yang models, which I'm not sure we need beacuse nothing depends on that one target at the root.
-# - json
-# git_repository(
-#     name = "com_github_nlohmann_json",
-#     # Current tip of "develop" branch as of Nov-2023.  Using this commit since
-#     # the last release is quite old and does not contain bazel support.
-#     commit = "6eab7a2b187b10b2494e39c1961750bfd1bda500",
-#     remote = "https://github.com/nlohmann/json",
-# )

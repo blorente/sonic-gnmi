@@ -37,7 +37,10 @@ load("@gazelle//:def.bzl", "gazelle")
 # gazelle:resolve proto proto github.com/openconfig/gnmi/proto/gnmi/gnmi.proto @com_github_openconfig_gnmi//proto/gnmi:gnmi_proto
 # gazelle:resolve proto go    github.com/gogo/protobuf/gogoproto/gogo.proto    @com_github_gogo_protobuf//gogoproto
 
-# TODO BL: Re-enable when it doesn't completely break everything
+# TODO(bazel-ready): Re-enable gazelle
+# Currently, gazelle completely breaks a lot of the repository:
+#  - It doesn't understand how sonic_go_repos works.
+#  - It tries to upgrde us to the gRPC compiler V2, which doesn't generate the types proto files, and thus breaks the build.
 # gazelle(name = "gazelle")
 
 buildifier(
