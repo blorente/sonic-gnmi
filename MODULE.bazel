@@ -138,26 +138,11 @@ go_deps.from_file(go_mod = "//:go.mod")
 # so they don't appear in go.mod.
 # However, Bazel fetches entire repos and their BUILD files reference these packages.
 # go_deps.module() makes them available without polluting go.mod.
-
-# protocolbuffers/txtpbfmt - needed by openconfig/gnmi cli
-go_deps.module(
-    path = "github.com/protocolbuffers/txtpbfmt",
-    sum = "h1:AKJY61V2SQtJ2a2PdeswKk0NM1qF77X+julRNYRxPOk=",
-    version = "v0.0.0-20220608084003-fc78c767cd6a",
-)
-
 # golang.org/x/term - needed by crypto/ssh
 go_deps.module(
     path = "golang.org/x/term",
     sum = "h1:WP60Sv1nlK1T6SupCHbXzSaN0b9wUmsPoRS9b61A23Q=",
     version = "v0.27.0",
-)
-
-# mitchellh/go-wordwrap - needed by txtpbfmt
-go_deps.module(
-    path = "github.com/mitchellh/go-wordwrap",
-    sum = "h1:TLuKupo69TCn6TQSyGxwI1EblZZEsQ0vMlAFQflz0v0=",
-    version = "v1.0.1",
 )
 
 # Export all Go dependencies
@@ -213,6 +198,8 @@ inject_repo(go_deps, "bookworm")  # For msteinert/pam's libpam0g dependency
 # inject_repo(go_deps, "openconfig_gnmi")  # For openconfig/gnsi's @openconfig_gnmi refs
 
 # TODO BL: If this is the right way to do it, we may need to add this to sonic_go_repos
+# because only roots can override gazelle
+
 # gRPC Go v1.71.0 ships checked-in BUILD files that reference @@xds+//udpa/type/v1:type,
 # pointing at the BCR's C++ xds module. Under bzlmod the Go bindings for xds live in
 # com_github_cncf_xds_go, so the checked-in label is invalid. Regenerating the BUILD
@@ -220,6 +207,14 @@ inject_repo(go_deps, "bookworm")  # For msteinert/pam's libpam0g dependency
 go_deps.gazelle_override(
     build_file_generation = "clean",
     path = "google.golang.org/grpc",
+)
+
+# gnoi's checked-in BUILD files reference gnmi's C++ targets,
+# which fail under bzlmod. Turn off BUILD generation so those targets
+# are never built — sonic-gnmi only uses gnoi's Go libraries.
+go_deps.gazelle_override(
+    build_file_generation = "off",
+    path = "github.com/openconfig/gnoi",
 )
 
 # SONiC-patched ygot/goyang/gnmi from sonic-mgmt-common's extension. The extension is not
@@ -230,11 +225,14 @@ use_repo(
     "com_github_golang_glog",
     "com_github_google_gnxi",
     "com_github_google_gousb",
+    "com_github_mitchellh_go_wordwrap",
     "com_github_msteinert_pam",
     "com_github_openconfig_gnmi",
-    "com_github_openconfig_goyang",
-    "com_github_openconfig_ygot",
     "com_github_openconfig_gnsi",
+    "com_github_openconfig_goyang",
+    "com_github_openconfig_grpctunnel",
+    "com_github_openconfig_ygot",
+    "com_github_protocolbuffers_txtpbfmt",
 )
 
 # TODO BL: Not migrated yet:
